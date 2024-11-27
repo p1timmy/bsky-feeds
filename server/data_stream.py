@@ -1,6 +1,13 @@
 from collections import defaultdict
 
-from atproto import AtUri, CAR, firehose_models, FirehoseSubscribeReposClient, models, parse_subscribe_repos_message
+from atproto import (
+    CAR,
+    AtUri,
+    FirehoseSubscribeReposClient,
+    firehose_models,
+    models,
+    parse_subscribe_repos_message,
+)
 from atproto.exceptions import FirehoseError
 
 from server.database import SubscriptionState
@@ -14,21 +21,21 @@ _INTERESTED_RECORDS = {
 
 
 def _get_ops_by_type(commit: models.ComAtprotoSyncSubscribeRepos.Commit) -> defaultdict:
-    operation_by_type = defaultdict(lambda: {'created': [], 'deleted': []})
+    operation_by_type = defaultdict(lambda: {"created": [], "deleted": []})
 
     car = CAR.from_bytes(commit.blocks)
     for op in commit.ops:
-        if op.action == 'update':
+        if op.action == "update":
             # we are not interested in updates
             continue
 
-        uri = AtUri.from_str(f'at://{commit.repo}/{op.path}')
+        uri = AtUri.from_str(f"at://{commit.repo}/{op.path}")
 
-        if op.action == 'create':
+        if op.action == "create":
             if not op.cid:
                 continue
 
-            create_info = {'uri': str(uri), 'cid': str(op.cid), 'author': commit.repo}
+            create_info = {"uri": str(uri), "cid": str(op.cid), "author": commit.repo}
 
             record_raw_data = car.blocks.get(op.cid)
             if not record_raw_data:
@@ -36,12 +43,16 @@ def _get_ops_by_type(commit: models.ComAtprotoSyncSubscribeRepos.Commit) -> defa
 
             record = models.get_or_create(record_raw_data, strict=False)
             for record_type, record_nsid in _INTERESTED_RECORDS.items():
-                if uri.collection == record_nsid and models.is_record_type(record, record_type):
-                    operation_by_type[record_nsid]['created'].append({'record': record, **create_info})
+                if uri.collection == record_nsid and models.is_record_type(
+                    record, record_type
+                ):
+                    operation_by_type[record_nsid]["created"].append(
+                        {"record": record, **create_info}
+                    )
                     break
 
-        if op.action == 'delete':
-            operation_by_type[uri.collection]['deleted'].append({'uri': str(uri)})
+        if op.action == "delete":
+            operation_by_type[uri.collection]["deleted"].append({"uri": str(uri)})
 
     return operation_by_type
 
@@ -79,9 +90,13 @@ def _run(name, operations_callback, stream_stop_event=None):
 
         # update stored state every ~20 events
         if commit.seq % 20 == 0:
-            logger.info(f'Updated cursor for {name} to {commit.seq}')
-            client.update_params(models.ComAtprotoSyncSubscribeRepos.Params(cursor=commit.seq))
-            SubscriptionState.update(cursor=commit.seq).where(SubscriptionState.service == name).execute()
+            logger.info(f"Updated cursor for {name} to {commit.seq}")
+            client.update_params(
+                models.ComAtprotoSyncSubscribeRepos.Params(cursor=commit.seq)
+            )
+            SubscriptionState.update(cursor=commit.seq).where(
+                SubscriptionState.service == name
+            ).execute()
 
         if not commit.blocks:
             return

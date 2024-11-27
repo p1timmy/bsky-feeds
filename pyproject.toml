@@ -1,0 +1,10 @@
+[tool.black]
+target-version = ['py38']
+extend-exclude = '/\.(v?env(.bak)?|ENV)'
+
+[tool.isort]
+profile = 'black'
+balanced_wrapping = true
+combine_star = true
+py_version = '3'
+skip_glob = ['env/*', 'venv/*', '.env/*', '.venv/*', 'ENV/*']
