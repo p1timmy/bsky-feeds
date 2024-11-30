@@ -1,5 +1,9 @@
-from . import whats_alf
+from . import lovelive
 
 algos = {
-    whats_alf.uri: whats_alf.handler,
+    lovelive.uri: lovelive.handler,
+}
+
+filters = {
+    lovelive.uri: lovelive.filter,
 }

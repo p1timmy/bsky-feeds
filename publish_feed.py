@@ -72,7 +72,7 @@ def main():
     )
 
     print("Successfully published!")
-    print('Feed URI (put in "WHATS_ALF_URI" env var):', response.uri)
+    print("Feed URI:", response.uri)
 
 
 if __name__ == "__main__":

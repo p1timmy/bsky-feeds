@@ -9,6 +9,7 @@ from atproto import (
     parse_subscribe_repos_message,
 )
 from atproto.exceptions import FirehoseError
+from click import style
 
 from server.database import SubscriptionState
 from server.logger import logger
@@ -58,12 +59,21 @@ def _get_ops_by_type(commit: models.ComAtprotoSyncSubscribeRepos.Commit) -> defa
 
 
 def run(name, operations_callback, stream_stop_event=None):
+    logger.info(style("Starting data stream...", fg="yellow"))
+
     while stream_stop_event is None or not stream_stop_event.is_set():
         try:
             _run(name, operations_callback, stream_stop_event)
-        except FirehoseError as e:
-            # here we can handle different errors to reconnect to firehose
-            raise e
+        except FirehoseError:
+            # Log error details and reconnect to firehose
+            logger.error(
+                style(
+                    "Error encountered in data stream, reconnecting...",
+                    fg="red",
+                    bold=True,
+                ),
+                exc_info=True,
+            )
 
 
 def _run(name, operations_callback, stream_stop_event=None):
@@ -84,13 +94,16 @@ def _run(name, operations_callback, stream_stop_event=None):
             client.stop()
             return
 
+        # BUG: Random model validation errors caused by broken/blank messages
+        # (https://github.com/MarshalX/atproto/issues/186)
         commit = parse_subscribe_repos_message(message)
         if not isinstance(commit, models.ComAtprotoSyncSubscribeRepos.Commit):
             return
 
-        # update stored state every ~20 events
-        if commit.seq % 20 == 0:
-            logger.info(f"Updated cursor for {name} to {commit.seq}")
+        # Update stored state every ~1000 events (up from 20 due to recent increase in
+        # network activity)
+        if commit.seq % 1000 == 0:
+            logger.debug("Updated cursor for %s to %s", name, commit.seq)
             client.update_params(
                 models.ComAtprotoSyncSubscribeRepos.Params(cursor=commit.seq)
             )

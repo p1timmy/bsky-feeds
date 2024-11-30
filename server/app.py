@@ -2,11 +2,14 @@ import signal
 import sys
 import threading
 
+from click import style
 from flask import Flask, jsonify, request
 
 from server import config, data_stream
 from server.algos import algos
 from server.data_filter import operations_callback
+from server.database import Feed, db
+from server.logger import logger
 
 app = Flask(__name__)
 
@@ -23,12 +26,18 @@ stream_thread.start()
 
 
 def sigint_handler(*_):
-    print("Stopping data stream...")
+    logger.info(style("Stopping data stream...", fg="yellow"))
     stream_stop_event.set()
     sys.exit(0)
 
 
 signal.signal(signal.SIGINT, sigint_handler)
+
+
+# Add feed URIs if not in database
+with db.atomic():
+    for feed_uri in algos:
+        Feed.get_or_create(uri=feed_uri)
 
 
 @app.route("/")
@@ -79,20 +88,14 @@ def get_feed_skeleton():
     if not algo:
         return "Unsupported algorithm", 400
 
-    # Example of how to check auth if giving user-specific results:
-    """
-    from server.auth import AuthorizationError, validate_auth
-    try:
-        requester_did = validate_auth(request)
-    except AuthorizationError:
-        return 'Unauthorized', 401
-    """
-
     try:
         cursor = request.args.get("cursor", default=None, type=str)
         limit = request.args.get("limit", default=20, type=int)
-        body = algo(cursor, limit)
-    except ValueError:
-        return "Malformed cursor", 400
+        body = algo(cursor, limit, feed)
+    except ValueError as e:
+        exc_msg = str(e)
+        if exc_msg.lower() == "malformed cursor":
+            return exc_msg, 400  # noqa: CLB100
+        raise e
 
     return jsonify(body)
