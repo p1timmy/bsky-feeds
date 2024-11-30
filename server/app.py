@@ -4,6 +4,7 @@ import threading
 
 from click import style
 from flask import Flask, jsonify, request
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from server import config, data_stream
 from server.algos import algos
@@ -12,6 +13,7 @@ from server.database import Feed, db
 from server.logger import logger
 
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
 stream_stop_event = threading.Event()
 stream_thread = threading.Thread(
