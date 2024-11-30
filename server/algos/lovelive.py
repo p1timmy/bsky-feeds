@@ -13,17 +13,22 @@ LOVELIVE_RE = re.compile(
     r"love\s?live[!\s]*(su(nshine|perstar))|"
     r"ラブライブ[!！\s]*(サンシャイン|スーパースター)?|スパスタ３期|"
     r"幻日のヨハネ|(genjitsu\s?no\s?)?yohane|"
-    r"[μµ]['’]s|aq(ou|uo)rs|\bliella\b|hasu\s?no\s?sora|蓮ノ空|"
+    r"[μµ]['’]s|aq(ou|uo)rs|[^a-z\u00C0-\u024F\u1E00-\u1EFF]+liella|"
+    r"hasu\s?no\s?sora|蓮ノ空|"
     r"虹ヶ咲|ニジガク|にじよん|niji(ga(saki|ku)|yon)|"
     r"スクールアイドル|school\s?idol(\s?((festiv|music)al|project))?|"
     r"llsif|スク(フェス|スタ)|(ll)?sif(as\b|\s?all\s?stars)|"
     r"リンクラ|link[!！]\s?like[!！]\s?love\s?live|ぷちぐる|puchiguru|"
     r"cyaron!|guilty\skiss|"
-    r"\ba・zu・na\b|\bqu4rtz\b|diverdiva|\br3birth\b|"
-    r"5yncri5e!|catchu!|\bkaleidoscore\b|\btomakanote\b|"
-    r"\bcerise\sbouquet|\bdollchestra\b|mira-cra\spark!|"
-    r"にこりんぱな|nicorinpana|わいわいわい|aiscream|"
-    r"\ba\-rise\b|saint\s?snow|sunny\s?passion|"
+    r"[^a-z\u00C0-\u024F\u1E00-\u1EFF]+a・zu・na|"
+    r"[^a-z\u00C0-\u024F\u1E00-\u1EFF]+qu4rtz|"
+    r"diverdiva|[^a-z\u00C0-\u024F\u1E00-\u1EFF]+r3birth|"
+    r"5yncri5e!|catchu!|[^a-z\u00C0-\u024F\u1E00-\u1EFF]+kaleidoscore|"
+    r"[^a-z\u00C0-\u024F\u1E00-\u1EFF]+tomakanote|"
+    r"[^a-z\u00C0-\u024F\u1E00-\u1EFF]+cerise\sbouquet|"
+    r"[^a-z\u00C0-\u024F\u1E00-\u1EFF]+dollchestra|mira-cra\spark!|"
+    r"にこりんぱな|nicorinpana|わいわいわい|[^a-z\u00C0-\u024F\u1E00-\u1EFF]+aiscream|"
+    r"[^a-z\u00C0-\u024F\u1E00-\u1EFF]+a\-rise|saint\s?snow|sunny\s?passion|"
     r"音ノ木坂|otonokizaka|浦の星女|uranohoshi|結ヶ丘|yuigaoka|"
     r"高坂\s?穂乃果|honoka\s?kou?saka|kou?saka\s?honoka|"
     r"絢瀬\s?絵里|ayase\s?eli|eli\s?ayase|elichika|"
@@ -79,7 +84,9 @@ LOVELIVE_RE = re.compile(
     re.IGNORECASE,
 )
 EXCLUDE_RE = re.compile(
-    r"\b(i|you|we|they) love live\b|(love\s?live(s|rpool|d)\b)", re.IGNORECASE
+    r"\b(i|you|we|they) love live|(love\s?live(s|rpool|d))|dangerously in love|"
+    r"\blove live service",
+    re.IGNORECASE,
 )
 LOVELIVENEWS_BSKY_SOCIAL = "did:plc:yfmm2mamtdjxyp4pbvdigpin"
 
