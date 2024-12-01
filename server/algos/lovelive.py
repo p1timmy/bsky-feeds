@@ -12,7 +12,7 @@ LOVELIVE_NAME_EN_RE = re.compile(r"love\s?live[!\s]*", re.IGNORECASE)
 LOVELIVE_RE = re.compile(
     r"love\s?live[!\s]*(su(nshine|perstar))|"
     r"ラブライブ[!！\s]*(サンシャイン|スーパースター)?|スパスタ３期|"
-    r"幻日のヨハネ|(genjitsu\s?no\s?)?yohane|"
+    r"幻日のヨハネ|(genjitsu\s?no\s?)?yohane\b|"
     r"[μµ]['’]s|aq(ou|uo)rs|[^a-z\u00C0-\u024F\u1E00-\u1EFF]+liella|"
     r"hasu\s?no\s?sora|蓮ノ空|"
     r"虹ヶ咲|ニジガク|にじよん|niji(ga(saki|ku)|yon)|"
