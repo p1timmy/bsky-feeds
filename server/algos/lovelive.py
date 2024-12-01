@@ -80,7 +80,8 @@ LOVELIVE_RE = re.compile(
     r"大沢\s?瑠璃乃|osawa\s?ruino|ruino\s?osawa|"
     r"百生\s?吟子|momose\s?ginko|ginko\s?momose|"
     r"徒町\s?小鈴|kachimachi\s?kosuzu|kosuzu\s?kachimachi|"
-    r"安養寺\s?姫芽|anyoji\s?hime|hime\s?anyoji",
+    r"安養寺\s?姫芽|anyoji\s?hime|hime\s?anyoji|"
+    r"snow\s?halation",
     re.IGNORECASE,
 )
 EXCLUDE_RE = re.compile(
