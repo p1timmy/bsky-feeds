@@ -84,8 +84,9 @@ LOVELIVE_RE = re.compile(
     re.IGNORECASE,
 )
 EXCLUDE_RE = re.compile(
-    r"\b(i|you|we|they) love live|(love\s?live(s|rpool|d))|dangerously in love|"
-    r"\blove live service",
+    r"\b(i|you|we|they)( [a-z]+(ing?|ly))? love live|"
+    r"(love\s?live(s|rpool|d))|\bthat\s(.\s)?love liver\b|"
+    r"dangerously in love|\blove live service",
     re.IGNORECASE,
 )
 LOVELIVENEWS_BSKY_SOCIAL = "did:plc:yfmm2mamtdjxyp4pbvdigpin"
