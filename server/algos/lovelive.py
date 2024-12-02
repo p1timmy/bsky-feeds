@@ -8,7 +8,7 @@ from atproto_client.models.app.bsky.feed.post import Record
 from server import config
 from server.database import Feed, Post
 
-LOVELIVE_NAME_EN_RE = re.compile(r"love\s?live[!\s]*", re.IGNORECASE)
+LOVELIVE_NAME_EN_RE = re.compile(r"love\s?live[!\s]*(sky\b)?", re.IGNORECASE)
 LOVELIVE_RE = re.compile(
     r"love\s?live[!\s]*(su(nshine|perstar))|"
     r"ラブライブ[!！\s]*(サンシャイン|スーパースター)?|スパスタ３期|"
@@ -87,7 +87,7 @@ LOVELIVE_RE = re.compile(
 EXCLUDE_RE = re.compile(
     r"\b(i|you|we|they)( [a-z]+(ing?|ly))? love live|"
     r"(love\s?live(s|rpool|d)\b)|\bthat\s(.\s)?love liver\b|"
-    r"dangerously in love|\blove live service",
+    r"dangerously in love|\blove live (music|service)",
     re.IGNORECASE,
 )
 LOVELIVENEWS_BSKY_SOCIAL = "did:plc:yfmm2mamtdjxyp4pbvdigpin"
