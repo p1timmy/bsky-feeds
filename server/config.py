@@ -1,12 +1,14 @@
 import os
 
-SERVICE_DID = os.environ.get("SERVICE_DID")
+from dotenv import load_dotenv
+
+load_dotenv()
+
 HOSTNAME = os.environ.get("HOSTNAME")
-
-
 if not HOSTNAME:
     raise RuntimeError('You should set "HOSTNAME" environment variable first.')
 
+SERVICE_DID = os.environ.get("SERVICE_DID")
 if not SERVICE_DID:
     SERVICE_DID = f"did:web:{HOSTNAME}"
 
