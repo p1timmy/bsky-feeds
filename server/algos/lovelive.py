@@ -13,22 +13,19 @@ LOVELIVE_RE = re.compile(
     r"love\s?live[!\s]*(su(nshine|perstar))|"
     r"ラブライブ[!！\s]*(サンシャイン|スーパースター)?|スパスタ３期|"
     r"幻日のヨハネ|(genjitsu\s?no\s?)?yohane\b|"
-    r"[μµ]['’]s|aq(ou|uo)rs|[^a-z\u00C0-\u024F\u1E00-\u1EFF]+liella|"
+    r"[μµ]['’]s|aq(ou|uo)rs|[^a-z\u00C0-\u024F\u1E00-\u1EFF]?\bliella[!！]?|"
     r"hasu\s?no\s?sora|蓮ノ空|"
     r"虹ヶ咲|ニジガク|にじよん|niji(ga(saki|ku)|yon)|"
     r"スクールアイドル|school\s?idol(\s?((festiv|music)al|project))?|"
     r"llsif|スク(フェス|スタ)|(ll)?sif(as\b|\s?all\s?stars)|"
     r"リンクラ|link[!！]\s?like[!！]\s?love\s?live|ぷちぐる|puchiguru|"
-    r"cyaron!|guilty\skiss|"
-    r"[^a-z\u00C0-\u024F\u1E00-\u1EFF]+a・zu・na|"
-    r"[^a-z\u00C0-\u024F\u1E00-\u1EFF]+qu4rtz|"
-    r"diverdiva|[^a-z\u00C0-\u024F\u1E00-\u1EFF]+r3birth|"
-    r"5yncri5e!|catchu!|[^a-z\u00C0-\u024F\u1E00-\u1EFF]+kaleidoscore|"
-    r"[^a-z\u00C0-\u024F\u1E00-\u1EFF]+tomakanote|"
-    r"[^a-z\u00C0-\u024F\u1E00-\u1EFF]+cerise\sbouquet|"
-    r"[^a-z\u00C0-\u024F\u1E00-\u1EFF]+dollchestra|mira-cra\spark!|"
-    r"にこりんぱな|nicorinpana|わいわいわい|[^a-z\u00C0-\u024F\u1E00-\u1EFF]+aiscream|"
-    r"[^a-z\u00C0-\u024F\u1E00-\u1EFF]+a\-rise|saint\s?snow|sunny\s?passion|"
+    r"cyaron!|guilty\s?kiss|"
+    r"a・zu・na|qu4rtz|diverdiva|r3birth|"
+    r"5yncri5e!|catchu!|kaleidoscore|tomakanote|"
+    r"cerise\sbouquet|dollchestra|mira-cra\spark!|"
+    r"にこりんぱな|nicorinpana|わいわいわい|aiscream|"
+    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|\b)a[-\u2010]rise[^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|"
+    r"saint\s?snow|sunny\s?passion|"
     r"音ノ木坂|otonokizaka|浦の星女|uranohoshi|結ヶ丘|yuigaoka|"
     r"高坂\s?穂乃果|honoka\s?kou?saka|kou?saka\s?honoka|"
     r"絢瀬\s?絵里|ayase\s?eli|eli\s?ayase|elichika|"
@@ -37,8 +34,8 @@ LOVELIVE_RE = re.compile(
     r"星空\s?凛|hoshizora\s?rin|rin\s?hoshizora|金曜凛ちゃんりんりんりん|"
     r"西木野\s?真姫|nishikino\s?maki|maki\s?nishikino|"
     r"東條\s?希|tou?jou?\s?nozomi|nozomi\s?tou?jou?|"
-    r"小泉\s?花陽|koizumi\s?hanayo|hanayo\s?koizumi|"
-    r"矢澤\s?にこ|yazawa\s?nico|nico\s?yazawa|nico\s?nico\s?ni|"
+    r"小泉\s?花陽|koizumi\s?hanayo|hanayo\s?koizumi|火曜日かよちゃん|"
+    r"矢澤\s?にこ|yazawa\s?nico|nico\s?yazawa|nico\s?nico\s?ni+\b|"
     r"高海\s?千歌|takami\s?chika|chika\s?takami|"
     r"桜内\s?梨子|sakurauchi\s?riko|riko\s?sakurauchi|"
     r"松浦\s?果南|matsuu?ra\s?kanan|kanan\s?matsuu?ra|"
@@ -90,6 +87,7 @@ EXCLUDE_RE = re.compile(
     r"dangerously in love|\blove live (music|service)",
     re.IGNORECASE,
 )
+NSFW_KEYWORDS_RE = re.compile("hentai|futanari|breasts?|penis", re.IGNORECASE)
 LOVELIVENEWS_BSKY_SOCIAL = "did:plc:yfmm2mamtdjxyp4pbvdigpin"
 
 uri = config.LOVELIVE_URI
@@ -158,10 +156,13 @@ def filter(post: dict) -> bool:
     if not all_texts:
         return False
 
-    return any(
-        (
-            post["author"] == LOVELIVENEWS_BSKY_SOCIAL,
-            LOVELIVE_NAME_EN_RE.search(all_texts) and not EXCLUDE_RE.search(all_texts),
-            LOVELIVE_RE.search(all_texts),
+    return post["author"] == LOVELIVENEWS_BSKY_SOCIAL or (
+        any(
+            (
+                LOVELIVE_NAME_EN_RE.search(all_texts)
+                and not EXCLUDE_RE.search(all_texts),
+                LOVELIVE_RE.search(all_texts),
+            )
         )
+        and not NSFW_KEYWORDS_RE.search(all_texts)
     )
