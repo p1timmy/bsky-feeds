@@ -86,7 +86,7 @@ LOVELIVE_RE = re.compile(
 )
 EXCLUDE_RE = re.compile(
     r"\b(i|you|we|they)( [a-z]+(ing?|ly))? love live|"
-    r"(love\s?live(s|rpool|d)\b)|\bthat\s(.\s)?love liver\b|"
+    r"(love\s?live(s|rpool|d|[\b\-]action)\b)|\bthat\s(.\s)?love liver\b|"
     r"dangerously in love|\blove live (music|service)",
     re.IGNORECASE,
 )
