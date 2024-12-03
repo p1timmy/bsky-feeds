@@ -1,7 +1,7 @@
-from . import lovelive
+from . import _base, lovelive
 
 algos = {
-    lovelive.uri: lovelive.handler,
+    lovelive.uri: _base.handler,
 }
 
 filters = {

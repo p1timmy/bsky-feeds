@@ -1,12 +1,7 @@
 import re
-from collections.abc import Iterable
-from datetime import datetime
-from typing import Optional
-
-from atproto_client.models.app.bsky.feed.post import Record
 
 from server import config
-from server.database import Feed, Post
+from server.algos._base import get_post_texts
 
 LOVELIVE_NAME_EN_RE = re.compile(r"love\s?live[!\s]*", re.IGNORECASE)
 LOVELIVE_RE = re.compile(
@@ -103,68 +98,10 @@ NSFW_KEYWORDS_RE = re.compile("hentai|futanari|penis|dildo|#コイカツ", re.IG
 LOVELIVENEWS_BSKY_SOCIAL = "did:plc:yfmm2mamtdjxyp4pbvdigpin"
 
 uri = config.LOVELIVE_URI
-CURSOR_EOF = "eof"
 
 
-# TODO: move to common module
-def handler(cursor: Optional[str], limit: int, feed_uri: str) -> dict:
-    posts = (
-        Post.select()
-        .join(Feed.posts.get_through_model())
-        .join(Feed)
-        .where(Feed.uri == feed_uri)
-        .order_by(Post.cid.desc())
-        .order_by(Post.indexed_at.desc())
-        .limit(limit)
-    )
-
-    if cursor:
-        if cursor == CURSOR_EOF:
-            return {
-                "cursor": CURSOR_EOF,
-                "feed": [],
-            }
-
-        cursor_parts = cursor.split("::")
-        if len(cursor_parts) != 2:
-            raise ValueError("Malformed cursor")
-
-        indexed_at, cid = cursor_parts
-        indexed_at = datetime.fromtimestamp(int(indexed_at) / 1000)
-        posts: Iterable[Post] = posts.where(
-            ((Post.indexed_at == indexed_at) & (Post.cid < cid))
-            | (Post.indexed_at < indexed_at)
-        )
-
-    feed = [{"post": post.uri} for post in posts]
-
-    cursor = CURSOR_EOF
-    if posts:
-        last_post: Post = posts[-1]
-        cursor = f"{int(last_post.indexed_at.timestamp() * 1000)}::{last_post.cid}"
-
-    return {
-        "cursor": cursor,
-        "feed": feed,
-    }
-
-
-# TODO: scan link URLs/embeds
 def filter(post: dict) -> bool:
-    record: Record = post["record"]
-    texts: list[str] = []
-    if record.text:  # some posts may not have any text at all
-        texts.append(record.text)
-
-    # Get alt text from images
-    if record.embed:
-        imagelist: Optional[Iterable] = getattr(record.embed, "images", None)
-        if imagelist:
-            for image in imagelist:
-                if image.alt:
-                    texts.append(image.alt)
-
-    all_texts = "\n".join(texts)
+    all_texts = "\n".join(get_post_texts(post))
     if not all_texts:
         return False
 
