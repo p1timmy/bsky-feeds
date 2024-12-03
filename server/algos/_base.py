@@ -36,6 +36,10 @@ def get_post_texts(post: dict, include_images=True) -> list[str]:
     return texts
 
 
+class MalformedCursorError(ValueError):
+    """`cursor` parameter from request URL doesn't follow the `timestamp::cid` format"""
+
+
 def handler(cursor: Optional[str], limit: int, feed_uri: str) -> dict:
     """
     Handler for generating a feed's skeleton (list of post URIs).
@@ -62,10 +66,16 @@ def handler(cursor: Optional[str], limit: int, feed_uri: str) -> dict:
 
         cursor_parts = cursor.split("::")
         if len(cursor_parts) != 2:
-            raise ValueError("Malformed cursor")
+            raise MalformedCursorError()
 
+        # TODO: Validate `cid` format
         indexed_at, cid = cursor_parts
-        indexed_at = datetime.fromtimestamp(int(indexed_at) / 1000)
+        try:
+            indexed_at = datetime.fromtimestamp(int(indexed_at) / 1000)
+        except ValueError:
+            # `indexed_at` (timestamp) value isn't an int
+            raise MalformedCursorError()
+
         posts = posts.where(
             ((Post.indexed_at == indexed_at) & (Post.cid < cid))
             | (Post.indexed_at < indexed_at)

@@ -7,7 +7,7 @@ from flask import Flask, Response, jsonify, request
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from server import config, data_stream
-from server.algos import algos
+from server.algos import MalformedCursorError, algos
 from server.data_filter import operations_callback
 from server.database import Feed, db
 from server.logger import logger
@@ -104,10 +104,7 @@ def get_feed_skeleton() -> tuple[str, int] | Response:
         cursor = request.args.get("cursor", default=None, type=str)
         limit = request.args.get("limit", default=20, type=int)
         body = algo(cursor, limit, feed)
-    except ValueError as e:
-        exc_msg = str(e)
-        if exc_msg.lower() == "malformed cursor":
-            return exc_msg, 400  # noqa: CLB100
-        raise e
+    except MalformedCursorError:
+        return "Malformed cursor", 400  # noqa: CLB100
 
     return jsonify(body)
