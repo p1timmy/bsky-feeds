@@ -5,6 +5,7 @@ from atproto_client.models.app.bsky.embed.images import Image
 from atproto_client.models.app.bsky.embed.images import Main as ImageEmbed
 from atproto_client.models.app.bsky.embed.video import Main as VideoEmbed
 from atproto_client.models.app.bsky.feed.post import Record
+from multiformats_cid import is_cid
 from peewee import ModelSelect
 
 from server.database import Feed, Post
@@ -71,12 +72,14 @@ def handler(cursor: Optional[str], limit: int, feed_uri: str) -> dict:
         if len(cursor_parts) != 2:
             raise MalformedCursorError()
 
-        # TODO: Validate `cid` format
         indexed_at, cid = cursor_parts
         try:
             indexed_at = datetime.fromtimestamp(int(indexed_at) / 1000)
         except ValueError:
             # `indexed_at` (timestamp) value isn't an int
+            raise MalformedCursorError()
+
+        if not is_cid(cid):
             raise MalformedCursorError()
 
         posts = posts.where(
