@@ -12,15 +12,15 @@ LOVELIVE_NAME_EN_RE = re.compile(r"love\s?live[!\s]*(sky\b)?", re.IGNORECASE)
 LOVELIVE_RE = re.compile(
     r"love\s?live[!\s]*(su(nshine|perstar))|"
     r"ラブライブ[!！\s]*(サンシャイン|スーパースター)?|スパスタ３期|"
-    r"幻日のヨハネ|(genjitsu\s?no\s?)?yohane\b|"
-    r"[μµ]['’]s|aq(ou|uo)rs|[^a-z\u00C0-\u024F\u1E00-\u1EFF]?\bliella[!！]?|"
+    r"幻日のヨハネ|(genjitsu\s?no\s?)?yohane\b|sunshine\sin\sthe\smirror|"
+    r"[μµ]['’]s|aq(ou|uo)rs|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)liella[!！]?|"
     r"hasu\s?no\s?sora|蓮ノ空|"
     r"虹ヶ咲|ニジガク|にじよん|niji(ga(saki|ku)|yon)|"
     r"スクールアイドル|school\s?idol(\s?((festiv|music)al|project))?|"
     r"llsif|スク(フェス|スタ)|(ll)?sif(as\b|\s?all\s?stars)|"
     r"リンクラ|link[!！]\s?like[!！]\s?love\s?live|ぷちぐる|puchiguru|"
     r"cyaron!|guilty\s?kiss|"
-    r"a・zu・na|qu4rtz|diverdiva|r3birth|"
+    r"a・zu・na|qu4rtz|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)diverdiva|r3birth|"
     r"5yncri5e!|catchu!|kaleidoscore|tomakanote|"
     r"cerise\sbouquet|dollchestra|mira-cra\spark!|"
     r"にこりんぱな|nicorinpana|わいわいわい|aiscream|"
@@ -88,8 +88,9 @@ LOVELIVE_RE = re.compile(
 )
 EXCLUDE_RE = re.compile(
     r"\b(i|you|we|they)( [a-z]+(ing?|ly))? love live|"
-    r"(love\s?live(s|rpool|d|[\b\-]action)\b)|\bthat\s(.\s)?love liver\b|"
-    r"dangerously in love|\blove live (music|service)",
+    r"love\s?live(s|rpool|d|ly)|\bthat\s(.\s)?love liver\b|"
+    r"dangerously in love|\blove live (music|service|theater|shows|tv)|"
+    r"\blove live[\s\-](action|streaming)\b",
     re.IGNORECASE,
 )
 NSFW_KEYWORDS_RE = re.compile("hentai|futanari|breasts?|penis", re.IGNORECASE)
