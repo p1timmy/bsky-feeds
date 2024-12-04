@@ -3,6 +3,7 @@ from typing import Optional
 
 from atproto_client.models.app.bsky.embed.images import Image
 from atproto_client.models.app.bsky.embed.images import Main as ImageEmbed
+from atproto_client.models.app.bsky.embed.video import Main as VideoEmbed
 from atproto_client.models.app.bsky.feed.post import Record
 from peewee import ModelSelect
 
@@ -12,11 +13,11 @@ CURSOR_EOF = "eof"
 
 
 # TODO: scan link URLs/embeds
-def get_post_texts(post: dict, include_images=True) -> list[str]:
+def get_post_texts(post: dict, include_media=True) -> list[str]:
     """
     Extract text content from a single post.
 
-    :param include_images: Also get image/video alt texts in addition to the post text.
+    :param include_media: Also get image/video alt texts in addition to the post text.
         Defaults to True.
     """
     record: Record = post["record"]
@@ -24,14 +25,16 @@ def get_post_texts(post: dict, include_images=True) -> list[str]:
     if record.text:  # some posts may not have any text at all
         texts.append(record.text)
 
-    # Get alt text from images
-    if include_images and record.embed:
-        imagelist: Optional[ImageEmbed] = getattr(record.embed, "images", None)
-        if imagelist:
+    # Get alt text from images/video
+    embed = record.embed
+    if include_media:
+        if isinstance(embed, ImageEmbed):
             image: Image
-            for image in imagelist:
+            for image in embed.images:
                 if image.alt:
                     texts.append(image.alt)
+        elif isinstance(embed, VideoEmbed) and embed.alt:
+            texts.append(embed.alt)
 
     return texts
 
