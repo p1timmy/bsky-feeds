@@ -8,11 +8,12 @@ from atproto_client.models.app.bsky.feed.post import Record
 from server import config
 from server.database import Feed, Post
 
-LOVELIVE_NAME_EN_RE = re.compile(r"love\s?live[!\s]*(sky\b)?", re.IGNORECASE)
+LOVELIVE_NAME_EN_RE = re.compile(r"love\s?live[!\s]*", re.IGNORECASE)
 LOVELIVE_RE = re.compile(
-    r"love\s?live[!\s]*(su(nshine|perstar))|"
-    r"ラブライブ[!！\s]*(サンシャイン|スーパースター)?|スパスタ３期|"
-    r"幻日のヨハネ|(genjitsu\s?no\s?)?yohane\b|sunshine\sin\sthe\smirror|"
+    r"love\s?live[!\s]*(s(ky|u(nshine|perstar)))|"
+    r"ラブライブ[!！\s]*(サンシャイン|スーパースター)?|スパスタ(3|３)期|"
+    r"幻日のヨハネ|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(genjitsu\s?no\s?)?yohane\b|"
+    r"sunshine\sin\sthe\smirror|"
     r"[μµ]['’]s|aq(ou|uo)rs|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)liella[!！]?|"
     r"hasu\s?no\s?sora|蓮ノ空|"
     r"虹ヶ咲|ニジガク|にじよん|niji(ga(saki|ku)|yon)|"
@@ -25,7 +26,8 @@ LOVELIVE_RE = re.compile(
     r"cerise\sbouquet|dollchestra|mira-cra\spark!|"
     r"にこりんぱな|nicorinpana|わいわいわい|aiscream|"
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|\b)a[-\u2010]rise[^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|"
-    r"saint\s?snow|sunny\s?pas(sion)?|sunnypa|"
+    r"saint\s?snow|sunny\s?pas(sion)?(\b|[^a-z\u00C0-\u024F\u1E00-\u1EFF])|"
+    r"sunnypa(\b|[^a-z\u00C0-\u024F\u1E00-\u1EFF])|"
     r"音ノ木坂|otonokizaka|浦の星女|uranohoshi|結ヶ丘|yuigaoka|"
     r"高坂\s?穂乃果|honoka\s?kou?saka|kou?saka\s?honoka|"
     r"絢瀬\s?絵里|ayase\s?eli|eli\s?ayase|elichika|"
@@ -89,11 +91,13 @@ LOVELIVE_RE = re.compile(
 EXCLUDE_RE = re.compile(
     r"\b(i|you|we|they)( [a-z]+(ing?|ly))? love live|"
     r"love\s?live(s|rpool|d|ly)|\bthat\s(.\s)?love liver\b|"
-    r"dangerously in love|\blove live (music|service|theater|shows|tv)|"
+    r"d(angerously|runk) in love|\blove live (music|service|theater|shows|tv)|"
     r"\blove live[\s\-](action|streaming)\b",
     re.IGNORECASE,
 )
-NSFW_KEYWORDS_RE = re.compile("hentai|futanari|breasts?|penis", re.IGNORECASE)
+NSFW_KEYWORDS_RE = re.compile(
+    "hentai|futanari|breasts?|penis|dildo|#コイカツ", re.IGNORECASE
+)
 LOVELIVENEWS_BSKY_SOCIAL = "did:plc:yfmm2mamtdjxyp4pbvdigpin"
 
 uri = config.LOVELIVE_URI
