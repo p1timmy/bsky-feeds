@@ -3,7 +3,7 @@ import sys
 import threading
 
 from click import style
-from flask import Flask, jsonify, request
+from flask import Flask, Response, jsonify, request
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from server import config, data_stream
@@ -12,34 +12,44 @@ from server.data_filter import operations_callback
 from server.database import Feed, db
 from server.logger import logger
 
+
+def firehose_setup():
+    """
+    Starts firehose client (data stream) thread and creates database entries for each
+    new feed URI.
+
+    This must be called before starting the WSGI server, otherwise no new posts will be
+    added to feeds.
+    """
+    stream_stop_event = threading.Event()
+    stream_thread = threading.Thread(
+        target=data_stream.run,
+        args=(
+            config.SERVICE_DID,
+            operations_callback,
+            stream_stop_event,
+        ),
+    )
+    stream_thread.start()
+
+    def stop_stream_thread(*_):
+        logger.info(style("Stopping data stream...", fg="yellow"))
+        stream_stop_event.set()
+        sys.exit(0)
+
+    signal.signal(signal.SIGINT, stop_stream_thread)
+
+    # Used by hupper to reload the server
+    signal.signal(signal.SIGTERM, stop_stream_thread)
+
+    # Add feed URIs if not in database
+    with db.atomic():
+        for feed_uri in algos:
+            Feed.get_or_create(uri=feed_uri)
+
+
 app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
-
-stream_stop_event = threading.Event()
-stream_thread = threading.Thread(
-    target=data_stream.run,
-    args=(
-        config.SERVICE_DID,
-        operations_callback,
-        stream_stop_event,
-    ),
-)
-stream_thread.start()
-
-
-def sigint_handler(*_):
-    logger.info(style("Stopping data stream...", fg="yellow"))
-    stream_stop_event.set()
-    sys.exit(0)
-
-
-signal.signal(signal.SIGINT, sigint_handler)
-
-
-# Add feed URIs if not in database
-with db.atomic():
-    for feed_uri in algos:
-        Feed.get_or_create(uri=feed_uri)
 
 
 @app.route("/")
@@ -51,7 +61,7 @@ def index():
 
 
 @app.route("/.well-known/did.json", methods=["GET"])
-def did_json():
+def did_json() -> tuple[str, int] | Response:
     if not config.SERVICE_DID.endswith(config.HOSTNAME):
         return "", 404
 
@@ -71,7 +81,7 @@ def did_json():
 
 
 @app.route("/xrpc/app.bsky.feed.describeFeedGenerator", methods=["GET"])
-def describe_feed_generator():
+def describe_feed_generator() -> Response:
     feeds = [{"uri": uri} for uri in algos.keys()]
     response = {
         "encoding": "application/json",
@@ -84,7 +94,7 @@ def describe_feed_generator():
 
 
 @app.route("/xrpc/app.bsky.feed.getFeedSkeleton", methods=["GET"])
-def get_feed_skeleton():
+def get_feed_skeleton() -> tuple[str, int] | Response:
     feed = request.args.get("feed", default=None, type=str)
     algo = algos.get(feed)
     if not algo:
