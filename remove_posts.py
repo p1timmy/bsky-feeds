@@ -78,7 +78,7 @@ def main(db: SqliteDatabase):
     if num_posts_in_feeds < 1:
         click.echo(click.style("Nothing to do here, exiting...", fg="green", bold=True))
     elif click.confirm(
-        f"Remove {num_posts_in_feeds} post{'s' if num_posts_in_feeds == 1 else ''} from"
+        f"Remove {num_posts_in_feeds} post{'' if num_posts_in_feeds == 1 else 's'} from"
         " all feeds in database? This action is not undoable!",
         abort=True,
     ):
