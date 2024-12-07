@@ -1,5 +1,7 @@
 import argparse
 
+import hupper
+
 from server.app import app, firehose_setup
 
 try:
@@ -17,7 +19,17 @@ def main():
         action="store_true",
         help="run development server - DO NOT USE IN PRODUCTION",
     )
+    parser.add_argument(
+        "--no-reload",
+        action="store_false",
+        dest="reload",
+        help="disable reloading on source/config file changes",
+    )
     args = parser.parse_args()
+
+    if args.reload:
+        reloader = hupper.start_reloader("server.__main__.main")
+        reloader.watch_files([".env"])
 
     host = "127.0.0.1"
     port = "8000"
