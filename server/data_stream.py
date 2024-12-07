@@ -75,6 +75,8 @@ def run(name, operations_callback, stream_stop_event=None):
                 exc_info=True,
             )
 
+    logger.info(style("Data stream stopped", fg="yellow"))
+
 
 def _run(name, operations_callback, stream_stop_event=None):
     state = SubscriptionState.get_or_none(SubscriptionState.service == name)
