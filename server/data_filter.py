@@ -4,10 +4,13 @@ from collections.abc import Iterable
 
 from atproto import models
 from atproto_client.models.app.bsky.feed.post import Record
+from atproto_client.models.com.atproto.label.defs import SelfLabel
 from click import style
 
 from server.algos import filters
 from server.database import Feed, Post, db
+
+_PR0N_LABEL = SelfLabel(val="porn")
 
 logger = logging.getLogger(__name__)
 
@@ -26,6 +29,10 @@ def operations_callback(ops: defaultdict):
     for created_post in ops[models.ids.AppBskyFeedPost]["created"]:
         author: str = created_post["author"]
         record: Record = created_post["record"]
+
+        # Skip if post has adult content (porn) label
+        if record.labels and _PR0N_LABEL in record.labels.values:
+            continue
 
         feeds: list[Feed] = []
         for algo_uri, filter in filters.items():
