@@ -14,16 +14,17 @@ LOVELIVE_RE = re.compile(
     r"ラブライブ[!！\s]*(サンシャイン|スーパースター)?|スパスタ(3|３)期|"
     r"幻日のヨハネ|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(genjitsu\s?no\s?)?yohane\b|"
     r"sunshine\sin\sthe\smirror|"
-    r"[μµ]['’]s|aq(ou|uo)rs|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)liella[!！]?|"
+    r"[μµ]['’`]s|aq(ou|uo)rs|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)liella[!！]?|"
     r"hasu\s?no\s?sora|蓮ノ空|"
     r"虹ヶ咲|ニジガク|にじよん|niji(ga(saki|ku)|yon)|"
     r"スクールアイドル|school\s?idol(\s?((festiv|music)al|project))?|"
-    r"llsif|スク(フェス|スタ)|(ll)?sif(as\b|\s?all\s?stars)|"
+    r"llsif|スク(フェス|スタ)|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|"
     r"リンクラ|link[!！]\s?like[!！]\s?love\s?live|ぷちぐる|puchiguru|"
     r"cyaron!|guilty\s?kiss|"
-    r"a・zu・na|qu4rtz|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)diverdiva|r3birth|"
+    r"a・zu・na|qu4rtz|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)diverdiva|"
+    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)r3birth|"
     r"5yncri5e!|catchu!|kaleidoscore|tomakanote|"
-    r"cerise\sbouquet|dollchestra|mira-cra\spark!|"
+    r"cerise\sbouquet|dollchestra|mira-cra\spark!|みらくらぱーく[!！]|"
     r"にこりんぱな|nicorinpana|わいわいわい|aiscream|"
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|\b)a[-\u2010]rise[^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|"
     r"saint\s?snow|sunny\s?pas(sion)?(\b|[^a-z\u00C0-\u024F\u1E00-\u1EFF])|"
@@ -44,9 +45,9 @@ LOVELIVE_RE = re.compile(
     r"高海\s?千歌|takami\s?chika|chika\s?takami|"
     r"桜内\s?梨子|sakurauchi\s?riko|riko\s?sakurauchi|"
     r"松浦\s?果南|matsuu?ra\s?kanan|kanan\s?matsuu?ra|"
-    r"黒澤\s?(ダイヤ|ルビ)|kurosawa\s?(dia|ruby)|(dia|ruby)\s?kurosawa|"
+    r"黒澤\s?(ダイヤ|ルビィ?)|kurosawa\s?(dia|ruby)|(dia|ruby)\s?kurosawa|"
     r"渡辺\s?曜|watanabe\s?you|you\s?watanabe|ヨーソロー[!！]|"
-    r"津島\s?善子tsushima\s?yoshiko|yoshiko\s?tsushima|堕天使ヨハネ|"
+    r"津島\s?善子|tsushima\s?yoshiko|yoshiko\s?tsushima|堕天使ヨハネ|"
     r"国木田\s?花丸|kunikida\s?hanamaru|hanamaru\s?kunikida|zuramaru|"
     r"小原\s?鞠莉|ohara\s?mari|mari\s?ohara|"
     r"鹿角\s?(理亞|聖良)|kazuno\s?(le|sar)ah|(le|sar)ah\s?kazuno|"
@@ -85,7 +86,7 @@ LOVELIVE_RE = re.compile(
     r"百生\s?吟子|momose\s?ginko|ginko\s?momose|"
     r"徒町\s?小鈴|kachimachi\s?kosuzu|kosuzu\s?kachimachi|"
     r"安養寺\s?姫芽|anyoji\s?hime|hime\s?anyoji|"
-    r"snow\s?halation",
+    r"snow\s?halation|異次元フェス",
     re.IGNORECASE,
 )
 EXCLUDE_RE = re.compile(
@@ -98,9 +99,7 @@ EXCLUDE_RE = re.compile(
     r"\blove live[\s\-](action|streaming)\b",
     re.IGNORECASE,
 )
-NSFW_KEYWORDS_RE = re.compile(
-    "hentai|futanari|breasts?|penis|dildo|#コイカツ", re.IGNORECASE
-)
+NSFW_KEYWORDS_RE = re.compile("hentai|futanari|penis|dildo|#コイカツ", re.IGNORECASE)
 LOVELIVENEWS_BSKY_SOCIAL = "did:plc:yfmm2mamtdjxyp4pbvdigpin"
 
 uri = config.LOVELIVE_URI
