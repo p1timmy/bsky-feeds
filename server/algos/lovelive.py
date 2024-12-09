@@ -27,7 +27,7 @@ LOVELIVE_RE = re.compile(
     r"cerise\sbouquet|dollchestra|mira-cra\spark!|みらくらぱーく[!！]|"
     r"にこりんぱな|nicorinpana|わいわいわい|aiscream|"
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|\b)a[-\u2010]rise[^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|"
-    r"saint\s?snow|sunny\s?pas(sion)?(\b|[^a-z\u00C0-\u024F\u1E00-\u1EFF])|"
+    r"(?<!\bRT @)saint\s?snow|sunny\s?pas(sion)?(\b|[^a-z\u00C0-\u024F\u1E00-\u1EFF])|"
     r"sunnypa(\b|[^a-z\u00C0-\u024F\u1E00-\u1EFF])|"
     r"音ノ木坂|otonokizaka|浦の星女|uranohoshi|結ヶ丘|yuigaoka|"
     r"高坂\s?穂乃果|honoka\s?kou?saka|kou?saka\s?honoka|"
@@ -92,7 +92,7 @@ LOVELIVE_RE = re.compile(
 EXCLUDE_RE = re.compile(
     r"\b(i|you|we( (all|both))?|they|gotta|who|people)"
     r"( ([a-z]+(ing?|ly)|do|just|also|still|tend to)\,?)*( love)+ live|"
-    r"love\s?live(s|rpool|d|ly)|\bthat (.\s)?love liver\b|"
+    r"love\s?live(s|rpool|d|ly|\s?life)|\bthat (.\s)?love liver\b|"
     r"\b(d(angerously|runk)|who live) in love\b|\blovelivemusic|"
     r"you( liv|['’]r)e in .+ and love live music|"
     r"\blove live (service|theat(er|re)|shows|tv)|"
