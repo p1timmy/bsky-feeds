@@ -31,7 +31,11 @@ def operations_callback(ops: defaultdict):
         record: Record = created_post["record"]
 
         # Skip if post has adult content (porn) label
-        if record.labels and _PR0N_LABEL in record.labels.values:
+        if (
+            record.labels
+            and record.labels.values is not None
+            and _PR0N_LABEL in record.labels.values
+        ):
             continue
 
         feeds: list[Feed] = []
