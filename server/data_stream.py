@@ -43,6 +43,11 @@ def _get_ops_by_type(commit: models.ComAtprotoSyncSubscribeRepos.Commit) -> defa
                 continue
 
             record = models.get_or_create(record_raw_data, strict=False)
+
+            # Drop events not supported by ATproto SDK to prevent log spamming
+            if record is None:
+                continue
+
             for record_type, record_nsid in _INTERESTED_RECORDS.items():
                 if uri.collection == record_nsid and models.is_record_type(
                     record, record_type
