@@ -14,7 +14,7 @@ LOVELIVE_RE = re.compile(
     r"虹ヶ咲|ニジガク|にじよん|niji(ga(saki|ku)|yon)|"
     r"スクールアイドル|school\s?idol(\s?((festiv|music)al|project))?|"
     r"llsif|スク(フェス|スタ)|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|"
-    r"リンクラ|link[!！]\s?like[!！]\s?love\s?live|ぷちぐる|puchiguru|"
+    r"(?<!スプ)リンクラ(?!ー)|link[!！]\s?like[!！]\s?love\s?live|ぷちぐる|puchiguru|"
     r"cyaron!|guilty\s?kiss|"
     r"a・zu・na|qu4rtz|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)diverdiva|"
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)r3birth|"
