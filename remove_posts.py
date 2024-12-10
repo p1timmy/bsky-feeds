@@ -8,7 +8,7 @@ from peewee import Model, ModelSelect, SqliteDatabase
 from server.database import Post
 
 BSKY_POST_URL_REGEX = re.compile(
-    r"https://bsky.app/profile/(?:[a-z0-9\-\.]+\.[a-z]+|did:plc:[a-z2-7]{24})/post/([a-z2-7]{13})"
+    r"https://bsky.app/profile/(?:[A-Za-z0-9\-\.]+\.[a-z]+|did:plc:[a-z2-7]{24})/post/([a-z2-7]{13})"
 )
 
 
