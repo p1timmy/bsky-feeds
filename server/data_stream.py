@@ -1,11 +1,15 @@
 from collections import defaultdict
+from threading import Event
+from typing import Optional
 
 from atproto import (
     CAR,
     AtUri,
+    FirehoseSubscribeLabelsClient,
     FirehoseSubscribeReposClient,
     firehose_models,
     models,
+    parse_subscribe_labels_message,
     parse_subscribe_repos_message,
 )
 from atproto.exceptions import FirehoseError
@@ -19,7 +23,9 @@ _INTERESTED_RECORDS = {
 }
 
 
-def _get_ops_by_type(commit: models.ComAtprotoSyncSubscribeRepos.Commit) -> defaultdict:
+def _get_commit_ops_by_type(
+    commit: models.ComAtprotoSyncSubscribeRepos.Commit,
+) -> defaultdict:
     operation_by_type = defaultdict(lambda: {"created": [], "deleted": []})
     if len(commit.blocks) >= 50_000:
         return operation_by_type
@@ -66,27 +72,9 @@ def _get_ops_by_type(commit: models.ComAtprotoSyncSubscribeRepos.Commit) -> defa
     return operation_by_type
 
 
-def run(name, operations_callback, stream_stop_event=None):
-    logger.info(style("Starting data stream...", fg="yellow"))
-
-    while stream_stop_event is None or not stream_stop_event.is_set():
-        try:
-            _run(name, operations_callback, stream_stop_event)
-        except FirehoseError:
-            # Log error details and reconnect to firehose
-            logger.error(
-                style(
-                    "Error encountered in data stream, reconnecting...",
-                    fg="red",
-                    bold=True,
-                ),
-                exc_info=True,
-            )
-
-    logger.info(style("Data stream stopped", fg="yellow"))
-
-
-def _run(name, operations_callback, stream_stop_event=None):
+def _run_repos_client(
+    name: str, operations_callback, stream_stop_event: Optional[Event] = None
+):
     state = SubscriptionState.get_or_none(SubscriptionState.service == name)
 
     params = None
@@ -113,7 +101,7 @@ def _run(name, operations_callback, stream_stop_event=None):
         # Update stored state every ~1000 events (up from 20 due to recent increase in
         # network activity)
         if commit.seq % 1000 == 0:
-            logger.debug("Updated cursor for %s to %s", name, commit.seq)
+            logger.debug("Updated repos cursor for %s to %s", name, commit.seq)
             client.update_params(
                 models.ComAtprotoSyncSubscribeRepos.Params(cursor=commit.seq)
             )
@@ -124,6 +112,66 @@ def _run(name, operations_callback, stream_stop_event=None):
         if not commit.blocks:
             return
 
-        operations_callback(_get_ops_by_type(commit))
+        operations_callback(_get_commit_ops_by_type(commit))
 
     client.start(on_message_handler)
+
+
+def _run_labels_client(
+    name: str, labels_message_callback, stream_stop_event: Optional[Event] = None
+):
+    client = FirehoseSubscribeLabelsClient()
+
+    def on_message_handler(message: firehose_models.MessageFrame):
+        # Stop on next message if requested
+        if stream_stop_event and stream_stop_event.is_set():
+            client.stop()
+            return
+
+        labels_message = parse_subscribe_labels_message(message)
+        if not isinstance(labels_message, models.ComAtprotoLabelSubscribeLabels.Labels):
+            return
+
+        # Update cursor in case we get disconnected
+        if labels_message.seq % 10 == 0:
+            client.update_params(
+                models.ComAtprotoLabelSubscribeLabels.Params(cursor=labels_message.seq)
+            )
+
+        labels_message_callback(labels_message)
+
+    client.start(on_message_handler)
+
+
+def run(name: str, on_message_callback, stream_stop_event=None, labels=False):
+    """
+    Start a firehose data stream client.
+
+    :param labels: If True, subscribe to the labels firehose instead. Defaults to False
+    """
+    client_func = _run_repos_client
+    if labels:
+        client_func = _run_labels_client
+
+    logger.info(
+        style("Starting %s firehose data stream...", fg="yellow"),
+        "labels" if labels else "repos",
+    )
+    while stream_stop_event is None or not stream_stop_event.is_set():
+        try:
+            client_func(name, on_message_callback, stream_stop_event)
+        except FirehoseError:
+            # Log error details and reconnect to firehose
+            logger.error(
+                style(
+                    "Error encountered in data stream, reconnecting...",
+                    fg="red",
+                    bold=True,
+                ),
+                exc_info=True,
+            )
+
+    logger.info(
+        style("%s firehose data stream stopped", fg="yellow"),
+        "Labels" if labels else "Repos",
+    )

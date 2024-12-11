@@ -8,44 +8,56 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 from server import config, data_stream
 from server.algos import MalformedCursorError, algos
-from server.data_filter import operations_callback
+from server.data_filter import labels_message_callback, operations_callback
 from server.database import Feed, db
 from server.logger import logger
 
 
 def firehose_setup():
     """
-    Starts firehose client (data stream) thread and creates database entries for each
+    Starts firehose client (data stream) threads and creates database entries for each
     new feed URI.
 
     This must be called before starting the WSGI server, otherwise no new posts will be
     added to feeds.
     """
-    stream_stop_event = threading.Event()
-    stream_thread = threading.Thread(
-        target=data_stream.run,
-        args=(
-            config.SERVICE_DID,
-            operations_callback,
-            stream_stop_event,
-        ),
-    )
-    stream_thread.start()
-
-    def stop_stream_thread(*_):
-        logger.info(style("Stopping data stream...", fg="yellow"))
-        stream_stop_event.set()
-        sys.exit(0)
-
-    signal.signal(signal.SIGINT, stop_stream_thread)
-
-    # Used by hupper to reload the server
-    signal.signal(signal.SIGTERM, stop_stream_thread)
 
     # Add feed URIs if not in database
     with db.atomic():
         for feed_uri in algos:
             Feed.get_or_create(uri=feed_uri)
+
+    stream_stop_event = threading.Event()
+    stream_run_args = {
+        "name": config.SERVICE_DID,
+        "stream_stop_event": stream_stop_event,
+    }
+    repo_stream_thread = threading.Thread(
+        target=data_stream.run,
+        kwargs={**stream_run_args, "on_message_callback": operations_callback},
+    )
+    labels_stream_thread = threading.Thread(
+        target=data_stream.run,
+        kwargs={
+            **stream_run_args,
+            "on_message_callback": labels_message_callback,
+            "labels": True,
+        },
+    )
+    repo_stream_thread.start()
+
+    # TODO: Queue label messages while waiting for repos firehose to catch up
+    labels_stream_thread.start()
+
+    def stop_stream_threads(*_):
+        logger.info(style("Stopping firehose data streams...", fg="yellow"))
+        stream_stop_event.set()
+        sys.exit(0)
+
+    signal.signal(signal.SIGINT, stop_stream_threads)
+
+    # Used by hupper to reload the server
+    signal.signal(signal.SIGTERM, stop_stream_threads)
 
 
 app = Flask(__name__)

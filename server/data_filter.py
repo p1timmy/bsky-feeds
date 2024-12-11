@@ -5,6 +5,7 @@ from collections.abc import Iterable
 from atproto import models
 from atproto_client.models.app.bsky.feed.post import Record
 from atproto_client.models.com.atproto.label.defs import SelfLabel
+from atproto_client.models.com.atproto.label.subscribe_labels import Labels
 from click import style
 
 from server.algos import filters
@@ -105,3 +106,8 @@ def operations_callback(ops: defaultdict):
                     p.feeds.add(feeds)
 
         logger.info(style("Posts added to feeds: %s", fg="green"), len(posts_to_create))
+
+
+# TODO: implement label message processing logic
+def labels_message_callback(labels_message: Labels):
+    pass
