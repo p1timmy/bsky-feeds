@@ -12,7 +12,7 @@ extend-ignore =
     D100,D101,D102,D103,D105,
     D200,D202,D209,
     N805,
-    TC002
+    TC002,TC003
 extend-select = W504,B950,Q0,ECE,CCR
 exclude = .git,__pycache__,env,venv,ENV,.venv
 max-line-length = 88
