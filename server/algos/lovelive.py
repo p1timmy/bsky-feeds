@@ -89,10 +89,10 @@ EXCLUDE_RE = re.compile(
     r"( ([a-z]+(ing?|ly)|do|just|also|still|tend to)\,?)*( love)+ live|"
     r"love\s?live(s|rpool|d|ly|\s?life)|\bthat (.\s)?love liver\b|"
     r"\b(d(angerously|runk)|who live) in love\b|\blovelivemusic|"
-    r"you( liv|['’]r)e in .+ and love live music|"
+    r"(you( liv|['’]r)e in .+ and |([.\,]|^)\s*)love live music(?! (i|wa)s)\b|"
     r"\blove live (service|theat(er|re)|shows|tv)|"
     r"\blove live[\s\-](action|streaming)\b",
-    re.IGNORECASE,
+    re.IGNORECASE | re.MULTILINE,
 )
 NSFW_KEYWORDS_RE = re.compile("hentai|futanari|penis|dildo|#コイカツ", re.IGNORECASE)
 LOVELIVENEWS_BSKY_SOCIAL = "did:plc:yfmm2mamtdjxyp4pbvdigpin"
