@@ -3,15 +3,14 @@ from collections import defaultdict
 from collections.abc import Iterable
 
 from atproto import models
-from atproto_client.models.app.bsky.feed.post import Record
-from atproto_client.models.com.atproto.label.defs import SelfLabel
-from atproto_client.models.com.atproto.label.subscribe_labels import Labels
 from click import style
 
 from server.algos import filters
 from server.database import Feed, Post, db
 
-_PR0N_LABEL = SelfLabel(val="porn")
+_PR0N_LABEL = models.ComAtprotoLabelDefs.SelfLabel(val="porn")
+_ADULT_LABELS = ("porn", "nudity", "sexual")
+_BSKY_MOD_SERVICE = "did:plc:ar7c4by46qjdydhdevvrndac"
 
 logger = logging.getLogger(__name__)
 
@@ -29,15 +28,17 @@ def operations_callback(ops: defaultdict):
     created_post: dict
     for created_post in ops[models.ids.AppBskyFeedPost]["created"]:
         author: str = created_post["author"]
-        record: Record = created_post["record"]
+        record: models.AppBskyFeedPost.Record = created_post["record"]
 
-        # Skip if post has adult content (porn) label
+        # Hide post if it has adult content (porn) label
+        pr0n_post_count = 0
+        has_pr0n_label = False
         if (
             record.labels
             and record.labels.values is not None
             and _PR0N_LABEL in record.labels.values
         ):
-            continue
+            has_pr0n_label = True
 
         feeds: list[Feed] = []
         for algo_uri, filter in filters.items():
@@ -82,9 +83,13 @@ def operations_callback(ops: defaultdict):
                 "author_did": author,
                 "reply_parent": reply_parent,
                 "reply_root": reply_root,
+                "has_porn_label": has_pr0n_label,
                 "feeds": feeds,
             }
             posts_to_create.append(post_dict)
+
+            if has_pr0n_label:
+                pr0n_post_count += 1
 
     posts_to_delete: Iterable[dict] = ops[models.ids.AppBskyFeedPost]["deleted"]
     if posts_to_delete:
@@ -105,9 +110,59 @@ def operations_callback(ops: defaultdict):
                 if feeds:
                     p.feeds.add(feeds)
 
-        logger.info(style("Posts added to feeds: %s", fg="green"), len(posts_to_create))
+        new_post_count = len(posts_to_create) - pr0n_post_count
+        if new_post_count > 0:
+            logger.info(style("Posts added to feeds: %s", fg="green"), new_post_count)
 
 
-# TODO: implement label message processing logic
-def labels_message_callback(labels_message: Labels):
-    pass
+def labels_message_callback(
+    labels_message: models.ComAtprotoLabelSubscribeLabels.Labels,
+):
+    posts_to_update: list[Post] = []
+    hide_count = unhide_count = 0
+
+    for label in labels_message.labels:
+        if (
+            "/app.bsky.feed.post/" not in label.uri  # posts only
+            or label.src != _BSKY_MOD_SERVICE  # labels by Bluesky Moderation Service
+            or label.val not in _ADULT_LABELS  # pr0n/nudity/sexual labels only
+        ):
+            continue
+
+        post = Post.get_or_none(Post.uri == label.uri)
+        if not post:
+            continue
+
+        old_value = post.adult_labels
+        flag_name = f"has_{label.val}_label"
+        if getattr(post, flag_name, None) is not None:
+            setattr(post, flag_name, not label.neg)
+            posts_to_update.append(post)
+            logger.debug(
+                style("[%s] %s: %03b -> %03b", fg="magenta", dim=True),
+                post.id,
+                post.uri,
+                old_value,
+                post.adult_labels,
+            )
+
+        if not old_value:
+            hide_count += 1
+        elif not post.adult_labels:
+            unhide_count += 1
+
+    if posts_to_update:
+        with db.atomic():
+            Post.bulk_update(posts_to_update, [Post.adult_labels])
+
+    if hide_count:
+        logger.info(
+            style("Posts hidden from feeds due to added labels: %d", fg="magenta"),
+            hide_count,
+        )
+
+    if unhide_count:
+        logger.info(
+            style("Posts restored to feeds due to removed labels: %d", fg="cyan"),
+            unhide_count,
+        )

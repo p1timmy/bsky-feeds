@@ -63,6 +63,7 @@ def handler(cursor: Optional[str], limit: int, feed_uri: str) -> dict:
         .join(Feed.posts.get_through_model())
         .join(Feed)
         .where(Feed.uri == feed_uri)
+        .where(Post.adult_labels == 0)
         .order_by(Post.cid.desc())
         .order_by(Post.indexed_at.desc())
         .limit(limit)
