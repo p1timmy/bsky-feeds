@@ -23,6 +23,8 @@ _INTERESTED_RECORDS = {
 
 def _get_ops_by_type(commit: models.ComAtprotoSyncSubscribeRepos.Commit) -> defaultdict:
     operation_by_type = defaultdict(lambda: {"created": [], "deleted": []})
+    if len(commit.blocks) >= 50_000:
+        return operation_by_type
 
     car = CAR.from_bytes(commit.blocks)
     for op in commit.ops:
