@@ -36,8 +36,6 @@ def _get_ops_by_type(commit: models.ComAtprotoSyncSubscribeRepos.Commit) -> defa
             if not op.cid:
                 continue
 
-            create_info = {"uri": str(uri), "cid": str(op.cid), "author": commit.repo}
-
             record_raw_data = car.blocks.get(op.cid)
             if not record_raw_data:
                 continue
@@ -53,7 +51,12 @@ def _get_ops_by_type(commit: models.ComAtprotoSyncSubscribeRepos.Commit) -> defa
                     record, record_type
                 ):
                     operation_by_type[record_nsid]["created"].append(
-                        {"record": record, **create_info}
+                        {
+                            "record": record,
+                            "uri": str(uri),
+                            "cid": str(op.cid),
+                            "author": commit.repo,
+                        }
                     )
                     break
 
