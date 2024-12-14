@@ -13,7 +13,7 @@ LOVELIVE_RE = re.compile(
     r"hasu\s?no\s?sora|蓮ノ空|"
     r"虹ヶ咲|ニジガク|にじよん|niji(ga(saki|ku)|yon)|"
     r"スクールアイドル|school\s?idol(\s?((festiv|music)al|project))?|"
-    r"llsif|スク(フェス|スタ(?!ンド))|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|"
+    r"\bllsif\b|スク(フェス|スタ(?!ンド))|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|"
     r"(?<!スプ)リンクラ(?!ー)|link[!！]\s?like[!！]\s?love\s?live|ぷちぐる|puchiguru|"
     r"cyaron!|guilty\s?kiss|"
     r"a・zu・na|qu4rtz|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)diverdiva|"
@@ -58,7 +58,7 @@ LOVELIVE_RE = re.compile(
     r"エマ・ヴェルデ|emma\s?verde|"
     r"天王寺\s?璃奈|tennou?ji\s?rina|rina\s?tennou?ji|"
     r"三船\s?栞子|mifune\s?shioriko|shioriko\s?mifune|"
-    r"ミア・テイラー|mia\s?taylor|"
+    r"ミア・テイラー|\bmia\s?taylor(?!19)\b|"
     r"鐘\s?嵐珠|lanzhu\s?zhong|"
     r"澁谷\s?かのん|shibuya\s?kanon|kanon\s?shibuya|"
     r"唐\s?可可|ク[ウゥ]ク[ウゥ]ちゃん|\btang\s?keke|\bkeke\s?tang|"
@@ -69,7 +69,7 @@ LOVELIVE_RE = re.compile(
     r"米女\s?メイ|yoneme\s?mei|mei\s?yoneme|"
     r"若菜\s?四季|wakana\s?shiki|shiki\s?wakana|"
     r"鬼塚\s?(夏美|冬毬)|onitsuka\s?(natsum|tomar)i|(natsum|tomar)i\s?onitsuka|oninatsu|"
-    r"ウィーン・マルガレーテ|wien\s?margarete|"
+    r"ウィーン・マルガレーテ|\bwien\s?margarete\b|"
     r"聖澤悠奈|hijirisawa\s?yuu?na|yuu?na\s?hijirisawa|"
     r"柊\s?摩央|hiiragi\s?mao|mao\s?hiiragi|"
     r"乙宗\s?梢|otomune\s?kozue|kozue\s?otomune|"
@@ -89,8 +89,9 @@ EXCLUDE_RE = re.compile(
     r"( ([a-z]+(ing?|ly)|do|just|also|still|tend to)\,?)*( love)+ live|"
     r"love\s?live(s|rpool|d|ly|\s?life)|\bthat (.\s)?love liver\b|"
     r"\b(d(angerously|runk)|who live) in love\b|\blovelivemusic|"
-    r"(you( liv|['’]r)e in .+ and |([.\,]|^)\s*)love live music(?! (i|wa)s)\b|"
-    r"\blove live (service|theat(er|re)|shows|tv)|"
+    r"(you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+and\s+|([.\,]|^)\s*)love live"
+    r" music(?! (i|wa)s)\b|"
+    r"\blove live (service|theat(er|re)|shows|tv)|\byour love live[.,]|"
     r"\blove live[\s\-](action|streaming)\b",
     re.IGNORECASE | re.MULTILINE,
 )
