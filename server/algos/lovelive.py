@@ -81,7 +81,8 @@ LOVELIVE_RE = re.compile(
     r"百生\s?吟子|momose\s?ginko|ginko\s?momose|"
     r"徒町\s?小鈴|kachimachi\s?kosuzu|kosuzu\s?kachimachi|"
     r"安養寺\s?姫芽|anyoji\s?hime|hime\s?anyoji|"
-    r"snow\s?halation|異次元フェス",
+    r"snow\s?halation|"
+    r"異次元フェス|ijigen\sfest?",
     re.IGNORECASE,
 )
 EXCLUDE_RE = re.compile(
@@ -89,8 +90,8 @@ EXCLUDE_RE = re.compile(
     r"( ([a-z]+(ing?|ly)|do|just|also|still|tend to)\,?)*( love)+ live|"
     r"love\s?live(s|rpool|d|ly|\s?life)|\bthat (.\s)?love liver\b|"
     r"\b(d(angerously|runk)|who live) in love\b|\blovelivemusic|"
-    r"(you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+and\s+|([.\,]|^)\s*)love live"
-    r" music(?! (i|wa)s)\b|"
+    r"(you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+and\s+|([.,?!]|^)\s*)love live"
+    r" (music|comedy)(?! (i|wa)s)\b|\blet love live\b|"
     r"\blove live (service|theat(er|re)|shows|tv)|\byour love live[.,]|"
     r"\blove live[\s\-](action|streaming)\b",
     re.IGNORECASE | re.MULTILINE,
