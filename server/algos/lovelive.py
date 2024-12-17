@@ -3,7 +3,9 @@ import re
 from server import config
 from server.algos._base import get_post_texts
 
-LOVELIVE_NAME_EN_RE = re.compile(r"love\s?live[!\s]*", re.IGNORECASE)
+LOVELIVE_NAME_EN_RE = re.compile(
+    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)love ?live[!\s]*", re.IGNORECASE
+)
 LOVELIVE_RE = re.compile(
     r"love\s?live[!\s]*(s(ky|u(nshine|perstar)))|"
     r"ラブライブ[!！\s]*(サンシャイン|スーパースター)?|スパスタ(3|３)期|"
@@ -12,7 +14,7 @@ LOVELIVE_RE = re.compile(
     r"[μµ]['’`]s|aq(ou|uo)rs|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)liella[!！]?|"
     r"hasu\s?no\s?sora|蓮ノ空|"
     r"虹ヶ咲|ニジガク|にじよん|niji(ga(saki|ku)|yon)|"
-    r"スクールアイドル|school\s?idol(\s?((festiv|music)al|project))?|"
+    r"スクールアイドル|school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
     r"\bllsif\b|スク(フェス|スタ(?!ンド))|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|"
     r"(?<!スプ)リンクラ(?!ー)|link[!！]\s?like[!！]\s?love\s?live|ぷちぐる|puchiguru|"
     r"cyaron!|guilty\s?kiss|"
@@ -26,17 +28,17 @@ LOVELIVE_RE = re.compile(
     r"sunnypa(\b|[^a-z\u00C0-\u024F\u1E00-\u1EFF])|"
     r"音ノ木坂|otonokizaka|浦の星女|uranohoshi|結ヶ丘|yuigaoka|"
     r"高坂\s?穂乃果|honoka\s?kou?saka|kou?saka\s?honoka|"
-    r"絢瀬\s?絵里|ayase\s?eli|eli\s?ayase|elichika|"
+    r"絢瀬\s?絵里|ayase\s?eli|eli\s?ayase|\belichika\b|"
     r"南\s?ことり|minami\s?kotori|kotori\s?minami|kotobirb|"
     r"園田\s?海未|sonoda\s?umi|umi\s?sonoda|"
     r"星空\s?凛|hoshizora\s?rin|rin\s?hoshizora|金曜凛ちゃんりんりんりん|"
     r"西木野\s?真姫|nishikino\s?maki|maki\s?nishikino|"
     r"東條\s?希|tou?jou?\s?nozomi|nozomi\s?tou?jou?|"
     r"小泉\s?花陽|koizumi\s?hanayo|hanayo\s?koizumi|火曜日かよちゃん|"
-    r"矢澤\s?にこ|yazawa\s?nico|nico\s?yazawa|nico\s?nico\s?ni+\b|"
+    r"矢澤\s?にこ|yazawa\s?nico|nico\s?yazawa|nico\snico\sni+\b|#niconiconi+\b"
     r"綺羅\s?ツバサ|kira\s?tsubasa|tsubasa\s?kira|"
     r"優木\s?あんじゅ|yuu?ki\s?anju|anju\s?yuu?ki|"
-    r"統堂\s?英玲奈|tou?dou?\s?erena|erena\s?tou?dou?|"
+    r"統堂\s?英玲奈|tou?dou?\s?erena|\berena\s?tou?dou?\b|"
     r"高海\s?千歌|takami\s?chika|chika\s?takami|"
     r"桜内\s?梨子|sakurauchi\s?riko|riko\s?sakurauchi|"
     r"松浦\s?果南|matsuu?ra\s?kanan|kanan\s?matsuu?ra|"
@@ -87,7 +89,7 @@ LOVELIVE_RE = re.compile(
 )
 EXCLUDE_RE = re.compile(
     r"\b(i|you|we( (all|both))?|they|gotta|who|people)"
-    r"( ([a-z]+(ing?|ly)|do|just|also|still|tend to)\,?)*( love)+ live|"
+    r"( ([a-z]+(ing?|ly)|do|just|also|still|tend to|always)\,?)*( love)+ live|"
     r"love\s?live(s|rpool|d|ly|\s?life)|\bthat (.\s)?love liver\b|"
     r"\b(d(angerously|runk)|who live) in love\b|\blovelivemusic|"
     r"(you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+and\s+|([.,?!]|^)\s*)love live"
