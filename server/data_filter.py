@@ -1,16 +1,20 @@
 import logging
-from collections import defaultdict
+from collections import defaultdict, deque
 from collections.abc import Iterable
+from datetime import datetime, timedelta
+from typing import NamedTuple, Optional, Self
 
 from atproto import models
 from click import style
 
+from server import data_stream
 from server.algos import filters
 from server.database import Feed, Post, db
 
 _PR0N_LABEL = models.ComAtprotoLabelDefs.SelfLabel(val="porn")
 _ADULT_LABELS = ("porn", "nudity", "sexual")
 _BSKY_MOD_SERVICE = "did:plc:ar7c4by46qjdydhdevvrndac"
+_MAX_COMMIT_LAG = timedelta(seconds=0.25)
 
 logger = logging.getLogger(__name__)
 
@@ -115,41 +119,75 @@ def operations_callback(ops: defaultdict):
             logger.info(style("Posts added to feeds: %s", fg="green"), new_post_count)
 
 
+class _LabelQueueItem(NamedTuple):
+    time: datetime
+    label: models.ComAtprotoLabelDefs.Label
+
+    @classmethod
+    def from_label(cls, label: models.ComAtprotoLabelDefs.Label) -> Self:
+        cts_dt = datetime.fromisoformat(label.cts)
+        return cls(cts_dt, label)
+
+
+_label_queue: deque[_LabelQueueItem] = deque([])
+
+
 def labels_message_callback(
     labels_message: models.ComAtprotoLabelSubscribeLabels.Labels,
 ):
-    posts_to_update: list[Post] = []
-    hide_count = unhide_count = 0
+    # Add headroom as label timestamps are always behind by fraction of a second due to
+    # network lag
+    repos_last_message_time = data_stream.repos_last_message_time + _MAX_COMMIT_LAG
+    queue_initial_size = len(_label_queue)
 
     for label in labels_message.labels:
         if (
-            "/app.bsky.feed.post/" not in label.uri  # posts only
-            or label.src != _BSKY_MOD_SERVICE  # labels by Bluesky Moderation Service
-            or label.val not in _ADULT_LABELS  # pr0n/nudity/sexual labels only
+            "/app.bsky.feed.post/" in label.uri  # posts only
+            and label.src == _BSKY_MOD_SERVICE  # labels by Bluesky Moderation Service
+            and label.val in _ADULT_LABELS  # pr0n/nudity/sexual labels only
         ):
-            continue
+            _label_queue.append(_LabelQueueItem.from_label(label))
 
-        post = Post.get_or_none(Post.uri == label.uri)
+    posts_to_update: list[Post] = []
+    hide_count = unhide_count = 0
+
+    # Process labels whose timestamps are older than that of last received repos commit
+    while _label_queue and _label_queue[0].time < repos_last_message_time:
+        label = _label_queue.popleft().label
+        post: Optional[Post] = Post.get_or_none(Post.uri == label.uri)
         if not post:
             continue
 
-        old_value = post.adult_labels
+        old_value: int = post.adult_labels
         flag_name = f"has_{label.val}_label"
         if getattr(post, flag_name, None) is not None:
             setattr(post, flag_name, not label.neg)
             posts_to_update.append(post)
             logger.debug(
-                style("[%s] %s: %03b -> %03b", fg="magenta", dim=True),
-                post.id,
+                style(
+                    "Updating adult label flags for %s (%s): %s -> %s",
+                    fg="magenta",
+                    dim=True,
+                ),
                 post.uri,
-                old_value,
-                post.adult_labels,
+                post.id,
+                format(old_value, "#05b"),
+                format(post.adult_labels, "#05b"),
             )
+            logger.debug(label)
 
         if not old_value:
             hide_count += 1
         elif not post.adult_labels:
             unhide_count += 1
+
+    queue_size_change = len(_label_queue) - queue_initial_size
+    if queue_size_change < 0:
+        logger.debug(
+            style("Processed %s label%s waiting in queue", dim=True),
+            abs(queue_size_change),
+            "" if queue_size_change == -1 else "s",
+        )
 
     if posts_to_update:
         with db.atomic():

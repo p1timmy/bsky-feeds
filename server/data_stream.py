@@ -1,4 +1,5 @@
 from collections import defaultdict
+from datetime import UTC, datetime
 from threading import Event
 from typing import Optional
 
@@ -21,6 +22,7 @@ from server.logger import logger
 _INTERESTED_RECORDS = {
     models.AppBskyFeedPost: models.ids.AppBskyFeedPost,
 }
+repos_last_message_time: datetime = datetime.min.replace(tzinfo=UTC)
 
 
 def _get_commit_ops_by_type(
@@ -95,6 +97,12 @@ def _run_repos_client(
         # BUG: Random model validation errors caused by broken/blank messages
         # (https://github.com/MarshalX/atproto/issues/186)
         commit = parse_subscribe_repos_message(message)
+
+        global repos_last_message_time
+        message_ts = datetime.fromisoformat(commit.time)
+        if message_ts > repos_last_message_time:
+            repos_last_message_time = message_ts
+
         if not isinstance(commit, models.ComAtprotoSyncSubscribeRepos.Commit):
             return
 
