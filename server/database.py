@@ -1,3 +1,5 @@
+from enum import IntEnum
+
 import peewee
 from playhouse import migrate
 
@@ -28,28 +30,61 @@ class Feed(BaseModel):
     posts = peewee.ManyToManyField(Post, backref="feeds")
 
 
+class FirehoseType(IntEnum):
+    REPOS = 0
+    LABELS = 1
+
+
 class SubscriptionState(BaseModel):
-    service = peewee.CharField(unique=True)
+    service = peewee.CharField()
     cursor = peewee.BigIntegerField()
+    firehose_type = peewee.IntegerField(
+        null=False,
+        default=FirehoseType.REPOS,
+        choices=[(t.value, t.name.lower()) for t in FirehoseType],
+    )
+
+    class Meta:
+        indexes = [
+            # Cursor is unique per firehose type per service
+            (("service", "firehose_type"), True),
+        ]
+        database = db
 
 
 if db.is_closed():
     db.connect()
-    db.create_tables(
-        [Post, Feed, Feed.posts.get_through_model(), SubscriptionState], safe=True
-    )
+    if not db.get_tables():
+        db.create_tables(
+            [Post, Feed, Feed.posts.get_through_model(), SubscriptionState], safe=True
+        )
 
     migrator = migrate.SqliteMigrator(db)
-    tablename = "post"
-    post_cols = [col.name for col in db.get_columns(tablename)]
     migrations: list[list] = []
 
+    tablename = "post"
+    post_cols = [col.name for col in db.get_columns(tablename)]
     if "adult_labels" not in post_cols:
         migrations.append(
             migrator.add_column(tablename, "adult_labels", Post.adult_labels)
         )
 
+    tablename = "subscriptionstate"
+    subscription_state_cols = [col.name for col in db.get_columns(tablename)]
+    if "firehose_type" not in subscription_state_cols:
+        migrations.extend(
+            [
+                migrator.add_column(
+                    tablename, "firehose_type", SubscriptionState.firehose_type
+                ),
+                migrator.drop_index(tablename, "subscriptionstate_service"),
+                migrator.add_index(
+                    tablename, ("service", "firehose_type"), unique=True
+                ),
+            ]
+        )
+
     if migrations:
         with db.atomic():
             migrate.migrate(*migrations)
-            db.pragma("main.user_version", 1)
+            db.pragma("main.user_version", 2)

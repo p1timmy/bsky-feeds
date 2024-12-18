@@ -16,7 +16,7 @@ from atproto import (
 from atproto.exceptions import FirehoseError
 from click import style
 
-from server.database import SubscriptionState
+from server.database import FirehoseType, SubscriptionState
 from server.logger import logger
 
 _INTERESTED_RECORDS = {
@@ -77,8 +77,10 @@ def _get_commit_ops_by_type(
 def _run_repos_client(
     name: str, operations_callback, stream_stop_event: Optional[Event] = None
 ):
-    state = SubscriptionState.get_or_none(SubscriptionState.service == name)
-
+    state = SubscriptionState.get_or_none(
+        (SubscriptionState.service == name)
+        & (SubscriptionState.firehose_type == FirehoseType.REPOS)
+    )
     params = None
     if state:
         params = models.ComAtprotoSyncSubscribeRepos.Params(cursor=state.cursor)
@@ -86,7 +88,9 @@ def _run_repos_client(
     client = FirehoseSubscribeReposClient(params)
 
     if not state:
-        SubscriptionState.create(service=name, cursor=0)
+        SubscriptionState.create(
+            service=name, cursor=0, firehose_type=FirehoseType.REPOS
+        )
 
     def on_message_handler(message: firehose_models.MessageFrame) -> None:
         # stop on next message if requested
@@ -109,13 +113,14 @@ def _run_repos_client(
         # Update stored state every ~1000 events (up from 20 due to recent increase in
         # network activity)
         if commit.seq % 1000 == 0:
-            logger.debug("Updated repos cursor for %s to %s", name, commit.seq)
             client.update_params(
                 models.ComAtprotoSyncSubscribeRepos.Params(cursor=commit.seq)
             )
+            logger.debug("Updated repos cursor for %s to %s", name, commit.seq)
+
             SubscriptionState.update(cursor=commit.seq).where(
                 SubscriptionState.service == name
-            ).execute()
+            ).where(SubscriptionState.firehose_type == FirehoseType.REPOS).execute()
 
         if not commit.blocks:
             return
@@ -128,7 +133,21 @@ def _run_repos_client(
 def _run_labels_client(
     name: str, labels_message_callback, stream_stop_event: Optional[Event] = None
 ):
-    client = FirehoseSubscribeLabelsClient()
+    state = SubscriptionState.get_or_none(
+        (SubscriptionState.service == name)
+        & (SubscriptionState.firehose_type == FirehoseType.LABELS)
+    )
+
+    params = None
+    if state:
+        params = models.ComAtprotoLabelSubscribeLabels.Params(cursor=state.cursor)
+
+    client = FirehoseSubscribeLabelsClient(params)
+
+    if not state:
+        SubscriptionState.create(
+            service=name, cursor=0, firehose_type=FirehoseType.LABELS
+        )
 
     def on_message_handler(message: firehose_models.MessageFrame):
         # Stop on next message if requested
@@ -140,11 +159,16 @@ def _run_labels_client(
         if not isinstance(labels_message, models.ComAtprotoLabelSubscribeLabels.Labels):
             return
 
-        # Update cursor in case we get disconnected
+        # Update cursor every ~10 messages in case we get disconnected
         if labels_message.seq % 10 == 0:
             client.update_params(
                 models.ComAtprotoLabelSubscribeLabels.Params(cursor=labels_message.seq)
             )
+            logger.debug("Updated labels cursor for %s to %s", name, labels_message.seq)
+
+            SubscriptionState.update(cursor=labels_message.seq).where(
+                SubscriptionState.service == name
+            ).where(SubscriptionState.firehose_type == FirehoseType.LABELS).execute()
 
         labels_message_callback(labels_message)
 
