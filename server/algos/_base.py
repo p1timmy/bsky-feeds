@@ -3,6 +3,9 @@ from typing import Optional
 
 from atproto_client.models.app.bsky.embed.images import Image
 from atproto_client.models.app.bsky.embed.images import Main as ImageEmbed
+from atproto_client.models.app.bsky.embed.record_with_media import (
+    Main as MediaAndQuoteEmbed,
+)
 from atproto_client.models.app.bsky.embed.video import Main as VideoEmbed
 from atproto_client.models.app.bsky.feed.post import Record
 from multiformats_cid import is_cid
@@ -29,6 +32,10 @@ def get_post_texts(post: dict, include_media=True) -> list[str]:
     # Get alt text from images/video
     embed = record.embed
     if include_media:
+        # Post has both pics/video and a quoted post
+        if isinstance(embed, MediaAndQuoteEmbed):
+            embed = embed.media
+
         if isinstance(embed, ImageEmbed):
             image: Image
             for image in embed.images:
