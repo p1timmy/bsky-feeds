@@ -83,7 +83,7 @@ LOVELIVE_RE = re.compile(
     r"百生\s?吟子|momose\s?ginko|ginko\s?momose|"
     r"徒町\s?小鈴|kachimachi\s?kosuzu|kosuzu\s?kachimachi|"
     r"安養寺\s?姫芽|anyoji\s?hime|hime\s?anyoji|"
-    r"snow\s?halation|"
+    r"snow\s?halation|(永久|\beikyuu\s?)hours|"
     r"異次元フェス|ijigen\sfest?",
     re.IGNORECASE,
 )
