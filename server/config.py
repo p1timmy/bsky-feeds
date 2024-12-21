@@ -19,3 +19,9 @@ if not LOVELIVE_URI:
         "Publish your feed first (run publish_feed.py) to obtain its URI. "
         'Set this URI to "LOVELIVE_URI" environment variable.'
     )
+
+
+DB_MMAP_SIZE = int(os.environ.get("DB_MMAP_SIZE") or "134217728")  # default 128MB
+DB_CACHE_SIZE = int(os.environ.get("DB_CACHE_SIZE") or "2000")
+DB_JOURNAL_SIZE_LIMIT = int(os.environ.get("DB_JOURNAL_SIZE_LIMIT") or "134217728")
+DB_WAL_AUTOCHECKPOINT = int(os.environ.get("DB_WAL_AUTOCHECKPOINT") or "100")

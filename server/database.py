@@ -3,7 +3,19 @@ from enum import IntEnum
 import peewee
 from playhouse import migrate
 
-db = peewee.SqliteDatabase("feed_database.db")
+from server import config
+
+db = peewee.SqliteDatabase(
+    "feed_database.db",
+    pragmas={
+        "main.journal_mode": "WAL",
+        "main.synchronous": "NORMAL",
+        "main.journal_size_limit": config.DB_JOURNAL_SIZE_LIMIT,
+        "main.mmap_size": config.DB_MMAP_SIZE,
+        "main.cache_size": config.DB_CACHE_SIZE,
+        "main.wal_autocheckpoint": config.DB_WAL_AUTOCHECKPOINT,
+    },
+)
 
 
 class BaseModel(peewee.Model):
