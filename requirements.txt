@@ -1,4 +1,4 @@
-atproto==0.0.53
+atproto~=0.0.56
 peewee~=3.17.8
 Flask~=2.3.3
 python-dotenv<2.0
