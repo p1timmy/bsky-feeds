@@ -1,3 +1,4 @@
+import atexit
 from enum import IntEnum
 
 import peewee
@@ -63,6 +64,13 @@ class SubscriptionState(BaseModel):
         ]
         database = db
 
+
+def _close_db_at_exit():
+    if not db.is_closed():
+        db.close()
+
+
+atexit.register(_close_db_at_exit)
 
 if db.is_closed():
     db.connect()
