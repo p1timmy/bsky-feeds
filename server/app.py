@@ -45,13 +45,18 @@ def firehose_setup():
         },
     )
     repo_stream_thread.start()
-
-    # TODO: Queue label messages while waiting for repos firehose to catch up
     labels_stream_thread.start()
 
     def stop_stream_threads(*_):
-        logger.info(style("Stopping firehose data streams...", fg="yellow"))
-        stream_stop_event.set()
+        if not stream_stop_event.is_set():
+            logger.info(
+                style(
+                    "Stopping firehose data streams... Press CTRL+C to force stop them",
+                    fg="yellow",
+                )
+            )
+            stream_stop_event.set()
+
         sys.exit(0)
 
     signal.signal(signal.SIGINT, stop_stream_threads)

@@ -194,14 +194,11 @@ def run(name: str, on_message_callback, stream_stop_event=None, labels=False):
             client_func(name, on_message_callback, stream_stop_event)
         except FirehoseError:
             # Log error details and reconnect to firehose
-            logger.error(
-                style(
-                    "Error encountered in data stream, reconnecting...",
-                    fg="red",
-                    bold=True,
-                ),
-                exc_info=True,
-            )
+            log_header = "Error encountered in data stream"
+            if stream_stop_event and not stream_stop_event.is_set():
+                log_header = f"{log_header}, reconnecting..."
+
+            logger.error(style(log_header, fg="red", bold=True), exc_info=True)
 
     logger.info(
         style("%s firehose data stream stopped", fg="yellow"),
