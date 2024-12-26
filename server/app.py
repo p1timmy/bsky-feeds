@@ -65,7 +65,7 @@ def firehose_setup():
     signal.signal(signal.SIGTERM, stop_stream_threads)
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder=None)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
 
