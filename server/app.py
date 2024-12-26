@@ -29,15 +29,17 @@ def firehose_setup():
 
     stream_stop_event = threading.Event()
     stream_run_args = {
-        "name": config.SERVICE_DID,
+        "service_did": config.SERVICE_DID,
         "stream_stop_event": stream_stop_event,
     }
     repo_stream_thread = threading.Thread(
         target=data_stream.run,
+        name="ReposFirehoseClientThread",
         kwargs={**stream_run_args, "on_message_callback": operations_callback},
     )
     labels_stream_thread = threading.Thread(
         target=data_stream.run,
+        name="LabelsFirehoseClientThread",
         kwargs={
             **stream_run_args,
             "on_message_callback": labels_message_callback,

@@ -75,10 +75,10 @@ def _get_commit_ops_by_type(
 
 
 def _run_repos_client(
-    name: str, operations_callback, stream_stop_event: Optional[Event] = None
+    service_did: str, operations_callback, stream_stop_event: Optional[Event] = None
 ):
     state = SubscriptionState.get_or_none(
-        (SubscriptionState.service == name)
+        (SubscriptionState.service == service_did)
         & (SubscriptionState.firehose_type == FirehoseType.REPOS)
     )
     params = None
@@ -89,7 +89,7 @@ def _run_repos_client(
 
     if not state:
         SubscriptionState.create(
-            service=name, cursor=0, firehose_type=FirehoseType.REPOS
+            service=service_did, cursor=0, firehose_type=FirehoseType.REPOS
         )
 
     def on_message_handler(message: firehose_models.MessageFrame) -> None:
@@ -116,10 +116,10 @@ def _run_repos_client(
             client.update_params(
                 models.ComAtprotoSyncSubscribeRepos.Params(cursor=commit.seq)
             )
-            logger.debug("Updated repos cursor for %s to %s", name, commit.seq)
+            logger.debug("Updated repos cursor for %s to %s", service_did, commit.seq)
 
             SubscriptionState.update(cursor=commit.seq).where(
-                SubscriptionState.service == name
+                SubscriptionState.service == service_did
             ).where(SubscriptionState.firehose_type == FirehoseType.REPOS).execute()
 
         if not commit.blocks:
@@ -131,10 +131,10 @@ def _run_repos_client(
 
 
 def _run_labels_client(
-    name: str, labels_message_callback, stream_stop_event: Optional[Event] = None
+    service_did: str, labels_message_callback, stream_stop_event: Optional[Event] = None
 ):
     state = SubscriptionState.get_or_none(
-        (SubscriptionState.service == name)
+        (SubscriptionState.service == service_did)
         & (SubscriptionState.firehose_type == FirehoseType.LABELS)
     )
 
@@ -146,7 +146,7 @@ def _run_labels_client(
 
     if not state:
         SubscriptionState.create(
-            service=name, cursor=0, firehose_type=FirehoseType.LABELS
+            service=service_did, cursor=0, firehose_type=FirehoseType.LABELS
         )
 
     def on_message_handler(message: firehose_models.MessageFrame):
@@ -164,10 +164,12 @@ def _run_labels_client(
             client.update_params(
                 models.ComAtprotoLabelSubscribeLabels.Params(cursor=labels_message.seq)
             )
-            logger.debug("Updated labels cursor for %s to %s", name, labels_message.seq)
+            logger.debug(
+                "Updated labels cursor for %s to %s", service_did, labels_message.seq
+            )
 
             SubscriptionState.update(cursor=labels_message.seq).where(
-                SubscriptionState.service == name
+                SubscriptionState.service == service_did
             ).where(SubscriptionState.firehose_type == FirehoseType.LABELS).execute()
 
         labels_message_callback(labels_message)
@@ -175,7 +177,7 @@ def _run_labels_client(
     client.start(on_message_handler)
 
 
-def run(name: str, on_message_callback, stream_stop_event=None, labels=False):
+def run(service_did: str, on_message_callback, stream_stop_event=None, labels=False):
     """
     Start a firehose data stream client.
 
@@ -191,7 +193,7 @@ def run(name: str, on_message_callback, stream_stop_event=None, labels=False):
     )
     while stream_stop_event is None or not stream_stop_event.is_set():
         try:
-            client_func(name, on_message_callback, stream_stop_event)
+            client_func(service_did, on_message_callback, stream_stop_event)
         except FirehoseError:
             # Log error details and reconnect to firehose
             log_header = "Error encountered in data stream"
