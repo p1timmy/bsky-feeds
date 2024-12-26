@@ -29,7 +29,7 @@ def main():
 
     if args.reload:
         reloader = hupper.start_reloader("server.__main__.main")
-        reloader.watch_files([".env"])
+        reloader.watch_files([".env", "lists"])
 
     host = "127.0.0.1"
     port = "8000"
