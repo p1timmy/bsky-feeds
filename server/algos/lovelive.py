@@ -43,7 +43,8 @@ LOVELIVE_RE = re.compile(
     r"松浦\s?果南|matsuu?ra\s?kanan|kanan\s?matsuu?ra|"
     r"黒澤\s?(ダイヤ|ルビィ?)|kurosawa\s?(dia|ruby)|(dia|ruby)\s?kurosawa|"
     r"がんば(ルビ|るび)|ganbaruby|"
-    r"渡辺\s?曜|watanabe\s?you|you\s?watanabe|ヨーソロー[!！]|"
+    r"渡辺\s?曜|watanabe\s?you|you\s?watanabe|"
+    r"ヨーソロー|ﾖｰｿﾛｰ|\byousoro|"
     r"津島\s?善子|tsushima\s?yoshiko|yoshiko\s?tsushima|堕天使ヨハネ|"
     r"国木田\s?花丸|kunikida\s?hanamaru|hanamaru\s?kunikida|zuramaru|"
     r"小原\s?鞠莉|ohara\s?mari|mari\s?ohara|"
@@ -86,7 +87,7 @@ LOVELIVE_RE = re.compile(
     r"聖澤悠奈|hijirisawa\s?yuu?na|yuu?na\s?hijirisawa|"
     r"柊\s?摩央|hiiragi\s?mao|mao\s?hiiragi|"
     # Link! Like! Love Live!! / Hasunosora
-    r"(?<!スプ|ソベ)リンクラ|link[!！]\s?like[!！]\s?love\s?live|"
+    r"((?<!スプ|ソベ)|[^ド])リンクラ(?!ウンジ)|link[!！]\s?like[!！]\s?love\s?live|"
     r"hasu\s?no\s?sora|蓮ノ空|"
     r"cerise\sbouquet|dollchestra|mira-cra\spark!|みらくらぱーく[!！]|"
     r"乙宗\s?梢|otomune\s?kozue|kozue\s?otomune|"
@@ -104,8 +105,8 @@ LOVELIVE_RE = re.compile(
 )
 EXCLUDE_RE = re.compile(
     r"\b(i|you|we( (all|both))?|they|gotta|who|people)"
-    r"( ([a-z]+(ing?|ly)|do|just|also|still|tend to|always|bloody)\,?)*( love)+ liver?|"
-    r"love\s?live(s|rpool|d|ly| ?life)|\bthat (.\s)?love liver\b|"
+    r"( ([a-z]+(ing?|ly)|do|just|also|still|tend to|always|bloody|would(v['’]e)?)\,?)*("
+    r" love)+ liver?|love\s?live(s|rpool|d|ly| ?life)|\bthat (.\s)?love liver\b|"
     r"\b(d(angerously|runk)|who live) in love\b|\blovelivemusic|"
     r"(you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+and\s+|[^\w ]\s*)love live"
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|\b(l(augh|et)|radical) love live\b|"
