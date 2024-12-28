@@ -35,7 +35,7 @@ LOVELIVE_RE = re.compile(
     r"優木\s?あんじゅ|yuu?ki\s?anju|anju\s?yuu?ki|"
     r"統堂\s?英玲奈|tou?dou?\s?erena|\berena\s?tou?dou?\b|"
     # Love Live! Sunshine!!
-    r"浦の星女|uranohoshi|aq(ou|uo)rs|cyaron!|guilty\s?kiss|わいわいわい|aiscream|"
+    r"浦の星女|uranohoshi|aq(ou|uo)rs|cyaron!|guilty\s?kiss|わいわいわい|\baiscream|"
     r"幻日のヨハネ|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(genjitsu\s?no\s?)?yohane\b|"
     r"sunshine\sin\sthe\smirror|"
     r"高海\s?千歌|takami\s?chika|chika\s?takami|"
@@ -104,9 +104,10 @@ LOVELIVE_RE = re.compile(
     re.IGNORECASE,
 )
 EXCLUDE_RE = re.compile(
-    r"\b(i|you|we( (all|both))?|they|gotta|who|people)"
-    r"( ([a-z]+(ing?|ly)|do|just|also|still|tend to|always|bloody|would(v['’]e)?)\,?)*("
-    r" love)+ liver?|love\s?live(s|rpool|d|ly| ?life)|\bthat (.\s)?love liver\b|"
+    r"\b(i(['’]d?)|you|we( (all|both))?|they|gotta|who|people)"
+    r"( ([a-z]+(ing?|ly)|do|just|al(so|ways)|still|t(o|end"
+    r" t)o|bloody|would(v['’]e)?)\,?)*( love)+ liver?|"
+    r"love\s?live(s|rpool|d|ly| ?life)|\bthat (.\s)?love liver\b|"
     r"\b(d(angerously|runk)|who live) in love\b|\blovelivemusic|"
     r"(you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+and\s+|[^\w ]\s*)love live"
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|\b(l(augh|et)|radical) love live\b|"
