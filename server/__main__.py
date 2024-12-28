@@ -2,8 +2,6 @@ import argparse
 
 import hupper
 
-from server.app import app, firehose_setup
-
 try:
     import waitress
 except ImportError:
@@ -28,18 +26,23 @@ def main():
     args = parser.parse_args()
 
     if args.reload:
-        reloader = hupper.start_reloader("server.__main__.main")
+        reloader = hupper.start_reloader("server.__main__.main", shutdown_interval=60)
         reloader.watch_files([".env", "lists"])
 
-    host = "127.0.0.1"
-    port = "8000"
-    if args.dev:
-        firehose_setup()
-        app.run(host=host, port=port, debug=True, use_reloader=False)
-    elif waitress is None:
+    if not args.dev and waitress is None:
         raise RuntimeError(
             "waitress is not installed, run 'pip install waitress' and try again"
         )
+
+    # Do the imports here instead of the top to prevent an old DB connection becoming
+    # unused after a graceful reload
+    from server.app import app, firehose_setup
+
+    host = "127.0.0.1"
+    port = 8000
+    if args.dev:
+        firehose_setup()
+        app.run(host=host, port=port, debug=True, use_reloader=False)
     else:
         firehose_setup()
         waitress.serve(app, host=host, port=port)
