@@ -12,8 +12,8 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)love ?live[!\s]*", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live[!\s]*(s(ky|taff|u(nshine|perstar)))|"
-    r"ラブライブ[!！\s]*(サンシャイン|スーパースター)?|"
+    r"love\s?live[!\s]*(s(ky|taff|u(nshine|perstar)))|thank you love ?live|"
+    r"#lovelive_|ラブライブ[!！\s]*(サンシャイン|スーパースター)?|"
     r"スクールアイドル|school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
     # Games
     r"\bllsif\b|[^マ]スク(フェス|スタ(?!ンド))|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|"
