@@ -4,6 +4,7 @@ import threading
 
 from click import style
 from flask import Flask, Response, jsonify, request
+from werkzeug.exceptions import HTTPException, NotFound
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from server import config, data_stream
@@ -82,7 +83,7 @@ def index():
 @app.route("/.well-known/did.json", methods=["GET"])
 def did_json() -> tuple[str, int] | Response:
     if not config.SERVICE_DID.endswith(config.HOSTNAME):
-        return "", 404
+        raise NotFound()
 
     return jsonify(
         {
@@ -127,3 +128,16 @@ def get_feed_skeleton() -> tuple[str, int] | Response:
         return "Malformed cursor", 400  # noqa: CLB100
 
     return jsonify(body)
+
+
+# Make all generic errors return just the name instead of a webpage for response body.
+# Routes should use `return "[message]", [error code]` to display a custom message.
+@app.errorhandler(HTTPException)
+def generic_error(e: HTTPException) -> tuple[str, int]:
+    return e.name, e.code
+
+
+# No response body for 404 Not Found errors
+@app.errorhandler(NotFound)
+def not_found_error(_) -> tuple[str, int]:
+    return "", 404
