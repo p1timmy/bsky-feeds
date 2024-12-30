@@ -60,10 +60,21 @@ def _get_commit_ops_by_type(
                 ):
                     operation_by_type[record_nsid]["created"].append(
                         {
+                            # Object containing all the details of the record
                             "record": record,
+                            # ATProto URI of the record
+                            # (hint: for posts use https://hopper.at/ to get its
+                            # regular link)
                             "uri": str(uri),
+                            # Unique identifier of a record, used by `cursor` parameter
+                            # in feed URLs
                             "cid": str(op.cid),
+                            # DID of account that made the record
                             "author": commit.repo,
+                            # Date/time of when the record was made.
+                            # In the case of posts, it's the real publish date aka the
+                            # post date/time as shown in clients
+                            "time": datetime.fromisoformat(commit.time),
                         }
                     )
                     break

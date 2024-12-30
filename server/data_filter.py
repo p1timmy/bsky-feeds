@@ -15,6 +15,7 @@ _PR0N_LABEL = models.ComAtprotoLabelDefs.SelfLabel(val="porn")
 _ADULT_LABELS = ("porn", "nudity", "sexual")
 _BSKY_MOD_SERVICE = "did:plc:ar7c4by46qjdydhdevvrndac"
 _MAX_COMMIT_LAG = timedelta(seconds=0.25)
+_ARCHIVED_THRESHOLD = timedelta(days=1)
 
 logger = logging.getLogger(__name__)
 
@@ -22,6 +23,32 @@ logger = logging.getLogger(__name__)
 _all_feeds: dict[str, Feed] = {}
 for row in Feed.select():
     _all_feeds[row.uri] = row
+
+
+def post_has_pr0n_label(post: dict) -> bool:
+    """
+    Check if a post was published with a porn (explicit adult content) label added by
+    the author
+    """
+    record: models.AppBskyFeedPost.Record = post["record"]
+    return (
+        record.labels
+        and record.labels.values is not None
+        and _PR0N_LABEL in record.labels.values
+    )
+
+
+def is_archived_post(post: dict) -> bool:
+    """
+    Check if a post is an archived one, meaning post creation date is over 24 hours old
+    as indicated by the official Bluesky app
+
+    (See
+    https://github.com/bluesky-social/social-app/blob/6471e809aa28f0319bde4aa1f362679e3723d298/src/view/com/post-thread/PostThreadItem.tsx#L779)
+    """
+    created_at = datetime.fromisoformat(post["record"].created_at)
+    published_at: datetime = post["time"]
+    return published_at - created_at > _ARCHIVED_THRESHOLD
 
 
 def operations_callback(ops: defaultdict):
@@ -34,14 +61,13 @@ def operations_callback(ops: defaultdict):
         author: str = created_post["author"]
         record: models.AppBskyFeedPost.Record = created_post["record"]
 
+        # Skip archived posts (mostly those imported from 𝕏/Twitter or similar)
+        if is_archived_post(created_post):
+            continue
+
         # Hide post if it has adult content (porn) label
-        pr0n_post_count = 0
         has_pr0n_label = False
-        if (
-            record.labels
-            and record.labels.values is not None
-            and _PR0N_LABEL in record.labels.values
-        ):
+        if post_has_pr0n_label(created_post):
             has_pr0n_label = True
 
         feeds: list[Feed] = []
