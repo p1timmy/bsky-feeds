@@ -113,7 +113,8 @@ EXCLUDE_RE = re.compile(
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|\b(l(augh|et)|radical) love live\b|"
     r"(^|[^\w ]) *love live the (?!school idol)\b|"
     r"\blove live (service|t(heat(er|re)|v)|(band|show)s)|\byour love live[.,]|"
-    r"\blove live[ \-](action|streaming)\b",
+    r"\blove live[ \-](action|streaming)\b|\bmay your love live|"
+    r"\bofficial love live festival\b",
     re.IGNORECASE | re.MULTILINE,
 )
 NSFW_KEYWORDS_RE = re.compile("hentai|futanari|penis|dildo|#コイカツ", re.IGNORECASE)
