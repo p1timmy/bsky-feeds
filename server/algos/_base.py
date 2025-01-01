@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import UTC, datetime, timedelta
 from typing import Optional
 
 from atproto_client.models.app.bsky.embed.images import Image
@@ -13,6 +13,7 @@ from peewee import ModelSelect
 
 from server.database import Feed, Post
 
+FORTNIGHT = timedelta(days=14)
 CURSOR_EOF = "eof"
 
 
@@ -58,12 +59,14 @@ def handler(cursor: Optional[str], limit: int, feed_uri: str) -> dict:
     This retrieves all posts in database that are only linked to the given `feed_uri` in
     strict reverse chronological order (newest to oldest).
     """
+    datetime_14d_ago = datetime.now(UTC) - FORTNIGHT
     posts: ModelSelect = (
         Post.select()
         .join(Feed.posts.get_through_model())
         .join(Feed)
         .where(Feed.uri == feed_uri)
         .where(Post.adult_labels == 0)
+        .where(Post.indexed_at > datetime_14d_ago)
         .order_by(Post.cid.desc())
         .order_by(Post.indexed_at.desc())
         .limit(limit)
