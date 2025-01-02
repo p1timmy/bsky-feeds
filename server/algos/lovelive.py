@@ -1,12 +1,7 @@
-import csv
 import re
-from pathlib import Path, PurePath
-
-from click import style
 
 from server import config
-from server.algos._base import get_post_texts
-from server.logger import logger
+from server.algos._base import get_post_texts, load_user_list_with_logs
 
 LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)love ?live[!\s]*", re.IGNORECASE
@@ -127,35 +122,6 @@ DEDICATED_USERS = set({LOVELIVENEWS_BSKY_SOCIAL})
 uri = config.LOVELIVE_URI
 
 
-def _load_user_list():
-    module_dir = PurePath(__file__).parent
-    user_list_path = Path(*module_dir.parts[:-2], "lists", "lovelive_users.csv")
-
-    try:
-        with user_list_path.open() as f:
-            reader = csv.DictReader(f)
-            users_initial_count = len(DEDICATED_USERS)
-            for row in reader:
-                user_did = row.get("did", "")
-                if user_did.startswith("did:"):
-                    DEDICATED_USERS.add(row["did"])
-
-            added_count = len(DEDICATED_USERS) - users_initial_count
-            if added_count > 0:
-                logger.debug(
-                    "Loaded DIDs of dedicated LoveLive accounts: %d", added_count
-                )
-    except Exception:  # noqa: PIE786
-        logger.warning(
-            style(
-                "Failed to load dedicated LoveLive accounts list",
-                fg="yellow",
-                bold=True,
-            ),
-            exc_info=True,
-        )
-
-
 def filter(post: dict) -> bool:
     all_texts = "\n".join(get_post_texts(post))
     if not all_texts:
@@ -173,4 +139,6 @@ def filter(post: dict) -> bool:
     )
 
 
-_load_user_list()
+load_user_list_with_logs(
+    "lovelive_users.csv", DEDICATED_USERS, "dedicated LoveLive accounts list"
+)
