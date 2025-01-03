@@ -14,6 +14,7 @@ from atproto import (
     parse_subscribe_repos_message,
 )
 from atproto.exceptions import FirehoseError
+from atproto_client.models.dot_dict import DotDict
 from click import style
 
 from server.database import FirehoseType, SubscriptionState

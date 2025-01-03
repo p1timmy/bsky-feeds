@@ -118,16 +118,21 @@ NSFW_KEYWORDS_RE = re.compile("hentai|futanari|penis|dildo|#コイカツ", re.IG
 # file didn't work
 LOVELIVENEWS_BSKY_SOCIAL = "did:plc:yfmm2mamtdjxyp4pbvdigpin"
 DEDICATED_USERS = set({LOVELIVENEWS_BSKY_SOCIAL})
+IGNORE_USERS: set[str] = set()
 
 uri = config.LOVELIVE_URI
 
 
 def filter(post: dict) -> bool:
+    author = post["author"]
+    if author in IGNORE_USERS:
+        return False
+
     all_texts = "\n".join(get_post_texts(post))
     if not all_texts:
         return False
 
-    return post["author"] in DEDICATED_USERS or (
+    return author in DEDICATED_USERS or (
         any(
             (
                 LOVELIVE_NAME_EN_RE.search(all_texts)
@@ -141,4 +146,8 @@ def filter(post: dict) -> bool:
 
 load_user_list_with_logs(
     "lovelive_users.csv", DEDICATED_USERS, "dedicated LoveLive accounts list"
+)
+
+load_user_list_with_logs(
+    "lovelive_ignore_users.csv", IGNORE_USERS, "LoveLive!Sky feed user ignore list"
 )
