@@ -51,8 +51,9 @@ def _get_commit_ops_by_type(
 
             record = models.get_or_create(record_raw_data, strict=False)
 
-            # Drop events not supported by ATproto SDK to prevent log spamming
-            if record is None:
+            # Drop operation if type is not in ATProto/Bluesky lexicon to prevent log
+            # spamming and other unexpected weird stuff
+            if record is None or isinstance(record, DotDict):
                 continue
 
             for record_type, record_nsid in _INTERESTED_RECORDS.items():
