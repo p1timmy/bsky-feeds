@@ -4,3 +4,5 @@ Flask~=2.3.3
 python-dotenv<2.0
 hupper
 py-multiformats-cid
+tld
+validators
