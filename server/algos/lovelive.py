@@ -7,11 +7,11 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)love ?live[!\s]*", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live[!\s]*(s(ky|taff|u(nshine|perstar)))|thank you love ?live|"
+    r"love\s?live[!\s]*(s(ky|taff|u(nshine|perstar)))|thank you love ?live\b|"
     r"#lovelive_|ラブライブ[!！\s]*(サンシャイン|スーパースター)?|"
     r"スクールアイドル|school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
     # Games
-    r"\bllsif\b|[^マ]スク(フェス|スタ(?!ンド))|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|"
+    r"\bllsif\b|[^マ]スク(フェス|スタ(?!ンド|ンプ))|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|"
     r"ぷちぐる|puchiguru|"
     # Love Live! School Idol Project
     r"音ノ木坂|otonokizaka|[μµ]['’`]s|にこりんぱな|nicorinpana|"
@@ -106,7 +106,7 @@ EXCLUDE_RE = re.compile(
     r"\b(d(angerously|runk)|who live) in love\b|\blovelivemusic|"
     r"((you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+|[^\w ]\s*)love live"
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|\b(l(augh|et)|radical) love live\b|"
-    r"(^|[^\w ]) *love live the (?!school idol)\b|"
+    r"(^|[^\w ]) *love live the (?!school idol)\b|\blove live (&|and) learn|"
     r"\blove live (service|t(heat(er|re)|v)|(band|show)s|oaks?)|\byour love live[.,]|"
     r"\blove live[ \-](action|streaming)\b|\bmay your love live|"
     r"\b(official )?love live festival\b|\b(blackpool|winter gardens)\b",
