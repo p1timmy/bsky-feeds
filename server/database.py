@@ -33,9 +33,10 @@ class Post(BaseModel):
     indexed_at = peewee.TimestampField(null=False, resolution=3, utc=True)
     adult_labels = peewee.BitField(null=False, default=0)
 
-    has_porn_label = adult_labels.flag(0b001)
-    has_nudity_label = adult_labels.flag(0b010)
-    has_sexual_label = adult_labels.flag(0b100)
+    has_porn_label = adult_labels.flag(0b0001)
+    has_nudity_label = adult_labels.flag(0b0010)
+    has_sexual_label = adult_labels.flag(0b0100)
+    has_sexual_figurative_label = adult_labels.flag(0b1000)
 
 
 class Feed(BaseModel):

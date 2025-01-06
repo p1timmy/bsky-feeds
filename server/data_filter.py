@@ -12,7 +12,7 @@ from server.algos import filters
 from server.database import Feed, Post, db
 
 _PR0N_LABEL = models.ComAtprotoLabelDefs.SelfLabel(val="porn")
-_ADULT_LABELS = ("porn", "nudity", "sexual")
+_ADULT_LABELS = ("porn", "nudity", "sexual", "sexual-figurative")
 _BSKY_MOD_SERVICE = "did:plc:ar7c4by46qjdydhdevvrndac"
 _MAX_COMMIT_LAG = timedelta(seconds=0.25)
 _ARCHIVED_THRESHOLD = timedelta(days=1)
@@ -185,23 +185,26 @@ def labels_message_callback(
         if not post:
             continue
 
+        label_name = label.val.replace("-", "_")
+        flag_name = f"has_{label_name}_label"
+        if not getattr(post, flag_name, None):
+            continue
+
         old_value: int = post.adult_labels
-        flag_name = f"has_{label.val}_label"
-        if getattr(post, flag_name, None) is not None:
-            setattr(post, flag_name, not label.neg)
-            posts_to_update.append(post)
-            logger.debug(
-                style(
-                    "Updating adult label flags for %s (%s): %s -> %s",
-                    fg="magenta",
-                    dim=True,
-                ),
-                post.uri,
-                post.id,
-                format(old_value, "#05b"),
-                format(post.adult_labels, "#05b"),
-            )
-            logger.debug(label)
+        setattr(post, flag_name, not label.neg)
+        posts_to_update.append(post)
+        logger.debug(
+            style(
+                "Updating adult label flags for %s (%s): %s -> %s",
+                fg="magenta",
+                dim=True,
+            ),
+            post.uri,
+            post.id,
+            format(old_value, "#06b"),
+            format(post.adult_labels, "#06b"),
+        )
+        logger.debug(label)
 
         if not old_value:
             hide_count += 1
