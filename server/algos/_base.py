@@ -3,13 +3,7 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path, PurePath
 from typing import Optional
 
-from atproto_client.models.app.bsky.embed.images import Image
-from atproto_client.models.app.bsky.embed.images import Main as ImageEmbed
-from atproto_client.models.app.bsky.embed.record_with_media import (
-    Main as MediaAndQuoteEmbed,
-)
-from atproto_client.models.app.bsky.embed.video import Main as VideoEmbed
-from atproto_client.models.app.bsky.feed.post import Record
+from atproto import models
 from click import style
 from multiformats_cid import is_cid
 from peewee import ModelSelect
@@ -64,33 +58,37 @@ def load_user_list_with_logs(filename: str, user_set: set[str], list_desc: str):
             logger.debug("Loaded DIDs in %s: %d", list_desc, added_count)
 
 
-# TODO: scan link URLs/embeds
 def get_post_texts(post: dict, include_media=True) -> list[str]:
     """
     Extract text content from a single post.
 
-    :param include_media: Also get image/video alt texts in addition to the post text.
+    :param include_media: Also get image/GIF/video alt texts in addition to the post text.
         Defaults to True.
     """
-    record: Record = post["record"]
+    record: models.AppBskyFeedPost.Record = post["record"]
     texts: list[str] = []
     if record.text:  # some posts may not have any text at all
         texts.append(record.text)
 
     # Get alt text from images/video
     embed = record.embed
-    if include_media:
+    if embed and include_media:
         # Post has both pics/video and a quoted post
-        if isinstance(embed, MediaAndQuoteEmbed):
+        if isinstance(embed, models.AppBskyEmbedRecordWithMedia.Main):
             embed = embed.media
 
-        if isinstance(embed, ImageEmbed):
-            image: Image
+        if isinstance(embed, models.AppBskyEmbedImages.Main):
             for image in embed.images:
                 if image.alt:
                     texts.append(image.alt)
-        elif isinstance(embed, VideoEmbed) and embed.alt:
+        elif isinstance(embed, models.AppBskyEmbedVideo.Main) and embed.alt:
             texts.append(embed.alt)
+        elif isinstance(embed, models.AppBskyEmbedExternal.Main):
+            # Tenor GIFs inserted using the post editor use link embeds, alt text is put
+            # into the link description
+            link = embed.external
+            if link.uri.startswith("https://media.tenor.com/") and link.description:
+                texts.append(link.description)
 
     return texts
 
