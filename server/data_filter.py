@@ -187,7 +187,7 @@ def labels_message_callback(
 
         label_name = label.val.replace("-", "_")
         flag_name = f"has_{label_name}_label"
-        if not getattr(post, flag_name, None):
+        if getattr(post, flag_name, None) is None:
             continue
 
         old_value: int = post.adult_labels
