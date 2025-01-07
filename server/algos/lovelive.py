@@ -88,7 +88,7 @@ LOVELIVE_RE = re.compile(
     r"聖澤悠奈|hijirisawa\s?yuu?na|yuu?na\s?hijirisawa|"
     r"柊\s?摩央|hiiragi\s?mao|mao\s?hiiragi|"
     # Link! Like! Love Live! / Hasunosora
-    r"[^ド](?<!スプ|ソブ)リンクラ(?!ウンジ)|link[!！]\s?like[!！]\s?love\s?live|"
+    r"(^|[^ド])(?<!スプ|ソブ)リンクラ(?!ウンジ)|link[!！]\s?like[!！]\s?love\s?live|"
     r"hasu\s?no\s?sora|蓮ノ(空|休日)|"
     r"cerise\sbouquet|スリーズブーケ|dollchestra|ドルケストラ|"
     r"mira-cra\spark!?|みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|"
@@ -115,9 +115,9 @@ EXCLUDE_RE = re.compile(
     r"\b(d(angerously|runk)|who live) in love\b|\blovelivemusic|"
     r"((you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+|[^\w ]\s*)love live"
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|\b(l(augh|et)|radical) love live\b|"
-    r"(^|[^\w ]) *love live the (?!school idol)\b|\blove live (&|and) learn|"
-    r"\blove live (service|t(heat(er|re)|v)|(band|show)s|oaks?)|\byour love live[.,]|"
-    r"\blove live[ \-](action|streaming)\b|\bmay your love live|"
+    r"(^|[^\w ]) *love live the (?!school idol)\b|\bi (\w+ )?love live (&|and) learn|"
+    r"\blove live (service|t(heat(er|re)|v)|(band|show)s|oaks?|(in|from) paris)|"
+    r"\blove live[ \-](action|streaming)\b|\bmay your love live|\byour love live[.,]|"
     r"\b(official )?love live festival\b|\b(blackpool|winter gardens)\b",
     re.IGNORECASE | re.MULTILINE,
 )
