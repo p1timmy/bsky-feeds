@@ -70,7 +70,8 @@ LOVELIVE_RE = re.compile(
     # Love Live! Superstar!!
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)liella[!！]?|結ヶ丘|yuigaoka|"
     r"5yncri5e!?|kaleidoscore"
-    r"|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(?<!i )(?<!to )catchu!?[^p]|"
+    r"|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(?<!i )(?<!to"
+    r" )catchu!?(?! later)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
     r"トマカノーテ|tomakanote|スパスタ[3３]期|"
     r"澁谷\s?かのん|shibuya\s?kanon|kanon\s?shibuya|"
     r"唐\s?可可|ク[ウゥ]ク[ウゥ]ちゃん?|\btang\s?keke|\bkeke\s?tang|"
@@ -108,16 +109,37 @@ LOVELIVE_RE = re.compile(
     re.IGNORECASE,
 )
 EXCLUDE_RE = re.compile(
+    # The great "I love live [something]" hoarde
     r"\b(i(['’]d)?|you|we( (all|both))?|they|gotta|who|people)"
     r"( ([a-z]+(ing?|ly)|just|al(so|ways)|still|(used? t|t(o|end t)|d)o|bloody|"
-    r"would(v['’]e)?)\,?)*( love)+ liver?|love\s?live(s|rpool|d|ly| ?life)|"
-    r"\bthat (.\s)?love liver\b|\bi (\w+ )?love live (&|and) learn|"
-    r"\b(d(angerously|runk)|who live) in love\b|\blovelivemusic|"
+    r"would(v['’]e)?)\,?)*( love)+ liver?|"
+    # love lives/Liverpool/lived/lively, love live life
+    r"love\s?live(s|rpool|d|ly| ?life)|"
+    # #lovelivemusic
+    r"\blovelivemusic|"
+    # that love liver (as in body part)
+    r"\bthat (.\s)?love liver\b|"
+    # Dangerously/Drunk in Love, who live in love (1 John 4:16)
+    r"\b(d(angerously|runk)|who live) in love\b|"
+    # laugh/let/radical love live
+    r"\b(l(augh|et)|radical) love live\b|"
+    # if you live in/near/around [place name] and love live music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+|[^\w ]\s*)love live"
-    r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|\b(l(augh|et)|radical) love live\b|"
-    r"(^|[^\w ]) *love live the (?!school idol)\b|[a-z]+[.?!] love live #?\w+|"
-    r"\blove live (service|t(heat(er|re)|v)|(band|show)s|oaks?|(in|from) paris)|"
-    r"\blove live[ \-](action|streaming)\b|\bmay your love live|\byour love live[.,]|"
+    r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|"
+    # love live(-)action/streaming
+    r"\blove live[ \-](action|streaming)\b|"
+    # "love live the" as a typo of "long live the"
+    r"(^|[^\w ]) *love live the (?!school idol)\b|"
+    # "love live [something]" as a typo of "long live [something]"
+    r"[a-z]+[.?!] love live #?\w+|"
+    # love live love/service/theater/shows/TV/bands/oak(s), Love Live in/from Paris
+    r"\blove live (love(?! wing bell)|service|t(heat(er|re)|v)|(band|show)s|oaks?|"
+    r"(in|from) paris)|"
+    # (may) your love live
+    r"\bmay your love live|\byour love live[.,]|"
+    # I love Live and Learn (as in Sonic Adventure 2 theme song)
+    r"\bi (\w+ )?love live (&|and) learn|"
+    # Official Love Live (rock music) Festival and its venue
     r"\b(official )?love live festival\b|\b(blackpool|winter gardens)\b",
     re.IGNORECASE | re.MULTILINE,
 )
