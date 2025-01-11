@@ -132,9 +132,10 @@ EXCLUDE_RE = re.compile(
     r"(^|[^\w ]) *love live the (?!school idol)\b|"
     # "love live [something]" as a typo of "long live [something]"
     r"[a-z]+[.?!] love live #?\w+|"
-    # love live love/service/theater/shows/TV/bands/oak(s), Love Live in/from Paris
-    r"\blove live (love(?! wing bell)|service|t(heat(er|re)|v)|(band|show)s|oaks?|"
-    r"(in|from) paris)|"
+    # love live laugh/love/service/theater/shows/TV/bands/oak(s), Love Live in/
+    # from Paris
+    r"\blove live (l(augh|ove(?! wing bell))|service|t(heat(er|re)|v)|(band|show)s|"
+    r"oaks?|(in|from) paris)|"
     # (may) your love live
     r"\bmay your love live|\byour love live[.,]|"
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
