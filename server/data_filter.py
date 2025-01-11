@@ -149,11 +149,12 @@ def operations_callback(ops: defaultdict):
 class _LabelQueueItem(NamedTuple):
     time: datetime
     label: models.ComAtprotoLabelDefs.Label
+    cursor: int
 
     @classmethod
-    def from_label(cls, label: models.ComAtprotoLabelDefs.Label) -> Self:
+    def from_label(cls, label: models.ComAtprotoLabelDefs.Label, cursor: int) -> Self:
         cts_dt = datetime.fromisoformat(label.cts)
-        return cls(cts_dt, label)
+        return cls(cts_dt, label, cursor)
 
 
 _label_queue: deque[_LabelQueueItem] = deque([])
@@ -161,7 +162,7 @@ _label_queue: deque[_LabelQueueItem] = deque([])
 
 def labels_message_callback(
     labels_message: models.ComAtprotoLabelSubscribeLabels.Labels,
-):
+) -> int:
     # Add headroom as label timestamps are always behind by fraction of a second due to
     # network lag
     repos_last_message_time = data_stream.repos_last_message_time + _MAX_COMMIT_LAG
@@ -173,7 +174,7 @@ def labels_message_callback(
             and label.src == _BSKY_MOD_SERVICE  # labels by Bluesky Moderation Service
             and label.val in _ADULT_LABELS  # pr0n/nudity/sexual labels only
         ):
-            _label_queue.append(_LabelQueueItem.from_label(label))
+            _label_queue.append(_LabelQueueItem.from_label(label, labels_message.seq))
 
     posts_to_update: list[Post] = []
     hide_count = unhide_count = 0
@@ -234,3 +235,10 @@ def labels_message_callback(
             style("Posts restored to feeds due to removed labels: %d", fg="cyan"),
             unhide_count,
         )
+
+    # If there are still labels left waiting in queue, return cursor number from 1st
+    # item in case the queue disappears after shutdown
+    if _label_queue:
+        return _label_queue[0].cursor
+
+    return labels_message.seq

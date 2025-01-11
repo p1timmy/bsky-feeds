@@ -1,4 +1,5 @@
 from collections import defaultdict
+from collections.abc import Callable
 from datetime import UTC, datetime
 from threading import Event
 from typing import Optional
@@ -144,13 +145,16 @@ def _run_repos_client(
 
 
 def _run_labels_client(
-    service_did: str, labels_message_callback, stream_stop_event: Optional[Event] = None
+    service_did: str,
+    labels_message_callback: Callable[
+        [models.ComAtprotoLabelSubscribeLabels.Labels], int
+    ],
+    stream_stop_event: Optional[Event] = None,
 ):
     state = SubscriptionState.get_or_none(
         (SubscriptionState.service == service_did)
         & (SubscriptionState.firehose_type == FirehoseType.LABELS)
     )
-
     params = None
     if state:
         params = models.ComAtprotoLabelSubscribeLabels.Params(cursor=state.cursor)
@@ -158,9 +162,11 @@ def _run_labels_client(
     client = FirehoseSubscribeLabelsClient(params)
 
     if not state:
-        SubscriptionState.create(
+        state = SubscriptionState.create(
             service=service_did, cursor=0, firehose_type=FirehoseType.LABELS
         )
+
+    queued_cursor: int = state.cursor
 
     def on_message_handler(message: firehose_models.MessageFrame):
         # Stop on next message if requested
@@ -172,20 +178,29 @@ def _run_labels_client(
         if not isinstance(labels_message, models.ComAtprotoLabelSubscribeLabels.Labels):
             return
 
+        nonlocal queued_cursor
+        prev_cursor = queued_cursor
+        queued_cursor = labels_message_callback(labels_message) // 10 * 10
+
         # Update cursor every ~10 messages in case we get disconnected
-        if labels_message.seq % 10 == 0:
+        current_cursor = labels_message.seq
+        if current_cursor % 10 == 0:
             client.update_params(
-                models.ComAtprotoLabelSubscribeLabels.Params(cursor=labels_message.seq)
+                models.ComAtprotoLabelSubscribeLabels.Params(cursor=current_cursor)
             )
             logger.debug(
-                "Updated labels cursor for %s to %s", service_did, labels_message.seq
+                "Updated labels cursor for %s to %s", service_did, current_cursor
             )
 
-            SubscriptionState.update(cursor=labels_message.seq).where(
+        # Save cursor before/at first label message in queue (in case there are labels
+        # left in queue at shutdown) or every ~10 messages
+        if prev_cursor < queued_cursor:
+            SubscriptionState.update(cursor=queued_cursor).where(
                 SubscriptionState.service == service_did
             ).where(SubscriptionState.firehose_type == FirehoseType.LABELS).execute()
-
-        labels_message_callback(labels_message)
+            logger.debug(
+                "Saved labels cursor for %s to database: %s", service_did, queued_cursor
+            )
 
     client.start(on_message_handler)
 
