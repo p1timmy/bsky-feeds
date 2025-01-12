@@ -113,6 +113,8 @@ EXCLUDE_RE = re.compile(
     r"\b(i(['’]d)?|you|we( (all|both))?|they|gotta|who|people)"
     r"( ([a-z]+(ing?|ly)|just|al(so|ways)|still|(used? t|t(o|end t)|d)o|bloody|"
     r"would(v['’]e)?|[a-z]+[a-z] and)\,?)*( love)+ liver?|"
+    # Anyone ... love live music?
+    r"anyone( .+)? love live music\?|"
     # love lives/Liverpool/lived/lively, love live life
     r"love\s?live(s|rpool|d|ly| ?life)|"
     # #lovelivemusic, lovelivegcw.com
