@@ -115,14 +115,14 @@ EXCLUDE_RE = re.compile(
     r"would(v['’]e)?|[a-z]+[a-z] and)\,?)*( love)+ liver?|"
     # love lives/Liverpool/lived/lively, love live life
     r"love\s?live(s|rpool|d|ly| ?life)|"
-    # #lovelivemusic
-    r"\blovelivemusic|"
+    # #lovelivemusic, lovelivegcw.com
+    r"\blovelive(music|gcw)|"
     # that love liver (as in body part)
-    r"\bthat (.\s)?love liver\b|"
+    r"\bthat ([a-z]+[a-z] )?love liver\b|"
     # Dangerously/Drunk in Love, who live in love (1 John 4:16)
     r"\b(d(angerously|runk)|who live) in love\b|"
-    # laugh/let/radical love live
-    r"\b(l(augh|et)|radical) love live\b|"
+    # laugh/let/radical/Rinku Love Live
+    r"\b(l(augh|et)|r(adical|inku)) love live\b|"
     # if you live in/near/around [place name] and love live music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+|[^\w ]\s*)love live"
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|"
