@@ -6,6 +6,7 @@ from typing import NamedTuple, Optional, Self
 
 from atproto import models
 from click import style
+from peewee import IntegrityError
 
 from server import data_stream
 from server.algos import filters
@@ -57,7 +58,6 @@ def operations_callback(ops: defaultdict):
     # Also, we should process deleted posts to remove them from our DB and keep it in sync
     posts_to_create: list[dict] = []
     created_post: dict
-    pr0n_post_count = 0
     for created_post in ops[models.ids.AppBskyFeedPost]["created"]:
         author: str = created_post["author"]
         record: models.AppBskyFeedPost.Record = created_post["record"]
@@ -119,9 +119,6 @@ def operations_callback(ops: defaultdict):
             }
             posts_to_create.append(post_dict)
 
-            if has_pr0n_label:
-                pr0n_post_count += 1
-
     posts_to_delete: Iterable[dict] = ops[models.ids.AppBskyFeedPost]["deleted"]
     if posts_to_delete:
         uris: list[str] = [post["uri"] for post in posts_to_delete]
@@ -134,14 +131,35 @@ def operations_callback(ops: defaultdict):
             logger.info(style("Posts deleted from feeds: %s", fg="red"), count)
 
     if posts_to_create:
+        new_post_count = 0
         with db.atomic():
             for post_dict in posts_to_create:
                 feeds = post_dict.pop("feeds")
-                p = Post.create(**post_dict)
-                if feeds:
-                    p.feeds.add(feeds)
+                try:
+                    post = Post.create(**post_dict)
+                except IntegrityError as e:
+                    # If caused by unique constraint on `cid` column, that means post
+                    # was already added to DB
+                    if e.args:
+                        message = e.args[0]
+                        if message.startswith(
+                            "UNIQUE constraint failed"
+                        ) and message.endswith(".cid"):
+                            logger.debug(
+                                style(
+                                    "Post already exists in database",
+                                    fg="red",
+                                    dim=True,
+                                )
+                            )
+                            continue
 
-        new_post_count = len(posts_to_create) - pr0n_post_count
+                    raise e
+                else:
+                    post.feeds.add(feeds)
+                    if not post.has_porn_label:
+                        new_post_count += 1
+
         if new_post_count > 0:
             logger.info(style("Posts added to feeds: %s", fg="green"), new_post_count)
 
