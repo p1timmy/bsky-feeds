@@ -164,6 +164,9 @@ uri = config.LOVELIVE_URI
 
 def filter(post: dict) -> bool:
     author = post["author"]
+    if author in DEDICATED_USERS:
+        return True
+
     if author in IGNORE_USERS:
         return False
 
@@ -171,15 +174,11 @@ def filter(post: dict) -> bool:
     if not all_texts:
         return False
 
-    return author in DEDICATED_USERS or (
-        any(
-            (
-                LOVELIVE_NAME_EN_RE.search(all_texts)
-                and not EXCLUDE_RE.search(all_texts),
-                LOVELIVE_RE.search(all_texts),
-            )
+    return not NSFW_KEYWORDS_RE.search(all_texts) and any(
+        (
+            LOVELIVE_NAME_EN_RE.search(all_texts) and not EXCLUDE_RE.search(all_texts),
+            LOVELIVE_RE.search(all_texts),
         )
-        and not NSFW_KEYWORDS_RE.search(all_texts)
     )
 
 
