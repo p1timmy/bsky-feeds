@@ -11,8 +11,9 @@ LOVELIVE_RE = re.compile(
     r"#lovelive_|ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     r"スクールアイドル|school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
     # Games
-    r"\bllsif\b|[^マ]スク(フェス|スタ(?!ンド|ンプ))|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|"
-    r"ぷちぐる|puchiguru|"
+    r"\bllsif\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|ぷちぐる|puchiguru|"
+    # スクフェス/スクスタ but not words with マスク/スタンド/スタンプ
+    r"[^マ]スク(フェス|スタ(?!ン[ドプ]))|"
     # Love Live! School Idol Project
     # NOTE: Printemps, lily white, BiBi not included due to too many false positives
     r"音ノ木坂?|otonokizaka|[μµ]['’‘`´′]s|にこりんぱな|nicorinpana|"
@@ -89,7 +90,8 @@ LOVELIVE_RE = re.compile(
     r"聖澤悠奈|hijirisawa\s?yuu?na|yuu?na\s?hijirisawa|"
     r"柊\s?摩央|hiiragi\s?mao|mao\s?hiiragi|"
     # Link! Like! Love Live! / Hasunosora
-    r"(^|[^ド])(?<!スプ|ソブ)リンクラ(?!ウンジ)|link[!！]\s?like[!！]\s?love\s?live|"
+    # リンクラ but not スプリンクラー or words with ソブリン/クラウド/ドリンク/ラウンジ/ライン
+    r"[^ド](?<!スプ|ソブ)リンクラ(?!ウ(ド|ンジ)|イン)|"
     r"hasu\s?no\s?sora|蓮ノ(空|休日)|"
     r"cerise\sbouquet|スリーズブーケ|dollchestra|ドルケストラ|"
     r"mira-cra\spark!?|みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|"
