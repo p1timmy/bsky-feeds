@@ -107,7 +107,9 @@ LOVELIVE_RE = re.compile(
     r"安養寺\s?姫芽|anyoji\s?hime|hime\s?anyoji|"
     r"大賀美沙知|ogami\s?sachi|sachi\s?ogami|"
     # Concerts
-    r"異次元フェス|ijigen\sfest?",
+    r"異次元フェス|ijigen\sfest?|"
+    # Notable community groups
+    r"(team )?onib(e|ased)",
     re.IGNORECASE,
 )
 EXCLUDE_RE = re.compile(
@@ -117,8 +119,8 @@ EXCLUDE_RE = re.compile(
     r"would(v['’]e)?|[a-z]+[a-z] and)\,?)*( love)+ liver?|"
     # Anyone ... love live music?
     r"anyone( .+)? love live music\?|"
-    # love lives/Liverpool/lived/lively, love live life
-    r"love\s?live(s|rpool|d|ly| ?life)|"
+    # love lives/Liverpool/lived/lively, love live life/love
+    r"love\s?live(s|rpool|d|ly| ?l(if|ov)e(?! wing bell))|"
     # #lovelivemusic, lovelivegcw.com
     r"\blovelive(music|gcw)|"
     # that love liver (as in body part)
@@ -133,19 +135,20 @@ EXCLUDE_RE = re.compile(
     # love live(-)action/streaming
     r"\blove live[ \-](action|streaming)\b|"
     # "love live the" as a typo of "long live the"
-    r"(^|[^\w ]) *love live the (?!school idol)\b|"
+    r"(^|[^\w]) *?love live the (?!school idol|musical)\b|"
     # "love live [something]" as a typo of "long live [something]"
     r"[a-z]+[.?!] love live #?\w+|"
-    # love live laugh/love/service/theater/shows/TV/bands/oak(s), Love Live in/
-    # from Paris
-    r"\blove live (l(augh|ove(?! wing bell))|service|t(heat(er|re)|v)|(band|show)s|"
-    r"oaks?|(in|from) paris)|"
+    # love live laugh/service/theater/shows/TV/bands/oak(s), Love Live in/from Paris
+    # (misspelling of "Lover (Live From Paris)" album by Taylor Swift)
+    r"\blove live (laugh|service|t(heat(er|re)|v)|(band|show)s|oaks?|(in|from) paris)|"
     # (may) your love live
     r"\bmay your love live|\byour love live[.,]|"
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
     r"\bi (\w+ )?love live (&|and) learn|"
     # Official Love Live (rock music) Festival and its venue
-    r"\b(official )?love live festival\b|\b(blackpool|winter gardens)\b",
+    r"\b(official )?love live festival\b|\b(blackpool|winter gardens)\b|"
+    # Prophecy x This Love by Taylor Swift
+    r"prophecy x this love",
     re.IGNORECASE | re.MULTILINE,
 )
 NSFW_KEYWORDS_RE = re.compile("hentai|futanari|penis|dildo|#コイカツ", re.IGNORECASE)
