@@ -13,7 +13,7 @@ LOVELIVE_RE = re.compile(
     # Games
     r"\bllsif\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|ぷちぐる|puchiguru|"
     # スクフェス/スクスタ but not words with マスク/スタンド/スタンプ
-    r"[^マ]スク(フェス|スタ(?!ン[ドプ]))|"
+    r"(^|[^マ])スク(フェス|スタ(?!ン[ドプ]))|"
     # Love Live! School Idol Project
     # NOTE: Printemps, lily white, BiBi not included due to too many false positives
     r"音ノ木坂?|otonokizaka|[μµ]['’‘`´′]s|にこりんぱな|nicorinpana|"
@@ -91,7 +91,7 @@ LOVELIVE_RE = re.compile(
     r"柊\s?摩央|hiiragi\s?mao|mao\s?hiiragi|"
     # Link! Like! Love Live! / Hasunosora
     # リンクラ but not スプリンクラー or words with ソブリン/クラウド/ドリンク/ラウンジ/ライン
-    r"[^ド](?<!スプ|ソブ)リンクラ(?!ウ(ド|ンジ)|イン)|"
+    r"(^|[^ド])(?<!スプ|ソブ)リンクラ(?!ウ(ド|ンジ)|イン)|"
     r"hasu\s?no\s?sora|蓮ノ(空|休日)|"
     r"cerise\sbouquet|スリーズブーケ|dollchestra|ドルケストラ|"
     r"mira-cra\spark!?|みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|"
@@ -135,7 +135,7 @@ EXCLUDE_RE = re.compile(
     # love live(-)action/streaming
     r"\blove live[ \-](action|streaming)\b|"
     # "love live the" as a typo of "long live the"
-    r"(^|[^\w]) *?love live the (?!school idol|musical)\b|"
+    r"(^|\W) *?love live the (?!school idol|musical)\b|"
     # "love live [something]" as a typo of "long live [something]"
     r"[a-z]+[.?!] love live #?\w+|"
     # love live laugh/service/theater/shows/TV/bands/oak(s), Love Live in/from Paris
