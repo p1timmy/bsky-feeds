@@ -42,7 +42,7 @@ LOVELIVE_RE = re.compile(
     r"松浦\s?果南|matsuu?ra\s?kanan|kanan\s?matsuu?ra|"
     r"黒澤\s?(ダイヤ|ルビィ?)|kurosawa\s?(dia|ruby)|(dia|ruby)\s?kurosawa|"
     r"がんば(ルビ|るび)|ganbaruby|"
-    r"渡辺\s?曜|watanabe\s?you|you\s?watanabe|ヨーソロー|ﾖｰｿﾛｰ|\byousoro|"
+    r"渡辺\s?曜|watanabe\s?you|you\s?watanabe|ヨーソロー?|ﾖｰｿﾛｰ?|\byousoro|"
     r"津島\s?善子|tsushima\s?yoshiko|yoshiko\s?tsushima|堕天使ヨハネ|"
     r"国木田\s?花丸|kunikida\s?hanamaru|hanamaru\s?kunikida|zuramaru|"
     r"小原\s?鞠莉|ohara\s?mari|mari\s?ohara|"
@@ -109,7 +109,7 @@ LOVELIVE_RE = re.compile(
     # Concerts
     r"異次元フェス|ijigen\sfest?|"
     # Notable community groups
-    r"(team )?onib(e|ased)",
+    r"\b(team )?onib(e|ased)\b",
     re.IGNORECASE,
 )
 EXCLUDE_RE = re.compile(
