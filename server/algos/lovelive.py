@@ -90,8 +90,9 @@ LOVELIVE_RE = re.compile(
     r"聖澤悠奈|hijirisawa\s?yuu?na|yuu?na\s?hijirisawa|"
     r"柊\s?摩央|hiiragi\s?mao|mao\s?hiiragi|"
     # Link! Like! Love Live! / Hasunosora
-    # リンクラ but not スプリンクラー or words with ソブリン/クラウド/ドリンク/ラウンジ/ライン
-    r"(^|[^ド])(?<!スプ|ソブ)リンクラ(?!ウ(ド|ンジ)|イン)|"
+    # リンクラ but not スプリンクラー/シュリンクラップ or words with ソブリン/クラウド/ドリンク/
+    # ラウンジ/ライン
+    r"(^|[^ド])(?<!スプ|ソブ|シュ)リンクラ(?!ウ(ド|ンジ)|イン|ップ)|"
     r"hasu\s?no\s?sora|蓮ノ(空|休日)|"
     r"cerise\sbouquet|スリーズブーケ|dollchestra|ドルケストラ|"
     r"mira-cra\spark!?|みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|"
