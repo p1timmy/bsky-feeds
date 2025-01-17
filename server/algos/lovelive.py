@@ -2,7 +2,6 @@ import re
 
 from server import config
 from server.algos._base import get_post_texts
-from server.algos._userlists import load_user_list_with_logs
 
 LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)love ?live[!\s]*", re.IGNORECASE
@@ -195,12 +194,3 @@ def filter(post: dict) -> bool:
             LOVELIVE_RE.search(all_texts),
         )
     )
-
-
-load_user_list_with_logs(
-    "lovelive_users.csv", DEDICATED_USERS, "dedicated LoveLive accounts list"
-)
-
-load_user_list_with_logs(
-    "lovelive_ignore_users.csv", IGNORE_USERS, "LoveLive!Sky feed user ignore list"
-)

@@ -1,9 +1,20 @@
 import csv
 from pathlib import Path, PurePath
+from typing import NamedTuple
 
 from click import style
 
 from server.logger import logger
+
+
+class UserList(NamedTuple):
+    """
+    Container for a user list (a `set` of user DIDs) and its metadata
+    """
+
+    csv_filename: str
+    member_dids: set[str]
+    description: str
 
 
 def load_user_list(filename: str, user_set: set[str]):
