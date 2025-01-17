@@ -1,7 +1,8 @@
 import re
 
 from server import config
-from server.algos._base import get_post_texts, load_user_list_with_logs
+from server.algos._base import get_post_texts
+from server.algos._userlists import load_user_list_with_logs
 
 LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)love ?live[!\s]*", re.IGNORECASE
