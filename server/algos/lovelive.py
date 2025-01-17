@@ -7,11 +7,11 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)love ?live[!\s]*", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live[!\s]*(s(ky|taff|u(nshine|perstar)))|thank you love ?live\b|"
+    r"love\s?live[!\s]*(s(ky|taff|u(nshine|per ?star)))|thank you love ?live\b|"
     r"#lovelive_|ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     r"スクールアイドル|school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
     # Games
-    r"\bllsif\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|ぷちぐる|puchiguru|"
+    r"\bl(l|ove ?live ?)sif\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|ぷちぐる|puchiguru|"
     # スクフェス/スクスタ but not words with マスク/スタンド/スタンプ
     r"(^|[^マ])スク(フェス|スタ(?!ン[ドプ]))|"
     # Love Live! School Idol Project
@@ -116,7 +116,10 @@ EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
     r"\b(i(['’]d)?|you|we( (all|both))?|they|gotta|who|people|s?he)"
     r"( ([a-z]+(ing?|ly)|just|al(so|ways)|still|(used? t|t(o|end t))o|do(es)?|bloody|"
-    r"would(v['’]e)?|[a-z]+[a-z] and)\,?)*( love)+ liver?|"
+    r"would(v['’]e)?|[a-z]+[a-z] and)\,?)*( love)+ live(r|(?! (so(?! far)|and|but)\b)"
+    r"(-|,? #?)[a-z]+\b)|"
+    # People I/you/etc. love live
+    r"people (i|you|they) love live|"
     # Anyone ... love live music?
     r"anyone( .+)? love live music\?|"
     # love lives/Liverpool/lived/lively/livelihood, love live life/love/local
@@ -136,22 +139,27 @@ EXCLUDE_RE = re.compile(
     r"\blove live[ \-](action|streaming)\b|"
     # "love live the" as a typo of "long live the"
     r"(^|\W) *?love live the (?!school idol|musical)\b|"
-    # "love live [something]" as a typo of "long live [something]"
-    r"([a-z]+[.?!]  ?|^)love live( #?[a-z]+[a-z]){1,2} ?([^a-z ]|$)|"
-    # love live laugh/service/theater/shows/TV/bands/oak(s), Love Live in/from Paris
-    # (misspelling of "Lover (Live From Paris)" album by Taylor Swift)
-    r"\blove live (laugh|service|t(heat(er|re)|v)|(band|show)s|oaks?|(in|from) paris)|"
-    # (may) your love live
-    r"\bmay your love live|\byour love live[.,]|"
+    # "love live [something]" as a typo of "long live [something]" or "love love love
+    # love [something]"
+    r"([a-z]+[^\w\s]*?  ?|^)(love )+live( #?[a-z]+[a-z]){1,2} ?([^a-z ]|$)|"
+    # love live laugh/service/theater/shows/TV/bands/oak(s)/mealworms, "Live and Let
+    # Die" (movie title), Love Live in/from Paris (misspelling of "Lover (Live From
+    # Paris)" album by Taylor Swift)
+    r"\blove live (laugh|service|t(heat(er|re)|v)|(band|show)s|oaks?|mealworms|"
+    r"and let die|(in|from) paris)|"
+    # may your love live
+    r"\bmay your love live|"
+    # "you(r) love live" before period/comma
+    r"\byour? love live[.,]|"
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
-    r"\bi (\w+ )?love live (&|and) learn|"
+    r"\bi ([a-z]+[a-z] )?love live (&|and) learn|"
     # Official Love Live (rock music) Festival and its venue
     r"\b(official )?love live festival\b|\b(blackpool|winter gardens)\b|"
-    # Prophecy x This Love by Taylor Swift
+    # "Prophecy x This Love" by Taylor Swift
     r"prophecy x this love",
     re.IGNORECASE | re.MULTILINE,
 )
-NSFW_KEYWORDS_RE = re.compile("hentai|futanari|penis|dildo|#コイカツ", re.IGNORECASE)
+NSFW_KEYWORDS_RE = re.compile("\b(hentai|futanari|penis|dildo|bds&?m)", re.IGNORECASE)
 
 # Prepopulate user list with only @lovelivenews.bsky.social just in case loading from
 # file didn't work
