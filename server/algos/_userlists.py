@@ -1,20 +1,31 @@
 import csv
+from collections.abc import Collection
 from pathlib import Path, PurePath
-from typing import NamedTuple
+from typing import NamedTuple, Optional
 
 from click import style
 
+from server.api_client import get_client, get_list_members
 from server.logger import logger
 
 
 class UserList(NamedTuple):
     """
     Container for a user list (a `set` of user DIDs) and its metadata
+
+    :param csv_filename: Name of CSV file in the `lists` directory to load list members
+    :param member_dids: A `set` of `str`s containing list member DIDs
+    :param description: The description of the user list as shown in logs
+    :param uri: ATProto URI to a live version of the user list on Bluesky.
+        Setting this to an empty string or None prevents the user list from being updated.
+
+        Defaults to None.
     """
 
     csv_filename: str
     member_dids: set[str]
     description: str
+    uri: Optional[str] = None
 
 
 def load_user_list(filename: str, user_set: set[str]):
@@ -58,3 +69,33 @@ def load_user_list_with_logs(filename: str, user_set: set[str], list_desc: str):
         added_count = len(user_set) - initial_count
         if added_count > 0:
             logger.info("Loaded DIDs in %s: %d", list_desc, added_count)
+
+
+def update_user_lists(userlists: Collection[UserList]):
+    # Create new client instance here to log in/check session once before retrieving
+    # the first list
+    client = get_client()
+
+    for user_list_info in userlists:
+        if not user_list_info.uri:
+            continue
+
+        member_dids = set(
+            {member.did for member in get_list_members(user_list_info.uri, client)}
+        )
+
+        user_did_set = user_list_info.member_dids
+        initial_count = len(user_did_set)
+        dids_to_add = member_dids.difference(user_did_set)
+        dids_to_remove = user_did_set.difference(member_dids)
+
+        user_did_set.update(dids_to_add)
+        user_did_set.difference_update(dids_to_remove)
+
+        if (len(user_did_set) - initial_count) != 0:
+            logger.info(
+                style("Updated %s: added %d, removed %d", fg="green"),
+                user_list_info.description,
+                len(dids_to_add),
+                len(dids_to_remove),
+            )

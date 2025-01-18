@@ -4,14 +4,25 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# ---- Server hostname ----
+
 HOSTNAME = os.environ.get("HOSTNAME")
 if not HOSTNAME:
     raise RuntimeError('You should set "HOSTNAME" environment variable first.')
 
-SERVICE_DID = os.environ.get("SERVICE_DID")
-if not SERVICE_DID:
-    SERVICE_DID = f"did:web:{HOSTNAME}"
+SERVICE_DID = os.environ.get("SERVICE_DID") or f"did:web:{HOSTNAME}"
 
+# ---- API client login ----
+
+HANDLE = os.environ.get("HANDLE")
+if not HANDLE:
+    raise RuntimeError('You should set "HANDLE" environment variable first.')
+
+PASSWORD = os.environ.get("PASSWORD")
+if not PASSWORD:
+    raise RuntimeError('You should set "PASSWORD" environment variable first.')
+
+# ---- Feed URIs ----
 
 LOVELIVE_URI = os.environ.get("LOVELIVE_URI")
 if not LOVELIVE_URI:
@@ -20,6 +31,12 @@ if not LOVELIVE_URI:
         'Set this URI to "LOVELIVE_URI" environment variable.'
     )
 
+# ---- User list URIs ----
+
+LOVELIVE_INCLUDE_LIST_URI = os.environ.get("LOVELIVE_INCLUDE_LIST_URI")
+LOVELIVE_IGNORE_LIST_URI = os.environ.get("LOVELIVE_IGNORE_LIST_URI")
+
+# ---- Database tuning pragmas ----
 
 DB_MMAP_SIZE = int(os.environ.get("DB_MMAP_SIZE") or "134217728")  # default 128MB
 DB_CACHE_SIZE = int(os.environ.get("DB_CACHE_SIZE") or "2000")

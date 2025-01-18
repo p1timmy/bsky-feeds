@@ -12,6 +12,7 @@ from server.algos import MalformedCursorError, algos
 from server.data_filter import labels_message_callback, operations_callback
 from server.database import Feed, db
 from server.logger import logger
+from server.scheduler import setup_scheduler
 
 
 def firehose_setup():
@@ -47,8 +48,11 @@ def firehose_setup():
             "labels": True,
         },
     )
+    scheduler = setup_scheduler()
+
     repo_stream_thread.start()
     labels_stream_thread.start()
+    scheduler.start()
 
     def stop_stream_threads(*_):
         if not stream_stop_event.is_set():
@@ -59,6 +63,7 @@ def firehose_setup():
                 )
             )
             stream_stop_event.set()
+            scheduler.shutdown(wait=False)
 
         sys.exit(0)
 

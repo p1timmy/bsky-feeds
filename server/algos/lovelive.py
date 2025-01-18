@@ -174,6 +174,8 @@ DEDICATED_USERS = set({LOVELIVENEWS_BSKY_SOCIAL})
 IGNORE_USERS: set[str] = set()
 
 uri = config.LOVELIVE_URI
+dedicated_userlist_uri = config.LOVELIVE_INCLUDE_LIST_URI
+ignore_list_uri = config.LOVELIVE_IGNORE_LIST_URI
 
 
 def filter(post: dict) -> bool:
