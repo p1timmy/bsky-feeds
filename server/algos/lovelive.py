@@ -123,8 +123,9 @@ EXCLUDE_RE = re.compile(
     r"people (i|you|they) love live|"
     # Anyone ... love live music?
     r"anyone( .+)? love live music\?|"
-    # love lives/Liverpool/lived/lively/livelihood, love live life/love/local
-    r"love\s?live(s|rpool|d|l(y|ihood)| ?l(ife|o(cal|ve(?! wing bell))))|"
+    # love lives/Liverpool/lived/lively/livelihood/Livejournal/LiveView, love live life/
+    # love/local
+    r"love\s?live(d|journal|l(y|ihood)|rpool|s|view| ?l(ife|o(cal|ve(?! wing bell))))|"
     # #lovelivemusic, lovelivegcw.com
     r"\blovelive(music|gcw)|"
     # that love liver (as in body part)
