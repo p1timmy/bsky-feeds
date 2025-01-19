@@ -2,6 +2,7 @@ import signal
 import sys
 import threading
 
+import validators
 from click import style
 from flask import Flask, Response, jsonify, request
 from werkzeug.exceptions import HTTPException, NotFound
@@ -17,8 +18,8 @@ from server.scheduler import setup_scheduler
 
 def firehose_setup():
     """
-    Starts firehose client (data stream) threads and creates database entries for each
-    new feed URI.
+    Starts firehose client (data stream) threads and background user list updates
+    scheduler. Also creates database entries for each new feed URI.
 
     This must be called before starting the WSGI server, otherwise no new posts will be
     added to feeds.
@@ -28,6 +29,29 @@ def firehose_setup():
     with db.atomic():
         for feed_uri in algos:
             Feed.get_or_create(uri=feed_uri)
+
+    # Warn if handle is invalid or login credentials missing/unset
+    no_list_auto_update_reason = ""
+    if config.HANDLE:
+        if validators.domain(config.HANDLE) is not True:
+            no_list_auto_update_reason = '"HANDLE" is not a valid Bluesky handle'
+        elif not config.PASSWORD:
+            no_list_auto_update_reason = (
+                '"PASSWORD" environment variable is missing or left blank'
+            )
+    else:
+        no_list_auto_update_reason = (
+            '"HANDLE" environment variable is missing or left blank'
+        )
+
+    if no_list_auto_update_reason:
+        logger.warning(
+            style(
+                "%s, lists won't be updated until next server restart",
+                fg="yellow",
+            ),
+            no_list_auto_update_reason,
+        )
 
     stream_stop_event = threading.Event()
     stream_run_args = {
@@ -52,7 +76,9 @@ def firehose_setup():
 
     repo_stream_thread.start()
     labels_stream_thread.start()
-    scheduler.start()
+
+    if scheduler:
+        scheduler.start()
 
     def stop_stream_threads(*_):
         if not stream_stop_event.is_set():
@@ -63,7 +89,9 @@ def firehose_setup():
                 )
             )
             stream_stop_event.set()
-            scheduler.shutdown(wait=False)
+
+            if scheduler:
+                scheduler.shutdown(wait=False)
 
         sys.exit(0)
 

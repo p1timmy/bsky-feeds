@@ -15,12 +15,7 @@ SERVICE_DID = os.environ.get("SERVICE_DID") or f"did:web:{HOSTNAME}"
 # ---- API client login ----
 
 HANDLE = os.environ.get("HANDLE")
-if not HANDLE:
-    raise RuntimeError('You should set "HANDLE" environment variable first.')
-
 PASSWORD = os.environ.get("PASSWORD")
-if not PASSWORD:
-    raise RuntimeError('You should set "PASSWORD" environment variable first.')
 
 # ---- Feed URIs ----
 
