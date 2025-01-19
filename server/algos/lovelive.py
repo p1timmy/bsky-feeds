@@ -120,7 +120,7 @@ EXCLUDE_RE = re.compile(
     r"\b(i(['’]d)?|you|we( (all|both))?|they|gotta|who|people|s?he)"
     r"( ([a-z]+(ing?|ly)|just|al(so|ways)|still|(used? t|t(o|end t))o|do(es)?|bloody|"
     r"would(v['’]e)?|[a-z]+[a-z] and)\,?)*( love)+ live(?! (so(?! far)|and|but)\b)"
-    r"(-|,?  ?#?)?[a-z]+\b"
+    r"(-|,?  ?#?)?[a-z]+\b|"
     # People I/you/etc. love live
     r"people (i|you|they) love live|"
     # Anyone ... love live music?
@@ -146,7 +146,7 @@ EXCLUDE_RE = re.compile(
     r"(^|\W) *?love live the (?!school idol|musical)\b|"
     # "love live [something]" as a typo of "long live [something]" or "love love love
     # love [something]"
-    r"([a-z]+[^\w\s]*?  ?|^)(love )+live( #?[a-z]+[a-z]){1,2} ?([^a-z ]|$)|"
+    r"([^\w\s]+?  ?|^)(love )+live( #?[a-z]+[a-z]){1,2} ?([^\w ]|$)|"
     # love live laugh/service/theater/shows/TV/bands/oak(s)/mealworms, "Live and Let
     # Die" (movie title), Love Live in/from Paris (misspelling of "Lover (Live From
     # Paris)" album by Taylor Swift)
