@@ -8,8 +8,8 @@ LOVELIVE_NAME_EN_RE = re.compile(
 )
 LOVELIVE_RE = re.compile(
     r"love\s?live[!\s]*(s(ky|taff|u(nshine|per ?star)))|thank you love ?live\b|"
-    r"#lovelive_|ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
-    r"スクールアイドル|school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
+    r"#lovelive_|ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|スクールアイドル|"
+    r"(?<!middle )(?<!high )school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
     # Games
     r"\bl(l|ove ?live ?)sif\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|puchiguru|"
     # ぷちぐる but not ぷちぐるみ
@@ -118,16 +118,16 @@ LOVELIVE_RE = re.compile(
 EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
     r"\b(i(['’]d)?|you|we( (all|both))?|they|gotta|who|people|s?he)"
-    r"( ([a-z]+(ing?|ly)|just|al(so|ways)|still|(used? t|t(o|end t))o|do(es)?|bloody|"
+    r"( ([a-z]+(ing?|ly)|just|al(so|ways)|still|(used? t|s|t(o|end t))o|do(es)?|bloody|"
     r"would(v['’]e)?|[a-z]+[a-z] and)\,?)*( love)+ live(?! (so(?! far)|and|but)\b)"
-    r"(-|,?  ?#?)?[a-z]+\b|"
+    r"(-|,?  ?#?)?\w+\b|"
     # People I/you/etc. love live
     r"people (i|you|they) love live|"
     # Anyone ... love live music?
     r"anyone( .+)? love live music\?|"
-    # love lives/Liverpool/lived/lively/livelihood/Livejournal/LiveView/Livewire,
+    # love lives/Liverpool/lived/lively/livelihood/Livejournal/LiveView/Livewire/Live2D,
     # love live life/love/local
-    r"love\s?live(d|journal|l(y|ihood)|rpool|s|view|wire|"
+    r"love\s?live(2?d|journal|l(y|ihood)|rpool|s|view|wire|"
     r" ?l(ife|o(cal|ve(?! wing bell))))|"
     # #lovelivemusic, lovelivegcw.com
     r"\blovelive(music|gcw)|"
@@ -135,8 +135,8 @@ EXCLUDE_RE = re.compile(
     r"\bthat ([a-z]+[a-z] )?love liver\b|"
     # Dangerously/Drunk in Love, who live in love (1 John 4:16)
     r"\b(d(angerously|runk)|who live) in love\b|"
-    # laugh/let/radical/Rinku Love Live
-    r"\b(l(augh|et)|r(adical|inku)) love live\b|"
+    # laugh/let/live/radical/Rinku Love Live
+    r"\b(l(augh|et|ive)|r(adical|inku)) love live\b|"
     # if you live in/near/around [place name] and love live music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+|[^\w ]\s*)love live"
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|"
