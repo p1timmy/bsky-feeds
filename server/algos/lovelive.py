@@ -11,7 +11,9 @@ LOVELIVE_RE = re.compile(
     r"#lovelive_|ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     r"スクールアイドル|school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
     # Games
-    r"\bl(l|ove ?live ?)sif\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|ぷちぐる|puchiguru|"
+    r"\bl(l|ove ?live ?)sif\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|puchiguru|"
+    # ぷちぐる but not ぷちぐるみ
+    r"ぷちぐる[^み]|"
     # スクフェス/スクスタ but not words with マスク/スタンド/スタンプ
     r"(^|[^マ])スク(フェス|スタ(?!ン[ドプ]))|"
     # Love Live! School Idol Project
@@ -117,15 +119,16 @@ EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
     r"\b(i(['’]d)?|you|we( (all|both))?|they|gotta|who|people|s?he)"
     r"( ([a-z]+(ing?|ly)|just|al(so|ways)|still|(used? t|t(o|end t))o|do(es)?|bloody|"
-    r"would(v['’]e)?|[a-z]+[a-z] and)\,?)*( love)+ live(r|(?! (so(?! far)|and|but)\b)"
-    r"(-|,? #?)[a-z]+\b)|"
+    r"would(v['’]e)?|[a-z]+[a-z] and)\,?)*( love)+ live(?! (so(?! far)|and|but)\b)"
+    r"(-|,?  ?#?)?[a-z]+\b"
     # People I/you/etc. love live
     r"people (i|you|they) love live|"
     # Anyone ... love live music?
     r"anyone( .+)? love live music\?|"
-    # love lives/Liverpool/lived/lively/livelihood/Livejournal/LiveView, love live life/
-    # love/local
-    r"love\s?live(d|journal|l(y|ihood)|rpool|s|view| ?l(ife|o(cal|ve(?! wing bell))))|"
+    # love lives/Liverpool/lived/lively/livelihood/Livejournal/LiveView/Livewire,
+    # love live life/love/local
+    r"love\s?live(d|journal|l(y|ihood)|rpool|s|view|wire|"
+    r" ?l(ife|o(cal|ve(?! wing bell))))|"
     # #lovelivemusic, lovelivegcw.com
     r"\blovelive(music|gcw)|"
     # that love liver (as in body part)
