@@ -13,6 +13,11 @@ def main():
         "server", description="ATProto Feed Generator Server"
     )
     parser.add_argument(
+        "--update-lists-now",
+        action="store_true",
+        help="update user lists immediately at startup/reload",
+    )
+    parser.add_argument(
         "--dev",
         action="store_true",
         help="run development server - DO NOT USE IN PRODUCTION",
@@ -38,13 +43,13 @@ def main():
     # unused after a graceful reload
     from server.app import app, firehose_setup
 
+    firehose_setup(args.update_lists_now)
+
     host = "127.0.0.1"
     port = 8000
     if args.dev:
-        firehose_setup()
         app.run(host=host, port=port, debug=True, use_reloader=False)
     else:
-        firehose_setup()
         waitress.serve(app, host=host, port=port)
 
 

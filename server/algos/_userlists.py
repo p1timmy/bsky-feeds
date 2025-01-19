@@ -92,6 +92,9 @@ def update_user_lists(userlists: Collection[UserList]):
         user_did_set.update(dids_to_add)
         user_did_set.difference_update(dids_to_remove)
 
+        # TODO: Save to file to preserve updates between restarts without having to wait
+        # for Git repo to be updated
+
         if (len(user_did_set) - initial_count) != 0:
             logger.info(
                 style("Updated %s: added %d, removed %d", fg="green"),

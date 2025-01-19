@@ -9,14 +9,14 @@ from werkzeug.exceptions import HTTPException, NotFound
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from server import config, data_stream
-from server.algos import MalformedCursorError, algos
+from server.algos import MalformedCursorError, algos, userlists
 from server.data_filter import labels_message_callback, operations_callback
 from server.database import Feed, db
 from server.logger import logger
-from server.scheduler import setup_scheduler
+from server.scheduler import setup_scheduler, update_user_lists
 
 
-def firehose_setup():
+def firehose_setup(do_userlist_updates: bool = False):
     """
     Starts firehose client (data stream) threads and background user list updates
     scheduler. Also creates database entries for each new feed URI.
@@ -45,6 +45,7 @@ def firehose_setup():
         )
 
     if no_list_auto_update_reason:
+        do_userlist_updates = False
         logger.warning(
             style(
                 "%s, lists won't be updated until next server restart",
@@ -52,6 +53,11 @@ def firehose_setup():
             ),
             no_list_auto_update_reason,
         )
+
+    # Check for user list updates if `--update-lists-now` flag is used
+    if do_userlist_updates:
+        logger.info("Checking for user list updates...")
+        update_user_lists(userlists)
 
     stream_stop_event = threading.Event()
     stream_run_args = {
