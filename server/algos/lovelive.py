@@ -14,8 +14,8 @@ LOVELIVE_RE = re.compile(
     r"\bl(l|ove ?live ?)sif\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|puchiguru|"
     # ぷちぐる but not ぷちぐるみ
     r"ぷちぐる[^み]|"
-    # スクフェス/スクスタ but not words with マスク/スタンド/スタンプ
-    r"(^|[^マ])スク(フェス|スタ(?!ン[ドプ]))|"
+    # スクフェス/スクスタ but not words with マスク/スタンド/スタンプ/スタイル
+    r"(^|[^マ])スク(フェス|スタ(?!ン[ドプ]|イル))|"
     # Love Live! School Idol Project
     # NOTE: Printemps, lily white, BiBi not included due to too many false positives
     r"音ノ木坂?|otonokizaka|[μµ]['’‘`´′]s|にこりんぱな|nicorinpana|"
@@ -93,8 +93,8 @@ LOVELIVE_RE = re.compile(
     r"柊\s?摩央|hiiragi\s?mao|mao\s?hiiragi|"
     # Link! Like! Love Live! / Hasunosora
     # リンクラ but not スプリンクラー/シュリンクラップ or words with ソブリン/クラウド/ドリンク/
-    # ラウンジ/ライン
-    r"(^|[^ド])(?<!スプ|ソブ|シュ)リンクラ(?!ウ(ド|ンジ)|イン|ップ)|"
+    # ラウンジ/ライン/クラブ
+    r"(^|[^ド])(?<!スプ|ソブ|シュ)リンクラ(?!ウ(ド|ンジ)|イン|ップ|ブ)|"
     r"hasu\s?no\s?sora|蓮ノ(空|休日)|"
     r"cerise\sbouquet|スリーズブーケ|dollchestra|ドルケストラ|"
     r"mira-cra\spark!?|みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|"
@@ -160,6 +160,7 @@ EXCLUDE_RE = re.compile(
     r"\bi ([a-z]+[a-z] )?love live (&|and) learn|"
     # Official Love Live (rock music) Festival and its venue
     r"\b(official )?love live festival\b|\b(blackpool|winter gardens)\b|"
+    r"#lovelivefestival|"
     # "Prophecy x This Love" by Taylor Swift
     r"prophecy x this love",
     re.IGNORECASE | re.MULTILINE,
