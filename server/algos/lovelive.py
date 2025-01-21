@@ -29,7 +29,7 @@ LOVELIVE_RE = re.compile(
     r"小泉\s?花陽|koizumi\s?hanayo|hanayo\s?koizumi|火曜日かよちゃん|"
     r"矢澤\s?にこ|yazawa\s?nico|nico\s?yazawa|nico\snico\sni+\b|#niconiconi+\b|"
     r"snow\s?halation|"
-    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|\b)a[-\u2010]rise[^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|"
+    r"[^a-z\u00C0-\u024F\u1E00-\u1EFF\-]a[-\u2010]rise[^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|"
     r"綺羅\s?ツバサ|kira\s?tsubasa|tsubasa\s?kira|"
     r"優木\s?あんじゅ|yuu?ki\s?anju|anju\s?yuu?ki|"
     r"統堂\s?英玲奈|tou?dou?\s?erena|\berena\s?tou?dou?\b|"
@@ -117,10 +117,10 @@ LOVELIVE_RE = re.compile(
 )
 EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
-    r"\b(i(['’]d)?|you|we( (all|both))?|they|gotta|who|people|s?he)"
-    r"( ([a-z]+(ing?|ly)|just|al(so|ways)|still|(used? t|s|t(o|end t))o|do(es)?|bloody|"
-    r"would(v['’]e)?|[a-z]+[a-z] and)\,?)*( love)+ live(?! (so(?! far)|and|but)\b)"
-    r"(-|,?  ?#?)?\w+\b|"
+    r"\b(i(['’]d)?|you(['’]ll)?|we( (all|both))?|they|gotta|who|people|s?he)"
+    r"( ([a-z]+(ing?|ly)|just|al(so|ways)|(st|w)ill|(used? t|s|t(o|end t))o|do(es)?|"
+    r"bloody|would(v['’]e)?|don['’]t|[a-z]+[a-z] and)\,?)*( love)+ live"
+    r"(?! (so(?! far)|and|but)\b)(-|,?  ?#?)?\w+\b|"
     # People I/you/etc. love live
     r"people (i|you|they) love live|"
     # Anyone ... love live music?
@@ -135,8 +135,8 @@ EXCLUDE_RE = re.compile(
     r"\bthat ([a-z]+[a-z] )?love liver\b|"
     # Dangerously/Drunk in Love, who live in love (1 John 4:16)
     r"\b(d(angerously|runk)|who live) in love\b|"
-    # laugh/let/live/radical/Rinku Love Live
-    r"\b(l(augh|et|ive)|r(adical|inku)) love live\b|"
+    # laugh/let/live/radical/you are in/Rinku Love Live
+    r"\b(l(augh|et|ive)|r(adical|inku)|you( a|['’])re in) love live\b|"
     # if you live in/near/around [place name] and love live music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+|[^\w ]\s*)love live"
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|"
@@ -147,10 +147,10 @@ EXCLUDE_RE = re.compile(
     # "love live [something]" as a typo of "long live [something]" or "love love love
     # love [something]"
     r"([^\w\s]+?  ?|^)(love )+live( #?[a-z]+[a-z]){1,2} ?([^\w ]|$)|"
-    # love live laugh/service/theater/shows/TV/bands/oak(s)/mealworms, "Live and Let
-    # Die" (movie title), Love Live in/from Paris (misspelling of "Lover (Live From
-    # Paris)" album by Taylor Swift)
-    r"\blove live (laugh|service|t(heat(er|re)|v)|(band|show)s|oaks?|mealworms|"
+    # love live laugh/service/theater/shows/TV/bands/oak(s)/mealworms/your,
+    # "Live and Let Die" (movie title), Love Live in/from Paris (misspelling of
+    # "Lover (Live From Paris)" album by Taylor Swift)
+    r"\blove live (laugh|service|t(heat(er|re)|v)|(band|show)s|oaks?|mealworms|your"
     r"and let die|(in|from) paris)|"
     # may your love live
     r"\bmay your love live|"
