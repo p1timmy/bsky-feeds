@@ -14,8 +14,8 @@ LOVELIVE_RE = re.compile(
     r"\bl(l|ove ?live ?)sif\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|puchiguru|"
     # ぷちぐる but not ぷちぐるみ
     r"ぷちぐる[^み]|"
-    # スクフェス/スクスタ but not words with マスク/スタンド/スタンプ/スタイル
-    r"(^|[^マ])スク(フェス|スタ(?!ン[ドプ]|イル))|"
+    # スクフェス/スクスタ but not words with マスク/スタンド/スタンプ/スタイル/スタッフ
+    r"(^|[^マ])スク(フェス|スタ(?!ン[ドプ]|イル|ッフ))|"
     # Love Live! School Idol Project
     # NOTE: Printemps, lily white, BiBi not included due to too many false positives
     r"音ノ木坂?|otonokizaka|[μµ]['’‘`´′]s|にこりんぱな|nicorinpana|"
@@ -135,8 +135,8 @@ EXCLUDE_RE = re.compile(
     r"\bthat ([a-z]+[a-z] )?love liver\b|"
     # Dangerously/Drunk in Love, who live in love (1 John 4:16)
     r"\b(d(angerously|runk)|who live) in love\b|"
-    # laugh/let/live/radical/you are in/Rinku Love Live
-    r"\b(l(augh|et|ive)|r(adical|inku)|you( a|['’])re in) love live\b|"
+    # laugh/let/live/radical/you are in/life/Rinku Love Live
+    r"\b(l(augh|et|ive)|r(adical|inku)|you( a|['’])re in|(?<!link )life) love live\b|"
     # if you live in/near/around [place name] and love live music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+|[^\w ]\s*)love live"
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|"
@@ -147,11 +147,11 @@ EXCLUDE_RE = re.compile(
     # "love live [something]" as a typo of "long live [something]" or "love love love
     # love [something]"
     r"([^\w\s]+?  ?|^)(love )+live( #?[a-z]+[a-z]){1,2} ?([^\w ]|$)|"
-    # love live laugh/service/theater/shows/TV/bands/oak(s)/mealworms/your,
-    # "Live and Let Die" (movie title), Love Live in/from Paris (misspelling of
-    # "Lover (Live From Paris)" album by Taylor Swift)
-    r"\blove live (laugh|service|t(heat(er|re)|v)|(band|show)s|oaks?|mealworms|your"
-    r"and let die|(in|from) paris)|"
+    # love live laugh/service/theater/shows/performances/TV/bands/oak(s)/mealworms/
+    # your [something], "Live and Let Die" (movie title), Love Live in/from Paris
+    # (misspelling of "Lover (Live From Paris)" album by Taylor Swift)
+    r"\blove live (laugh|service|t(heat(er|re)|v)|(band|show)s|oaks?|mealworms|your|"
+    r"performances|and let die|(in|from) paris)|"
     # may your love live
     r"\bmay your love live|"
     # "you(r) love live" before period/comma
