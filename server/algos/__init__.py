@@ -6,6 +6,10 @@ algos = {
     lovelive.uri: _base.handler,
 }
 
+algo_names = {
+    lovelive.uri: lovelive.__name__.split(".")[-1],
+}
+
 filters = {
     lovelive.uri: lovelive.filter,
 }
@@ -25,7 +29,7 @@ userlists = [
     ),
 ]
 
-for userlist in userlists:
+for _userlist in userlists:
     load_user_list_with_logs(
-        userlist.csv_filename, userlist.member_dids, userlist.description
+        _userlist.csv_filename, _userlist.member_dids, _userlist.description
     )

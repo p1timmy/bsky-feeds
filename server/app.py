@@ -9,7 +9,7 @@ from werkzeug.exceptions import HTTPException, NotFound
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from server import config, data_stream
-from server.algos import MalformedCursorError, algos, userlists
+from server.algos import MalformedCursorError, algo_names, algos, userlists
 from server.data_filter import labels_message_callback, operations_callback
 from server.database import Feed, db
 from server.logger import logger
@@ -27,8 +27,14 @@ def firehose_setup(do_userlist_updates: bool = False):
 
     # Add feed URIs if not in database
     with db.atomic():
-        for feed_uri in algos:
-            Feed.get_or_create(uri=feed_uri)
+        for feed_uri, algo_name in algo_names.items():
+            feed: Feed
+            _: bool
+            feed, _ = Feed.get_or_create(uri=feed_uri)
+
+            # Set algo_name separately in case DB was just migrated
+            if not feed.algo_name:
+                Feed.update(algo_name=algo_name).where(Feed.uri == feed_uri).execute()
 
     # Warn if handle is invalid or login credentials missing/unset
     no_list_auto_update_reason = ""

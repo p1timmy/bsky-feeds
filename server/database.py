@@ -40,6 +40,7 @@ class Post(BaseModel):
 
 
 class Feed(BaseModel):
+    algo_name = peewee.CharField(null=True, default=None, unique=True)
     uri = peewee.CharField(unique=True)
     posts = peewee.ManyToManyField(Post, backref="feeds")
 
@@ -66,6 +67,11 @@ class SubscriptionState(BaseModel):
         database = db
 
 
+def _column_exists(table_name: str, col_name: str) -> bool:
+    cols: set[str] = set({col.name for col in db.get_columns(table_name)})
+    return col_name in cols
+
+
 def _close_db_at_exit():
     if not db.is_closed():
         db.close()
@@ -75,6 +81,8 @@ atexit.register(_close_db_at_exit)
 
 if db.is_closed():
     db.connect()
+
+    # v0: Initial state as of first deploying server (commit 5646679)
     if not db.get_tables():
         db.create_tables(
             [Post, Feed, Feed.posts.get_through_model(), SubscriptionState], safe=True
@@ -83,29 +91,29 @@ if db.is_closed():
     migrator = migrate.SqliteMigrator(db)
     migrations: list[list] = []
 
+    # v1: Add `adult_labels` column to `post`
     tablename = "post"
-    post_cols = [col.name for col in db.get_columns(tablename)]
-    if "adult_labels" not in post_cols:
-        migrations.append(
-            migrator.add_column(tablename, "adult_labels", Post.adult_labels)
-        )
+    col_name = "adult_labels"
+    if not _column_exists(tablename, col_name):
+        migrations.append(migrator.add_column(tablename, col_name, Post.adult_labels))
 
+    # v2: Add `firehose_type` column to `subscriptionstate`, change indexes
     tablename = "subscriptionstate"
-    subscription_state_cols = [col.name for col in db.get_columns(tablename)]
-    if "firehose_type" not in subscription_state_cols:
-        migrations.extend(
-            [
-                migrator.add_column(
-                    tablename, "firehose_type", SubscriptionState.firehose_type
-                ),
-                migrator.drop_index(tablename, "subscriptionstate_service"),
-                migrator.add_index(
-                    tablename, ("service", "firehose_type"), unique=True
-                ),
-            ]
-        )
+    col_name = "firehose_type"
+    if not _column_exists(tablename, col_name):
+        migrations += [
+            migrator.add_column(tablename, col_name, SubscriptionState.firehose_type),
+            migrator.drop_index(tablename, f"{tablename}_service"),
+            migrator.add_index(tablename, ("service", col_name), unique=True),
+        ]
+
+    # v3: Add `algo_name` column to `feed`
+    tablename = "feed"
+    col_name = "algo_name"
+    if not _column_exists(tablename, col_name):
+        migrations.append(migrator.add_column(tablename, col_name, Feed.algo_name))
 
     if migrations:
         with db.atomic():
             migrate.migrate(*migrations)
-            db.pragma("main.user_version", 2)
+            db.pragma("main.user_version", 3)
