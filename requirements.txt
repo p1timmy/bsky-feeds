@@ -1,8 +1,8 @@
-atproto~=0.0.56
+atproto @ git+https://github.com/MarshalX/atproto.git@8b89a2439d5475b799e8d64f121068d70913bfc2
 peewee~=3.17.8
 Flask~=2.3.3
 python-dotenv<2.0
-apscheduler>=3.11.0<4.0.0
+apscheduler>=3.11.0,<4.0.0
 hupper
 py-multiformats-cid
 tld
