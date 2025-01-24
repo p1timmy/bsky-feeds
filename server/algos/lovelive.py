@@ -11,7 +11,7 @@ LOVELIVE_RE = re.compile(
     r"#lovelive_|ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|スクールアイドル|"
     r"(?<!middle )(?<!high )school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
     # Games
-    r"\bl(l|ove ?live ?)sif\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|puchiguru|"
+    r"\bl(l|ove ?live ?)sif2?\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|puchiguru|"
     # ぷちぐる but not ぷちぐるみ
     r"ぷちぐる[^み]|"
     # スクフェス/スクスタ but not words with マスク/スタンド/スタンプ/スタイル/スタッフ
@@ -35,7 +35,9 @@ LOVELIVE_RE = re.compile(
     r"統堂\s?英玲奈|tou?dou?\s?erena|\berena\s?tou?dou?\b|"
     # Love Live! Sunshine!!
     # NOTE: AZALEA not included due to too many false positives
-    r"浦の星女?|uranohoshi|aq(ou|uo)rs|cyaron!?|guilty\s?kiss|わいわいわい|"
+    r"浦の星女?|uranohoshi|aq(ou|uo)rs|cyaron!?|guilty\s?kiss|"
+    # YYY (You, Yoshiko/Yohane, RubY)
+    r"(?<!わい)(?<!わーい)わいわいわい(?!わー?い)|"
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)aiscream|"
     r"幻(日のヨハネ|ヨハ)|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(genjitsu\s?no\s?)?yohane\b|"
     r"sunshine\sin\sthe\smirror|"
@@ -135,8 +137,9 @@ EXCLUDE_RE = re.compile(
     r"\bthat ([a-z]+[a-z] )?love liver\b|"
     # Dangerously/Drunk in Love, who live in love (1 John 4:16)
     r"\b(d(angerously|runk)|who live) in love\b|"
-    # laugh/let/live/radical/you are in/life/Rinku Love Live
-    r"\b(l(augh|et|ive)|r(adical|inku)|you( a|['’])re in|(?<!link )life) love live\b|"
+    # laugh/let/live/radical/you are in/life/performing .../savage/Rinku Love Live
+    r"\b(l(augh|et|ive)|r(adical|inku)|you( a|['’])re in|(?<!link )life|savage|"
+    r"performing( \w+)+) love live\b|"
     # if you live in/near/around [place name] and love live music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+|[^\w ]\s*)love live"
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|"
