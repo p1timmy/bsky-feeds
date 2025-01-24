@@ -39,6 +39,9 @@ def firehose_setup(do_userlist_updates: bool = False):
             no_list_auto_update_reason = (
                 '"PASSWORD" environment variable is missing or left blank'
             )
+        elif all(not userlist.uri for userlist in userlists):
+            # FIXME: Different message if URIs of all userlists are hardcoded to None
+            no_list_auto_update_reason = "No list URIs found in config"
     else:
         no_list_auto_update_reason = (
             '"HANDLE" environment variable is missing or left blank'

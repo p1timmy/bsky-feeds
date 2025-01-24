@@ -17,7 +17,14 @@ def setup_scheduler() -> Optional[BackgroundScheduler]:
     invalid or missing/unset, otherwise a new `BackgroundScheduler` instance
     """
 
-    if all([config.HANDLE, config.PASSWORD, validators.domain(config.HANDLE) is True]):
+    if all(
+        [
+            config.HANDLE,
+            config.PASSWORD,
+            validators.domain(config.HANDLE) is True,
+            any(userlist.uri for userlist in userlists),
+        ]
+    ):
         scheduler = BackgroundScheduler()
         scheduler.add_job(
             update_user_lists, trigger=IntervalTrigger(minutes=20), args=[userlists]
