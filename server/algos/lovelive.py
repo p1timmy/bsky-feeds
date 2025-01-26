@@ -109,7 +109,7 @@ LOVELIVE_RE = re.compile(
     r"大沢\s?瑠璃乃|osawa\s?rurino|rurino\s?osawa|"
     r"百生\s?吟子|momose\s?ginko|ginko\s?momose|"
     r"徒町\s?小鈴|kachimachi\s?kosuzu|kosuzu\s?kachimachi|"
-    r"安養寺\s?姫芽|anyoji\s?hime|hime\s?anyoji|"
+    r"安養寺\s?姫芽|anyoji\s?hime|\bhime\s?anyoji\b|"
     r"大賀美沙知|ogami\s?sachi|sachi\s?ogami|"
     # Concerts
     r"異次元フェス|ijigen\sfest?|"
@@ -133,12 +133,14 @@ EXCLUDE_RE = re.compile(
     r" ?l(ife|o(cal|ve(?! wing bell))))|"
     # #lovelivemusic, lovelivegcw.com
     r"\blovelive(music|gcw)|"
+    # [Artist] - [song name ending with "love"] live
+    r"\w+ - .+ love live\b[^!]|"
     # that love liver (as in body part)
     r"\bthat ([a-z]+[a-z] )?love liver\b|"
     # Dangerously/Drunk in Love, who live in love (1 John 4:16)
     r"\b(d(angerously|runk)|who live) in love\b|"
-    # laugh/let/live/radical/you are in/life/performing .../savage/Rinku Love Live
-    r"\b(l(augh|et|ive)|r(adical|inku)|you( a|['’])re in|(?<!link )life|savage|"
+    # laugh/let/live/radical/you are in/life/performing .../savage/mad/Rinku Love Live
+    r"\b(l(augh|et|ive)|r(adical|inku)|you( a|['’])re in|(?<!link )life|savage|mad|"
     r"performing( \w+)+) love live\b|"
     # if you live in/near/around [place name] and love live music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+|[^\w ]\s*)love live"
