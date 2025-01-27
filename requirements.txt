@@ -1,4 +1,4 @@
-atproto @ git+https://github.com/MarshalX/atproto.git@8b89a2439d5475b799e8d64f121068d70913bfc2
+atproto~=0.0.58
 peewee~=3.17.8
 Flask~=2.3.3
 python-dotenv<2.0
