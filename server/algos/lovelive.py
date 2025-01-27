@@ -120,8 +120,8 @@ LOVELIVE_RE = re.compile(
 EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
     r"\b(i(['’]d)?|you(['’]ll)?|we( (all|both))?|they|gotta|who|people|s?he)"
-    r"( ([a-z]+(ing?|ly)|just|al(so|ways)|(st|w)ill|(used? t|s|t(o|end t))o|do(es)?|"
-    r"bloody|would(v['’]e)?|don['’]t|[a-z]+[a-z] and)\,?)*( love)+ live"
+    r"( ([a-z]+(ing?|ly)|just|al(so|ways)|(st|w)ill|((have|used?) t|s|t(o|end t))o|"
+    r"do(es)?|bloody|would(v['’]e)?|don['’]t|[a-z]+[a-z] and)\,?)*( love)+ live"
     r"(?! (so(?! far)|and|but)\b)(-|,?  ?#?)?\w+\b|"
     # People I/you/etc. love live
     r"people (i|you|they) love live|"
@@ -148,10 +148,10 @@ EXCLUDE_RE = re.compile(
     # love live(-)action/streaming
     r"\blove live[ \-](action|streaming)\b|"
     # "love live the" as a typo of "long live the"
-    r"(^|\W) *?love live the (?!school idol|musical)\b|"
+    r"(^|[^\w ] *?)love live the (?!school idol|musical)\b|"
     # "love live [something]" as a typo of "long live [something]" or "love love love
     # love [something]"
-    r"([^\w\s]+?  ?|^)(love )+live( #?[a-z]+[a-z]){1,2} ?([^\w ]|$)|"
+    r"([^\w\s]+?  ?|^)(love )+live( #?[a-z]+[a-z]){1,3} ?([^\w ]|$)|"
     # love live laugh/service/theater/shows/performances/TV/bands/oak(s)/mealworms/
     # your [something], "Live and Let Die" (movie title), Love Live in/from Paris
     # (misspelling of "Lover (Live From Paris)" album by Taylor Swift)
