@@ -54,7 +54,10 @@ def remove(post_uri: tuple[str, ...]):
 
     feed_post_through: Model = Post.feeds.get_through_model()
     num_posts_in_feeds: int = (
-        feed_post_through.select().where(feed_post_through.post_id.in_(db_ids)).count()
+        feed_post_through.select(feed_post_through.post_id)
+        .distinct()
+        .where(feed_post_through.post_id.in_(db_ids))
+        .count()
     )
 
     uri_count = len(post_uris)
