@@ -20,7 +20,7 @@ CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"]}
 
 if t.TYPE_CHECKING:
     from atproto_client.models.app.bsky.feed.defs import PostView
-    from atproto_client.models.app.bsky.feed.post import Record
+    from atproto_client.models.app.bsky.feed.post import GetRecordResponse, Record
 
 
 def _get_api_client():
@@ -80,52 +80,79 @@ def add(feed: str, post_uri: tuple[str, ...]):
 
     # Get missing posts from API and add them to DB
     if uris_to_get:
+        uris_to_get_count_str = (
+            f"{len(uris_to_get)} post{'s' if len(uris_to_get) != 1 else ''}"
+        )
         click.confirm(
-            "Need to fetch metadata for"
-            f" {len(uris_to_get)} post{'s' if len(uris_to_get) != 1 else ''},"
-            " continue?",
+            f"Need to fetch metadata for {uris_to_get_count_str}, continue?",
             abort=True,
         )
+
+        click.echo(f"Getting metadata for {uris_to_get_count_str}...")
+
+        # Do ATProto SDK imports here due to (again) Pydantic being slow to load
+        from atproto_client.exceptions import RequestErrorBase
+        from atproto_client.models.common import XrpcError
+        from atproto_client.request import Response as RequestResponse
 
         at_uris_to_get: list[str] = []
         client = _get_api_client()
         for uri in uris_to_get:
             author, tid = BSKY_POST_URL_REGEX.findall(uri)[0]
-            response = client.get_post(tid, author)
-            if response is None:
-                click.echo(f"Failed to get post URL: {uri}", fg="red")
+            try:
+                response: GetRecordResponse = client.get_post(tid, author)
+            except RequestErrorBase as e:
+                response: RequestResponse = e.response
+
+            if response is None or (
+                isinstance(response, RequestResponse) and response.success is False
+            ):
+                click.secho(f"Failed to get post URL: {uri}", fg="red")
+                if response is not None:
+                    reason = f"({response.status_code})"
+                    error = response.content
+                    if isinstance(error, XrpcError):
+                        reason = f"{reason} {error.error}"
+                        if error.message:
+                            reason = f"{reason} - {error.message}"
+                    else:
+                        reason = f"{reason} {error}"
+
+                    click.secho(reason, fg="red", dim=True)
             else:
                 at_uris_to_get.append(response.uri)
 
-        response = client.get_posts(at_uris_to_get)
+        if at_uris_to_get:
+            response = client.get_posts(at_uris_to_get)
 
-        posts_to_create: list[dict] = []
-        post: PostView
-        for post in response.posts:
-            record: Record = post.record
-            reply_root = reply_parent = None
-            if record.reply:
-                reply_root = record.reply.root.uri
-                reply_parent = record.reply.parent.uri
+            posts_to_create: list[dict] = []
+            post: PostView
+            for post in response.posts:
+                record: Record = post.record
+                reply_root = reply_parent = None
+                if record.reply:
+                    reply_root = record.reply.root.uri
+                    reply_parent = record.reply.parent.uri
 
-            posts_to_create.append(
-                {
-                    "uri": post.uri,
-                    "cid": post.cid,
-                    "author_did": post.author.did,
-                    "reply_parent": reply_parent,
-                    "reply_root": reply_root,
-                    "indexed_at": datetime.fromisoformat(post.indexed_at),
-                }
-            )
+                posts_to_create.append(
+                    {
+                        "uri": post.uri,
+                        "cid": post.cid,
+                        "author_did": post.author.did,
+                        "reply_parent": reply_parent,
+                        "reply_root": reply_root,
+                        "indexed_at": datetime.fromisoformat(post.indexed_at),
+                    }
+                )
 
-        if posts_to_create:
-            with db.atomic():
-                for post_dict in posts_to_create:
-                    posts_to_add.append(Post.create(**post_dict))
+            if posts_to_create:
+                with db.atomic():
+                    for post_dict in posts_to_create:
+                        posts_to_add.append(Post.create(**post_dict))
 
             click.echo(
-                f"Added {len(posts_to_create)}/{len(at_uris_to_get)} posts to database"
+                f"Added {len(posts_to_create)}/{len(uris_to_get)}"
+                f" post{'s' if len(uris_to_get) != 1 else ''} to database"
             )
 
     # Add the posts to feed
@@ -142,12 +169,16 @@ def add(feed: str, post_uri: tuple[str, ...]):
             fg="green",
             bold=True,
         )
-    else:
+    elif posts_to_add:
         click.secho(
-            f'All posts already included in "{feed}" feed, nothing to do',
+            f'All {"other " if uris_to_get else ""}posts already included in "{feed}"'
+            " feed, nothing to do",
             fg="green",
             bold=True,
         )
+    else:
+        click.secho(f'No posts were added to "{feed}" feed', fg="red", bold=True)
+        raise click.exceptions.Exit(1)
 
 
 @cli.command()
