@@ -54,7 +54,8 @@ def cli():
 @cli.command()
 @click.argument("feed", nargs=1, required=True, type=click.STRING)
 @click.argument("post_uri", nargs=-1, required=True, type=click.STRING)
-def add(feed: str, post_uri: tuple[str, ...]):
+@click.option("-y", "--noconfirm", is_flag=True, help="Skip confirmation prompts")
+def add(feed: str, post_uri: tuple[str, ...], noconfirm: bool):
     """
     Add posts to a feed
 
@@ -83,10 +84,11 @@ def add(feed: str, post_uri: tuple[str, ...]):
         uris_to_get_count_str = (
             f"{len(uris_to_get)} post{'s' if len(uris_to_get) != 1 else ''}"
         )
-        click.confirm(
-            f"Need to fetch metadata for {uris_to_get_count_str}, continue?",
-            abort=True,
-        )
+        if not noconfirm:
+            click.confirm(
+                f"Need to fetch metadata for {uris_to_get_count_str}, continue?",
+                abort=True,
+            )
 
         click.echo(f"Getting metadata for {uris_to_get_count_str}...")
 
@@ -183,7 +185,8 @@ def add(feed: str, post_uri: tuple[str, ...]):
 
 @cli.command()
 @click.argument("post_uri", nargs=-1, required=True, type=click.STRING)
-def remove(post_uri: tuple[str, ...]):
+@click.option("-y", "--noconfirm", is_flag=True, help="Skip confirmation prompts")
+def remove(post_uri: tuple[str, ...], noconfirm: bool):
     """
     Remove posts from all feeds
 
@@ -220,7 +223,7 @@ def remove(post_uri: tuple[str, ...]):
         click.secho("Nothing to do here", fg="green", bold=True)
         return
 
-    if click.confirm(
+    if noconfirm or click.confirm(
         f"Remove {num_posts_in_feeds} post{'' if num_posts_in_feeds == 1 else 's'} from"
         " all feeds in database?",
         abort=True,
