@@ -14,8 +14,8 @@ LOVELIVE_RE = re.compile(
     r"\bl(l|ove ?live ?)sif2?\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|puchiguru|"
     # ぷちぐる but not ぷちぐるみ
     r"ぷちぐる[^み]|"
-    # スクフェス/スクスタ but not words with マスク/スタンド/スタンプ/スタイル/スタッフ
-    r"(^|[^マ])スク(フェス|スタ(?!ン[ドプ]|イル|ッフ))|"
+    # スクフェス/スクスタ/スクミュ but not words with マスク/スタンド/スタンプ/スタイル/スタッフ
+    r"(^|[^マ])スク(フェス|スタ(?!ン[ドプ]|イル|ッフ)|ミュ)|"
     # Love Live! School Idol Project
     # NOTE: Printemps, lily white, BiBi not included due to too many false positives
     r"音ノ木坂?|otonokizaka|[μµ]['’‘`´′]s|にこりんぱな|nicorinpana|"
@@ -82,7 +82,7 @@ LOVELIVE_RE = re.compile(
     r"唐\s?可可|ク[ウゥ]ク[ウゥ]ちゃん?|\btang\s?keke|\bkeke\s?tang|"
     r"嵐千\s?砂都|arashi\s?chisato|chisato\s?arashi|"
     r"平安名\s?すみれ|heanna\s?sumire|sumire\s?heanna|"
-    r"葉月\s?恋|hazuki\s?ren|ren\s?hazuki|"
+    r"葉月\s?恋|\bhazuki\s?ren\b|ren\s?hazuki|"
     r"桜小路\s?きな子|sakurakoji\s?kinako|kinako\s?sakurakoji|"
     r"米女\s?メイ|yoneme\s?mei|mei\s?yoneme|"
     r"若菜\s?四季|wakana\s?shiki|shiki\s?wakana|"
@@ -119,7 +119,7 @@ LOVELIVE_RE = re.compile(
 )
 EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
-    r"\b(i(['’]d)?|you(['’]ll)?|we( (all|both))?|they|gotta|who|people|s?he)"
+    r"\b(i(['’]d)?|you(['’]ll)?|we( (all|both))?|they|gotta|who|people|s?he|[a-z]{3,}s)"
     r"( ([a-z]+(ing?|ly)|just|al(so|ways)|(st|w)ill|((have|used?) t|s|t(o|end t))o|"
     r"do(es)?|bloody|would(v['’]e)?|don['’]t|[a-z]+[a-z] and)\,?)*( love)+ live"
     r"(?! (so(?! far)|and|but)\b)(-|,?  ?#?)?\w+\b|"
@@ -145,13 +145,15 @@ EXCLUDE_RE = re.compile(
     # if you live in/near/around [place name] and love live music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+|[^\w ]\s*)love live"
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|"
+    # whether ... or (just) love live [something]
+    r"whether you.+ or (just )?love live |"
     # love live(-)action/streaming
     r"\blove live[ \-](action|streaming)\b|"
     # "love live the" as a typo of "long live the"
     r"(^|[^\w ] *?)love live the (?!school idol|musical)\b|"
     # "love live [something]" as a typo of "long live [something]" or "love love love
     # love [something]"
-    r"([^\w\s]+?  ?|^)(love )+live( #?[a-z]+[a-z]){1,3} ?([^\w ]|$)|"
+    r"([^\w\s]+?  ?|^)(love )+liver?( #?[a-z]+[a-z]){1,3} ?([^\w ]|$)|"
     # love live laugh/service/theater/shows/performances/TV/bands/oak(s)/mealworms/
     # your [something], "Live and Let Die" (movie title), Love Live in/from Paris
     # (misspelling of "Lover (Live From Paris)" album by Taylor Swift)
