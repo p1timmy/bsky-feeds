@@ -70,8 +70,16 @@ def add(feed: str, post_uri: tuple[str, ...], noconfirm: bool):
     """
     Add posts to a feed
 
-    FEED is a feed name as listed in the server/algos directory
+    FEED is a feed name as listed in the server/algos directory (any of those that don't
+    start with an underscore)
+
     POST_URI is 1 or more bsky.app URLs of the post(s) to add
+    \f
+
+    :param feed: Name of the feed to add posts into. Must be one of the module
+        names listed in `server/algos` directory.
+    :param post_uri: `tuple` of bsky.app URLs of posts to add to feed
+    :param noconfirm: Whether to skip confirmation prompts or not
     """
 
     # Check if feed name exists in DB
@@ -212,6 +220,12 @@ def remove(post_uri: tuple[str, ...], feed: tuple[str, ...], noconfirm: bool):
     Remove posts from all feeds
 
     POST_URI is 1 or more bsky.app URLs of the post(s) to remove
+    \f
+
+    :param post_uri: `tuple` of bsky.app URLs of posts to remove
+    :param feed: `tuple` of feed names to remove posts from, can be empty if `-f/--feed`
+        option is not used
+    :param noconfirm: Whether to skip confirmation prompts or not
     """
     feed_ids = set(_get_feed_row_by_name_or_abort(feedname).id for feedname in feed)
 
