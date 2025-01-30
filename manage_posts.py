@@ -15,7 +15,10 @@ from server.database import Feed, Post, db  # noqa: E402
 BSKY_POST_URL_REGEX = re.compile(
     r"https://bsky.app/profile/([A-Za-z0-9\-\.]+\.[a-z]+|did:plc:[a-z2-7]{24})/post/([a-z2-7]{13})"
 )
-CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"]}
+CONTEXT_SETTINGS = {
+    "help_option_names": ["-h", "--help"],
+    "max_content_width": 999,
+}
 
 
 if t.TYPE_CHECKING:
