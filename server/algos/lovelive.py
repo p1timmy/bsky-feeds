@@ -122,7 +122,7 @@ EXCLUDE_RE = re.compile(
     r"\b(i(['’]d)?|you(['’]ll)?|we( (all|both))?|they|gotta|who|people|s?he|[a-z]{3,}s)"
     r"( ([a-z]+(ing?|ly)|just|al(so|ways)|(st|w)ill|((have|used?) t|s|t(o|end t))o|"
     r"do(es)?|bloody|would(v['’]e)?|don['’]t|[a-z]+[a-z] and)\,?)*( love)+ live"
-    r"(?! (so(?! far)|and|but)\b)(-|,?  ?#?)?\w+\b|"
+    r"(?! (so(?! far)|and(?! learn)|but)\b)(-|,?  ?#?)?\w+\b|"
     # People I/you/etc. love live
     r"people (i|you|they) love live|"
     # Anyone ... love live music?
@@ -133,6 +133,10 @@ EXCLUDE_RE = re.compile(
     r" ?l(ife|o(cal|ve(?! wing bell))))|"
     # #lovelivemusic, lovelivegcw.com
     r"\blovelive(music|gcw)|"
+    # "love live music" at start of sentence but not "love live music is"
+    r"(^|[^\w ] )love live music (?!is )|"
+    # "love live music" at end of sentence
+    r" love live music[^\w ]|"
     # [Artist] - [song name ending with "love"] live
     r"\w+ - .+ love live\b[^!]|"
     # that love liver (as in body part)
@@ -145,7 +149,7 @@ EXCLUDE_RE = re.compile(
     # if you live in/near/around [place name] and love live music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+|[^\w ]\s*)love live"
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|"
-    # whether ... or (just) love live [something]
+    # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
     # love live(-)action/streaming
     r"\blove live[ \-](action|streaming)\b|"
@@ -165,9 +169,14 @@ EXCLUDE_RE = re.compile(
     r"\byour? love live[.,]|"
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
     r"\bi ([a-z]+[a-z] )?love live (&|and) learn|"
-    # Official Love Live (rock music) Festival and its venue
-    r"\b(official )?love live festival\b|\b(blackpool|winter gardens)\b|"
-    r"#lovelivefestival|"
+    # Love Live (rock music) Festival and its venue and bands
+    r"\b(official )?love live festival\b|\blovelivefestival|"
+    r"\b((black(pool| ?(lak|vultur)es?))|cancel ?the ?transmission|fugitive|"
+    r"darker ?my ?horizon|g(in ?annie|r(a(ham ?oliver|nd ?slam)|eyfox))|"
+    r"j(a(nice ?lee|yler)|oan ?of ?arc)|king ?voodoo|m(chale['‘’`]?s|idnite)|nazareth|"
+    r"phil ?campbell|r(amblin|e(d ?giant|venant))|screaming ?eagles|"
+    r"t(akeaway ?thieve|his ?house ?we ?built|r(oy ?redfern|ucker ?diablo)|ygers)|"
+    r"urban ?commandos?|zac ?the ?locust|winter ?gardens)|"
     # "Prophecy x This Love" by Taylor Swift
     r"prophecy x this love",
     re.IGNORECASE | re.MULTILINE,
