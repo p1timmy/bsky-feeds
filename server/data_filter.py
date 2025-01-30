@@ -92,13 +92,13 @@ def operations_callback(ops: defaultdict):
                 "[author=%s]"
                 "[with_embed=%s]"
                 "[is_reply=%s]"
-                "[feed_uris=%s]"
+                "[feeds=%s]"
                 ": %s",
                 record.created_at,
                 author,
                 post_has_embeds,
                 post_is_reply,
-                [feed.uri for feed in feeds],
+                ",".join(feed.algo_name for feed in feeds),
                 inlined_text,
             )
             logger.debug(created_post)
