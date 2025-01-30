@@ -44,6 +44,14 @@ def _get_post_tid_or_abort(uri: str) -> str:
         _echo_and_abort(f"Not a valid URI: {uri}")
 
 
+def _get_feed_row_by_name_or_abort(feed_name: str) -> Feed:
+    row = Feed.get_or_none(Feed.algo_name == feed_name)
+    if row is None:
+        _echo_and_abort(f"Feed name not found in database: {feed_name}")
+
+    return row
+
+
 @click.group(
     context_settings=CONTEXT_SETTINGS, help="Manage Bluesky posts in feed database"
 )
@@ -63,9 +71,8 @@ def add(feed: str, post_uri: tuple[str, ...], noconfirm: bool):
     POST_URI is 1 or more bsky.app URLs of the post(s) to add
     """
 
-    feed_row = Feed.get_or_none(Feed.algo_name == feed)
-    if feed_row is None:
-        _echo_and_abort(f"Feed name not found in database: {feed}")
+    # Check if feed name exists in DB
+    feed_row = _get_feed_row_by_name_or_abort(feed)
 
     posts_to_add: list[Post] = []
     uris_to_get: list[str] = []
@@ -109,6 +116,7 @@ def add(feed: str, post_uri: tuple[str, ...], noconfirm: bool):
             if response is None or (
                 isinstance(response, RequestResponse) and response.success is False
             ):
+                # Skip if post in URL can't be found for some reason
                 click.secho(f"Failed to get post URL: {uri}", fg="red")
                 if response is not None:
                     reason = f"({response.status_code})"
@@ -185,13 +193,25 @@ def add(feed: str, post_uri: tuple[str, ...], noconfirm: bool):
 
 @cli.command()
 @click.argument("post_uri", nargs=-1, required=True, type=click.STRING)
+@click.option(
+    "-f",
+    "--feed",
+    multiple=True,
+    type=click.STRING,
+    help=(
+        "Name of a specific feed to remove posts from. To remove from multiple feeds,"
+        " use this option before every feed name."
+    ),
+)
 @click.option("-y", "--noconfirm", is_flag=True, help="Skip confirmation prompts")
-def remove(post_uri: tuple[str, ...], noconfirm: bool):
+def remove(post_uri: tuple[str, ...], feed: tuple[str, ...], noconfirm: bool):
     """
     Remove posts from all feeds
 
     POST_URI is 1 or more bsky.app URLs of the post(s) to remove
     """
+    feed_ids = set(_get_feed_row_by_name_or_abort(feedname).id for feedname in feed)
+
     post_uris = set(post_uri)
     tids: set[str] = set()
     for uri in post_uris:
@@ -201,21 +221,21 @@ def remove(post_uri: tuple[str, ...], noconfirm: bool):
     for tid in tids:
         query = query.orwhere(Post.uri.endswith(f"/{tid}"))
 
-    db_ids = set(post.id for post in query)
-    if not db_ids:
+    post_ids = set(post.id for post in query)
+    if not post_ids:
         _echo_and_abort("No matching posts found in database")
 
     feed_post_through: Model = Post.feeds.get_through_model()
-    num_posts_in_feeds: int = (
-        feed_post_through.select(feed_post_through.post_id)
-        .distinct()
-        .where(feed_post_through.post_id.in_(db_ids))
-        .count()
-    )
+    query = feed_post_through.select().where(feed_post_through.post_id.in_(post_ids))
+    if feed_ids:
+        query = query.where(feed_post_through.feed_id.in_(feed_ids))
+
+    num_posts_in_feeds = len(set(row.post_id for row in query))
+    ids_to_delete = set(row.id for row in query)
 
     uri_count = len(post_uris)
     click.echo(
-        f"{len(db_ids)}/{uri_count} post{'' if uri_count == 1 else 's'} found in"
+        f"{len(post_ids)}/{uri_count} post{'' if uri_count == 1 else 's'} found in"
         f" database, {num_posts_in_feeds} of them are in feeds."
     )
 
@@ -230,7 +250,7 @@ def remove(post_uri: tuple[str, ...], noconfirm: bool):
     ):
         # FIXME: Ask to retry query if DB is locked
         feed_post_through.delete().where(
-            feed_post_through.post_id.in_(db_ids)
+            feed_post_through.id.in_(ids_to_delete)
         ).execute()
         click.secho("All done! Posts removed successfully", fg="green", bold=True)
 
