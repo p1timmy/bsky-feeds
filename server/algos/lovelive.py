@@ -29,7 +29,7 @@ LOVELIVE_RE = re.compile(
     r"小泉\s?花陽|koizumi\s?hanayo|hanayo\s?koizumi|火曜日かよちゃん|"
     r"矢澤\s?にこ|yazawa\s?nico|nico\s?yazawa|nico\snico\sni+\b|#niconiconi+\b|"
     r"snow\s?halation|"
-    r"[^a-z\u00C0-\u024F\u1E00-\u1EFF\-]a[-\u2010]rise[^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|"
+    r"(^|[^a-z\u00C0-\u024F\u1E00-\u1EFF\-])a[-\u2010]rise[^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|"
     r"綺羅\s?ツバサ|kira\s?tsubasa|tsubasa\s?kira|"
     r"優木\s?あんじゅ|yuu?ki\s?anju|anju\s?yuu?ki|"
     r"統堂\s?英玲奈|tou?dou?\s?erena|\berena\s?tou?dou?\b|"
