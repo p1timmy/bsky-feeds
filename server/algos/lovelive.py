@@ -112,7 +112,7 @@ LOVELIVE_RE = re.compile(
     r"安養寺\s?姫芽|anyoji\s?hime|\bhime\s?anyoji\b|"
     r"大賀美沙知|ogami\s?sachi|sachi\s?ogami|"
     # Concerts
-    r"異次元フェス|ijigen\sfest?|"
+    r"異次元フェス|ijigen\sfest?|#llsat_|"
     # Notable community groups
     r"\b(team )?onib(e|ased)\b",
     re.IGNORECASE,
