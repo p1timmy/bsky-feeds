@@ -90,7 +90,7 @@ def add(feed: str, post_uri: tuple[str, ...], noconfirm: bool):
     uris_to_get: list[str] = []
 
     # Check if post exists in DB
-    for uri in post_uri:
+    for uri in set(post_uri):
         tid = _get_post_tid_or_abort(uri)
         post: Post | None = Post.get_or_none(Post.uri.endswith(f"/{tid}"))
         if post is None:
