@@ -7,8 +7,9 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)love ?live[!\s]*", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live[!\s]*(days|s(ky|taff|u(nshine|per ?star)))|thank you love ?live\b|"
-    r"#lovelive_|ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|スクールアイドル|"
+    r"love\s?live[!\s]*(bluebird|days|s(ky|taff|u(nshine|per ?star)))|"
+    r"thank you love ?live\b|#lovelive_|"
+    r"ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|スクールアイドル|"
     r"(?<!middle )(?<!high )school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
     # Games
     r"\bl(l|ove ?live ?)sif2?\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|puchiguru|"
@@ -96,7 +97,7 @@ LOVELIVE_RE = re.compile(
     # Link! Like! Love Live! / Hasunosora
     # リンクラ but not スプリンクラー/シュリンクラップ or words with ソブリン/クラウド/ドリンク/
     # ラウンジ/ライン/クラブ
-    r"(^|[^ド])(?<!スプ|ソブ|シュ)リンクラ(?!ウ(ド|ンジ)|イン|ップ|ブ)|"
+    r"(^|[^ドキ])(?<!スプ|ソブ|シュ)リンクラ(?!ウ(ド|ンジ)|イン|ップ|ブ|フト)|"
     r"hasu\s?no\s?sora|蓮ノ(空|休日)|"
     r"cerise\sbouquet|スリーズブーケ|dollchestra|ドルケストラ|"
     r"mira-cra\spark!?|みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|"
@@ -111,6 +112,8 @@ LOVELIVE_RE = re.compile(
     r"徒町\s?小鈴|kachimachi\s?kosuzu|kosuzu\s?kachimachi|"
     r"安養寺\s?姫芽|anyoji\s?hime|\bhime\s?anyoji\b|"
     r"大賀美沙知|ogami\s?sachi|sachi\s?ogami|"
+    # Love Live! Bluebird
+    r"いきづらい部|イキヅライブ|"
     # Concerts
     r"異次元フェス|ijigen\sfest?|#llsat_|"
     # Notable community groups
@@ -163,8 +166,8 @@ EXCLUDE_RE = re.compile(
     # (misspelling of "Lover (Live From Paris)" album by Taylor Swift)
     r"\blove live (laugh|service|t(heat(er|re)|v)|(band|show)s|oaks?|mealworms|your|"
     r"performances|and let die|(in|from) paris)|"
-    # may your love live
-    r"\bmay your love live|"
+    # may your/his/her/their ... love live (on)
+    r"\bmay (h(is|er)|(thei|you)r) (.+ )?love live |"
     # "you(r) love live" before period/comma
     r"\byour? love live[.,]|"
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
@@ -181,7 +184,9 @@ EXCLUDE_RE = re.compile(
     r"prophecy x this love",
     re.IGNORECASE | re.MULTILINE,
 )
-NSFW_KEYWORDS_RE = re.compile("\b(hentai|futanari|penis|dildo|bds&?m)", re.IGNORECASE)
+NSFW_KEYWORDS_RE = re.compile(
+    "\b(hentai|futanari|p(enis|orn)|dildo|nsfw|bds&?m)", re.IGNORECASE
+)
 
 # Prepopulate user list with only @lovelivenews.bsky.social just in case loading from
 # file didn't work
