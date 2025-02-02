@@ -4,6 +4,7 @@ import re
 import readline  # noqa: F401
 import typing as t
 from datetime import datetime
+from itertools import batched
 
 import click
 from peewee import Model, ModelSelect
@@ -144,27 +145,28 @@ def add(feed: str, post_uri: tuple[str, ...], noconfirm: bool):
                 at_uris_to_get.append(response.uri)
 
         if at_uris_to_get:
-            response = client.get_posts(at_uris_to_get)
-
             posts_to_create: list[dict] = []
-            post: PostView
-            for post in response.posts:
-                record: Record = post.record
-                reply_root = reply_parent = None
-                if record.reply:
-                    reply_root = record.reply.root.uri
-                    reply_parent = record.reply.parent.uri
+            for chunk in batched(at_uris_to_get, 25):
+                response = client.get_posts(list(chunk))
 
-                posts_to_create.append(
-                    {
-                        "uri": post.uri,
-                        "cid": post.cid,
-                        "author_did": post.author.did,
-                        "reply_parent": reply_parent,
-                        "reply_root": reply_root,
-                        "indexed_at": datetime.fromisoformat(post.indexed_at),
-                    }
-                )
+                post: PostView
+                for post in response.posts:
+                    record: Record = post.record
+                    reply_root = reply_parent = None
+                    if record.reply:
+                        reply_root = record.reply.root.uri
+                        reply_parent = record.reply.parent.uri
+
+                    posts_to_create.append(
+                        {
+                            "uri": post.uri,
+                            "cid": post.cid,
+                            "author_did": post.author.did,
+                            "reply_parent": reply_parent,
+                            "reply_root": reply_root,
+                            "indexed_at": datetime.fromisoformat(post.indexed_at),
+                        }
+                    )
 
             if posts_to_create:
                 with db.atomic():
