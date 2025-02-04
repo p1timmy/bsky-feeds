@@ -7,7 +7,7 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)love ?live[!\s]*", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live[!\s]*(bluebird|days|s(ky|taff|u(nshine|per ?star)))|"
+    r"love\s?live[!\s]*(blue ?bird|days|s(ky|taff|u(nshine|per ?star)))|"
     r"thank you love ?live\b|#lovelive_|"
     r"ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|スクールアイドル|"
     r"(?<!middle )(?<!high )school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
@@ -40,7 +40,7 @@ LOVELIVE_RE = re.compile(
     # YYY (You, Yoshiko/Yohane, RubY)
     r"(?<!わい)(?<!わーい)わいわいわい(?!わー?い)|"
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)aiscream|"
-    r"幻(日のヨハネ|ヨハ)|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(genjitsu\s?no\s?)?yohane\b|"
+    r"幻(日のヨハネ|ヨハ)|\b(genjitsu ?no ?)?yohane\b(?!(.|\n)+shaman ?king)|"
     r"sunshine\sin\sthe\smirror|"
     r"高海\s?千歌|takami\s?chika|chika\s?takami|"
     r"桜内\s?梨子|sakurauchi\s?riko|riko\s?sakurauchi|"
@@ -148,7 +148,7 @@ EXCLUDE_RE = re.compile(
     r"\b(d(angerously|runk)|who live) in love\b|"
     # laugh/let/live/radical/you are in/life/performing .../savage/mad/Rinku Love Live
     r"\b(l(augh|et|ive)|r(adical|inku)|you( a|['’])re in|(?<!link )life|savage|mad|"
-    r"performing( \w+)+) love live\b|"
+    r"perform(ing|s)( \w+)+) love live\b|"
     # if you live in/near/around [place name] and love live music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+|[^\w ]\s*)love live"
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|"
@@ -177,7 +177,7 @@ EXCLUDE_RE = re.compile(
     r"\b((black(pool| ?(lak|vultur)es?))|cancel ?the ?transmission|fugitive|"
     r"darker ?my ?horizon|g(in ?annie|r(a(ham ?oliver|nd ?slam)|eyfox))|"
     r"j(a(nice ?lee|yler)|oan ?of ?arc)|king ?voodoo|m(chale['‘’`]?s|idnite)|nazareth|"
-    r"phil ?campbell|r(amblin|e(d ?giant|venant))|screaming ?eagles|"
+    r"p(an ?tang|hil ?campbell)|r(amblin|e(d ?giant|venant))|screaming ?eagles|"
     r"t(akeaway ?thieve|his ?house ?we ?built|r(oy ?redfern|ucker ?diablo)|ygers)|"
     r"urban ?commandos?|zac ?the ?locust|winter ?gardens)|"
     # "Prophecy x This Love" by Taylor Swift
