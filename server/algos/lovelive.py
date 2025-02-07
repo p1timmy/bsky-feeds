@@ -146,9 +146,10 @@ EXCLUDE_RE = re.compile(
     r"\bthat ([a-z]+[a-z] )?love liver\b|"
     # Dangerously/Drunk in Love, who live in love (1 John 4:16)
     r"\b(d(angerously|runk)|who live) in love\b|"
-    # laugh/let/live/radical/you are in/life/performing .../savage/mad/Rinku Love Live
+    # laugh/let/live/radical/you are in/life/performing .../savage/mad/Friday I'm In/
+    # Rinku Love Live
     r"\b(l(augh|et|ive)|r(adical|inku)|you( a|['’])re in|(?<!link )life|savage|mad|"
-    r"perform(ing|s)( \w+)+) love live\b|"
+    r"friday i['’]?m in|perform(ing|s)( \w+)+) love live\b|"
     # if you live in/near/around [place name] and love live music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+|[^\w ]\s*)love live"
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|"
@@ -161,11 +162,12 @@ EXCLUDE_RE = re.compile(
     # "love live [something]" as a typo of "long live [something]" or "love love love
     # love [something]"
     r"([^\w\s]+?  ?|^)(love )+liver?( #?[a-z]+[a-z]){1,3} ?([^\w ]|$)|"
-    # love live laugh/service/theater/shows/performances/TV/bands/oak(s)/mealworms/
-    # your [something], "Live and Let Die" (movie title), Love Live in/from Paris
-    # (misspelling of "Lover (Live From Paris)" album by Taylor Swift)
-    r"\blove live (laugh|service|t(heat(er|re)|v)|(band|show)s|oaks?|mealworms|your|"
-    r"performances|and let die|(in|from) paris)|"
+    # love live laugh/service/theater/shows/sports/performances/TV/bands/oak(s)/
+    # mealworms/your [something], "Live and Let Die" (movie title),
+    # Love Live in/from Paris (misspelling of "Lover (Live From Paris)" album by
+    # Taylor Swift)
+    r"\blove live (laugh|service|t(heat(er|re)|v)|oaks?|your|and let die|"
+    r"(band|s(how|port)|mealworm|performance|(in|from) pari)s)|"
     # may your/his/her/their ... love live (on)
     r"\bmay (h(is|er)|(thei|you)r) (.+ )?love live |"
     # "you(r) love live" before period/comma
