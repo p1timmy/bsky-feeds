@@ -87,7 +87,7 @@ def firehose_setup(do_userlist_updates: bool = False):
             "labels": True,
         },
     )
-    scheduler = setup_scheduler(do_userlist_updates)
+    scheduler = setup_scheduler(not no_list_auto_update_reason)
 
     repo_stream_thread.start()
     labels_stream_thread.start()
