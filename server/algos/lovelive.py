@@ -187,7 +187,8 @@ EXCLUDE_RE = re.compile(
     re.IGNORECASE | re.MULTILINE,
 )
 NSFW_KEYWORDS_RE = re.compile(
-    r"\b(hentai|futanari|p(enis|orn)|dildo|nsfw|bds&?m)", re.IGNORECASE
+    r"\b(hentai|futanari|p(enis|orn)|dildo|n(sfw|ude)|bds&?m|cum(ming)?\b)",
+    re.IGNORECASE,
 )
 
 # Prepopulate user list with only @lovelivenews.bsky.social just in case loading from
