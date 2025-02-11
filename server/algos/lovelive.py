@@ -8,7 +8,7 @@ LOVELIVE_NAME_EN_RE = re.compile(
 )
 LOVELIVE_RE = re.compile(
     r"love\s?live[!\s]*(blue ?bird|days|s(ky|taff|u(nshine|per ?star)))|"
-    r"thank you love ?live\b|#lovelive_|"
+    r"(thank you|likes) love ?live\b|#lovelive_|"
     r"ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|スクールアイドル|"
     r"(?<!middle )(?<!high )school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
     # Games
@@ -71,7 +71,7 @@ LOVELIVE_RE = re.compile(
     r"エマ・?ヴェルデ|emma\s?verde|"
     r"天王寺\s?璃奈|tennou?ji\s?rina|rina\s?tennou?ji|"
     r"三船\s?栞子|mifune\s?shioriko|shioriko\s?mifune|"
-    r"ミア・?テイラー|\bmia\s?taylor(?!19)\b|"
+    r"ミア・?テイラー|\bmia\staylor\b|"
     r"鐘\s?嵐珠|lanzhu\s?zhong|zhong\s?lanzhu|"
     # Love Live! Superstar!!
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)liella(?! kelly)[!！]?|結ヶ丘|yuigaoka|"
@@ -141,7 +141,7 @@ EXCLUDE_RE = re.compile(
     # "love live music" at end of sentence
     r" love live music[^\w ]|"
     # [Artist] - [song name ending with "love"] live
-    r"\w+ - .+ love live\b[^!]|"
+    r"\w+ [\-\u2013] .+ love live\b[^!]|"
     # that love liver (as in body part)
     r"\bthat ([a-z]+[a-z] )?love liver\b|"
     # Dangerously/Drunk in Love, who live in love (1 John 4:16)
