@@ -134,8 +134,8 @@ EXCLUDE_RE = re.compile(
     # love live life/love/local
     r"love\s?live(2?d|journal|l(y|ihood)|rpool|s|view|wire|"
     r" ?l(ife|o(cal|ve(?! wing bell))))|"
-    # #lovelivemusic, lovelivegcw.com
-    r"\blovelive(music|gcw)|"
+    # #lovelivemusic, lovelivegcw.com, loveliveitalian.com
+    r"\blovelive(music|gcw|italian)|"
     # "love live music" at start of sentence but not "love live music is"
     r"(^|[^\w ] )love live music (?!is )|"
     # "love live music" at end of sentence
@@ -163,10 +163,10 @@ EXCLUDE_RE = re.compile(
     # love [something]"
     r"([^\w\s]+?  ?|^)(love )+liver?( #?[a-z]+[a-z]){1,3} ?([^\w ]|$)|"
     # love live laugh/service/theater/shows/sports/performances/TV/bands/oak(s)/
-    # mealworms/your [something], "Live and Let Die" (movie title),
+    # mealworms/Italian/your [something], "Live and Let Die" (movie title),
     # Love Live in/from Paris (misspelling of "Lover (Live From Paris)" album by
     # Taylor Swift)
-    r"\blove live (laugh|service|t(heat(er|re)|v)|oaks?|your|and let die|"
+    r"\blove live (laugh|service|t(heat(er|re)|v)|oaks?|your|italian|and let die|"
     r"(band|s(how|port)|mealworm|performance|(in|from) pari)s)|"
     # may your/his/her/their ... love live (on)
     r"\bmay (h(is|er)|(thei|you)r) (.+ )?love live |"
