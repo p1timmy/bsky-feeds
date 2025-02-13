@@ -15,8 +15,8 @@ LOVELIVE_RE = re.compile(
     r"\bl(l|ove ?live ?)sif2?\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|puchiguru|"
     # ぷちぐる but not ぷちぐるみ
     r"ぷちぐる[^み]|"
-    # スクフェス/スクスタ/スクミュ but not words with マスク/スタンド/スタンプ/スタイル/スタッフ
-    r"(^|[^マ])スク(フェス|スタ(?!ン[ドプ]|イル|ッフ)|ミュ)|"
+    # スクスタ/スクミュ but not words with マスク/スタンド/スタンプ/スタイル/スタッフ
+    r"(^|[^マ])スク(スタ(?!ン[ドプ]|イル|ッフ)|ミュ)|"
     # Love Live! School Idol Project
     # NOTE: Printemps, lily white, BiBi not included due to too many false positives
     r"音ノ木坂?|otonokizaka|[μµ]['’‘`´′]s|にこりんぱな|nicorinpana|"
@@ -120,6 +120,10 @@ LOVELIVE_RE = re.compile(
     r"\b(team )?onib(e|ased)\b",
     re.IGNORECASE,
 )
+SUKUFEST_RE = re.compile(
+    r"(^|[^マ])スクフェス(?!札幌|大阪|福岡|神奈川|新潟|仙台|三河|沖縄)"
+)
+
 EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
     r"\b(i(['’]d)?|you(['’]ll)?|we( (all|both))?|they|gotta|who|people|s?he|[a-z]{3,}s)"
@@ -217,6 +221,7 @@ def filter(post: dict) -> bool:
     return not NSFW_KEYWORDS_RE.search(all_texts) and any(
         (
             LOVELIVE_NAME_EN_RE.search(all_texts) and not EXCLUDE_RE.search(all_texts),
+            SUKUFEST_RE.search(all_texts) and not "scrum" in all_texts.lower(),
             LOVELIVE_RE.search(all_texts),
         )
     )
