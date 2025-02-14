@@ -150,10 +150,12 @@ EXCLUDE_RE = re.compile(
     r"\bthat ([a-z]+[a-z] )?love liver\b|"
     # Dangerously/Drunk in Love, who live in love (1 John 4:16)
     r"\b(d(angerously|runk)|who live) in love\b|"
-    # laugh/let/live/radical/you are in/life/performing .../savage/mad/Friday I'm In/
-    # Rinku Love Live
+    # laugh/let/live/radical/you are in/life/savage/mad/Friday I'm In/Rinku Love Live
     r"\b(l(augh|et|ive)|r(adical|inku)|you( a|['’])re in|(?<!link )life|savage|mad|"
-    r"friday i['’]?m in|perform(ing|s)( \w+)+) love live\b|"
+    r"friday i['’]?m in) love live\b|"
+    # perform(s/ed/ing/ance of) ... [song name ending with "Love"] live at/in/on/inside/
+    # outside
+    r"perform(ance of|ed|ing|s)? .+ love live (at|[io]n|(in|out)side)\b|"
     # if you live in/near/around [place name] and love live music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+|[^\w ]\s*)love live"
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|"
@@ -174,6 +176,8 @@ EXCLUDE_RE = re.compile(
     r"(band|s(how|port)|mealworm|performance|(in|from) pari)s)|"
     # may your/his/her/their ... love live (on)
     r"\bmay (h(is|er)|(thei|you)r) (.+ )?love live |"
+    # may love live in
+    r"\bmay love live in\b|"
     # "you(r) love live" before period/comma
     r"\byour? love live[.,]|"
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
@@ -187,7 +191,9 @@ EXCLUDE_RE = re.compile(
     r"t(akeaway ?thieve|his ?house ?we ?built|r(oy ?redfern|ucker ?diablo)|ygers)|"
     r"urban ?commandos?|zac ?the ?locust|winter ?gardens)|"
     # "Prophecy x This Love" by Taylor Swift
-    r"prophecy x this love",
+    r"prophecy x this love|"
+    # "No Loss, No Love" by Spiritbox
+    r"\bno loss,? no love",
     re.IGNORECASE | re.MULTILINE,
 )
 NSFW_KEYWORDS_RE = re.compile(
