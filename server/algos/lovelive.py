@@ -55,8 +55,8 @@ LOVELIVE_RE = re.compile(
     r"(?<!\bRT @)saint\s?snow|"
     r"鹿角\s?(理亞|聖良)|kazuno\s?(le|sar)ah|(le|sar)ah\s?kazuno|"
     # Nijigasaki
-    r"虹ヶ咲|ニジガク|(アニ|エイ)ガサキ|(あに|えい)がさき|にじよん|"
-    r"(nij|an|e)igasaki|niji(gaku|yon)|a・zu・na|qu4rtz|"
+    r"虹ヶ咲|ニジガク|(アニ|エイ)ガサキ|(あに|えい)がさき|にじ(よん|ちず)|"
+    r"(nij|an|e)igasaki|niji(chizu|gaku|yon)|a・zu・na|qu4rtz|"
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(diver"
     r" ?diva|r3birth)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
     r"高咲\s?侑|takasaki\s?yuu?|yuu?\s?takasaki|"
@@ -134,9 +134,9 @@ EXCLUDE_RE = re.compile(
     r"people (i|you|they) love live|"
     # Anyone ... love live music?
     r"anyone( .+)? love live music\?|"
-    # love lives/Liverpool/lived/lively/livelihood/Livejournal/LiveView/Livewire/Live2D,
-    # love live life/love/local
-    r"love\s?live(2?d|journal|l(y|ihood)|rpool|s|view|wire|"
+    # love lives/Liverpool/Liverpudlian(s)/lived/lively/livelihood/Livejournal/LiveView/
+    # Livewire/Live2D, love live life/love/local
+    r"love\s?live(2?d|journal|l(y|ihood)|rp(ool|udlians?)|s|view|wire|"
     r" ?l(ife|o(cal|ve(?! wing bell))))|"
     # #lovelivemusic, lovelivegcw.com, loveliveitalian.com
     r"\blovelive(music|gcw|italian)|"
@@ -191,7 +191,7 @@ EXCLUDE_RE = re.compile(
     re.IGNORECASE | re.MULTILINE,
 )
 NSFW_KEYWORDS_RE = re.compile(
-    r"\b(hentai|futanari|p(enis|orn)|dildo|n(sfw|ude)|bds&?m|cum(ming)?\b)",
+    r"\b(hentai|futanari|p(enis|orn)|dildo|n(sfw|ude)|bds&?m|c(ock|um(ming)?\b)|sex\b)",
     re.IGNORECASE,
 )
 
