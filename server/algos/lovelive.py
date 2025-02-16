@@ -178,8 +178,12 @@ EXCLUDE_RE = re.compile(
     r"\bmay (h(is|er)|(thei|you)r) (.+ )?love live |"
     # may love live in
     r"\bmay love live in\b|"
+    # her/his/our/their/who(se) ... (and) love live on
+    r"(h(er|is)|(ou|thei)r|who(se)?) (([a-z]+[a-z]|.+ and) )?love lives? on\b|"
     # "you(r) love live" before period/comma
     r"\byour? love live[.,]|"
+    # playing [video game title ending with "Love"] live (on/at)
+    r"\bplay(ing)? (.+ )+love live (at|on)|"
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
     r"\bi ([a-z]+[a-z] )?love live (&|and) learn|"
     # Love Live (rock music) Festival and its venue and bands
