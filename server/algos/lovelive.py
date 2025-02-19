@@ -29,8 +29,8 @@ LOVELIVE_RE = re.compile(
     r"東條\s?希|tou?jou?\s?nozomi|nozomi\s?tou?jou?|"
     r"小泉\s?花陽|koizumi\s?hanayo|hanayo\s?koizumi|火曜日かよちゃん|"
     r"矢澤\s?にこ|yazawa\s?nico|nico\s?yazawa|nico\snico\sni+\b|#niconiconi+\b|"
-    r"snow\s?halation|"
-    r"(^|[^a-z\u00C0-\u024F\u1E00-\u1EFF\-])a[-\u2010]rise[^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|"
+    r"snow\s?halation([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
+    r"(^|[^a-z\u00C0-\u024F\u1E00-\u1EFF\-])a[-\u2010]rise([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|$)|"
     r"綺羅\s?ツバサ|kira\s?tsubasa|tsubasa\s?kira|"
     r"優木\s?あんじゅ|yuu?ki\s?anju|anju\s?yuu?ki|"
     r"統堂\s?英玲奈|tou?dou?\s?erena|\berena\s?tou?dou?\b|"
@@ -169,10 +169,10 @@ EXCLUDE_RE = re.compile(
     # love [something]"
     r"([^\w\s]+?  ?|^)(love )+liver?( #?[a-z]+[a-z]){1,3} ?([^\w ]|$)|"
     # love live laugh/service/theater/shows/sports/performances/TV/bands/oak(s)/
-    # mealworms/Italian/your [something], "Live and Let Die" (movie title),
+    # mealworms/Italian/long/your [something], "Live and Let Die" (movie title),
     # Love Live in/from Paris (misspelling of "Lover (Live From Paris)" album by
     # Taylor Swift)
-    r"\blove live (laugh|service|t(heat(er|re)|v)|oaks?|your|italian|and let die|"
+    r"\blove live (l(augh|ong)|service|t(heat(er|re)|v)|oaks?|your|italian|and let die|"
     r"(band|s(how|port)|mealworm|performance|(in|from) pari)s)|"
     # may your/his/her/their ... love live (on)
     r"\bmay (h(is|er)|(thei|you)r) (.+ )?love live |"
@@ -201,7 +201,8 @@ EXCLUDE_RE = re.compile(
     re.IGNORECASE | re.MULTILINE,
 )
 NSFW_KEYWORDS_RE = re.compile(
-    r"\b(hentai|futanari|p(enis|orn)|dildo|n(sfw|ude)|bds&?m|c(ock|um(ming)?\b)|sex\b)",
+    r"\b(bds&?m|c(ock|um(ming)?\b)|di(ck|ldo)|(futanar|henta)i|n(sfw|ude)|"
+    r"p(enis|regnant)|sex\b)",
     re.IGNORECASE,
 )
 
