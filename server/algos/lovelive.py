@@ -149,9 +149,10 @@ EXCLUDE_RE = re.compile(
     r"\bthat ([a-z]+[a-z] )?love liver\b|"
     # Dangerously/Drunk in Love, who live in love (1 John 4:16)
     r"\b(d(angerously|runk)|who live) in love\b|"
-    # laugh/let/live/radical/you are in/life/savage/mad/Friday I'm In/Rinku Love Live
-    r"\b(l(augh|et|ive)|r(adical|inku)|you( a|['’])re in|(?<!link )life|savage|mad|"
-    r"friday i['’]?m in) love live\b|"
+    # laugh/let/live/radical/you are in/life/savage/mad/Friday I'm In/Lexicon of/
+    # Rinku Love Live
+    r"\b(l(augh|et|ive|exicon of)|r(adical|inku)|you( a|['’])re in|(?<!link )life|"
+    r"savage|mad|friday i['’]?m in) love live\b|"
     # perform(s/ed/ing/ance of) ... [song name ending with "Love"] live at/in/on/inside/
     # outside
     r"perform(ance of|ed|ing|s)? .+ love live (at|[io]n|(in|out)side)\b|"
