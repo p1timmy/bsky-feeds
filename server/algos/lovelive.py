@@ -8,8 +8,8 @@ LOVELIVE_NAME_EN_RE = re.compile(
 )
 LOVELIVE_RE = re.compile(
     r"love\s?live[!\s]*(blue ?bird|days|s(ky|taff|u(nshine|per ?star)))|"
-    r"(thank you|likes) love ?live\b|#lovelive_|"
-    r"ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|スクールアイドル|"
+    r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
+    r"(thank you|likes) love ?live\b|#lovelive_|スクールアイドル|"
     r"(?<!middle )(?<!high )school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
     # Games
     r"\bl(l|ove ?live ?)sif2?\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|puchiguru|"
@@ -126,9 +126,9 @@ SUKUFEST_RE = re.compile(
 EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
     r"\b(i(['’]d)?|you(['’]ll)?|we( (all|both))?|they|gotta|who|people|s?he|[a-z]{3,}s)"
-    r"( ([a-z]+(ing?|ly)|just|al(so|ways)|(st|w)ill|((have|used?) t|s|t(o|end t))o|"
-    r"do(es)?|bloody|would(v['’]e)?|don['’]t|[a-z]+[a-z] and)\,?)*( love)+ live"
-    r"(?! (so(?! far)|and(?! learn)|but)\b)(-|,?  ?#?)?\w+\b|"
+    r"( ([a-z]+(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|don['’]t|"
+    r"((ha(ve|ppen(ed)?)|used?) t|s|t(o|end t))o|would(v['’]e)?|[a-z]+[a-z] and)\,?)*"
+    r"( love)+ live(?! (so(?! far)|and(?! learn)|but)\b)(-|,?  ?#?)?\w+\b|"
     # People I/you/etc. love live
     r"people (i|you|they) love live|"
     # Anyone ... love live music?
@@ -178,8 +178,8 @@ EXCLUDE_RE = re.compile(
     r"\bmay (h(is|er)|(thei|you)r) (.+ )?love live |"
     # may love live in
     r"\bmay love live in\b|"
-    # her/his/our/their/who(se) ... (and) love live on
-    r"(h(er|is)|(ou|thei)r|who(se)?) (([a-z]+[a-z]|.+ and) )?love lives? on\b|"
+    # her/his/our/their/who(se) ... (and) love live in/on
+    r"(h(er|is)|(ou|thei)r|who(se)?) (([a-z]+[a-z]|.+ and) )?love lives? [io]n\b|"
     # "you(r) love live" before period/comma
     r"\byour? love live[.,]|"
     # # playing [video game title ending with "Love"] live (on/at)
