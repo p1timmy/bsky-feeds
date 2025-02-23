@@ -7,7 +7,7 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)love ?live[!\s]*", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live[!\s]*(blue ?bird|days|s(ky|taff|u(nshine|per ?star)))|"
+    r"love\s?live[!\s]*(blue ?bird|days|s(ky|oundtrack|taff|u(nshine|per ?star)))|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     r"(thank you|likes) love ?live\b|#lovelive_|スクールアイドル|"
     r"(?<!middle )(?<!high )school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
@@ -21,7 +21,7 @@ LOVELIVE_RE = re.compile(
     # NOTE: Printemps, lily white, BiBi not included due to too many false positives
     r"音ノ木坂?|otonokizaka|[μµ]['’‘`´′]s|にこりんぱな|nicorinpana|"
     r"高坂\s?穂乃果|honoka\s?kou?saka|kou?saka\s?honoka|"
-    r"絢瀬\s?絵里|ayase\s?eli|eli\s?ayase|エリーチカ|\belichika\b|"
+    r"絢瀬\s?絵里|([^@]|^)ayase\s?eli|eli\s?ayase|エリーチカ|\belichika\b|"
     r"南\s?ことり|minami\s?kotori|kotori\s?minami|kotobirb|"
     r"園田\s?海未|sonoda\s?umi|umi\s?sonoda|"
     r"星空\s?凛|hoshizora\s?rin|rin\s?hoshizora|金曜凛ちゃんりんりんりん|"
