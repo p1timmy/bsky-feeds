@@ -1,5 +1,5 @@
-atproto~=0.0.58
-peewee~=3.17.8
+atproto~=0.0.59
+peewee~=3.17.9
 Flask~=2.3.3
 python-dotenv<2.0
 apscheduler>=3.11.0,<4.0.0
