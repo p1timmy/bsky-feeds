@@ -134,8 +134,8 @@ EXCLUDE_RE = re.compile(
     # Anyone ... love live music?
     r"anyone( .+)? love live music\?|"
     # love lives/Liverpool/Liverpudlian(s)/lived/lively/livelihood/Livejournal/LiveView/
-    # Livewire/Live2D, love live life/love/local
-    r"love\s?live(2?d|journal|l(y|ihood)|rp(ool|udlians?)|s|view|wire|"
+    # Livewire/Live2D, love live life/love/local/gigs
+    r"love\s?live(2?d|journal|l(y|ihood)|rp(ool|udlians?)|( gig)?s|view|wire|"
     r" ?l(ife|o(cal|ve(?! wing bell))))|"
     # #lovelivemusic, lovelivegcw.com, loveliveitalian.com
     r"\blovelive(music|gcw|italian)|"
