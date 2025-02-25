@@ -12,9 +12,9 @@ from server import data_stream
 from server.algos import filters
 from server.database import Feed, Post, db
 
-_PR0N_LABEL = models.ComAtprotoLabelDefs.SelfLabel(val="porn")
 _ADULT_LABELS = ("porn", "nudity", "sexual", "sexual-figurative")
 _BSKY_MOD_SERVICE = "did:plc:ar7c4by46qjdydhdevvrndac"
+
 _MAX_COMMIT_LAG = timedelta(seconds=0.25)
 _ARCHIVED_THRESHOLD = timedelta(days=1)
 
@@ -24,19 +24,6 @@ logger = logging.getLogger(__name__)
 _all_feeds: dict[str, Feed] = {}
 for row in Feed.select():
     _all_feeds[row.uri] = row
-
-
-def post_has_pr0n_label(post: dict) -> bool:
-    """
-    Check if a post was published with a porn (explicit adult content) label added by
-    the author
-    """
-    record: models.AppBskyFeedPost.Record = post["record"]
-    return (
-        record.labels
-        and record.labels.values is not None
-        and _PR0N_LABEL in record.labels.values
-    )
 
 
 def is_archived_post(post: dict) -> bool:
@@ -66,10 +53,23 @@ def operations_callback(ops: defaultdict):
         if is_archived_post(created_post):
             continue
 
-        # Hide post if it has adult content (porn) label
-        has_pr0n_label = False
-        if post_has_pr0n_label(created_post):
-            has_pr0n_label = True
+        # Hide post if it has adult content (porn/sexual) or nudity label
+        #
+        # In the official Bluesky app the labels show up as:
+        # - porn = Adult Content (Explicit sexual images)
+        # - nudity = Non-Sexual Nudity
+        # - sexual = Adult Content (Does not include nudity)
+        labels: list[str] = []
+        if record.labels and record.labels.values is not None:
+            labels += [value.val for value in record.labels.values]
+
+        pr0n = nudity = sexual = False
+        if "porn" in labels:
+            pr0n = True
+        elif "nudity" in labels:
+            nudity = True
+        elif "sexual" in labels:
+            sexual = True
 
         feeds: list[Feed] = []
         for algo_uri, filter in filters.items():
@@ -114,7 +114,9 @@ def operations_callback(ops: defaultdict):
                 "author_did": author,
                 "reply_parent": reply_parent,
                 "reply_root": reply_root,
-                "has_porn_label": has_pr0n_label,
+                "has_porn_label": pr0n,
+                "has_nudity_label": nudity,
+                "has_sexual_label": sexual,
                 "feeds": feeds,
             }
             posts_to_create.append(post_dict)
