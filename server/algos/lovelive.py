@@ -133,27 +133,28 @@ EXCLUDE_RE = re.compile(
     r"people (i|you|they) love live|"
     # Anyone ... love live music?
     r"anyone( .+)? love live music\?|"
+    # "love live music" at start of sentence or after freaking/really/bloody/etc. but
+    # not "love live music is"
+    r"(^|([^\w ]|[a-z]+(ng?|ly)|bloody ))love live music (?!is )|"
+    # "love live music" at end of sentence, "love live music at"
+    r" love live music([^\w ]| at\b)|"
+    # #lovelivemusic, lovelivegcw.com, loveliveitalian.com
+    r"\blovelive(music|gcw|italian)|"
     # love lives/Liverpool/Liverpudlian(s)/lived/lively/livelihood/Livejournal/LiveView/
     # Livewire/Live2D, love live life/love/local/gigs, love LIVE and FALL (album by
     # Xdinary Heroes)
     r"love\s?live(2?d|journal|l(y|ihood)|rp(ool|udlians?)|( gig)?s|view|wire| and fall|"
     r" ?l(ife|o(cal|ve(?! wing bell))))|"
-    # #lovelivemusic, lovelivegcw.com, loveliveitalian.com
-    r"\blovelive(music|gcw|italian)|"
-    # "love live music" at start of sentence but not "love live music is"
-    r"(^|[^\w ] )love live music (?!is )|"
-    # "love live music" at end of sentence
-    r" love live music[^\w ]|"
     # [Artist] - [song name ending with "love"] live
     r"\w+ [\-\u2013] .+ love live\b[^!]|"
     # that love liver (as in body part)
     r"\bthat ([a-z]+[a-z] )?love liver\b|"
     # Dangerously/Drunk in Love, who live in love (1 John 4:16)
     r"\b(d(angerously|runk)|who live) in love\b|"
-    # laugh/let/live/radical/you are in/life/savage/mad/show some/Friday I'm In/
+    # laugh/let/live/radical/you are in/life/savage/mad/show some/stone/Friday I'm In/
     # Lexicon of/Rinku Love Live
     r"\b(l(augh|et|ive|exicon of)|r(adical|inku)|you( a|['’])re in|(?<!link )life|"
-    r"s(avage|how some)|mad|friday i['’]?m in) love live\b|"
+    r"s(avage|how some|tone)|mad|friday i['’]?m in) love live\b|"
     # perform(s/ed/ing/ance of) ... [song name ending with "Love"] live at/in/on/inside/
     # outside
     r"perform(ance of|ed|ing|s)? .+ love live (at|[io]n|(in|out)side)\b|"
