@@ -4,10 +4,11 @@ from server import config
 from server.algos._base import get_post_texts
 
 LOVELIVE_NAME_EN_RE = re.compile(
-    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)love ?live[!\s]*", re.IGNORECASE
+    r"([^a-z0-9\-]|\b)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live[!\s]*(blue ?bird|days|s(ky|oundtrack|taff|u(nshine|per ?star)))|"
+    r"love\s?live[!\s]*(blue ?bird|days|heardle|s(ky|oundtrack|taff|u(nshine|per"
+    r" ?star)))|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     r"(thank you|likes) love ?live\b|#lovelive_|スクールアイドル|"
     r"(?<!middle )(?<!high )school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
@@ -154,23 +155,19 @@ EXCLUDE_RE = re.compile(
     r"\b(i(['’]d)?|you(['’]ll)?|we( (all|both))?|they|gotta|who|people|s?he|[a-z]{3,}s)"
     r"( ([a-z]+(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|don['’]t|"
     r"((ha(ve|ppen(ed)?)|used?) t|s|t(o|end t))o|would(v['’]e)?|[a-z]+[a-z] and)\,?)*"
-    r"( love)+ live(?! (so(?! far)|and(?! learn)|but)\b)(-|,?  ?#?)?\w+\b|"
+    r"( love)+ live(rs?)?(?! (so(?! far)|and(?! learn)|but)\b),?  ?#?\w+\b|"
     # People I/you/etc. love live
     r"people (i|you|they) love live|"
     # Anyone ... love live music?
     r"anyone( .+)? love live music\?|"
-    # "love live music" at start of sentence or after freaking/really/bloody/etc. but
+    # "love live music" at start of sentence or after "freaking/really/bloody/etc." but
     # not "love live music is"
     r"(^|([^\w ]|[a-z]+(ng?|ly)|bloody ))love live music (?!is )|"
     # "love live music" at end of sentence, "love live music at"
     r" love live music([^\w ]| at\b)|"
-    # #lovelivemusic, lovelivegcw.com, loveliveitalian.com
-    r"\blovelive(music|gcw|italian)|"
-    # love lives/Liverpool/Liverpudlian(s)/lived/lively/livelihood/Livejournal/LiveView/
-    # Livewire/Live2D, love live life/love/local/gigs, love LIVE and FALL (album by
-    # Xdinary Heroes)
-    r"love\s?live(2?d|journal|l(y|ihood)|rp(ool|udlians?)|( gig)?s|view|wire| and fall|"
-    r" ?l(ife|o(cal|ve(?! wing bell))))|"
+    # love live life/local/gigs/Italian, "love live love" but not "love live love wing
+    # bell", love LIVE and FALL (album by Xdinary Heroes)
+    r"love live (and fall|gigs|italian|l(ife|o(cal|ve(?! wing bell))))|"
     # [Artist] - [song name ending with "love"] live
     r"\w+ [\-\u2013] .+ love live\b[^!]|"
     # that love liver (as in body part)
