@@ -192,7 +192,7 @@ EXCLUDE_RE = re.compile(
     r"(^|[^\w ] *?)love live the (?!school idol|musical)\b|"
     # "love live [something]" as a typo of "long live [something]" or "love love love
     # love [something]", "love liver" at beginning of sentence
-    r"([^\w\s]+?  ?|^)(love )+liver?( #?[a-z]+[a-z]){1,3} ?([^\w'’ ]|$)|"
+    r"([^\w\s,:]+?  ?|^)(love )+live[r,]?( #?[a-z]+[a-z]){1,3} ?([^\w'’ ]|$)|"
     # love live laugh/service/theater/shows/sports/performances/TV/bands/oak(s)/tour/
     # mealworms/Italian/long/your [something], "Live and Let Die" (movie title),
     # Love Live in/from Paris (misspelling of "Lover (Live From Paris)" album by
