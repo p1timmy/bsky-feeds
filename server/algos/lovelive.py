@@ -10,8 +10,9 @@ LOVELIVE_RE = re.compile(
     r"love\s?live[!\s]*(blue ?bird|days|heardle|s(ky|oundtrack|taff|u(nshine|per"
     r" ?star)))|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
-    r"(thank you|likes) love ?live\b|#lovelive_|スクールアイドル|"
-    r"(?<!middle )(?<!high )school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
+    r"(thank you|likes) love ?live\b|#lovelive_|lovelive-anime|スクールアイドル|"
+    r"(?<!middle )(?<!high )(?<!old )(?<!old-)"
+    r"school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
     # Games
     r"\bl(l|ove ?live ?)sif2?\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|puchiguru|"
     # ぷちぐる but not ぷちぐるみ
@@ -101,7 +102,7 @@ CHARACTER_NAMES = set(
         ("Riko", "Sakurauchi", False),
         ("Kanan", "Matsuu?ra", False),
         ("(Dia|Ruby)", "Kurosawa", False),
-        ("You", "Watanabe", False),
+        ("You(?!['’])", "Watanabe", False),
         ("Yoshiko", "Tsushima", False),
         ("Hanamaru", "Kunikida", False),
         ("Mari", "Ohara", False),
