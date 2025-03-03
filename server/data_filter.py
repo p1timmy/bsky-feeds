@@ -80,10 +80,6 @@ def operations_callback(ops: defaultdict):
 
         if feeds:
             # print post to show that it will be added to feeds
-            post_has_embeds = isinstance(
-                record.embed,
-                (models.AppBskyEmbedImages.Main, models.AppBskyEmbedVideo.Main),
-            )
             inlined_text = record.text.replace("\n", " ").strip() or "<no text>"
             post_is_reply = bool(record.reply)
             logger.info(
@@ -92,12 +88,14 @@ def operations_callback(ops: defaultdict):
                 "[author=%s]"
                 "[with_embed=%s]"
                 "[is_reply=%s]"
+                "[labels=%s]"
                 "[feeds=%s]"
                 ": %s",
                 record.created_at,
                 author,
-                post_has_embeds,
+                record.embed is not None,
                 post_is_reply,
+                ",".join(labels) or None,
                 ",".join(feed.algo_name for feed in feeds),
                 inlined_text,
             )
@@ -133,7 +131,7 @@ def operations_callback(ops: defaultdict):
             logger.info(style("Posts deleted from feeds: %s", fg="red"), count)
 
     if posts_to_create:
-        new_post_count = 0
+        new_post_count = posts_with_labels_count = 0
         with db.atomic():
             for post_dict in posts_to_create:
                 feeds = post_dict.pop("feeds")
@@ -159,11 +157,20 @@ def operations_callback(ops: defaultdict):
                     raise e
                 else:
                     post.feeds.add(feeds)
-                    if not post.has_porn_label:
-                        new_post_count += 1
+                    new_post_count += 1
+                    if post.adult_labels != 0:
+                        posts_with_labels_count += 1
 
         if new_post_count > 0:
-            logger.info(style("Posts added to feeds: %s", fg="green"), new_post_count)
+            logger.info(
+                style("Posts added to feeds: %s%s", fg="green"),
+                new_post_count,
+                (
+                    f" ({posts_with_labels_count} with adult labels)"
+                    if posts_with_labels_count > 0
+                    else ""
+                ),
+            )
 
 
 class _LabelQueueItem(NamedTuple):
