@@ -7,11 +7,12 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z0-9\-]|\b)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live[!\s]*(blue ?bird|days|heardle|s(ky|oundtrack|taff|u(nshine|per"
-    r" ?star)))|"
+    r"love\s?live[!\s]*(blue ?bird|days|heardle|s(eries|ky|oundtrack|taff|"
+    r"u(nshine|per ?star)))|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
-    r"(thank you|likes) love ?live\b|#lovelive_|lovelive-anime|スクールアイドル|"
-    r"(?<!middle )(?<!high )(?<!old )(?<!old-)"
+    r"(thank you|likes) love ?live\b|#lovelive_|lovelive(-anime|_staff)|"
+    # School idol
+    r"スクールアイドル|(?<!middle )(?<!high )(?<!old )(?<!old-)"
     r"school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
     # Games
     r"\bl(l|ove ?live ?)sif2?\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|puchiguru|"
@@ -193,7 +194,8 @@ EXCLUDE_RE = re.compile(
     r"(^|[^\w ] *?)love live the (?!school idol|musical)\b|"
     # "love live [something]" as a typo of "long live [something]" or "love love love
     # love [something]", "love liver" at beginning of sentence
-    r"([^\w\s,:]+?  ?|^)(love )+live[r,]?( #?[a-z]+[a-z]){1,3} ?([^\w'’ ]|$)|"
+    r"(([^\w\s:]+?  ?|^)(love )+liver?(?! is )|([^\w\s,:]+?  ?|^)(love )+live,)"
+    r"( #?[a-z]+){1,3} ?([^\w'’ ]|$)|"
     # love live laugh/service/theater/shows/sports/performances/TV/bands/oak(s)/tour/
     # mealworms/Italian/long/your [something], "Live and Let Die" (movie title),
     # Love Live in/from Paris (misspelling of "Lover (Live From Paris)" album by
