@@ -39,9 +39,9 @@ LOVELIVE_RE = re.compile(
     r"yohane\b(.|\n)*)|sunshine\sin\sthe\smirror|"
     r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?曜|津島\s?善子|"
     r"国木田\s?花丸|小原\s?鞠莉|"
-    r"がんば(ルビ|るび)|ganbaruby|"
+    r"がんば(ルビ|るび)|(^|[^@])ganbaruby|"
     r"(永久|\beikyuu\s?)hours|"
-    r"(?<!\bRT @)saint\s?snow|"
+    r"(?<!\bRT @)saint\s?snow([^a-z]|$)|"
     r"鹿角\s?(理亞|聖良)|"
     # Nijigasaki
     r"虹ヶ咲|ニジガク|(アニ|エイ)ガサキ|(あに|えい)がさき|にじ(よん|ちず)|"
@@ -155,7 +155,7 @@ CHARACTER_NAMES = set(
 EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
     r"\b(i(['’]d)?|you(['’]ll)?|we( (all|both))?|they|gotta|who|people|s?he|[a-z]{3,}s)"
-    r"( ([a-z]+(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|don['’]t|"
+    r"( ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|don['’]t|"
     r"((ha(ve|ppen(ed)?)|used?) t|s|t(o|end t))o|would(v['’]e)?|[a-z]+[a-z] and)\,?)*"
     r"( love)+ live(rs?)?(?! (so(?! far)|and(?! learn)|but)\b),?  ?#?\w+\b|"
     # People I/you/etc. love live
@@ -167,41 +167,63 @@ EXCLUDE_RE = re.compile(
     r"(^|([^\w ]|[a-z]+(ng?|ly)|bloody ))love live music (?!is )|"
     # "love live music" at end of sentence, "love live music at"
     r" love live music([^\w ]| at\b)|"
-    # love live life/local/gigs/Italian, "love live love" but not "love live love wing
-    # bell", love LIVE and FALL (album by Xdinary Heroes)
-    r"love live (and fall|gigs|italian|l(ife|o(cal|ve(?! wing bell))))|"
+    # Words/phrases starting with "love live"
+    r"\blove live ("
+    # - love live action, love "Live and Let Die" (movie title), love "LIVE and FALL"
+    #   (album by Xdinary Heroes)
+    r"a(ction|nd (fall|let die))|"
+    # - Love Live Italian/within
+    r"(italia|withi)n|"
+    # - love live laugh/life/local/long/loud (music), "love live love" but not "love live
+    #   love wing bell"
+    r"l(augh|o(cal|ife|ng|ud( music)?|ve(?! wing bell)))|"
+    # - love live oak(s)
+    r"oaks?|"
+    # - love live service/streaming/streams
+    r"s(ervice|tream(ing|s))|"
+    # - love live theater/TV
+    r"t(heat(er|re)|v)|"
+    # - love live tour/your
+    r"[ty]our|"
+    # - love live bands/gigs/mealworms/performances/shows/sports, "Love Live in/from
+    #   Paris" (misspelling of "Lover (Live from Paris)" album by Taylor Swift)
+    r"(band|gig|mealworm|performance|s(how|port)|(in|from) pari)s)|"
     # [Artist] - [song name ending with "love"] live
     r"\w+ [\-\u2013] .+ love live\b[^!]|"
     # that love liver (as in body part)
     r"\bthat ([a-z]+[a-z] )?love liver\b|"
-    # Dangerously/Drunk in Love, who live in love (1 John 4:16)
-    r"\b(d(angerously|runk)|who live) in love\b|"
-    # laugh/let/live/radical/you are in/life/savage/mad/show some/stone/Friday I'm In/
-    # Lexicon of/Rinku Love Live
-    r"\b(l(augh|et|ive|exicon of)|r(adical|inku)|you( a|['’])re in|(?<!link )life|"
-    r"s(avage|how some|tone)|mad|friday i['’]?m in) love live\b|"
-    # perform(s/ed/ing/ance of) ... [song name ending with "Love"] live at/in/on/inside/
-    # outside
-    r"perform(ance of|ed|ing|s)? .+ love live (at|[io]n|(in|out)side)\b|"
+    # Words/phrases ending with "love live"
+    # - Dangerously/Drunk in Love live, who live in love live (1 John 4:16)
+    r"\b(d(angerously|runk)|who live) in love live\b|\b("
+    # - does not/doesn't love live [something]
+    r"do(es)?( not|n['’]t)|"
+    # - Friday I'm In Love live
+    r"friday i['’]?m in|"
+    # - laugh/let/live/Lexicon of Love live
+    r"l(augh|et|ive|exicon of)|"
+    # - "life love live" but not "Link Life Love Live"
+    r"(?<!link )life|"
+    # - mad love live
+    r"mad|"
+    # - Radical/Rinku Love Live
+    r"r(adical|inku)|"
+    # - show some/Savage/Stone Love live
+    r"s(avage|how some|tone)|"
+    # - you are/you're in love live
+    r"you( a|['’])re in) love live\b|"
+    # perform(s/ed/ing/ance of) ... [song name ending with "Love"] live
+    r"perform(ance of|ed|ing|s)? .+ love live($| +(at|[io]n|(in|out)side)\b)|"
     # if you live in/near/around [place name] and love live music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+|[^\w ]\s*)love live"
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|"
     # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
-    # love live(-)action/streaming
-    r"\blove live[ \-](action|streaming)\b|"
     # "love live the" as a typo of "long live the"
     r"(^|[^\w ] *?)love live the (?!school idol|musical)\b|"
     # "love live [something]" as a typo of "long live [something]" or "love love love
     # love [something]", "love liver" at beginning of sentence
-    r"(([^\w\s:]+?  ?|^)(love )+liver?(?! is )|([^\w\s,:]+?  ?|^)(love )+live,)"
-    r"( #?[a-z]+){1,3} ?([^\w'’ ]|$)|"
-    # love live laugh/service/theater/shows/sports/performances/TV/bands/oak(s)/tour/
-    # mealworms/Italian/long/your [something], "Live and Let Die" (movie title),
-    # Love Live in/from Paris (misspelling of "Lover (Live From Paris)" album by
-    # Taylor Swift)
-    r"\blove live (l(augh|ong)|service|t(heat(er|re)|our|v)|oaks?|your|italian|"
-    r"and let die|(band|s(how|port)|mealworm|performance|(in|from) pari)s)|"
+    r"(([^\w\s:]+?  ?|^)(love )+liver?(?! (i[ns]|are) )|([^\w\s,:]+?  ?|^)(love"
+    r" )+live,)( #?[a-z]+)+ ?([^\w'’ ]|$)|"
     # may your/his/her/their ... love live (on)
     r"\bmay (h(is|er)|(thei|you)r) (.+ )?love live |"
     # may love live in
