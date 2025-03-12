@@ -31,7 +31,7 @@ LOVELIVE_RE = re.compile(
     r"綺羅\s?ツバサ|優木\s?あんじゅ|統堂\s?英玲奈|"
     # Love Live! Sunshine!!
     # NOTE: AZALEA not included due to too many false positives
-    r"浦の星女?|uranohoshi|aq(ou|uo)rs|cyaron!?|guilty\s?kiss|"
+    r"浦の星女?|uranohoshi|aq(ou|uo)rs|cyaron!?|guilty\s?kiss([^a-z]|$)|"
     # YYY (You, Yoshiko/Yohane, RubY)
     r"(?<!わい)(?<!わーい)わいわいわい(?!わー?い)|"
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)aiscream|"
@@ -157,7 +157,7 @@ EXCLUDE_RE = re.compile(
     r"\b(i(['’]d)?|you(['’]ll)?|we( (all|both))?|they|gotta|who|people|s?he|[a-z]{3,}s)"
     r"( ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|don['’]t|"
     r"((ha(ve|ppen(ed)?)|used?) t|s|t(o|end t))o|would(v['’]e)?|[a-z]+[a-z] and)\,?)*"
-    r"( love)+ live(rs?)?(?! (so(?! far)|and(?! learn)|but)\b),?  ?#?\w+\b|"
+    r"( love)+ live((?! (so(?! far)|and(?! learn)|but)\b)|rs?),?  ?#?\w+\b|"
     # People I/you/etc. love live
     r"people (i|you|they) love live|"
     # Anyone ... love live music?
