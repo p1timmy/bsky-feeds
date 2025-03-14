@@ -156,7 +156,8 @@ EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
     r"\b(i(['’]d)?|you(['’]ll)?|we( (all|both))?|they|gotta|who|people|s?he|[a-z]{3,}s)"
     r"( ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|don['’]t|"
-    r"((ha(ve|ppen(ed)?)|used?) t|s|t(o|end t))o|would(v['’]e)?|[a-z]+[a-z] and)\,?)*"
+    r"((ha(ve|ppen(ed)?)|used?) t|s|t(o|end t))o|would(v['’]e)?|"
+    r"[a-z]+[a-z] (and|&))\,?)*"
     r"( love)+ live((?! (so(?! far)|and(?! learn)|but)\b)|rs?),?  ?#?\w+\b|"
     # People I/you/etc. love live
     r"people (i|you|they) love live|"
@@ -169,9 +170,11 @@ EXCLUDE_RE = re.compile(
     r" love live music([^\w ]| at\b)|"
     # Words/phrases starting with "love live"
     r"\blove live ("
-    # - love live action, love "Live and Let Die" (movie title), love "LIVE and FALL"
-    #   (album by Xdinary Heroes)
-    r"a(ction|nd (fall|let die))|"
+    # - love live action, love "LIVE and FALL" (album by Xdinary Heroes)
+    r"a(ction|nd fall)|"
+    # - love "Live and Let Die" (movie title)/"Live Die Repeat" (alt name of "Edge of
+    #   Tomorrow" movie)
+    r"((and|&) let )?die( repeat)?\b|"
     # - Love Live Italian/within
     r"(italia|withi)n|"
     # - love live laugh/life/local/long/loud (music), "love live love" but not "love live
