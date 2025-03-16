@@ -198,6 +198,8 @@ EXCLUDE_RE = re.compile(
     # Words/phrases ending with "love live"
     # - Dangerously/Drunk in Love live, who live in love live (1 John 4:16)
     r"\b(d(angerously|runk)|who live) in love live\b|\b("
+    # - all your love live
+    r"all your|"
     # - does not/doesn't love live [something]
     r"do(es)?( not|n['’]t)|"
     # - Friday I'm In Love live
