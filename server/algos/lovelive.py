@@ -51,7 +51,7 @@ LOVELIVE_RE = re.compile(
     r"高咲\s?侑|上原\s?歩夢|中須\s?かすみ|桜坂\s?しずく|朝香\s?果林|宮下\s?愛|近江\s?(彼方|遥)|"
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
     # Love Live! Superstar!!
-    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)liella(?! kelly)[!！]?|結ヶ丘|yuigaoka|"
+    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)liella(?!(nd| kelly))[!！]?|結ヶ丘|yuigaoka|"
     r"5yncri5e!?|kaleidoscore"
     r"|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(?<!i )(?<!to"
     r" )catchu!?(?! later)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
@@ -177,15 +177,17 @@ EXCLUDE_RE = re.compile(
     r"((and|&) let )?die( repeat)?\b|"
     # - Love Live Italian/within
     r"(italia|withi)n|"
-    # - love live laugh/life/local/long/loud (music), "love live love" but not "love live
+    # - love live (and) laugh
+    r"(and )?laugh|"
+    # - love live life/local/long/loud (music), "love live love" but not "love live
     #   love wing bell"
-    r"l(augh|o(cal|ife|ng|ud( music)?|ve(?! wing bell)))|"
+    r"l(ife|o(cal|ng|ud( music)?|ve(?! wing bell)))|"
     # - love live oak(s)
     r"oaks?|"
     # - love live service/streaming/streams
     r"s(ervice|tream(ing|s))|"
-    # - love live theater/TV
-    r"t(heat(er|re)|v)|"
+    # - love live tables/theater/TV
+    r"t(ables|heat(er|re)|v)|"
     # - love live tour/your
     r"[ty]our|"
     # - love live bands/gigs/mealworms/performances/shows/sports, "Love Live in/from
@@ -196,14 +198,16 @@ EXCLUDE_RE = re.compile(
     # that love liver (as in body part)
     r"\bthat ([a-z]+[a-z] )?love liver\b|"
     # Words/phrases ending with "love live"
-    # - Dangerously/Drunk in Love live, who live in love live (1 John 4:16)
-    r"\b(d(angerously|runk)|who live) in love live\b|\b("
+    # - Dangerously/Drunk/I'm Not in Love live, who live in love live (1 John 4:16)
+    r"\b(d(angerously|runk)|i['’]?m not|who live) in love live\b|\b("
     # - all your love live
     r"all your|"
+    # Can't Hide/Computer Love live
+    r"c(an['’]?t hide|omputer)|"
     # - does not/doesn't love live [something]
     r"do(es)?( not|n['’]t)|"
-    # - Friday I'm In Love live
-    r"friday i['’]?m in|"
+    # - fight/Friday I'm In Love live
+    r"f(ight|riday i['’]?m in)|"
     # - laugh/let/live/Lexicon of Love live
     r"l(augh|et|ive|exicon of)|"
     # - "life love live" but not "Link Life Love Live"
@@ -214,6 +218,8 @@ EXCLUDE_RE = re.compile(
     r"r(adical|inku)|"
     # - show some/Savage/Stone Love live
     r"s(avage|how some|tone)|"
+    # - The House of Love live
+    r"the house of|"
     # - you are/you're in love live
     r"you( a|['’])re in) love live\b|"
     # perform(s/ed/ing/ance of) ... [song name ending with "Love"] live
@@ -231,8 +237,8 @@ EXCLUDE_RE = re.compile(
     r" )+live,)( #?[a-z]+)+ ?([^\w'’ ]|$)|"
     # may your/his/her/their ... love live (on)
     r"\bmay (h(is|er)|(thei|you)r) (.+ )?love live |"
-    # may love live in
-    r"\bmay love live in\b|"
+    # may/my love live in
+    r"\bma?y love live in\b|"
     # her/his/our/their/who(se) ... (and) love live in/on
     r"(h(er|is)|(ou|thei)r|who(se)?) (([a-z]+[a-z]|.+ and) )?love lives? [io]n\b|"
     # "you(r) love live" before period/comma
