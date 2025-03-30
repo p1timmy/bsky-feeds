@@ -8,7 +8,7 @@ LOVELIVE_NAME_EN_RE = re.compile(
 )
 LOVELIVE_RE = re.compile(
     r"love\s?live[!\s]*(blue ?bird|days|heardle|mention(ed)?\b|references?|"
-    r"s(eries|ky|oundtrack|potted|taff|u(nshine|per ?star)))|"
+    r"s(eries|ky|oundtrack|potted|taff|u(nshine|per ?star))|[ot]cg)|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     r"(thank you|likes) love ?live\b|#lovelive_|lovelive(-anime|_staff)|"
     # School idol
@@ -31,10 +31,10 @@ LOVELIVE_RE = re.compile(
     r"綺羅\s?ツバサ|優木\s?あんじゅ|統堂\s?英玲奈|"
     # Love Live! Sunshine!!
     # NOTE: AZALEA not included due to too many false positives
-    r"浦の星女?|uranohoshi|aq(ou|uo)rs|cyaron!?|guilty\s?kiss([^a-z]|$)|"
+    r"浦の星女?|uranohoshi|aq(ou|uo)rs|cyaron!?\b|guilty\s?kiss([^a-z]|$)|"
     # YYY (You, Yoshiko/Yohane, RubY)
     r"(?<!わい)(?<!わーい)わいわいわい(?!わー?い)|"
-    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)aiscream|"
+    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)ai♡?scream|"
     r"幻(日のヨハネ|ヨハ)|^(?!(.|\n)*(shaman ?king)(.|\n)*$)((.|\n)*\b(genjitsu ?no ?)?"
     r"yohane\b(.|\n)*)|sunshine\sin\sthe\smirror|"
     r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?曜|津島\s?善子|"
@@ -75,8 +75,8 @@ LOVELIVE_RE = re.compile(
     r"いきづらい部|イキヅライブ|"
     # Concerts
     r"異次元フェス|ijigen\sfest?|#llsat_|"
-    # Notable community groups
-    r"\b(team )?onib(e|ased)\b",
+    # Community stuff
+    r"\b(team )?onib(e|ased)\b|schoolido\.lu|idol\.st|#HasuTH_Tran",
     re.IGNORECASE,
 )
 SUKUFEST_RE = re.compile(
@@ -108,7 +108,10 @@ CHARACTER_NAMES = set(
         ("Hanamaru", "Kunikida", False),
         ("Mari", "Ohara", False),
         # Saint Snow
-        ("(Le|Sar)ah", "Kazuno", False),
+        ("Kazuno", "Leah", True),
+        # NOTE: Leah Kazuno included in pattern builder to try to skip posts about a
+        # speedrunner named "LeahKazuno"
+        ("Sarah", "Kazuno", False),
         # Nijigasaki
         ("Yuu?", "Takasaki", False),
         ("Ayumu", "Uehara", False),
@@ -122,7 +125,8 @@ CHARACTER_NAMES = set(
         ("Emma", "Verde", True),
         ("Rina", "Tennou?ji", False),
         ("Shioriko", "Mifune", False),
-        # Mia Taylor included in pattern builder due to so many false positives
+        # NOTE: Mia Taylor included in pattern builder to prevent generating a pattern
+        # for "MiaTaylor" due to too many false positives
         ("Lanzhu", "Zhong", False),
         # Liella
         ("Kanon", "Shibuya", False),
@@ -208,6 +212,8 @@ EXCLUDE_RE = re.compile(
     r"do(es)?( not|n['’]t)|"
     # - fight/Friday I'm In Love live
     r"f(ight|riday i['’]?m in)|"
+    # - I love live (part of the Great "I love live [something]" Hoarde)
+    r"\bI|"
     # - laugh/let/live/Lexicon of Love live
     r"l(augh|et|ive|exicon of)|"
     # - "life love live" but not "Link Life Love Live"
@@ -233,8 +239,10 @@ EXCLUDE_RE = re.compile(
     r"(^|[^\w ] *?)love live the (?!school idol|musical)\b|"
     # "love live [something]" as a typo of "long live [something]" or "love love love
     # love [something]", "love liver" at beginning of sentence
-    r"(([^\w\s:]+?  ?|^)(love )+liver?(?! (i[ns]|are) )|([^\w\s,:]+?  ?|^)(love"
-    r" )+live,)( #?[a-z]+)+ ?([^\w'’ ]|$)|"
+    r"(([^\w\s:]+?  ?|^)(love )+liver?(?! (i[ns]|are) )|([^\w\s,:]+?  ?|^)"
+    r"(love )+live,)( #?[a-z]+)+ ?([^\w'’ ]|$)|"
+    # "love love live" at beginning of sentence
+    r"([^\w\s]+?  ?|^)love (love )+live\b|"
     # may your/his/her/their ... love live (on)
     r"\bmay (h(is|er)|(thei|you)r) (.+ )?love live |"
     # may/my love live in
@@ -243,7 +251,7 @@ EXCLUDE_RE = re.compile(
     r"(h(er|is)|(ou|thei)r|who(se)?) (([a-z]+[a-z]|.+ and) )?love lives? [io]n\b|"
     # "you(r) love live" before period/comma
     r"\byour? love live[.,]|"
-    # # playing [video game title ending with "Love"] live (on/at)
+    # playing [video game title ending with "Love"] live (on/at)
     r"\bplay(ing)? .+ love live (at|on)|"
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
     r"\bi ([a-z]+[a-z] )?love live (&|and) learn|"
@@ -288,7 +296,8 @@ def make_characters_pattern() -> re.Pattern:
         patterns.append(f"{first} ?{last}")
 
     return re.compile(
-        f"(?:^|[^@a-z])(?:{'|'.join(patterns)}|mia taylor)\\b", re.IGNORECASE
+        f"(?:^|[^@a-z])(?:{'|'.join(patterns)}|leah kazuno|mia taylor)\\b",
+        re.IGNORECASE,
     )
 
 
