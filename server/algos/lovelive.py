@@ -31,7 +31,7 @@ LOVELIVE_RE = re.compile(
     r"綺羅\s?ツバサ|優木\s?あんじゅ|統堂\s?英玲奈|"
     # Love Live! Sunshine!!
     # NOTE: AZALEA not included due to too many false positives
-    r"浦の星女?|uranohoshi|aq(ou|uo)rs|cyaron!?\b|guilty\s?kiss([^a-z]|$)|"
+    r"(^|[^三土])浦の星女?|uranohoshi|aq(ou|uo)rs|cyaron!?\b|guilty\s?kiss([^a-z]|$)|"
     # YYY (You, Yoshiko/Yohane, RubY)
     r"(?<!わい)(?<!わーい)わいわいわい(?!わー?い)|"
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)ai♡?scream|"
@@ -80,7 +80,7 @@ LOVELIVE_RE = re.compile(
     re.IGNORECASE,
 )
 SUKUFEST_RE = re.compile(
-    r"(^|[^マ])スクフェス(?!札幌|大阪|福岡|神奈川|新潟|仙台|三河|沖縄)"
+    r"(^|[^マ])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄)"
 )
 CHARACTER_NAMES = set(
     {
@@ -158,9 +158,9 @@ CHARACTER_NAMES = set(
 
 EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
-    r"\b(i(['’]d)?|you(['’]ll)?|we( (all|both))?|they|gotta|who|people|s?he|[a-z]{3,}s)"
-    r"( ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|don['’]t|"
-    r"((ha(ve|ppen(ed)?)|used?) t|s|t(o|end t))o|would(v['’]e)?|"
+    r"\b((i|s?he)(['’]d)?|you(['’]ll)?|we( (all|both))?|they|gotta|who|people|"
+    r"[a-z]{3,}s)( ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|"
+    r"don['’]t|((ha(ve|ppen(ed)?)|used?) t|s|t(o|end t))o|would(v['’]e)?|"
     r"[a-z]+[a-z] (and|&))\,?)*"
     r"( love)+ live((?! (so(?! far)|and(?! learn)|but)\b)|rs?),? &? ?#?\w+\b|"
     # People I/you/etc. love live
@@ -249,6 +249,8 @@ EXCLUDE_RE = re.compile(
     r"\bma?y love live in\b|"
     # her/his/our/their/who(se) ... (and) love live in/on
     r"(h(er|is)|(ou|thei)r|who(se)?) (([a-z]+[a-z]|.+ and) )?love lives? [io]n\b|"
+    # their/her/his ... and love live
+    r"(h(er|is)|their) ([a-z]+,? )+(and|&) love lives?\b|"
     # "you(r) love live" before period/comma
     r"\byour? love live[.,]|"
     # playing [video game title ending with "Love"] live (on/at)
