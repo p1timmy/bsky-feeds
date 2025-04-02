@@ -158,7 +158,7 @@ CHARACTER_NAMES = set(
 
 EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
-    r"\b((i|s?he)(['’]d)?|you(['’]ll)?|we( (all|both))?|they|gotta|who|people|"
+    r"\b((i|s?he|they)(['’]d)?|you(['’]ll)?|we( (all|both))?|gotta|who|people|"
     r"[a-z]{3,}s)( ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|"
     r"don['’]t|((ha(ve|ppen(ed)?)|used?) t|s|t(o|end t))o|would(v['’]e)?|"
     r"[a-z]+[a-z] (and|&))\,?)*"
@@ -206,10 +206,10 @@ EXCLUDE_RE = re.compile(
     r"\b(d(angerously|runk)|i['’]?m not|who live) in love live\b|\b("
     # - all your love live
     r"all your|"
-    # Can't Hide/Computer Love live
+    # - Can't Hide/Computer Love live
     r"c(an['’]?t hide|omputer)|"
-    # - does not/doesn't love live [something]
-    r"do(es)?( not|n['’]t)|"
+    # - Darker My Love live, does not/doesn't love live [something]
+    r"d(arker my|o(es)?( not|n['’]t))|"
     # - fight/Friday I'm In Love live
     r"f(ight|riday i['’]?m in)|"
     # - I love live (part of the Great "I love live [something]" Hoarde)
