@@ -222,8 +222,8 @@ EXCLUDE_RE = re.compile(
     r"mad|"
     # - Radical/Rinku Love Live
     r"r(adical|inku)|"
-    # - show some/Savage/Stone Love live
-    r"s(avage|how some|tone)|"
+    # - show some/Savage/Songs of/Stone Love live
+    r"s(avage|how some|ongs of|tone)|"
     # - The House of Love live
     r"the house of|"
     # - you are/you're in love live
