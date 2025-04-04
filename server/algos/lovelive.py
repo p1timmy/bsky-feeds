@@ -243,6 +243,8 @@ EXCLUDE_RE = re.compile(
     r"(love )+live,)( #?[a-z]+)+ ?([^\w'’ ]|$)|"
     # "love love live" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+live\b|"
+    # ... and love live(s) here/there
+    r" (and|&) love lives? t?here\b|"
     # may your/his/her/their ... love live (on)
     r"\bmay (h(is|er)|(thei|you)r) (.+ )?love live |"
     # may/my love live in
