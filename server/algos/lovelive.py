@@ -163,8 +163,8 @@ EXCLUDE_RE = re.compile(
     r"don['’]t|((ha(ve|ppen(ed)?)|used?) t|s|t(o|end t))o|would(v['’]e)?|"
     r"[a-z]+[a-z] (and|&))\,?)*"
     r"( love)+ live((?! (so(?! far)|and(?! learn)|but)\b)|rs?),? &? ?#?\w+\b|"
-    # People I/you/etc. love live
-    r"people (i|you|they) love live|"
+    # People I/you/etc. (... and) love live
+    r"people (i|you|they) (([a-z]+[a-z],? )+(and|&) )?love live|"
     # Anyone ... love live music?
     r"anyone( .+)? love live music\?|"
     # "love live music" at start of sentence or after "freaking/really/bloody/etc." but
