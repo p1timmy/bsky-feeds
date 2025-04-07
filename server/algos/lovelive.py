@@ -103,7 +103,9 @@ CHARACTER_NAMES = set(
         ("Riko", "Sakurauchi", False),
         ("Kanan", "Matsuu?ra", False),
         ("(Dia|Ruby)", "Kurosawa", False),
-        ("You(?!['’])", "Watanabe", False),
+        # NOTE: Watanabe You included in pattern builder to try to skip posts mentioning
+        # other people with Watanabe in their names
+        ("You", "Watanabe", True),
         ("Yoshiko", "Tsushima", False),
         ("Hanamaru", "Kunikida", False),
         ("Mari", "Ohara", False),
@@ -270,7 +272,9 @@ EXCLUDE_RE = re.compile(
     # "Prophecy x This Love" by Taylor Swift
     r"prophecy x this love|"
     # "No Loss, No Love" by Spiritbox
-    r"\bno loss,? no love",
+    r"\bno loss,? no love|"
+    # lovelive.com/net/org/etc.
+    r"\blovelive\.[a-z]+[a-z]\b",
     re.IGNORECASE | re.MULTILINE,
 )
 NSFW_KEYWORDS_RE = re.compile(
@@ -300,7 +304,8 @@ def make_characters_pattern() -> re.Pattern:
         patterns.append(f"{first} ?{last}")
 
     return re.compile(
-        f"(?:^|[^@a-z])(?:{'|'.join(patterns)}|leah kazuno|mia taylor)\\b",
+        f"(?:^|[^@a-z])(?:{'|'.join(patterns)}|"
+        r"\b(?<!momo )(?<!shinichiro )watanabe ?you(?!['’])|leah kazuno|mia taylor)\b",
         re.IGNORECASE,
     )
 
