@@ -164,7 +164,7 @@ EXCLUDE_RE = re.compile(
     r"[a-z]{3,}s)( ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|"
     r"don['’]t|((ha(ve|ppen(ed)?)|used?) t|s|t(o|end t))o|would(v['’]e)?|"
     r"[a-z]+[a-z] (and|&))\,?)*"
-    r"( love)+ live((?! (so(?! far)|and(?! learn)|but)\b)|rs?),? &? ?#?\w+\b|"
+    r"( love)+ live((?! (so(?! far)|and(?! learn)|but)\b),? &? ?#?\w+\b|rs?)|"
     # People I/you/etc. (... and) love live
     r"people (i|you|they) (([a-z]+[a-z],? )+(and|&) )?love live|"
     # Anyone ... love live music?
