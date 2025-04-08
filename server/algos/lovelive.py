@@ -214,8 +214,9 @@ EXCLUDE_RE = re.compile(
     r"d(arker my|o(es)?( not|n['’]t))|"
     # - fight/Friday I'm In Love live
     r"f(ight|riday i['’]?m in)|"
-    # - I love live (part of the Great "I love live [something]" Hoarde)
-    r"\bI|"
+    # - I love live (part of the Great "I love live [something]" Hoarde),
+    #   I Feel Love live
+    r"\bI( feel)?|"
     # - laugh/let/live/Lexicon of Love live
     r"l(augh|et|ive|exicon of)|"
     # - "life love live" but not "Link Life Love Live"
