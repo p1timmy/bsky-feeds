@@ -51,8 +51,8 @@ LOVELIVE_RE = re.compile(
     r"高咲\s?侑|上原\s?歩夢|中須\s?かすみ|桜坂\s?しずく|朝香\s?果林|宮下\s?愛|近江\s?(彼方|遥)|"
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
     # Love Live! Superstar!!
-    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)liella(?!(nd| kelly))[!！]?|結ヶ丘|yuigaoka|"
-    r"5yncri5e!?|kaleidoscore"
+    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(tuto)?liella(?!(nd| kelly))[!！]?|"
+    r"結ヶ丘|yuigaoka|5yncri5e!?|kaleidoscore"
     r"|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(?<!i )(?<!to"
     r" )catchu!?(?! later)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
     r"トマカノーテ|tomakanote|スパスタ[3３]期|"
@@ -66,11 +66,11 @@ LOVELIVE_RE = re.compile(
     # リンクラ but not リンクライン or katakana phrases with リンクラ character sequence
     r"(^|[^\u30a1-\u30f6\u30fc])リンクラ(?!イン)|"
     r"hasu\s?no\s?sora|蓮ノ(空|休日)|"
-    r"cerise\sbouquet|スリーズブーケ|dollchestra(?!-art)|ドルケストラ|"
-    r"mira-cra\spark!?|みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|"
+    r"cerise\sbouquet|スリーズブーケ|dollchestra(?!-art)|ドルケストラ|mira-cra\spark!?|"
+    r"みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|\bedel\s?note\b|"
     r"るりのとゆかいなつづりたち|"
     r"乙宗\s?梢|夕霧\s?綴理|藤島\s?慈|日野下\s?花帆|村野\s?さやか|大沢\s?瑠璃乃|百生\s?吟子|"
-    r"徒町\s?小鈴|安養寺\s?姫芽|大賀美沙知|"
+    r"徒町\s?小鈴|安養寺\s?姫芽|大賀美沙知|桂城\s?泉|セラス[・\s]?柳田[・\s]?リリエンフェルト|"
     # Love Live! Bluebird
     r"いきづらい部|イキヅライブ|"
     # Concerts
@@ -155,6 +155,10 @@ CHARACTER_NAMES = set(
         ("Kosuzu", "Kachimachi", False),
         ("Hime", "Anyoji", False),
         ("Sachi", "Ogami", False),
+        ("Izumi", "Katzuragi", False),
+        ("Ceras", "Yanagida", True),
+        ("Yanagida", "Lilienfeld", True),
+        ("Ceras", "Lilienfeld", True),
     }
 )
 
@@ -229,6 +233,8 @@ EXCLUDE_RE = re.compile(
     r"s(avage|how some|ongs of|tone)|"
     # - The House of Love live
     r"the house of|"
+    # - We Found Love live
+    r"we found|"
     # - you are/you're in love live
     r"you( a|['’])re in) love live\b|"
     # perform(s/ed/ing/ance of) ... [song name ending with "Love"] live
@@ -242,7 +248,7 @@ EXCLUDE_RE = re.compile(
     r"(^|[^\w ] *?)love live the (?!school idol|musical)\b|"
     # "love live [something]" as a typo of "long live [something]" or "love love love
     # love [something]", "love liver" at beginning of sentence
-    r"(([^\w\s:]+?  ?|^)(love )+liver?(?! (i[ns]|are) )|([^\w\s,:]+?  ?|^)"
+    r"(([^\w\s:]+? *?|^)(love )+liver?(?! (i[ns]|are) )|([^\w\s,:]+?  ?|^)"
     r"(love )+live,)( #?[a-z]+)+ ?([^\w'’ ]|$)|"
     # "love love live" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+live\b|"
