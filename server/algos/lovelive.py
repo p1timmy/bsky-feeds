@@ -155,7 +155,7 @@ CHARACTER_NAMES = set(
         ("Kosuzu", "Kachimachi", False),
         ("Hime", "Anyoji", False),
         ("Sachi", "Ogami", False),
-        ("Izumi", "Katzuragi", False),
+        ("Izumi", "Katsuragi", False),
         ("Ceras", "Yanagida", True),
         ("Yanagida", "Lilienfeld", True),
         ("Ceras", "Lilienfeld", True),
