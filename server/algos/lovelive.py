@@ -80,7 +80,7 @@ LOVELIVE_RE = re.compile(
     re.IGNORECASE,
 )
 SUKUFEST_RE = re.compile(
-    r"(^|[^マ])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄)"
+    r"(^|[^マア])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄)"
 )
 CHARACTER_NAMES = set(
     {
