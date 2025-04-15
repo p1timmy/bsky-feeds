@@ -8,7 +8,7 @@ LOVELIVE_NAME_EN_RE = re.compile(
 )
 LOVELIVE_RE = re.compile(
     r"love\s?live[!\s]*(blue ?bird|days|heardle|mention(ed)?\b|references?|"
-    r"s(eries|ky|oundtrack|potted|taff|u(nshine|per ?star))|[ot]cg)|"
+    r"s(eries|(ifs)?orter|ky|oundtrack|potted|taff|u(nshine|per ?star))|[ot]cg)|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     r"(thank you|likes) love ?live\b|#lovelive_|lovelive(-anime|_staff)|"
     # School idol
@@ -22,10 +22,10 @@ LOVELIVE_RE = re.compile(
     r"(^|[^マタ])スク(スタ(?!ン[ドプ]|イル|ッフ|ート)|ミュ)|"
     # Love Live! School Idol Project
     # NOTE: Printemps, lily white, BiBi not included due to too many false positives
-    r"音ノ木坂?|otonokizaka|[μµ]['’‘`´′]s|にこりんぱな|nicorinpana|"
+    r"音ノ木坂?|otonokizaka|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)[μµ]['’‘`´′]s|"
     r"高坂\s?穂乃果|絢瀬\s?絵里|南\s?ことり|園田\s?海未|星空\s?凛|西木野\s?真姫|東條\s?希|"
-    r"小泉\s?花陽|矢澤\s?にこ|nico\snico\sni+\b|#niconiconi+\b|"
-    r"エリーチカ|\belichika\b|金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
+    r"小泉\s?花陽|矢澤\s?にこ|nico\snico\sni+\b|#niconiconi+\b|エリーチカ|\belichika\b|"
+    r"にこりんぱな|nicorinpana|金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
     r"snow\s?halation([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
     r"(^|[^a-z\u00C0-\u024F\u1E00-\u1EFF\-])a[-\u2010]rise([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|$)|"
     r"綺羅\s?ツバサ|優木\s?あんじゅ|統堂\s?英玲奈|"
@@ -44,7 +44,7 @@ LOVELIVE_RE = re.compile(
     r"(?<!\bRT @)saint\s?snow([^a-z]|$)|"
     r"鹿角\s?(理亞|聖良)|"
     # Nijigasaki
-    r"虹ヶ咲|ニジガク|(アニ|エイ)ガサキ|(あに|えい)がさき|にじ(よん|ちず)|"
+    r"虹ヶ咲(?!学園交通運輸研究部)|ニジガク|(アニ|エイ)ガサキ|(あに|えい)がさき|にじ(よん|ちず)|"
     r"(nij|an|e)igasaki|niji(chizu|gaku|yon)|a・zu・na|qu4rtz|"
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(diver"
     r" ?diva|r3birth)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
