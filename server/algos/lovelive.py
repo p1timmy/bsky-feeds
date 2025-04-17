@@ -165,7 +165,7 @@ CHARACTER_NAMES = set(
 EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
     r"\b((i|s?he|they)(['’]d)?|you(['’]ll)?|we( (all|both))?|gotta|who|people|"
-    r"[a-z]{3,}s)( ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|"
+    r"[a-z]{3,}s)(,? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|"
     r"don['’]t|((ha(ve|ppen(ed)?)|used?) t|s|t(o|end t))o|would(v['’]e)?|"
     r"[a-z]+[a-z] (and|&))\,?)*"
     r"( love)+ live((?! (so(?! far)|and(?! learn)|but)\b),? &? ?#?\w+\b|rs?)|"
@@ -180,11 +180,14 @@ EXCLUDE_RE = re.compile(
     r" love live music([^\w ]| at\b)|"
     # Words/phrases starting with "love live"
     r"\blove live ("
-    # - love live action, love "LIVE and FALL" (album by Xdinary Heroes)
-    r"a(ction|nd fall)|"
+    # - love live action, love Live A Live, love "LIVE and FALL" (album by
+    # Xdinary Heroes)
+    r"a(ction|nd fall| live)|"
     # - love "Live and Let Die" (movie title)/"Live Die Repeat" (alt name of "Edge of
     #   Tomorrow" movie)
     r"((and|&) let )?die( repeat)?\b|"
+    # - love live fact checking
+    r"fact checking|"
     # - Love Live Italian/within
     r"(italia|withi)n|"
     # - love live (and) laugh
@@ -196,8 +199,8 @@ EXCLUDE_RE = re.compile(
     r"oaks?|"
     # - love live service/streaming/streams
     r"s(ervice|tream(ing|s))|"
-    # - love live tables/theater/TV
-    r"t(ables|heat(er|re)|v)|"
+    # - love live tables/theater/TV, love "Live Through This" (usually an album by Hole)
+    r"t(ables|h(eat(er|re)|rough this)|v)|"
     # - love live tour/your
     r"[ty]our|"
     # - love live bands/gigs/mealworms/performances/shows/sports, "Love Live in/from
@@ -233,8 +236,8 @@ EXCLUDE_RE = re.compile(
     r"s(avage|how some|ongs of|tone)|"
     # - The House of Love live
     r"the house of|"
-    # - We Found Love live
-    r"we found|"
+    # - would/"We Found Love" live
+    r"w(e found|ould)|"
     # - you are/you're in love live
     r"you( a|['’])re in) love live\b|"
     # perform(s/ed/ing/ance of) ... [song name ending with "Love"] live
@@ -312,7 +315,8 @@ def make_characters_pattern() -> re.Pattern:
 
     return re.compile(
         f"(?:^|[^@a-z])(?:{'|'.join(patterns)}|"
-        r"\b(?<!momo )(?<!shinichiro )watanabe ?you(?!['’])|leah kazuno|mia taylor)\b",
+        r"\b(?<!momo )(?<!shinichiro )watanabe ?you(?!['’][a-z]+[a-z]|"
+        r" ([a-z]+[a-z]n['’]?t|are|have)\b)|leah kazuno|mia taylor)\b",
         re.IGNORECASE,
     )
 
