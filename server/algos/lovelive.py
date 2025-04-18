@@ -105,7 +105,7 @@ CHARACTER_NAMES = set(
         ("(Dia|Ruby)", "Kurosawa", False),
         # NOTE: Watanabe You included in pattern builder to try to skip posts mentioning
         # other people with Watanabe in their names
-        ("You", "Watanabe", True),
+        ("(?<!thank )You", "Watanabe", True),
         ("Yoshiko", "Tsushima", False),
         ("Hanamaru", "Kunikida", False),
         ("Mari", "Ohara", False),
@@ -199,8 +199,9 @@ EXCLUDE_RE = re.compile(
     r"oaks?|"
     # - love live service/streaming/streams
     r"s(ervice|tream(ing|s))|"
-    # - love live tables/theater/TV, love "Live Through This" (usually an album by Hole)
-    r"t(ables|h(eat(er|re)|rough this)|v)|"
+    # - love live tables/theater/TV/television, love "Live Through This" (usually an
+    #   album by Hole)
+    r"t(ables|elevision|h(eat(er|re)|rough this)|v)|"
     # - love live tour/your
     r"[ty]our|"
     # - love live bands/gigs/mealworms/performances/shows/sports, "Love Live in/from
@@ -261,10 +262,9 @@ EXCLUDE_RE = re.compile(
     r"\bmay (h(is|er)|(thei|you)r) (.+ )?love live |"
     # may/my love live in
     r"\bma?y love live in\b|"
-    # her/his/our/their/who(se) ... (and) love live in/on
-    r"(h(er|is)|(ou|thei)r|who(se)?) (([a-z]+[a-z]|.+ and) )?love lives? [io]n\b|"
-    # their/her/his ... and love live
-    r"(h(er|is)|their) ([a-z]+,? )+(and|&) love lives?\b|"
+    # her/his/our/their/who(se)/yet ... (and) love live in/on/with
+    r"(h(er|is)|(y?ou|thei)r|who(se)?|yet|\w+['’]s)( ([a-z]+[a-z]|.+ (and|&)))?"
+    r" love lives? ([io]n|with)|"
     # "you(r) love live" before period/comma
     r"\byour? love live[.,]|"
     # playing [video game title ending with "Love"] live (on/at)
