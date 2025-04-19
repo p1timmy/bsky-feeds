@@ -253,7 +253,7 @@ EXCLUDE_RE = re.compile(
     # "love live [something]" as a typo of "long live [something]" or "love love love
     # love [something]", "love liver" at beginning of sentence
     r"(([^\w\s:]+? *?|^)(love )+liver?(?! (i[ns]|are) )|([^\w\s,:]+?  ?|^)"
-    r"(love )+live,)( #?[a-z]+)+ ?([^\w'’ ]|$)|"
+    r"(love )+live,)( [a-z]+['’]s)?( #?[a-z\-]+)+ ?([^\w'’ ]|$)|"
     # "love love live" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+live\b|"
     # ... and love live(s) here/there
