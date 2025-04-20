@@ -80,7 +80,7 @@ LOVELIVE_RE = re.compile(
     re.IGNORECASE,
 )
 SUKUFEST_RE = re.compile(
-    r"(^|[^マア])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄)"
+    r"(^|[^マア])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄|金沢)"
 )
 CHARACTER_NAMES = set(
     {
@@ -103,9 +103,9 @@ CHARACTER_NAMES = set(
         ("Riko", "Sakurauchi", False),
         ("Kanan", "Matsuu?ra", False),
         ("(Dia|Ruby)", "Kurosawa", False),
-        # NOTE: Watanabe You included in pattern builder to try to skip posts mentioning
-        # other people with Watanabe in their names
-        ("(?<!thank )You", "Watanabe", True),
+        # NOTE: Watanabe You/You Watanabe included in pattern builder to try to skip
+        # posts mentioning other people with Watanabe in their names, has the phrase
+        # "thank you Watanabe", or contains "Lazarus" anywhere in the post
         ("Yoshiko", "Tsushima", False),
         ("Hanamaru", "Kunikida", False),
         ("Mari", "Ohara", False),
@@ -315,6 +315,7 @@ def make_characters_pattern() -> re.Pattern:
 
     return re.compile(
         f"(?:^|[^@a-z])(?:{'|'.join(patterns)}|"
+        r"^(?!(.|\n)*(lazarus)(.|\n)*$)((.|\n)*\b(?<!thank )you ?watanabe(.|\n)*)|"
         r"\b(?<!momo )(?<!shinichiro )watanabe ?you(?!['’][a-z]+[a-z]|"
         r" ([a-z]+[a-z]n['’]?t|are|have)\b)|leah kazuno|mia taylor)\b",
         re.IGNORECASE,
