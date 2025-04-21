@@ -222,11 +222,13 @@ EXCLUDE_RE = re.compile(
     r"d(arker my|o(es)?( not|n['’]t))|"
     # - fight/Friday I'm In Love live
     r"f(ight|riday i['’]?m in)|"
+    # "Darkness at the Heart of My Love" live
+    r"darkness at the heart of my|"
     # - I love live (part of the Great "I love live [something]" Hoarde),
     #   I Feel Love live
     r"\bI( feel)?|"
-    # - laugh/let/live/Lexicon of Love live
-    r"l(augh|et|ive|exicon of)|"
+    # - laugh/let (that)/live/Lexicon of Love live
+    r"l(augh|et( that)?|ive|exicon of)|"
     # - "life love live" but not "Link Life Love Live"
     r"(?<!link )life|"
     # - mad love live
@@ -316,7 +318,7 @@ def make_characters_pattern() -> re.Pattern:
     return re.compile(
         f"(?:^|[^@a-z])(?:{'|'.join(patterns)}|"
         r"^(?!(.|\n)*(lazarus)(.|\n)*$)((.|\n)*\b(?<!thank )you ?watanabe(.|\n)*)|"
-        r"\b(?<!momo )(?<!shinichiro )watanabe ?you(?!['’][a-z]+[a-z]|"
+        r"\b(?<!momo )(?<!shinichiro )(?<!akio )watanabe ?you(?!['’][a-z]+[a-z]|"
         r" ([a-z]+[a-z]n['’]?t|are|have)\b)|leah kazuno|mia taylor)\b",
         re.IGNORECASE,
     )
