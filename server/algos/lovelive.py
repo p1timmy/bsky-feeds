@@ -34,7 +34,8 @@ LOVELIVE_RE = re.compile(
     r"(^|[^三土])浦の星女?|uranohoshi|aq(ou|uo)rs|cyaron!?\b|guilty\s?kiss([^a-z]|$)|"
     # YYY (You, Yoshiko/Yohane, RubY)
     r"(?<!わい)(?<!わーい)わいわいわい(?!わー?い)|"
-    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)ai♡?scream|"
+    # AiScReam (Ayumu, Shiki, Ruby)
+    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)ai♡?scream|愛♡スクリ〜ム|"
     r"幻(日のヨハネ|ヨハ)|^(?!(.|\n)*(shaman ?king)(.|\n)*$)((.|\n)*\b(genjitsu ?no ?)?"
     r"yohane\b(.|\n)*)|sunshine\sin\sthe\smirror|"
     r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?曜|津島\s?善子|"
@@ -53,8 +54,8 @@ LOVELIVE_RE = re.compile(
     # Love Live! Superstar!!
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(tuto)?liella(?!(nd| kelly))[!！]?|"
     r"結ヶ丘|yuigaoka|5yncri5e!?|kaleidoscore"
-    r"|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(?<!i )(?<!to"
-    r" )catchu!?(?! later)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
+    r"|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(?<!i )(?<!to )(?<!will )"
+    r"catchu!?(?! later)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
     r"トマカノーテ|tomakanote|スパスタ[3３]期|"
     r"澁谷\s?かのん|唐\s?可可|嵐千\s?砂都|平安名\s?すみれ|葉月\s?恋|桜小路\s?きな子|米女\s?メイ|"
     r"若菜\s?四季|鬼塚\s?(夏美|冬毬)|ウィーン・?マルガレーテ|"
@@ -237,14 +238,16 @@ EXCLUDE_RE = re.compile(
     r"r(adical|inku)|"
     # - show some/Savage/Songs of/Stone Love live
     r"s(avage|how some|ongs of|tone)|"
-    # - The House of Love live
-    r"the house of|"
+    # - The House/Book of Love live
+    r"the (book|house) of|"
     # - would/"We Found Love" live
     r"w(e found|ould)|"
     # - you are/you're in love live
     r"you( a|['’])re in) love live\b|"
-    # perform(s/ed/ing/ance of) ... [song name ending with "Love"] live
-    r"perform(ance of|ed|ing|s)? .+ love live($| +(at|[io]n|(in|out)side)\b)|"
+    # perform(s/ed/ing/ance of)/sing(s/ing) [song name ending with "Love"] live at/on/
+    # in(side)/outside
+    r"(perform(ance of|ed|ing|s)?|sing(ing|s)) .+ love live"
+    r"($| +(at|[io]n|(in|out)side)\b)|"
     # if you live in/near/around [place name] and love live music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+|[^\w ]\s*)love live"
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|"
@@ -271,6 +274,8 @@ EXCLUDE_RE = re.compile(
     r"\byour? love live[.,]|"
     # playing [video game title ending with "Love"] live (on/at)
     r"\bplay(ing)? .+ love live (at|on)|"
+    # I('d) got/need/etc. to hear [song name ending with "Love"] live
+    r"\bI(['’]d)? ([a-z]+ ){,2}to hear ([\w'’]+ )+love live|"
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
     r"\bi ([a-z]+[a-z] )?love live (&|and) learn|"
     # Love Live (rock music) Festival and its venue and bands
