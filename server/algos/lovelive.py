@@ -49,6 +49,7 @@ LOVELIVE_RE = re.compile(
     r"(nij|an|e)igasaki|niji(chizu|gaku|yon)|a・zu・na|qu4rtz|"
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(diver"
     r" ?diva|r3birth)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
+    r"tokimeki r(unners|oadmap to the future)|"
     r"高咲\s?侑|上原\s?歩夢|中須\s?かすみ|桜坂\s?しずく|朝香\s?果林|宮下\s?愛|近江\s?(彼方|遥)|"
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
     # Love Live! Superstar!!
@@ -219,12 +220,11 @@ EXCLUDE_RE = re.compile(
     r"all your|"
     # - Can't Hide/Computer Love live
     r"c(an['’]?t hide|omputer)|"
-    # - Darker My Love live, does not/doesn't love live [something]
-    r"d(arker my|o(es)?( not|n['’]t))|"
+    # - "Darker My Love"/"Darkness at the Heart of My Love" live, does not/doesn't
+    #   love live [something]
+    r"d(ark(er my|ness at the heart of my)|o(es)?( not|n['’]t))|"
     # - fight/Friday I'm In Love live
     r"f(ight|riday i['’]?m in)|"
-    # "Darkness at the Heart of My Love" live
-    r"darkness at the heart of my|"
     # - I love live (part of the Great "I love live [something]" Hoarde),
     #   I Feel Love live
     r"\bI( feel)?|"
