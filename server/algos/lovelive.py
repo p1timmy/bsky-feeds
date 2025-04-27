@@ -4,7 +4,7 @@ from server import config
 from server.algos._base import get_post_texts
 
 LOVELIVE_NAME_EN_RE = re.compile(
-    r"([^a-z0-9\-]|\b)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
+    r"([^a-z0-9\-_]|\b)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
     r"love\s?live[!\s]*(blue ?bird|days|heardle|mention(ed)?\b|references?|"
@@ -66,7 +66,7 @@ LOVELIVE_RE = re.compile(
     r"聖澤悠奈|柊\s?摩央|"
     # Link! Like! Love Live! / Hasunosora
     # リンクラ but not リンクライン or katakana phrases with リンクラ character sequence
-    r"(^|[^\u30a1-\u30f6\u30fc])リンクラ(?!イン)|"
+    r"(^|[^\u30a1-\u30f6\u30fc])リンクラ(?!イン|ボ)|"
     r"hasu\s?no\s?sora|蓮ノ(空|休日)|"
     r"cerise\sbouquet|スリーズブーケ|dollchestra(?!-art)|ドルケストラ|mira-cra\spark!?|"
     r"みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|\bedel\s?note\b|"
@@ -270,8 +270,9 @@ EXCLUDE_RE = re.compile(
     # her/his/our/their/who(se)/yet ... (and) love live in/on/with
     r"(h(er|is)|(y?ou|thei)r|who(se)?|yet|\w+['’]s)( ([a-z]+[a-z]|.+ (and|&)))?"
     r" love lives? ([io]n|with)|"
-    # "you(r) love live" before period/comma
-    r"\byour? love live[.,]|"
+    # "you(r) love live" (sometimes a typo of "your love life") before period/comma/
+    # quote mark
+    r'\byour? love live[.,"”]|'
     # playing [video game title ending with "Love"] live (on/at)
     r"\bplay(ing)? .+ love live (at|on)|"
     # I('d) got/need/etc. to hear [song name ending with "Love"] live
