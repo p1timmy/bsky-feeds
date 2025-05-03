@@ -35,7 +35,7 @@ LOVELIVE_RE = re.compile(
     # YYY (You, Yoshiko/Yohane, RubY)
     r"(?<!わい)(?<!わーい)わいわいわい(?!わー?い)|"
     # AiScReam (Ayumu, Shiki, Ruby)
-    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)ai♡?scream|愛♡スクリ〜ム|"
+    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)ai[♡ ]?scream|愛♡スクリ〜ム|"
     r"幻(日のヨハネ|ヨハ)|^(?!(.|\n)*(shaman ?king)(.|\n)*$)((.|\n)*\b(genjitsu ?no ?)?"
     r"yohane\b(.|\n)*)|sunshine\sin\sthe\smirror|"
     r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?曜|津島\s?善子|"
@@ -68,13 +68,13 @@ LOVELIVE_RE = re.compile(
     # リンクラ but not リンクライン or katakana phrases with リンクラ character sequence
     r"(^|[^\u30a1-\u30f6\u30fc])リンクラ(?!イン|ボ)|"
     r"hasu\s?no\s?sora|蓮ノ(空|休日)|"
-    r"cerise\sbouquet|スリーズブーケ|dollchestra(?!-art)|ドルケストラ|mira-cra\spark!?|"
+    r"cerise\sbouquet|スリーズブーケ|dollches(tra(?!-art)|\b)|ドルケストラ|mira-cra\spark!?|"
     r"みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|\bedel\s?note\b|"
     r"るりのとゆかいなつづりたち|#新メンバーお披露目105期|"
     r"乙宗\s?梢|夕霧\s?綴理|藤島\s?慈|日野下\s?花帆|村野\s?さやか|大沢\s?瑠璃乃|百生\s?吟子|"
     r"徒町\s?小鈴|安養寺\s?姫芽|大賀美沙知|桂城\s?泉|セラス[・\s]?柳田[・\s]?リリエンフェルト|"
     # Love Live! Bluebird
-    r"いきづらい部|イキヅライブ|"
+    r"いきづらい部|イキヅライブ|ikizu ?(live|raibu)|"
     # Concerts
     r"異次元フェス|ijigen\sfest?|#llsat_|"
     # Community stuff
@@ -183,8 +183,10 @@ EXCLUDE_RE = re.compile(
     # Words/phrases starting with "love live"
     r"\blove live ("
     # - love live action, love Live A Live, love "LIVE and FALL" (album by
-    # Xdinary Heroes)
+    #   Xdinary Heroes)
     r"a(ction|nd fall| live)|"
+    # - Love Live Bleeding (typo of "Love Lies Bleeding")
+    r"bleeding|"
     # - love "Live and Let Die" (movie title)/"Live Die Repeat" (alt name of "Edge of
     #   Tomorrow" movie)
     r"((and|&) let )?die( repeat)?\b|"
@@ -225,6 +227,8 @@ EXCLUDE_RE = re.compile(
     r"d(ark(er my|ness at the heart of my)|o(es)?( not|n['’]t))|"
     # - fight/Friday I'm In Love live
     r"f(ight|riday i['’]?m in)|"
+    # - Gerry Love live (live music performer from the UK)
+    r"ger(ard|ry)|"
     # - I love live (part of the Great "I love live [something]" Hoarde),
     #   I Feel Love live
     r"\bI( feel)?|"
@@ -240,8 +244,8 @@ EXCLUDE_RE = re.compile(
     r"s(avage|how some|ongs of|tone)|"
     # - The House/Book of Love live
     r"the (book|house) of|"
-    # - would/"We Found Love" live
-    r"w(e found|ould)|"
+    # - would/"Wasted Love"/"We Found Love" live
+    r"w(asted|e found|ould)|"
     # - you are/you're in love live
     r"you( a|['’])re in) love live\b|"
     # perform(s/ed/ing/ance of)/sing(s/ing) [song name ending with "Love"] live at/on/
@@ -296,7 +300,7 @@ EXCLUDE_RE = re.compile(
     re.IGNORECASE | re.MULTILINE,
 )
 NSFW_KEYWORDS_RE = re.compile(
-    r"\b(bds&?m|c(ock|um(ming)?\b)|di(ck|ldo)|(futanar|henta)i|n(sfw|ude)|"
+    r"\b(bds&?m|c(ock|um(ming)?\b)|di(aper|ck|ldo)|(futanar|henta)i|n(sfw|ude)|"
     r"p(enis|regnant)|sex\b)",
     re.IGNORECASE,
 )
