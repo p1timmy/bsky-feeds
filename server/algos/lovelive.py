@@ -213,8 +213,8 @@ EXCLUDE_RE = re.compile(
     r"(band|gig|mealworm|performance|s(how|port)|(in|from) pari)s)|"
     # [Artist] - [song name ending with "love"] live
     r"\w+ [\-\u2013] .+ love live\b[^!]|"
-    # that love liver (as in body part)
-    r"\bthat ([a-z]+[a-z] )?love liver\b|"
+    # that/just love liver (body part or food)
+    r"\b(jus|tha)t ([a-z]+[a-z] )?love liver\b|"
     # Words/phrases ending with "love live"
     # - Dangerously/Drunk/I'm Not in Love live, who live in love live (1 John 4:16)
     r"\b(d(angerously|runk)|i['’]?m not|who live) in love live\b|\b("
@@ -258,7 +258,7 @@ EXCLUDE_RE = re.compile(
     # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
     # "love live the" as a typo of "long live the"
-    r"(^|[^\w ] *?)love live the (?!school idol|musical)\b|"
+    r"\blove live the (?!school idol|musical)\b|"
     # "love live [something]" as a typo of "long live [something]" or "love love love
     # love [something]", "love liver" at beginning of sentence
     r"(([^\w\s:]+? *?|^)(love )+liver?(?! (i[ns]|are) )|([^\w\s,:]+?  ?|^)"
