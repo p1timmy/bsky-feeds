@@ -182,69 +182,105 @@ EXCLUDE_RE = re.compile(
     r" love live music([^\w ]| at\b)|"
     # Words/phrases starting with "love live"
     r"\blove live ("
-    # - love live action, love Live A Live, love "LIVE and FALL" (album by
-    #   Xdinary Heroes)
+    # - love live action
+    # - love Live A Live (video game title)
+    # - love "LIVE and FALL" (album by Xdinary Heroes)
     r"a(ction|nd fall| live)|"
     # - Love Live Bleeding (typo of "Love Lies Bleeding")
     r"bleeding|"
-    # - love "Live and Let Die" (movie title)/"Live Die Repeat" (alt name of "Edge of
-    #   Tomorrow" movie)
+    # - love live die
+    # - love "Live and Let Die" (movie title)
+    # - love "Live Die Repeat" (alt name of "Edge of Tomorrow" movie)
     r"((and|&) let )?die( repeat)?\b|"
     # - love live fact checking
     r"fact checking|"
-    # - Love Live Italian/within
+    # - love live him
+    r"him|"
+    # - Love Live Italian
+    # - love live within
     r"(italia|withi)n|"
+    # - love live jazz
+    r"jazz|"
     # - love live (and) laugh
     r"(and )?laugh|"
-    # - love live life/local/long/loud (music), "love live love" but not "love live
-    #   love wing bell"
+    # - love live life/local/long/loud (music)
+    # - "love live love" but not "love live love wing bell"
     r"l(ife|o(cal|ng|ud( music)?|ve(?! wing bell)))|"
     # - love live oak(s)
     r"oaks?|"
-    # - love live service/streaming/streams
+    # - love live service
+    # - love live streaming/streams
     r"s(ervice|tream(ing|s))|"
-    # - love live tables/theater/TV/television, love "Live Through This" (usually an
-    #   album by Hole)
+    # - love live tables/theater/TV/television
+    # - love "Live Through This" (usually an album by Hole)
     r"t(ables|elevision|h(eat(er|re)|rough this)|v)|"
+    # - "love live the" as a typo of "long live the" but not "Love Live the School Idol"
+    #   or "Love Live the Musical"
+    r"the (?!school idol|musical)\b|"
     # - love live tour/your
     r"[ty]our|"
-    # - love live bands/gigs/mealworms/performances/shows/sports, "Love Live in/from
-    #   Paris" (misspelling of "Lover (Live from Paris)" album by Taylor Swift)
+    # - love live bands/gigs/mealworms/performances/shows/sports
+    # - "Love Live in/from Paris" (misspelling of "Lover (Live from Paris)" album by
+    #   Taylor Swift)
     r"(band|gig|mealworm|performance|s(how|port)|(in|from) pari)s)|"
     # [Artist] - [song name ending with "love"] live
     r"\w+ [\-\u2013] .+ love live\b[^!]|"
     # that/just love liver (body part or food)
     r"\b(jus|tha)t ([a-z]+[a-z] )?love liver\b|"
     # Words/phrases ending with "love live"
-    # - Dangerously/Drunk/I'm Not in Love live, who live in love live (1 John 4:16)
-    r"\b(d(angerously|runk)|i['’]?m not|who live) in love live\b|\b("
-    # - all your love live
-    r"all your|"
-    # - Can't Hide/Computer Love live
+    r"\b("
+    # - absolutely love live [something]
+    # - "All Your Love" live (usually song by Otis Rush or any song name ending with
+    #   that phrase)
+    r"a(bsolutely|ll your)|"
+    # - "Can't Hide Love" live (different songs by different artists)
+    # - "Computer Love" live (song by Kraftwerk)
     r"c(an['’]?t hide|omputer)|"
-    # - "Darker My Love"/"Darkness at the Heart of My Love" live, does not/doesn't
-    #   love live [something]
+    # - "Dangerously in Love" live (album by Beyonce)
+    # - "Drunk in Love" live (song by Beyonce)
+    # - "I'm Not in Love" live (usually song by 10cc)
+    # - who live in love live (1 John 4:16)
+    r"(d(angerously|runk)|i['’]?m not|who live) in|"
+    # - "Darker My Love" live (song by T.S.O.L.)
+    # - "Darkness at the Heart of My Love" live (song by Ghost)
+    # - does not/doesn't love live [something]
     r"d(ark(er my|ness at the heart of my)|o(es)?( not|n['’]t))|"
-    # - fight/Friday I'm In Love live
+    # - fight love live (usually Filoli, California historical marker)
+    # - "Friday I'm In Love" live (usually song by The Cure)
     r"f(ight|riday i['’]?m in)|"
-    # - Gerry Love live (live music performer from the UK)
+    # - Gerry Love live (British live music performer)
     r"ger(ard|ry)|"
-    # - I love live (part of the Great "I love live [something]" Hoarde),
-    #   I Feel Love live
-    r"\bI( feel)?|"
-    # - laugh/let (that)/live/Lexicon of Love live
+    # - I (definitely/really/etc.) love live (part of the Great "I love live [something]"
+    #   Hoarde, also sometimes about Ableton Live software)
+    # - "I Feel Love" live (usually song by Donna Summer)
+    r"\bI( (feel|[a-z]+ly|))?|"
+    # - laugh/let (that)/live love live
+    # - "Lexicon of Love" live (album by ABC)
     r"l(augh|et( that)?|ive|exicon of)|"
     # - "life love live" but not "Link Life Love Live"
     r"(?<!link )life|"
     # - mad love live
     r"mad|"
-    # - Radical/Rinku Love Live
-    r"r(adical|inku)|"
-    # - show some/Savage/Songs of/Stone Love live
+    # - "No Loss, No Love" live (song by Spiritbox)
+    r"\bno loss,? no|"
+    # - "Prophecy x This Love" live (song by Taylor Swift)
+    r"prophecy x this|"
+    # - Radical Love Live (some religious podcast with a Bluesky presence)
+    # - really love live [something]
+    # - Rinku Love Live (NSFW/R18 AI artist sometimes featured on @mikubot.bsky.social)
+    r"r(adical|eally|inku)|"
+    # - Savage Love Live (sex advice podcast by Dan Savage)
+    # - show some love live
+    # - "Songs of Love Live" (album by Mark Eitzel)
+    # - Stone Love live (usually Jamaican DJ group)
     r"s(avage|how some|ongs of|tone)|"
-    # - The House/Book of Love live
+    # - "The House of Love" live (usually song by Christine)
+    # - "The Book of Love" live (usually song by Peter Gabriel or The Magnetic Fields)
     r"the (book|house) of|"
-    # - would/"Wasted Love"/"We Found Love" live
+    # - would love live
+    # - "Wasted Love" live (song by JJ)
+    # - "We Found Love" live (song by Rihanna feat. Calvin Harris or any song name
+    #   ending with that phrase)
     r"w(asted|e found|ould)|"
     # - you are/you're in love live
     r"you( a|['’])re in) love live\b|"
@@ -257,8 +293,6 @@ EXCLUDE_RE = re.compile(
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|"
     # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
-    # "love live the" as a typo of "long live the"
-    r"\blove live the (?!school idol|musical)\b|"
     # "love live [something]" as a typo of "long live [something]" or "love love love
     # love [something]", "love liver" at beginning of sentence
     r"(([^\w\s:]+? *?|^)(love )+liver?(?! (i[ns]|are) )|([^\w\s,:]+?  ?|^)"
@@ -291,10 +325,6 @@ EXCLUDE_RE = re.compile(
     r"p(an ?tang|hil ?campbell)|r(amblin|e(d ?giant|venant))|screaming ?eagles|"
     r"t(akeaway ?thieve|his ?house ?we ?built|r(oy ?redfern|ucker ?diablo)|ygers)|"
     r"urban ?commandos?|zac ?the ?locust|winter ?gardens)|"
-    # "Prophecy x This Love" by Taylor Swift
-    r"prophecy x this love|"
-    # "No Loss, No Love" by Spiritbox
-    r"\bno loss,? no love|"
     # lovelive.com/net/org/etc.
     r"\blovelive\.[a-z]+[a-z]\b",
     re.IGNORECASE | re.MULTILINE,
