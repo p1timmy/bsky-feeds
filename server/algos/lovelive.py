@@ -229,6 +229,9 @@ EXCLUDE_RE = re.compile(
     r"\b(jus|tha)t ([a-z]+[a-z] )?love liver\b|"
     # Words/phrases ending with "love live"
     r"\b("
+    # - about/confess(ed/es/ing) his/her/their love live (usually typo of "about his/
+    #   her/their love life/lives")
+    r"(about|confess[a-z]*) (h(er|is)|their)|"
     # - absolutely love live [something]
     # - "All Your Love" live (usually song by Otis Rush or any song name ending with
     #   that phrase)
@@ -308,9 +311,9 @@ EXCLUDE_RE = re.compile(
     # her/his/our/their/who(se)/yet ... (and) love live in/on/with
     r"(h(er|is)|(y?ou|thei)r|who(se)?|yet|\w+['’]s)( ([a-z]+[a-z]|.+ (and|&)))?"
     r" love lives? ([io]n|with)|"
-    # "you(r) love live" (sometimes a typo of "your love life") before period/comma/
-    # quote mark
-    r'\byour? love live[.,"”]|'
+    # "his/her/their/you(r) love live" (sometimes a typo of "love life/lives") before
+    # period/comma/quote mark/"is/was"/at end of post
+    r'\b(h(er|is)|their|your?) love live([.,"”]|$| (i|wa)s\b)|'
     # playing [video game title ending with "Love"] live (on/at)
     r"\bplay(ing)? .+ love live (at|on)|"
     # I('d) got/need/etc. to hear [song name ending with "Love"] live
