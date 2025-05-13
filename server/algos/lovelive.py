@@ -36,8 +36,8 @@ LOVELIVE_RE = re.compile(
     r"(?<!わい)(?<!わーい)わいわいわい(?!わー?い)|"
     # AiScReam (Ayumu, Shiki, Ruby)
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)ai[♡ ]?scream\b|愛♡スクリ〜ム|"
-    r"幻(日のヨハネ|ヨハ)|^(?!(.|\n)*(shaman ?king)(.|\n)*$)((.|\n)*\b(genjitsu ?no ?)?"
-    r"yohane\b(.|\n)*)|sunshine\sin\sthe\smirror|"
+    r"幻(日のヨハネ|ヨハ)|genjitsu\s?no\s?yohane|sunshine\sin\sthe\smirror|"
+    r"^(?!(.|\n)*(shaman ?king|touhou)(.|\n)*$)((.|\n)*\byohane\b(.|\n)*)|"
     r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?曜|津島\s?善子|"
     r"国木田\s?花丸|小原\s?鞠莉|"
     r"がんば(ルビ|るび)|(^|[^@])ganbaruby|"
@@ -167,16 +167,16 @@ CHARACTER_NAMES = set(
         ("Yanagida", "Lilienfeld", True),
         ("Ceras", "Lilienfeld", True),
         # LL Bluebird
-        ("Polka", "Takahashi", True),
-        ("Mai", "Azabu", True),
-        ("Akira", "Gotou?", True),
-        ("Hanabi", "Komagata", True),
-        ("Miracle", "Kanazawa", True),
-        ("Noriko", "Chofu", True),
-        ("Yukuri", "Harumiya", True),
-        ("Aurora", "Konohana", True),
-        ("Midori", "Yamada", True),
-        ("Shion", "Sasaki", True),
+        ("Polka", "Takahashi", False),
+        ("Mai", "Azabu", False),
+        ("Akira", "Gotou?", False),
+        ("Hanabi", "Komagata", False),
+        ("Miracle", "Kanazawa", False),
+        ("Noriko", "Chou?fu", False),
+        ("Yukuri", "Harumiya", False),
+        ("Aurora", "Konohana", False),
+        ("Midori", "Yamada", False),
+        ("Shion", "Sasaki", False),
     }
 )
 
@@ -349,8 +349,8 @@ EXCLUDE_RE = re.compile(
     re.IGNORECASE | re.MULTILINE,
 )
 NSFW_KEYWORDS_RE = re.compile(
-    r"\b(bds&?m|c(ock|um(ming)?\b)|di(aper|ck|ldo)|(futanar|henta)i|n(sfw|ude)|"
-    r"p(enis|regnant)|sex\b)",
+    r"\b(bds&?m|c(ock|um(ming)?\b)|di(aper|ck|ldo)|(futanar|henta)i|GOP\b|n(sfw|ude)|"
+    r"p(enis|regnant)|sex\b|trump)",
     re.IGNORECASE,
 )
 
