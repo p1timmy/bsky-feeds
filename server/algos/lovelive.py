@@ -182,11 +182,17 @@ CHARACTER_NAMES = set(
 
 EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
+    # - I('d)/he/she/they/you/we (all/both)/gotta/who/people/etc.
     r"\b((i|s?he|they)(['’]d)?|you(['’]ll)?|we( (all|both))?|gotta|who|people|"
-    r"[a-z]{3,}s)(,? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|"
-    r"don['’]t|((ha(ve|ppen(ed)?)|used?) t|s|t(o|end t))o|would(v['’]e)?|"
+    r"[a-z]{3,}s)"
+    # - *ing/*ly/bloody/also/always/do(es)/don't/happen(ed)/just/still/tend to/too/will/
+    #   would('ve)/... and
+    r"(,? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|don['’]t|"
+    r"((ha(ve|ppen(ed)?)|used?|grew) t|s|t(o|end t))o|would(['’]ve)?|"
     r"[a-z]+[a-z] (and|&))\,?)*"
-    r"( love)+ live((?! (so(?! far)|and(?! learn)|but)\b),? &? ?#?\w+\b|rs?)|"
+    # - love live [something]/love liver(s)
+    r" ((love )+live((?! (so |and(?! learn)|but)\b),? &? ?#?\w+\b|rs?)|"
+    r"love live($|[^\s\w]| \w+))|"
     # People I/you/etc. (... and) love live
     r"people (i|you|they) (([a-z]+[a-z],? )+(and|&) )?love live|"
     # Anyone ... love live music?
