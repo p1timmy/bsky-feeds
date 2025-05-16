@@ -188,7 +188,7 @@ EXCLUDE_RE = re.compile(
     # - *ing/*ly/bloody/also/always/do(es)/don't/happen(ed)/just/still/tend to/too/will/
     #   would('ve)/... and
     r"(,? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|don['’]t|"
-    r"((ha(ve|ppen(ed)?)|used?|grew) t|s|t(o|end t))o|would(['’]ve)?|"
+    r"((ha(ve|ppen(ed)?)|used?|grew) t|s|t(o|end t))o|would(['’]ve)?|even|"
     r"[a-z]+[a-z] (and|&))\,?)*"
     # - love live [something]/love liver(s)
     r" ((love )+live((?! (so |and(?! learn)|but)\b),? &? ?#?\w+\b|rs?)|"
@@ -320,8 +320,8 @@ EXCLUDE_RE = re.compile(
     r"whether you.+ or (just )?love live |"
     # "love live [something]" as a typo of "long live [something]" or "love love love
     # love [something]", "love liver" at beginning of sentence
-    r"(([^\w\s:]+? *?|^)(love )+liver?(?! (i[ns]|are) )|([^\w\s,:]+?  ?|^)"
-    r"(love )+live,)( [a-z]+['’]s)?( #?[a-z\-]+)+ ?([^\w'’ ]|$)|"
+    r"(([^\w\s:]+? *?|^)(love )+liver?(?! (i[ns]|are) )|"
+    r"([^\w\s'’,:]+?  ?|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+live\b|"
     # ... and love live(s) here/there
