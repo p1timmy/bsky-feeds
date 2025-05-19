@@ -190,7 +190,7 @@ EXCLUDE_RE = re.compile(
     r"(,? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|don['’]t|"
     r"((ha(ve|ppen(ed)?)|used?|grew) t|s|t(o|end t))o|would(['’]ve)?|even|"
     r"[a-z]+[a-z] (and|&))\,?)*"
-    # - love live [something]/love liver(s)
+    # - love live [something]/love liver(s)/love Live (as in Ableton Live software)
     r" ((love )+live((?! (so |and(?! learn)|but)\b),? &? ?#?\w+\b|rs?)|"
     r"love live($|[^\s\w]| \w+))|"
     # People I/you/etc. (... and) love live
@@ -200,8 +200,8 @@ EXCLUDE_RE = re.compile(
     # "love live music" at start of sentence or after "freaking/really/bloody/etc." but
     # not "love live music is"
     r"(^|([^\w ]|[a-z]+(ng?|ly)|bloody ))love live music (?!is )|"
-    # "love live music" at end of sentence, "love live music at"
-    r" love live music([^\w ]| at\b)|"
+    # "and love live [something]" at end of sentence
+    r"and love live [a-z]+[a-z]([^\w ]|$)|"
     # Words/phrases starting with "love live"
     r"\blove live ("
     # - love live action
@@ -228,6 +228,9 @@ EXCLUDE_RE = re.compile(
     # - love live life/local/long/loud (music)
     # - "love live love" but not "love live love wing bell"
     r"l(ife|o(cal|ng|ud( music)?|ve(?! wing bell)))|"
+    # - "love live music" at end of sentence
+    # - love live music at
+    r"music ([^\w ]|$|at\b)|"
     # - love live oak(s)
     r"oaks?|"
     # - love live service
@@ -275,10 +278,10 @@ EXCLUDE_RE = re.compile(
     r"f(ight|riday i['’]?m in)|"
     # - Gerry Love live (British live music performer)
     r"ger(ard|ry)|"
-    # - I (definitely/really/etc.) love live (part of the Great "I love live [something]"
-    #   Hoarde, also sometimes about Ableton Live software)
+    # - his love live (usually typo of "his love life")
+    r"his|"
     # - "I Feel Love" live (usually song by Donna Summer)
-    r"\bI( (feel|[a-z]+ly|))?|"
+    r"\bI feel|"
     # - laugh/let (that)/live love live
     # - "Lexicon of Love" live (album by ABC)
     r"l(augh|et( that)?|ive|exicon of)|"
@@ -299,9 +302,10 @@ EXCLUDE_RE = re.compile(
     # - "Songs of Love Live" (album by Mark Eitzel)
     # - Stone Love live (usually Jamaican DJ group)
     r"s(avage|how some|ongs of|tone)|"
+    # - "that I love live [something]"
     # - "The House of Love" live (usually song by Christine)
     # - "The Book of Love" live (usually song by Peter Gabriel or The Magnetic Fields)
-    r"the (book|house) of|"
+    r"th(at I|e (book|house) of)|"
     # - would love live
     # - "Wasted Love" live (song by JJ)
     # - "We Found Love" live (song by Rihanna feat. Calvin Harris or any song name
@@ -333,9 +337,9 @@ EXCLUDE_RE = re.compile(
     # her/his/our/their/who(se)/yet ... (and) love live in/on/with
     r"(h(er|is)|(y?ou|thei)r|who(se)?|yet|\w+['’]s)( ([a-z]+[a-z]|.+ (and|&)))?"
     r" love lives? ([io]n|with)|"
-    # "his/her/their/you(r) love live" (sometimes a typo of "love life/lives") before
-    # period/comma/quote mark/"is/was"/at end of post
-    r'\b(h(er|is)|their|your?) love live([.,"”]|$| (i|wa)s\b)|'
+    # "his/her/their/you(r) (...ing) love live" (sometimes a typo of "love life/lives")
+    # before period/comma/quote mark/"is/was" or at end of post
+    r'\b(h(er|is)|their|your?)( [a-z]+ing)? love live([.,"”]|$| (i|wa)s\b)|'
     # playing [video game title ending with "Love"] live (on/at)
     r"\bplay(ing)? .+ love live (at|on)|"
     # I('d) got/need/etc. to hear [song name ending with "Love"] live
@@ -355,8 +359,8 @@ EXCLUDE_RE = re.compile(
     re.IGNORECASE | re.MULTILINE,
 )
 NSFW_KEYWORDS_RE = re.compile(
-    r"\b(bds&?m|c(ock|um(ming)?\b)|di(aper|ck|ldo)|(futanar|henta)i|GOP\b|n(sfw|ude)|"
-    r"p(enis|regnant)|sex\b|trump)",
+    r"\b(bds&?m|c(ock(s|\b)|um(ming)?\b)|di(aper|ck|ldo)|(futanar|henta)i|GOP\b|n(sfw|ude)|"
+    r"p(enis|regnant)|republicans?|sex\b|trump)",
     re.IGNORECASE,
 )
 
