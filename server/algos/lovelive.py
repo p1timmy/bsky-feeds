@@ -139,7 +139,9 @@ CHARACTER_NAMES = set(
         ("Lanzhu", "Zhong", False),
         # Liella
         ("Kanon", "Shibuya", False),
-        ("Keke", "Tang", False),
+        # NOTE: Keke Tang included in pattern builder to prevent posts containing
+        # "arxiv" anywhere in post from being added
+        ("Tang", "Keke", True),
         ("Chisato", "Arashi", False),
         ("Sumire", "Heanna", False),
         ("Ren", "Hazuki", False),
@@ -388,7 +390,8 @@ def make_characters_pattern() -> re.Pattern:
         f"(?:^|[^@a-z])(?:{'|'.join(patterns)}|"
         r"^(?!(.|\n)*(lazarus)(.|\n)*$)((.|\n)*\b(?<!thank )you ?watanabe(.|\n)*)|"
         r"\b(?<!momo )(?<!shinichiro )(?<!akio )watanabe ?you(?!['’][a-z]+[a-z]|"
-        r" ([a-z]+[a-z]n['’]?t|are|have)\b)|leah kazuno|mia taylor)\b",
+        r" ([a-z]+[a-z]n['’]?t|are|have)\b)|leah kazuno|mia taylor)\b|"
+        r"^(?!(.|\n)*arxiv(.|\n)*$)((.|\n)*\bkeke ?tang\b(.|\n)*)",
         re.IGNORECASE,
     )
 
