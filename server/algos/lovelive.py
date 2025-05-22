@@ -185,8 +185,8 @@ CHARACTER_NAMES = set(
 EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
     # - I('d)/he/she/they/you/we (all/both)/gotta/who/people/etc.
-    r"\b((i|s?he|they)(['’]d)?|you(['’]ll)?|we( (all|both))?|gotta|who|people|"
-    r"[a-z]{3,}s)"
+    r"\b((i|s?he|they)(['’]d)?|y(ou(['’]ll)?|['’ ]all)|we( (all|both))?|gotta|who|"
+    r"people|[a-z]{3,}s)"
     # - *ing/*ly/bloody/also/always/do(es)/don't/happen(ed)/just/still/tend to/too/will/
     #   would('ve)/... and
     r"(,? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|don['’]t|"
