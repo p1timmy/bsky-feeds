@@ -7,7 +7,7 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z0-9\-_]|\b)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live([!\s]*(blue ?bird|days|heardle|mention(ed)?\b|references?|"
+    r"love\s?live([!\s]*(blue ?bird|days|fans\b|heardle|mention(ed)?\b|references?|"
     r"s(eries|(ifs)?orter|ky|oundtrack|potted|taff|u(nshine|per ?star))|[ot]cg)| x\b)|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     r"\b(thank you|(like|mis)s) love ?live\b|#lovelive_|lovelive(-anime|_staff)|"
@@ -83,7 +83,7 @@ LOVELIVE_RE = re.compile(
     # Concerts
     r"異次元フェス|ijigen\sfest?|#llsat_|"
     # Community stuff
-    r"\b(team )?onib(e|ased)\b|schoolido\.lu|idol\.st|#HasuTH_Tran",
+    r"\b(team )?onib(e|ased)\b|schoolido\.lu|idol\.st(?!/user/\d+)|#HasuTH_Tran",
     re.IGNORECASE,
 )
 SUKUFEST_RE = re.compile(
@@ -201,7 +201,7 @@ EXCLUDE_RE = re.compile(
     r"anyone( .+)? love live music\?|"
     # "love live music" at start of sentence or after "freaking/really/bloody/etc." but
     # not "love live music is"
-    r"(^|([^\w ]|[a-z]+(ng?|ly)|bloody ))love live music (?!is )|"
+    r"(^|([^\w ]|([a-z]+(ng?|ly)|bloody) ))love live music(?! is)\b|"
     # "and love live [something]" at end of sentence
     r"and love live [a-z]+[a-z]([^\w ]|$)|"
     # Words/phrases starting with "love live"
@@ -239,8 +239,9 @@ EXCLUDE_RE = re.compile(
     # - love live streaming/streams
     r"s(ervice|tream(ing|s))|"
     # - love live tables/theater/TV/television
+    # - love "Live to Tell" (song by Madonna)
     # - love "Live Through This" (usually an album by Hole)
-    r"t(ables|elevision|h(eat(er|re)|rough this)|v)|"
+    r"t(ables|elevision|h(eat(er|re)|rough this)|o tell|v)|"
     # - "love live the" as a typo of "long live the" but not "Love Live the School Idol"
     #   or "Love Live the Musical"
     r"the (?!school idol|musical)\b|"
