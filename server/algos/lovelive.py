@@ -325,9 +325,9 @@ EXCLUDE_RE = re.compile(
     r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|"
     # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
-    # "love live [something]" as a typo of "long live [something]" or "love love love
-    # love [something]", "love liver" at beginning of sentence
-    r"(([^\w\s:]+? *?|^)(love )+liver?(?! (i[ns]|are) )|"
+    # "(and) love live [something]" as a typo of "long live [something]" or "love love
+    # love love [something]", "love liver" at beginning of sentence
+    r"(([^\w\s:]+? *?|^)(and )?(love )+liver?(?! (i[ns]|are) )|"
     r"([^\w\s'’,:]+?  ?|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+live\b|"
