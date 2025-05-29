@@ -7,8 +7,9 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z0-9\-_]|\b)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live([!\s]*(blue ?bird|days|fans\b|heardle|mention(ed)?\b|references?|"
-    r"s(eries|(ifs)?orter|ky|oundtrack|potted|taff|u(nshine|per ?star))|[ot]cg)| x\b)|"
+    r"love\s?live([!\s]*(blue ?bird|days|fans\b|heardle|idols|mention(ed)?\b|"
+    r"references?|s(eries|(ifs)?orter|ky|oundtrack|potted|taff|u(nshine|per ?star))|"
+    r"[ot]cg)| x\b)|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     r"\b(thank you|(like|mis)s) love ?live\b|#lovelive_|lovelive(-anime|_staff)|"
     # School idol
@@ -277,8 +278,9 @@ EXCLUDE_RE = re.compile(
     # - does not/doesn't love live [something]
     r"d(ark(er my|ness at the heart of my)|o(es)?( not|n['’]t))|"
     # - fight love live (usually Filoli, California historical marker)
+    # - "Fool for Love" live
     # - "Friday I'm In Love" live (usually song by The Cure)
-    r"f(ight|riday i['’]?m in)|"
+    r"f(ight|ool for love|riday i['’]?m in)|"
     # - Gerry Love live (British live music performer)
     r"ger(ard|ry)|"
     # - his love live (usually typo of "his love life")
@@ -302,9 +304,11 @@ EXCLUDE_RE = re.compile(
     r"r(adical|eally|inku)|"
     # - Savage Love Live (sex advice podcast by Dan Savage)
     # - show some love live
+    # - "Somebody to Love" live (usually song by Queen or Jefferson Airplane or any song
+    #   name ending with that phrase)
     # - "Songs of Love Live" (album by Mark Eitzel)
     # - Stone Love live (usually Jamaican DJ group)
-    r"s(avage|how some|ongs of|tone)|"
+    r"s(avage|how some|o(mebody to|ngs of)|tone)|"
     # - "that I love live [something]"
     # - "The House of Love" live (usually song by Christine)
     # - "The Book of Love" live (usually song by Peter Gabriel or The Magnetic Fields)
@@ -345,8 +349,8 @@ EXCLUDE_RE = re.compile(
     r'\b(h(er|is)|their|your?)( [a-z]+ing)? love live([.,"”]|$| (i|wa)s\b)|'
     # playing [video game title ending with "Love"] live (on/at)
     r"\bplay(ing)? .+ love live (at|on)|"
-    # I('d) got/need/etc. to hear [song name ending with "Love"] live
-    r"\bI(['’]d)? ([a-z]+ ){,2}to hear ([\w'’]+ )+love live|"
+    # I('d/'ve) got/need/etc. to/gotta hear/have heard [song name ending with "Love"] live
+    r"\bI(['’]d|ve)? ((([a-z]+ ){,2}to|gotta) hear|(have )?heard) ([\w'’]+ )+love live|"
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
     r"\bi ([a-z]+[a-z] )?love live (&|and) learn|"
     # Love Live (rock music) Festival and its venue and bands
