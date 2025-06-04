@@ -41,7 +41,7 @@ LOVELIVE_RE = re.compile(
     r"^(?!(.|\n)*(shaman ?king|touhou)(.|\n)*$)((.|\n)*\byohane\b(.|\n)*)|"
     r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?曜|津島\s?善子|"
     r"国木田\s?花丸|小原\s?鞠莉|"
-    r"がんば(ルビ|るび)|(^|[^@])ganbaruby|"
+    r"がんば(ルビ|るび)|(^|[^@])ganbaruby|daily maru\b|maru's month|"
     r"(永久|\beikyuu\s?)hours|"
     r"(?<!\bRT @)saint\s?snow([^a-z]|$)|"
     r"鹿角\s?(理亞|聖良)|"
@@ -67,7 +67,7 @@ LOVELIVE_RE = re.compile(
     r"聖澤悠奈|柊\s?摩央|"
     # Link! Like! Love Live! / Hasunosora
     # リンクラ but not リンクライン or katakana phrases with リンクラ character sequence
-    r"(^|[^\u30a1-\u30f6\u30fc])リンクラ(?!イン|ボ)|"
+    r"(^|[^\u30a1-\u30f6\u30fc])リンクラ(?!イン|ボ|ベル)|"
     r"hasu\s?no\s?sora|蓮ノ(空|休日)|"
     r"cerise\sbouquet|スリーズブーケ|dollches(tra(?!-art)|\b)|ドルケストラ|mira-cra\spark!?|"
     r"みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|\bedel\s?note\b|"
@@ -88,7 +88,7 @@ LOVELIVE_RE = re.compile(
     re.IGNORECASE,
 )
 SUKUFEST_RE = re.compile(
-    r"(^|[^マア])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄|金沢)"
+    r"(^|[^マア])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄|金沢|香川)"
 )
 CHARACTER_NAMES = set(
     {
@@ -245,7 +245,7 @@ EXCLUDE_RE = re.compile(
     r"t(ables|elevision|h(eat(er|re)|rough this)|o tell|v)|"
     # - "love live the" as a typo of "long live the" but not "Love Live the School Idol"
     #   or "Love Live the Musical"
-    r"the (?!school idol|musical)\b|"
+    r"the\b(?! school idol|musical)|"
     # - love live tour/your
     r"[ty]our|"
     # - love live bands/gigs/mealworms/performances/shows/sports
@@ -330,8 +330,9 @@ EXCLUDE_RE = re.compile(
     # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
-    # love love [something]", "love liver" at beginning of sentence
-    r"(([^\w\s:]+? *?|^)(and )?(love )+liver?(?! (i[ns]|are) )|"
+    # love love [something]" but not "(and) love live in/is/are/song(s)", "love liver"
+    # at beginning of sentence
+    r"(([^\w\s:]+? *?|^)(and )?(love )+liver?(?! (i[ns]|are|songs?) )|"
     r"([^\w\s'’,:]+?  ?|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+live\b|"
@@ -393,11 +394,12 @@ def make_characters_pattern() -> re.Pattern:
 
     return re.compile(
         f"(?:^|[^@a-z])(?:{'|'.join(patterns)}|"
-        r"^(?!(.|\n)*(lazarus)(.|\n)*$)((.|\n)*\b(?<!thank )you ?watanabe(.|\n)*)|"
+        r"^(?!(.|\n)*lazarus(.|\n)*$).*\b(?<!thank )you ?watanabe.*$|"
         r"\b(?<!momo )(?<!shinichiro )(?<!akio )watanabe ?you(?!['’][a-z]+[a-z]|"
-        r" ([a-z]+[a-z]n['’]?t|are|have)\b)|leah kazuno|mia taylor)\b|"
-        r"^(?!(.|\n)*arxiv(.|\n)*$)((.|\n)*\bkeke ?tang\b(.|\n)*)",
-        re.IGNORECASE,
+        r" ([a-z]+[a-z]n['’]?t|are|have)\b)|leah kazuno|"
+        r"(?<!^by )(?<!post by )mia taylor)\b|"
+        r"^(?!(.|\n)*arxiv(.|\n)*$).*\bkeke ?tang\b.*$",
+        re.IGNORECASE | re.MULTILINE,
     )
 
 
