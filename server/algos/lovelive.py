@@ -41,7 +41,7 @@ LOVELIVE_RE = re.compile(
     r"^(?!(.|\n)*(shaman ?king|touhou)(.|\n)*$)((.|\n)*\byohane\b(.|\n)*)|"
     r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?曜|津島\s?善子|"
     r"国木田\s?花丸|小原\s?鞠莉|"
-    r"がんば(ルビ|るび)|(^|[^@])ganbaruby|daily maru\b|maru's month|"
+    r"がんば(ルビ|るび)|(^|[^@])ganbaruby|(daily|today['’]s) maru\b|maru's month|"
     r"(永久|\beikyuu\s?)hours|"
     r"(?<!\bRT @)saint\s?snow([^a-z]|$)|"
     r"鹿角\s?(理亞|聖良)|"
