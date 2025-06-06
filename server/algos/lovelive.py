@@ -287,8 +287,10 @@ EXCLUDE_RE = re.compile(
     r"ger(ard|ry)|"
     # - his love live (usually typo of "his love life")
     r"his|"
+    # - I('d) love live [something] (all other cases not caught by the Great "I love
+    #   live [something]" Hoarde pattern)
     # - "I Feel Love" live (usually song by Donna Summer)
-    r"\bI feel|"
+    r"\bI(['’]d| feel)?|"
     # - laugh/let (that)/live love live
     # - "Lexicon of Love" live (album by ABC)
     r"l(augh|et( that)?|ive|exicon of)|"
