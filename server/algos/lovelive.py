@@ -43,7 +43,7 @@ LOVELIVE_RE = re.compile(
     r"国木田\s?花丸|小原\s?鞠莉|"
     r"がんば(ルビ|るび)|(^|[^@])ganbaruby|(daily|today['’]s) maru\b|maru's month|"
     r"(永久|\beikyuu\s?)hours|"
-    r"(?<!\bRT @)saint\s?snow([^a-z]|$)|"
+    r"(?<!\bRT @)(?<!x.com/)saint\s?snow([^a-z]|$)|"
     r"鹿角\s?(理亞|聖良)|"
     # Nijigasaki
     r"虹ヶ咲(?!学園交通運輸研究部)|ニジガク|(アニ|エイ)ガサキ|(あに|えい)がさき|にじ(よん|ちず)|"
@@ -217,6 +217,8 @@ EXCLUDE_RE = re.compile(
     # - love "Live and Let Die" (movie title)
     # - love "Live Die Repeat" (alt name of "Edge of Tomorrow" movie)
     r"((and|&) let )?die( repeat)?\b|"
+    # - love live entertainment
+    r"entertainment|"
     # - love live fact checking
     r"fact checking|"
     # - love live him
@@ -293,7 +295,8 @@ EXCLUDE_RE = re.compile(
     # - "life love live" but not "Link Life Love Live"
     r"(?<!link )life|"
     # - mad love live
-    r"mad|"
+    # - Mike Love live (some reggae artist)
+    r"m(ad|ike)|"
     # - "No Loss, No Love" live (song by Spiritbox)
     r"\bno loss,? no|"
     # - "Prophecy x This Love" live (song by Taylor Swift)
