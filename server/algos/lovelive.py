@@ -194,10 +194,8 @@ EXCLUDE_RE = re.compile(
     r"((ha(ve|ppen(ed)?)|used?|grew) t|s|t(o|end t))o|would(['’]ve)?|even|"
     r"[a-z]+[a-z] (and|&))\,?)*"
     # - love live [something]/love liver(s)/love Live (as in Ableton Live software)
-    r" ((love )+live((?! (so |and(?! learn)|but)\b),? &? ?#?\w+\b|rs?)|"
+    r" ((love )+live((?! (so |and|but)\b),? &? ?#?\w+\b|rs?)|"
     r"love live($|[^\s\w]| \w+))|"
-    # People I/you/etc. (... and) love live
-    r"people (i|you|they) (([a-z]+[a-z],? )+(and|&) )?love live|"
     # Anyone ... love live music?
     r"anyone( .+)? love live music\?|"
     # "love live music" at start of sentence or after "freaking/really/bloody/etc." but
@@ -267,9 +265,12 @@ EXCLUDE_RE = re.compile(
     # - "All Your Love" live (usually song by Otis Rush or any song name ending with
     #   that phrase)
     r"a(bsolutely|ll your)|"
+    # Art(ist(s))/band(s)/music/people/[some plural word] I/you/etc. (... and) love live
+    r"(art(ist)?|band|music|people|[a-z]+s) (i|you|they)( ([a-z]+[a-z],? )+(and|&))?|"
+    # - "Can't Buy Me Love" live (usually song by the Beatles)
     # - "Can't Hide Love" live (different songs by different artists)
     # - "Computer Love" live (song by Kraftwerk)
-    r"c(an['’]?t hide|omputer)|"
+    r"c(an['’]?t (buy me|hide)|omputer)|"
     # - "Dangerously in Love" live (album by Beyonce)
     # - "Drunk in Love" live (song by Beyonce)
     # - "I'm Not in Love" live (usually song by 10cc)
@@ -287,10 +288,11 @@ EXCLUDE_RE = re.compile(
     r"ger(ard|ry)|"
     # - his love live (usually typo of "his love life")
     r"his|"
-    # - I('d) love live [something] (all other cases not caught by the Great "I love
-    #   live [something]" Hoarde pattern)
+    # - (that) I('d) love live [something] (all other cases not caught by the Great "I
+    #   love live [something]" Hoarde pattern)
+    r"(that)?\bI(['’]d)?|"
     # - "I Feel Love" live (usually song by Donna Summer)
-    r"\bI(['’]d| feel)?|"
+    r"\bI feel|"
     # - laugh/let (that)/live love live
     # - "Lexicon of Love" live (album by ABC)
     r"l(augh|et( that)?|ive|exicon of)|"
@@ -314,10 +316,15 @@ EXCLUDE_RE = re.compile(
     # - "Songs of Love Live" (album by Mark Eitzel)
     # - Stone Love live (usually Jamaican DJ group)
     r"s(avage|how some|o(mebody to|ngs of)|tone)|"
-    # - "that I love live [something]"
+    # saw [artist name] perform [song name ending with "Love"] live
+    r"\bsaw .+ perform .+|"
+    # - that/what kind of love live (sometimes typo of "that/what kind of love life")
+    r"[tw]hat kind of|"
+    # - they love live [something] (all other cases not caught by the Great "I love
+    #   live [something]" Hoarde pattern)
     # - "The House of Love" live (usually song by Christine)
     # - "The Book of Love" live (usually song by Peter Gabriel or The Magnetic Fields)
-    r"th(at I|e (book|house) of)|"
+    r"the(y| (book|house) of)|"
     # - would love live
     # - "Wasted Love" live (song by JJ)
     # - "We Found Love" live (song by Rihanna feat. Calvin Harris or any song name
@@ -327,7 +334,7 @@ EXCLUDE_RE = re.compile(
     r"you( a|['’])re in) love live\b|"
     # perform(s/ed/ing/ance of)/sing(s/ing) [song name ending with "Love"] live at/on/
     # in(side)/outside
-    r"(perform(ance of|ed|ing|s)?|sing(ing|s)) .+ love live"
+    r"(perform(ance of|ed|ing|s)?|sing(ing|s)) .+ (?<!from )love live"
     r"($| +(at|[io]n|(in|out)side)\b)|"
     # if you live in/near/around [place name] and love live music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+|[^\w ]\s*)love live"
