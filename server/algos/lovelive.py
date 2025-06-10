@@ -69,7 +69,8 @@ LOVELIVE_RE = re.compile(
     # リンクラ but not リンクライン or katakana phrases with リンクラ character sequence
     r"(^|[^\u30a1-\u30f6\u30fc])リンクラ(?!イン|ボ|ベル)|"
     r"hasu\s?no\s?sora|蓮ノ(空|休日)|"
-    r"cerise\sbouquet|スリーズブーケ|dollches(tra(?!-art)|\b)|ドルケストラ|mira-cra\spark!?|"
+    r"^(?!(.|\n)*\broses?\b(.|\n)*$)((.|\n)*\bcerise\sbouquet\b(.|\n)*)|"
+    r"スリーズブーケ|dollches(tra(?!-art)|\b)|ドルケストラ|mira-cra\spark!?|"
     r"みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|\bedel\s?note\b|"
     r"るりのとゆかいなつづりたち|#新メンバーお披露目105期|"
     r"乙宗\s?梢|夕霧\s?綴理|藤島\s?慈|日野下\s?花帆|村野\s?さやか|大沢\s?瑠璃乃|百生\s?吟子|"
@@ -185,9 +186,10 @@ CHARACTER_NAMES = set(
 
 EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
-    # - I('d)/he/she/they/you/we (all/both)/gotta/got to/who/people/etc.
-    r"\b((i|s?he|they)(['’]d)?|y(ou(['’]ll)?|['’ ]all)|we( (all|both))?|got(ta| to)|"
-    r"who|people|[a-z]{3,}s)"
+    # - I('d)/he/she/they/you (all)/y'all/you'll/we (all/both)/gotta/got to/who/people/
+    #   [plural word] that
+    r"\b((i|s?he|they)(['’]d)?|y(ou(['’]ll)?|(ou |['’])all)|we( (all|both))?|"
+    r"got(ta| to)|who|people|[a-z]{3,}s( that)?)"
     # - *ing/*ly/bloody/also/always/do(es)/don't/happen(ed)/just/still/tend to/too/will/
     #   would('ve)/... and
     r"(,? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|don['’]t|"
@@ -325,11 +327,13 @@ EXCLUDE_RE = re.compile(
     # - "The House of Love" live (usually song by Christine)
     # - "The Book of Love" live (usually song by Peter Gabriel or The Magnetic Fields)
     r"the(y| (book|house) of)|"
-    # - would love live
+    # - would love live [something] (all other cases not caught by the Great "I love
+    #   live [something]" Hoarde pattern)
     # - "Wasted Love" live (song by JJ)
     # - "We Found Love" live (song by Rihanna feat. Calvin Harris or any song name
     #   ending with that phrase)
-    r"w(asted|e found|ould)|"
+    # - "Whole Lotta Love" live (usually song by Led Zeppelin)
+    r"w(asted|e found|hole lotta|ould)|"
     # - you are/you're in love live
     r"you( a|['’])re in) love live\b|"
     # perform(s/ed/ing/ance of)/sing(s/ing) [song name ending with "Love"] live at/on/
