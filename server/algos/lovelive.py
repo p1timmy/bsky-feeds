@@ -56,7 +56,7 @@ LOVELIVE_RE = re.compile(
     # Love Live! Superstar!!
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(tuto)?liella(?!(nd| kelly))[!！]?|"
     r"結ヶ丘|yuigaoka|5yncri5e!?|kaleidoscore"
-    r"|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(?<!i )(?<!to )(?<!will )"
+    r"|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(?<!i['’]ll )(?<!i )(?<!to )(?<!will )"
     r"catchu!?(?! later)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
     r"トマカノーテ|tomakanote|スパスタ[3３]期|"
     r"澁谷\s?かのん|唐\s?可可|嵐千\s?砂都|平安名\s?すみれ|葉月\s?恋|桜小路\s?きな子|米女\s?メイ|"
@@ -69,7 +69,7 @@ LOVELIVE_RE = re.compile(
     # リンクラ but not リンクライン or katakana phrases with リンクラ character sequence
     r"(^|[^\u30a1-\u30f6\u30fc])リンクラ(?!イン|ボ|ベル)|"
     r"hasu\s?no\s?sora|蓮ノ(空|休日)|"
-    r"^(?!(.|\n)*\broses?\b(.|\n)*$)((.|\n)*\bcerise\sbouquet\b(.|\n)*)|"
+    r"^(?!(.|\n)*\broses?\b(.|\n)*$)((.|\n)*\bcerise\s?bouquet\b(.|\n)*)|"
     r"スリーズブーケ|dollches(tra(?!-art)|\b)|ドルケストラ|mira-cra\spark!?|"
     r"みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|\bedel\s?note\b|"
     r"るりのとゆかいなつづりたち|#新メンバーお披露目105期|"
@@ -77,7 +77,7 @@ LOVELIVE_RE = re.compile(
     r"徒町\s?小鈴|安養寺\s?姫芽|大賀美沙知|桂城\s?泉|セラス[・\s]?柳田[・\s]?リリエンフェルト|"
     # Love Live! Bluebird
     # NOTE: "Love High School" not included due to too many false positives
-    r"いきづらい部|イキヅライブ|ikizu ?(live|raibu)|love学院|"
+    r"いきづら[い絵]部|イキヅライブ|ikizu ?(live|raibu)|love学院|"
     r"高橋\s?ポルカ|麻布\s?麻衣|五桐\s?玲|駒形\s?花火|金澤\s?奇跡|調布\s?のりこ|春宮\s?ゆくり|"
     r"此花\s?輝夜|山田\s?真緑|佐々木\s?翔音|"
     r"\b(polka_lion|My_Mai_Eld|G_Akky304250|hanabistarmine|MiracleGoldSP|Noricco_U|"
@@ -250,6 +250,8 @@ EXCLUDE_RE = re.compile(
     r"the\b(?! school idol|musical)|"
     # - love live tour/your
     r"[ty]our|"
+    # - "love live ur" (usually typo of "long live ur") but not "Love Live UR ... card"
+    r"ur (?!.*\bcards?\b)|"
     # - love live bands/gigs/mealworms/performances/shows/sports
     # - "Love Live in/from Paris" (misspelling of "Lover (Live from Paris)" album by
     #   Taylor Swift)
@@ -269,10 +271,11 @@ EXCLUDE_RE = re.compile(
     r"a(bsolutely|ll your)|"
     # Art(ist(s))/band(s)/music/people/[some plural word] I/you/etc. (... and) love live
     r"(art(ist)?|band|music|people|[a-z]+s) (i|you|they)( ([a-z]+[a-z],? )+(and|&))?|"
+    # - can/could you not love live
     # - "Can't Buy Me Love" live (usually song by the Beatles)
     # - "Can't Hide Love" live (different songs by different artists)
     # - "Computer Love" live (song by Kraftwerk)
-    r"c(an['’]?t (buy me|hide)|omputer)|"
+    r"c(an['’]?t (buy me|hide)|(an|ould) you not|omputer)|"
     # - "Dangerously in Love" live (album by Beyonce)
     # - "Drunk in Love" live (song by Beyonce)
     # - "I'm Not in Love" live (usually song by 10cc)
@@ -318,7 +321,7 @@ EXCLUDE_RE = re.compile(
     # - "Songs of Love Live" (album by Mark Eitzel)
     # - Stone Love live (usually Jamaican DJ group)
     r"s(avage|how some|o(mebody to|ngs of)|tone)|"
-    # saw [artist name] perform [song name ending with "Love"] live
+    # - saw [artist name] perform [song name ending with "Love"] live
     r"\bsaw .+ perform .+|"
     # - that/what kind of love live (sometimes typo of "that/what kind of love life")
     r"[tw]hat kind of|"
@@ -370,6 +373,8 @@ EXCLUDE_RE = re.compile(
     r"\bI(['’]d|ve)? ((([a-z]+ ){,2}to|gotta) hear|(have )?heard) ([\w'’]+ )+love live|"
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
     r"\bi ([a-z]+[a-z] )?love live (&|and) learn|"
+    # hashtags starting with #Sunday and #lovelive in the same post
+    r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Love Live (rock music) Festival and its venue and bands
     r"\b(official )?love live festival\b|\blovelivefestival|"
     r"\b((black(pool| ?(lak|vultur)es?))|cancel ?the ?transmission|fugitive|"
