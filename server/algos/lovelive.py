@@ -7,7 +7,7 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z0-9\-_]|\b)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live([!\s]*(blue ?bird|days|fans\b|heardle|idols|mention(ed)?\b|"
+    r"love\s?live([!\s]*(blue ?bird|days|fans?\b|heardle|idols|mention(ed)?\b|"
     r"references?|s(eries|(ifs)?orter|ky|oundtrack|potted|taff|u(nshine|per ?star))|"
     r"[ot]cg)| x\b)|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
@@ -339,6 +339,9 @@ EXCLUDE_RE = re.compile(
     r"w(asted|e found|hole lotta|ould)|"
     # - you are/you're in love live
     r"you( a|['’])re in) love live\b|"
+    # "Big Love" live (at) (song by Fleetwood Mac or Lindsey Buckingham)
+    r"(fleetwood|buckingham)(.|\n)+big love live|"
+    r"big love live( (in|at)|(.|\n)+(fleetwood|buckingham))|"
     # perform(s/ed/ing/ance of)/sing(s/ing) [song name ending with "Love"] live at/on/
     # in(side)/outside
     r"(perform(ance of|ed|ing|s)?|sing(ing|s)) .+ (?<!from )love live"
