@@ -77,7 +77,7 @@ LOVELIVE_RE = re.compile(
     r"徒町\s?小鈴|安養寺\s?姫芽|大賀美沙知|桂城\s?泉|セラス[・\s]?柳田[・\s]?リリエンフェルト|"
     # Love Live! Bluebird
     # NOTE: "Love High School" not included due to too many false positives
-    r"いきづら[い絵]部|イキヅライブ|ikizu ?(live|raibu)|love学院|"
+    r"いきづら[い絵]部|イキヅ(ライブ|LIVE配信)|ikizu ?(live|raibu)|love学院|"
     r"高橋\s?ポルカ|麻布\s?麻衣|五桐\s?玲|駒形\s?花火|金澤\s?奇跡|調布\s?のりこ|春宮\s?ゆくり|"
     r"此花\s?輝夜|山田\s?真緑|佐々木\s?翔音|"
     r"\b(polka_lion|My_Mai_Eld|G_Akky304250|hanabistarmine|MiracleGoldSP|Noricco_U|"
