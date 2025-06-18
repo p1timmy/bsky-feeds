@@ -346,9 +346,11 @@ EXCLUDE_RE = re.compile(
     # in(side)/outside
     r"(perform(ance of|ed|ing|s)?|sing(ing|s)) .+ (?<!from )love live"
     r"($| +(at|[io]n|(in|out)side)\b)|"
-    # if you live in/near/around [place name] and love live music/comedy
-    r"((you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+|[^\w ]\s*)love live"
-    r"( (music|comedy)|r)(?! ((i|wa)s)|are)\b|"
+    # if you live in/near/around [place name] and love live (...) music/comedy
+    r"(you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+love live( .+)?"
+    r" (music|comedy)\b|"
+    # "love liver/live music/comedy" at beginning of sentence or after emoji
+    r"[^\w ]\s*love live( (music|comedy)|r)(?! ((i|wa)s)|are)|"
     # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
