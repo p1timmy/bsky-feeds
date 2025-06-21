@@ -7,9 +7,9 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z0-9\-_]|\b)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live([!\s]*(blue ?bird|days|fans?\b|heardle|idols|mention(ed)?\b|"
-    r"references?|s(eries|(ifs)?orter|ky|oundtrack|potted|taff|u(nshine|per ?star))|"
-    r"[ot]cg)| x\b)|"
+    r"love\s?live([!\s]*(blue ?bird|days|f(ans?\b|ranchise)|heardle|idols|"
+    r"mention(ed)?\b|ost|references?|[ot]cg|s(eries|ip([^a-z]|\b)|(ifs)?orter|"
+    r"ky|o(ng\b|undtrack)|potted|taff|u(nshine|per ?star)))| ?!? +(vs|X)\b)|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     r"\b(thank you|(like|mis)s) love ?live\b|#lovelive_|lovelive(-anime|_staff)|"
     # School idol
@@ -42,7 +42,7 @@ LOVELIVE_RE = re.compile(
     r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?曜|津島\s?善子|"
     r"国木田\s?花丸|小原\s?鞠莉|"
     r"がんば(ルビ|るび)|(^|[^@])ganbaruby|(daily|today['’]s) maru\b|maru's month|"
-    r"(永久|\beikyuu\s?)hours|"
+    r"(永久|\beikyuu\s?)(hours|stage)|"
     r"(?<!\bRT @)(?<!x.com/)saint\s?snow([^a-z]|$)|"
     r"鹿角\s?(理亞|聖良)|"
     # Nijigasaki
@@ -355,9 +355,10 @@ EXCLUDE_RE = re.compile(
     # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
-    # love love [something]" but not "(and) love live in/is/are/song(s)", "love liver"
-    # at beginning of sentence
-    r"(([^\w\s:]+? *?|^)(and )?(love )+liver?(?! (i[ns]|are|songs?) )|"
+    # love love [something]" but not "(and) love live also/are/going/had/has/in/is/never
+    # /song(s)", "love liver" at beginning of sentence
+    r"(([^\w\s:]+? *?|^)(and )?(love )+liver?(?! (a(lso|re)|going|ha[ds]\b|i[ns]|never|"
+    r"songs?) )|"
     r"([^\w\s'’,:]+?  ?|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+live\b|"
