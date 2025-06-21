@@ -475,6 +475,7 @@ def filter(post: dict) -> bool:
             LOVELIVE_NAME_EN_RE.search(all_texts) and not EXCLUDE_RE.search(all_texts),
             SUKUFEST_RE.search(all_texts) and "scrum" not in all_texts.lower(),
             LOVELIVE_RE.search(all_texts),
+            CATCHU_RE.search(all_texts) and not FAKE_CATCHU_RE.search(all_texts),
             CHARACTERS_EN_RE.search(all_texts),
         )
     )
