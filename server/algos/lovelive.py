@@ -55,10 +55,7 @@ LOVELIVE_RE = re.compile(
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
     # Love Live! Superstar!!
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(tuto)?liella(?!(nd| kelly))[!！]?|"
-    r"結ヶ丘|yuigaoka|5yncri5e!?|kaleidoscore"
-    r"|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(?<!i['’]ll )(?<!i )(?<!to )(?<!will )"
-    r"catchu!?(?! later)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
-    r"トマカノーテ|tomakanote|スパスタ[3３]期|"
+    r"結ヶ丘|yuigaoka|5yncri5e!?|kaleidoscore|トマカノーテ|tomakanote|スパスタ[3３]期|"
     r"澁谷\s?かのん|唐\s?可可|嵐千\s?砂都|平安名\s?すみれ|葉月\s?恋|桜小路\s?きな子|米女\s?メイ|"
     r"若菜\s?四季|鬼塚\s?(夏美|冬毬)|ウィーン・?マルガレーテ|"
     r"ク[ウゥ]ク[ウゥ]ちゃん?|oninatsu|オニナッツ|"
@@ -90,6 +87,10 @@ LOVELIVE_RE = re.compile(
 )
 SUKUFEST_RE = re.compile(
     r"(^|[^マア])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄|金沢|香川)"
+)
+CATCHU_RE = re.compile(
+    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(C[Aa]t[Cc][Hh]u|catchu|CATCHU)!?"
+    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)"
 )
 CHARACTER_NAMES = set(
     {
@@ -391,6 +392,30 @@ EXCLUDE_RE = re.compile(
     # lovelive.com/net/org/etc.
     r"\blovelive\.[a-z]+[a-z]\b",
     re.IGNORECASE | re.MULTILINE,
+)
+FAKE_CATCHU_RE = re.compile(
+    # Phrases ending with "catchu":
+    # - coo coo(l) catchu
+    # - don't catchu
+    # - go/gonna/gotta catchu
+    # - (when) I catchu
+    # - I'll/I'm catchu
+    # - lemme/let me catchu
+    # - [something] is so/really/very/etc. catchu (typo of catchy)
+    # - need/tried/try(ing)/wait/want to catchu
+    # - wanna/will catchu
+    r"(coo cool?|don['’]t|go((nn|tt)a)?|i(['’](ll|m)|s [a-z]+)?|le(m|t )me|w(anna|ill)|"
+    r"(need|tr(ied|y(ing)?)|w(a(it|nt))) to) +catchu|"
+    # Phrases starting with "catchu":
+    # - catchu all/later/with
+    # - (Ricky when I) catchu Ricky
+    # - (Don't) catchu slippin (up)
+    # - Catchu The Future
+    # - "catchu up" but not "CatChu up close/next"
+    # - catchu p (typo of "catch up")
+    r"catchu +(all|later|ricky|slippin|the future|u?p\b(?! (close|next)))|"
+    r"\bto catchu with",
+    re.IGNORECASE,
 )
 NSFW_KEYWORDS_RE = re.compile(
     r"\b(bds&?m|c(ock(s|\b)|um(ming)?\b)|di(aper|ck|ldo)|(futanar|henta)i|GOP\b|n(sfw|ude)|"
