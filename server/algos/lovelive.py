@@ -38,7 +38,8 @@ LOVELIVE_RE = re.compile(
     # AiScReam (Ayumu, Shiki, Ruby)
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)ai[♡ ]?scream\b|愛♡スクリ〜ム|"
     r"幻(日のヨハネ|ヨハ)|genjitsu\s?no\s?yohane|sunshine\sin\sthe\smirror|"
-    r"^(?!(.|\n)*(shaman ?king|touhou)(.|\n)*$)((.|\n)*\byohane\b(.|\n)*)|"
+    r"^(?!(.|\n)*(shaman ?king|touhou)(.|\n)*$)"
+    r"((.|\n)*\byohane(?! mbatizati)\b(.|\n)*)|"
     r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?曜|津島\s?善子|"
     r"国木田\s?花丸|小原\s?鞠莉|"
     r"がんば(ルビ|るび)|(^|[^@])ganbaruby|(daily|today['’]s) maru\b|maru's month|"
@@ -64,7 +65,7 @@ LOVELIVE_RE = re.compile(
     r"聖澤悠奈|柊\s?摩央|"
     # Link! Like! Love Live! / Hasunosora
     # リンクラ but not リンクライン or katakana phrases with リンクラ character sequence
-    r"(^|[^\u30a1-\u30f6\u30fc])リンクラ(?!イン|ボ|ベル)|"
+    r"(^|[^\u30a1-\u30f6\u30fc])リンクラ(?!イン|ボ|ベル|ス)|"
     r"hasu\s?no\s?sora|蓮ノ(空|休日)|"
     r"^(?!(.|\n)*\broses?\b(.|\n)*$)((.|\n)*\bcerise\s?bouquet\b(.|\n)*)|"
     r"スリーズブーケ|dollches(tra(?!-art)|\b)|ドルケストラ|mira-cra\spark!?|"
@@ -204,8 +205,8 @@ EXCLUDE_RE = re.compile(
     # "love live music" at start of sentence or after "freaking/really/bloody/etc." but
     # not "love live music is"
     r"(^|([^\w ]|([a-z]+(ng?|ly)|bloody) ))love live music(?! is)\b|"
-    # "and love live [something]" at end of sentence
-    r"and love live [a-z]+[a-z]([^\w ]|$)|"
+    # "and/but love live [something]" at end of sentence
+    r"(and|but) love live [a-z]+[a-z]([^\w ]|$)|"
     # Words/phrases starting with "love live"
     r"\blove live ("
     # - love live action
@@ -347,9 +348,9 @@ EXCLUDE_RE = re.compile(
     # in(side)/outside
     r"(perform(ance of|ed|ing|s)?|sing(ing|s)) .+ (?<!from )love live"
     r"($| +(at|[io]n|(in|out)side)\b)|"
-    # if you live in/near/around [place name] and love live (...) music/comedy
-    r"(you(\s+liv|['’]r)e\s+(in|near|around)\s+.+\s+)?and\s+love live( .+)?"
-    r" (music|comedy)\b|"
+    # if you (live in/near/around [place name]) ... and/but love live (...) music/comedy
+    r"((you(\s+liv|['’]r)e\s+(in|near|around)|if you)\s+.+\s+)?(and|but)\s+love"
+    r" live( .+)? (music|comedy)\b|"
     # "love liver/live music/comedy" at beginning of sentence or after emoji
     r"[^\w ]\s*love live( (music|comedy)|r)(?! ((i|wa)s)|are)|"
     # whether you('re) ... or (just) love live [something]
