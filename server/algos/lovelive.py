@@ -83,7 +83,8 @@ LOVELIVE_RE = re.compile(
     # Concerts
     r"異次元フェス|ijigen\sfest?|#llsat_|"
     # Community stuff
-    r"\b(team )?onib(e|ased)\b|schoolido\.lu|idol\.st(?!/user/\d+)|#HasuTH_Tran",
+    r"\b(team )?onib(e|ased)\b|schoolido\.lu|idol\.st(?!/user/\d+)|#HasuTH_Tran|"
+    r"([^a-z]|\b)OurSIF([^a-z]|$)",
     re.IGNORECASE,
 )
 SUKUFEST_RE = re.compile(
