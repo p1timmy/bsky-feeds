@@ -7,11 +7,12 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z0-9\-_]|\b)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live([!\s]*(blue ?bird|days|f(ans?\b|ranchise)|heardle|idols|"
-    r"mention(ed)?\b|ost|references?|[ot]cg|s(eries|ip([^a-z]|\b)|(ifs)?orter|"
-    r"ky|o(ng\b|undtrack)|potted|taff|u(nshine|per ?star)))| ?!? +(vs|X)\b)|"
+    r"love\s?live([!\s]*(anime|blue ?bird|cosplays?|days|f(ans?\b|ranchise)|heardle|"
+    r"idols?|mention(ed)?\b|or (?!die)|ost|plush(ies?)|references?|[ot]cg|s(eries|"
+    r"ip([^a-z]|\b)|(ifs)?orter|ky|o(ng\b|undtrack)|potted|taff|u(nshine|per ?star)))|"
+    r" ?!? +(vs|X)\b| fest?\b)|lovelive(-anime|_staff)|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
-    r"\b(thank you|(like|mis)s) love ?live\b|#lovelive_|lovelive(-anime|_staff)|"
+    r"\b(thank you|(like|mis)s) love ?live\b|#lovelive_|\bLLstaff|"
     # School idol
     r"スクールアイドル|(?<!middle )(?<!high )(?<!old )(?<!old-)"
     r"school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
@@ -91,8 +92,8 @@ SUKUFEST_RE = re.compile(
     r"(^|[^マア])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄|金沢|香川)"
 )
 CATCHU_RE = re.compile(
-    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(C[Aa]t[Cc][Hh]u|catchu|CATCHU)!?"
-    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)"
+    r"([^A-Za-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(C[Aa]t[Cc][Hh]u|catchu|CATCHU)!?"
+    r"([^A-Za-z\u00C0-\u024F\u1E00-\u1EFF]|\b)"
 )
 CHARACTER_NAMES = set(
     {
@@ -207,7 +208,7 @@ EXCLUDE_RE = re.compile(
     # not "love live music is"
     r"(^|([^\w ]|([a-z]+(ng?|ly)|bloody) ))love live music(?! is)\b|"
     # "and/but love live [something]" at end of sentence
-    r"(and|but) love live [a-z]+[a-z]([^\w ]|$)|"
+    r"(and|but) love live [a-z]+[a-z]([^\w ]| - |$)|"
     # Words/phrases starting with "love live"
     r"\blove live ("
     # - love live action
@@ -216,10 +217,10 @@ EXCLUDE_RE = re.compile(
     r"a(ction|nd fall| live)|"
     # - Love Live Bleeding (typo of "Love Lies Bleeding")
     r"bleeding|"
-    # - love live die
+    # - love live (and/or) die
     # - love "Live and Let Die" (movie title)
     # - love "Live Die Repeat" (alt name of "Edge of Tomorrow" movie)
-    r"((and|&) let )?die( repeat)?\b|"
+    r"((and|&|or) (let )?)?die( repeat)?\b|"
     # - love live entertainment
     r"entertainment|"
     # - love live fact checking
@@ -357,10 +358,10 @@ EXCLUDE_RE = re.compile(
     # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
-    # love love [something]" but not "(and) love live also/are/going/had/has/in/is/never
-    # /song(s)", "love liver" at beginning of sentence
-    r"(([^\w\s:]+? *?|^)(and )?(love )+liver?(?! (a(lso|re)|going|ha[ds]\b|i[ns]|never|"
-    r"songs?) )|"
+    # love love [something]" but not "(and) love live also/are/could/did/does(n't)/going/had/
+    # has/I/in/is/never/song(s)/was/would", "love liver" at beginning of sentence
+    r"(([^\w\s:]+? *?|^)(and )?(love )+liver?(?! (a(lso|re)|[cw]ould|going|ha[ds]|"
+    r"d(id|oes(n['’]?t)?)|i[ns]?|never|songs?|was) )|"
     r"([^\w\s'’,:]+?  ?|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+live\b|"
@@ -410,13 +411,13 @@ FAKE_CATCHU_RE = re.compile(
     r"(coo cool?|don['’]t|go((nn|tt)a)?|i(['’](ll|m)|s [a-z]+)?|le(m|t )me|w(anna|ill)|"
     r"(need|tr(ied|y(ing)?)|w(a(it|nt))) to) +catchu|"
     # Phrases starting with "catchu":
-    # - catchu all/later/with
+    # - catchu all/catchme/later
     # - (Ricky when I) catchu Ricky
     # - (Don't) catchu slippin (up)
     # - Catchu The Future
     # - "catchu up" but not "CatChu up close/next"
     # - catchu p (typo of "catch up")
-    r"catchu +(all|later|ricky|slippin|the future|u?p\b(?! (close|next)))|"
+    r"catchu +(all|catchme|later|ricky|slippin|the future|u?p\b(?! (close|next)))|"
     r"\bto catchu with",
     re.IGNORECASE,
 )
