@@ -209,12 +209,16 @@ EXCLUDE_RE = re.compile(
     r"(^|([^\w ]|([a-z]+(ng?|ly)|bloody) ))love live music(?! is)\b|"
     # "and/but love live [something]" at end of sentence
     r"(and|but) love live [a-z]+[a-z]([^\w ]| - |$)|"
+    # What a ... to love live [something]
+    r"what a ([\w'’\-]+ +)*to love live [a-z]+[a-z]|"
     # Words/phrases starting with "love live"
     r"\blove live ("
     # - love live action
     # - love Live A Live (video game title)
+    # - love live ammo (usually "Republicans love live ammo and dead kids")
     # - love "LIVE and FALL" (album by Xdinary Heroes)
-    r"a(ction|nd fall| live)|"
+    # - love "Live and Dangerous" (album by Thin Lizzy)
+    r"a(ction|mmo|nd (dangerous|fall)| live)|"
     # - Love Live Bleeding (typo of "Love Lies Bleeding")
     r"bleeding|"
     # - love live (and/or) die
@@ -224,7 +228,8 @@ EXCLUDE_RE = re.compile(
     # - love live entertainment
     r"entertainment|"
     # - love live fact checking
-    r"fact checking|"
+    # - love "Live from Daryl's House"
+    r"f(act checking|rom daryl['’]?s)|"
     # - love live him
     r"him|"
     # - Love Live Italian
@@ -242,6 +247,8 @@ EXCLUDE_RE = re.compile(
     r"music ([^\w ]|$|at\b)|"
     # - love live oak(s)
     r"oaks?|"
+    # - love "Live Rust" (album by Neil Young & Crazy Horse)
+    r"rust|"
     # - love live service
     # - love live streaming/streams
     r"s(ervice|tream(ing|s))|"
@@ -278,8 +285,9 @@ EXCLUDE_RE = re.compile(
     # - can/could you not love live
     # - "Can't Buy Me Love" live (usually song by the Beatles)
     # - "Can't Hide Love" live (different songs by different artists)
+    # - complicated love live (typo of "complicated love life")
     # - "Computer Love" live (song by Kraftwerk)
-    r"c(an['’]?t (buy me|hide)|(an|ould) you not|omputer)|"
+    r"c(an['’]?t (buy me|hide)|(an|ould) you not|omp(licated|uter))|"
     # - "Dangerously in Love" live (album by Beyonce)
     # - "Drunk in Love" live (song by Beyonce)
     # - "I'm Not in Love" live (usually song by 10cc)
@@ -289,10 +297,11 @@ EXCLUDE_RE = re.compile(
     # - "Darkness at the Heart of My Love" live (song by Ghost)
     # - does not/doesn't love live [something]
     r"d(ark(er my|ness at the heart of my)|o(es)?( not|n['’]t))|"
+    # - "Fake Love" live (song by BTS)
     # - fight love live (usually Filoli, California historical marker)
     # - "Fool for Love" live
     # - "Friday I'm In Love" live (usually song by The Cure)
-    r"f(ight|ool for love|riday i['’]?m in)|"
+    r"f(ake|ight|ool for love|riday i['’]?m in)|"
     # - Gerry Love live (British live music performer)
     r"ger(ard|ry)|"
     # - his love live (usually typo of "his love life")
@@ -337,10 +346,12 @@ EXCLUDE_RE = re.compile(
     # - would love live [something] (all other cases not caught by the Great "I love
     #   live [something]" Hoarde pattern)
     # - "Wasted Love" live (song by JJ)
+    # - we love live [something] (all other cases not caught by the Great "I love live
+    #   [something]" Hoarde pattern)
     # - "We Found Love" live (song by Rihanna feat. Calvin Harris or any song name
     #   ending with that phrase)
     # - "Whole Lotta Love" live (usually song by Led Zeppelin)
-    r"w(asted|e found|hole lotta|ould)|"
+    r"w(asted|e( found)?|hole lotta|ould)|"
     # - you are/you're in love live
     r"you( a|['’])re in) love live\b|"
     # "Big Love" live (at) (song by Fleetwood Mac or Lindsey Buckingham)
@@ -385,6 +396,8 @@ EXCLUDE_RE = re.compile(
     r"\bi ([a-z]+[a-z] )?love live (&|and) learn|"
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
+    # Random artists frequently mentioned in "love live music" false positive posts
+    r"\b(grateful dead|phish)\b|"
     # Love Live (rock music) Festival and its venue and bands
     r"\b(official )?love live festival\b|\blovelivefestival|"
     r"\b((black(pool| ?(lak|vultur)es?))|cancel ?the ?transmission|fugitive|"
