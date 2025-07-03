@@ -208,7 +208,7 @@ EXCLUDE_RE = re.compile(
     # not "love live music is"
     r"(^|([^\w ]|([a-z]+(ng?|ly)|bloody) ))love live music(?! is)\b|"
     # "and/but love live [something]" at end of sentence
-    r"(and|but) love live [a-z]+[a-z]([^\w ]| - |$)|"
+    r"(and|but) love live( [a-z]+[a-z]){1,2}([^\w ]| - |$)|"
     # What a ... to love live [something]
     r"what a ([\w'’\-]+ +)*to love live [a-z]+[a-z]|"
     # Words/phrases starting with "love live"
