@@ -255,7 +255,8 @@ EXCLUDE_RE = re.compile(
     r"rust|"
     # - love live service
     # - love live streaming/streams
-    r"s(ervice|tream(ing|s))|"
+    # - love Live Score (some sports app)
+    r"s(core|ervice|tream(ing|s))|"
     # - love live tables/theater/TV/television
     # - love "Live to Tell" (song by Madonna)
     # - love "Live Through This" (usually an album by Hole)
@@ -318,7 +319,8 @@ EXCLUDE_RE = re.compile(
     r"I feel|"
     # - laugh/let (that)/live love live
     # - "Lexicon of Love" live (album by ABC)
-    r"l(augh|et( that)?|ive|exicon of)|"
+    # - "Love Hate Love" live (song by Alice In Chains)
+    r"l(augh|et( that)?|exicon of|ive|ove hate)|"
     # - "life love live" but not "Link Life Love Live"
     r"(?<!link )life|"
     # - mad love live
