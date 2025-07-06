@@ -7,10 +7,10 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z0-9\-_]|\b)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live([!\s]*(anime|blue ?bird|cosplays?|days|f(ans?\b|ranchise)|heardle|"
-    r"idols?|mention(ed)?\b|or (?!die)|ost|plush(ies?)|references?|[ot]cg|s(eries|"
-    r"ip([^a-z]|\b)|(ifs)?orter|ky|o(ng\b|undtrack)|potted|taff|u(nshine|per ?star)))|"
-    r" ?!? +(vs|X)\b| fest?\b)|lovelive(-anime|_staff)|"
+    r"love\s?live([!\s]*(anime|blue ?bird|c(osplay|haracter)s?|days|f(ans?\b|ranchise)|"
+    r"heardle|idols?|mention(ed)?\b|or (?!die)|ost|pl(aylist|ush(ies?))|references?|"
+    r"[ot]cg|s(eries|ip([^a-z]|\b)|(ifs)?orter|ky|o(ng\b|undtrack)|potted|taff|"
+    r"u(nshine|per ?star)))| ?!? +(vs|X)\b| fest?\b)|lovelive(-anime|_staff)|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     r"\b(thank you|(like|mis)s) love ?live\b|#lovelive_|\bLLstaff|"
     # School idol
@@ -57,7 +57,7 @@ LOVELIVE_RE = re.compile(
     r"高咲\s?侑|上原\s?歩夢|中須\s?かすみ|桜坂\s?しずく|朝香\s?果林|宮下\s?愛|近江\s?(彼方|遥)|"
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
     # Love Live! Superstar!!
-    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(tuto)?liella(?!(nd| kelly))[!！]?|"
+    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(or|tuto)?liella(?!(nd| kelly))[!！]?|"
     r"結ヶ丘|yuigaoka|5yncri5e!?|kaleidoscore|トマカノーテ|tomakanote|スパスタ[3３]期|"
     r"澁谷\s?かのん|唐\s?可可|嵐千\s?砂都|平安名\s?すみれ|葉月\s?恋|桜小路\s?きな子|米女\s?メイ|"
     r"若菜\s?四季|鬼塚\s?(夏美|冬毬)|ウィーン・?マルガレーテ|"
@@ -210,8 +210,8 @@ EXCLUDE_RE = re.compile(
     r"(^|([^\w ]|([a-z]+(ng?|ly)|bloody) ))love live music(?! is)\b|"
     # "and/but love live [something]" at end of sentence
     r"(and|but) love live( [a-z]+[a-z]){1,2}([^\w ]| - |$)|"
-    # What a ... to love live [something]
-    r"what a ([\w'’\-]+ +)*to love live [a-z]+[a-z]|"
+    # It's/What a ... to love live [something]
+    r"(it['’]?s|what) a ([\w'’\-]+ +)+to love live [a-z]+[a-z]|"
     # Words/phrases starting with "love live"
     r"\blove live ("
     # - love live action
@@ -222,6 +222,8 @@ EXCLUDE_RE = re.compile(
     r"a(ction|mmo|nd (dangerous|fall)| live)|"
     # - Love Live Bleeding (typo of "Love Lies Bleeding")
     r"bleeding|"
+    # - Love live Canada (typo of "Long live Canada")
+    r"canada|"
     # - love live (and/or) die
     # - love "Live and Let Die" (movie title)
     # - love "Live Die Repeat" (alt name of "Edge of Tomorrow" movie)
@@ -229,8 +231,9 @@ EXCLUDE_RE = re.compile(
     # - love live entertainment
     r"entertainment|"
     # - love live fact checking
+    # - love "Live Free and Die Hard"
     # - love "Live from Daryl's House"
-    r"f(act checking|rom daryl['’]?s)|"
+    r"f(act checking|r(ee (and|&) die hard|om daryl['’]?s))|"
     # - love live him
     r"him|"
     # - Love Live Italian
@@ -306,12 +309,13 @@ EXCLUDE_RE = re.compile(
     # - Gerry Love live (British live music performer)
     r"ger(ard|ry)|"
     # - his love live (usually typo of "his love life")
-    r"his|"
+    # - "How Deep Is Your Love" live (usually song by Bee Gees)
+    r"h(ow deep )?is|"
     # - (that) I('d) love live [something] (all other cases not caught by the Great "I
     #   love live [something]" Hoarde pattern)
     r"(that)?\bI(['’]d)?|"
     # - "I Feel Love" live (usually song by Donna Summer)
-    r"\bI feel|"
+    r"I feel|"
     # - laugh/let (that)/live love live
     # - "Lexicon of Love" live (album by ABC)
     r"l(augh|et( that)?|ive|exicon of)|"
@@ -321,7 +325,7 @@ EXCLUDE_RE = re.compile(
     # - Mike Love live (some reggae artist)
     r"m(ad|ike)|"
     # - "No Loss, No Love" live (song by Spiritbox)
-    r"\bno loss,? no|"
+    r"no loss,? no|"
     # - "Prophecy x This Love" live (song by Taylor Swift)
     r"prophecy x this|"
     # - Radical Love Live (some religious podcast with a Bluesky presence)
@@ -332,11 +336,12 @@ EXCLUDE_RE = re.compile(
     # - show some love live
     # - "Somebody to Love" live (usually song by Queen or Jefferson Airplane or any song
     #   name ending with that phrase)
+    # - "Some Kinda Love" live (song by The Velvet Underground)
     # - "Songs of Love Live" (album by Mark Eitzel)
     # - Stone Love live (usually Jamaican DJ group)
-    r"s(avage|how some|o(mebody to|ngs of)|tone)|"
+    r"s(avage|how some|o(me(body to| kinda)|ngs of)|tone)|"
     # - saw [artist name] perform [song name ending with "Love"] live
-    r"\bsaw .+ perform .+|"
+    r"saw .+ perform .+|"
     # - that/what kind of love live (sometimes typo of "that/what kind of love life")
     r"[tw]hat kind of|"
     # - they love live [something] (all other cases not caught by the Great "I love
@@ -370,10 +375,11 @@ EXCLUDE_RE = re.compile(
     # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
-    # love love [something]" but not "(and) love live also/are/could/did/does(n't)/going/had/
-    # has/I/in/is/never/song(s)/was/would", "love liver" at beginning of sentence
-    r"(([^\w\s:]+? *?|^)(and )?(love )+liver?(?! (a(lso|re)|[cw]ould|going|ha[ds]|"
-    r"d(id|oes(n['’]?t)?)|i[ns]?|never|songs?|was) )|"
+    # love love [something]" but not "(and) love live also/are/could/did/does(n't)/doing/
+    # going/had/has/hates/I/in/is/made/make(s)/making/never/song(s)/tries/tried/was/
+    # would", "love liver" at beginning of sentence
+    r"(([^\w\s:]+? *?|^)(and )?(love )+liver?(?! (a(lso|re)|[cw]ould|[dg]oing|i[ns]?|"
+    r"d(id|oes(n['’]?t)?)|ha([ds]|tes)|ma(de|k(es?|ing))|never|songs?|trie[ds]|was) )|"
     r"([^\w\s'’,:]+?  ?|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+live\b|"
