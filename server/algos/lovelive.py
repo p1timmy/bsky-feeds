@@ -151,7 +151,9 @@ CHARACTER_NAMES = set(
         ("Tang", "Keke", True),
         ("Chisato", "Arashi", False),
         ("Sumire", "Heanna", False),
-        ("Ren", "Hazuki", False),
+        # NOTE: Ren Hazuki included in pattern builder to try to prevent posts about
+        # Ren Hazuki from "The Expanse" from being added
+        ("Hazuki", "Ren", True),
         ("Kinako", "Sakurakoji", False),
         ("Mei", "Yoneme", False),
         ("Shiki", "Wakana", False),
@@ -195,10 +197,10 @@ EXCLUDE_RE = re.compile(
     #   [plural word] that
     r"\b((i|s?he|they)(['’]d)?|y(ou(['’]ll)?|(ou |['’])all)|we( (all|both))?|"
     r"got(ta| to)|who|people|[a-z]{3,}s( that)?)"
-    # - *ing/*ly/bloody/also/always/do(es)/don't/happen(ed)/just/still/tend to/too/will/
-    #   would('ve)/... and
+    # - *ing/*ly/bloody/also/always/do(es)/don't/happen(ed)/just/lowkey/still/tend to/
+    #   too/will/would('ve)/... and
     r"(,? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|don['’]t|"
-    r"((ha(ve|ppen(ed)?)|used?|grew) t|s|t(o|end t))o|would(['’]ve)?|even|"
+    r"((ha(ve|ppen(ed)?)|used?|grew) t|s|t(o|end t))o|would(['’]ve)?|even|lowkey|"
     r"[a-z]+[a-z] (and|&))\,?)*"
     # - love live [something]/love liver(s)/love Live (as in Ableton Live software)
     r" ((love )+live((?! (so |and|but)\b),? &? ?#?\w+\b|rs?)|"
@@ -225,7 +227,7 @@ EXCLUDE_RE = re.compile(
     # - Love live Canada (typo of "Long live Canada")
     r"canada|"
     # - love live (and/or) die
-    # - love "Live and Let Die" (movie title)
+    # - love "Live and Let Die" (James Bond movie title)
     # - love "Live Die Repeat" (alt name of "Edge of Tomorrow" movie)
     r"((and|&|or) (let )?)?die( repeat)?\b|"
     # - love live entertainment
@@ -471,12 +473,12 @@ def make_characters_pattern() -> re.Pattern:
 
     return re.compile(
         f"(?:^|[^@a-z])(?:{'|'.join(patterns)}|"
-        r"^(?!(.|\n)*lazarus(.|\n)*$).*\b(?<!thank )you ?watanabe.*$|"
-        r"^(?!(.|\n)*lazarus(.|\n)*$).*\b(?<!momo )(?<!shinichiro )(?<!akio )watanabe"
-        r" ?you(?!['’][a-z]+[a-z]| ([a-z]+[a-z]n['’]?t|are|have)\b).*$|"
-        r"leah kazuno|(?<!^by )(?<!post by )mia taylor(?!.+arxiv))\b|"
-        r"^(?!(.|\n)*arxiv(.|\n)*$).*\bkeke ?tang\b.*$",
-        re.IGNORECASE | re.MULTILINE,
+        r"^(?!.*\blazarus\b.*).*((?<!thank )you ?watanabe|"
+        r"(?<!momo )(?<!shinichiro )(?<!akio )watanabe ?you(?!['’][a-z]+[a-z]|"
+        r" ([a-z]+[a-z]n['’]?t|are|have)\b)).*|leah kazuno|"
+        r"(?<!\nby )(?<!^by )(?<!post by )mia taylor(?!.+arxiv)|"
+        r"keke ?tang(?!.+arxiv)|^(?!.*\bexpanse\b.*).*ren ?hazuki.*)\b",
+        re.IGNORECASE | re.DOTALL,
     )
 
 
