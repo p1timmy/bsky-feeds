@@ -7,12 +7,14 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z0-9\-_]|\b)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live([!\s]*(anime|blue ?bird|c(osplay|haracter)s?|days|f(ans?\b|ranchise)|"
-    r"heardle|idols?|mention(ed)?\b|or (?!die)|ost|pl(aylist|ush(ies?))|references?|"
-    r"[ot]cg|s(eries|ip([^a-z]|\b)|(ifs)?orter|ky|o(ng\b|undtrack)|potted|taff|"
-    r"u(nshine|per ?star)))| ?!? +(vs|X)\b| fest?\b)|lovelive(-anime|_staff)|"
+    r"love\s?live([!\s]*(a(fter school\b|nime)|blue ?bird|c(osplay|haracter)s?|days|"
+    r"f(ans?\b|ranchise)|heardle|i(dols?|n general)|mention(ed)?\b|or (?!die)|ost|"
+    r"pl(aylist|ush(ies?))|references?|oc(g|\b)|tcg|s(eries|ip([^a-z]|\b)|(ifs)?orter|"
+    r"ky|o(ng\b|undtrack)|potted|taff|u(nshine|per ?star)))| ?!? +(vs|X)\b| fest?\b)|"
+    # r"^(?!(.|\n)*\bjisoo\b(.|\n)*$)((.|\n)*\breal love live\b)|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
-    r"\b(thank you|(like|mis)s) love ?live\b|#lovelive_|\bLLstaff|"
+    r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|miss) love ?live\b|#lovelive_|"
+    r"\bLLstaff|"
     # School idol
     r"スクールアイドル|(?<!middle )(?<!high )(?<!old )(?<!old-)"
     r"school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
@@ -193,10 +195,10 @@ CHARACTER_NAMES = set(
 
 EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
-    # - I('d)/he/she/they/you (all)/y'all/you'll/we (all/both)/gotta/got to/who/people/
-    #   [plural word] that
+    # - I('d)/he/she/they/you (all)/y'all/you'll/we (all/both)/gotta/got to/who/people
+    #   (in [some place])/[plural word] that
     r"\b((i|s?he|they)(['’]d)?|y(ou(['’]ll)?|(ou |['’])all)|we( (all|both))?|"
-    r"got(ta| to)|who|people|[a-z]{3,}s( that)?)"
+    r"got(ta| to)|who|people( in (the )?[a-z]+[a-z])?|[a-z]{3,}s( that)?)"
     # - *ing/*ly/bloody/also/always/do(es)/don't/happen(ed)/just/lowkey/still/tend to/
     #   too/will/would('ve)/... and
     r"(,? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|don['’]t|"
@@ -232,12 +234,16 @@ EXCLUDE_RE = re.compile(
     r"((and|&|or) (let )?)?die( repeat)?\b|"
     # - love live entertainment
     r"entertainment|"
+    # - love live dragons
+    r"dragons|"
     # - love live fact checking
     # - love "Live Free and Die Hard"
     # - love "Live from Daryl's House"
     r"f(act checking|r(ee (and|&) die hard|om daryl['’]?s))|"
     # - love live him
     r"him|"
+    # - love live interaction
+    r"interaction|"
     # - Love Live Italian
     # - love live within
     r"(italia|withi)n|"
@@ -314,6 +320,8 @@ EXCLUDE_RE = re.compile(
     # - his love live (usually typo of "his love life")
     # - "How Deep Is Your Love" live (usually song by Bee Gees)
     r"h(ow deep )?is|"
+    # - hope/joy/peace/unity and love live
+    r"(hope|joy|peace|unity),? and|"
     # - (that) I('d) love live [something] (all other cases not caught by the Great "I
     #   love live [something]" Hoarde pattern)
     r"(that)?\bI(['’]d)?|"
@@ -379,12 +387,12 @@ EXCLUDE_RE = re.compile(
     # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
-    # love love [something]" but not "(and) love live also/are/could/did/does(n't)/doing/
-    # going/had/has/hates/I/in/is/made/make(s)/making/never/song(s)/tries/tried/was/
-    # would", "love liver" at beginning of sentence
-    r"(([^\w\s:]+? *?|^)(and )?(love )+liver?(?! (a(lso|re)|[cw]ould|[dg]oing|i[ns]?|"
-    r"d(id|oes(n['’]?t)?)|ha([ds]|tes)|ma(de|k(es?|ing))|never|songs?|trie[ds]|was) )|"
-    r"([^\w\s'’,:]+?  ?|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
+    # love love [something]" but not "(and) love live also/always/are/could/did/does(n't)
+    # /doing/going/had/has/hates/I/in/is/made/make(s)/making/never/song(s)/tries/tried/
+    # was/would", "love liver" at beginning of sentence
+    r"(([^\w\s:]+? *?|^)(and )?(love )+liver?(?! (a(l(so|ways)|re)|[cw]ould|[dg]oing|"
+    r"i[ns]?|d(id|oes(n['’]?t)?)|ha([ds]|tes)|ma(de|k(es?|ing))|never|songs?|trie[ds]|"
+    r"was) )|([^\w\s'’,:]+?  ?|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+live\b|"
     # ... and love live(s) here/there
