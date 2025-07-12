@@ -14,7 +14,7 @@ LOVELIVE_RE = re.compile(
     # r"^(?!(.|\n)*\bjisoo\b(.|\n)*$)((.|\n)*\breal love live\b)|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|miss) love ?live\b|#lovelive_|"
-    r"\bLLstaff|"
+    r"\bLL(heardle|staff)|"
     # School idol
     r"スクールアイドル|(?<!middle )(?<!high )(?<!old )(?<!old-)"
     r"school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
@@ -212,10 +212,13 @@ EXCLUDE_RE = re.compile(
     # "love live music" at start of sentence or after "freaking/really/bloody/etc." but
     # not "love live music is"
     r"(^|([^\w ]|([a-z]+(ng?|ly)|bloody) ))love live music(?! is)\b|"
-    # "and/but love live [something]" at end of sentence
-    r"(and|but) love live( [a-z]+[a-z]){1,2}([^\w ]| - |$)|"
+    # "also/and/but (still) love live [something] (for)" at end of sentence
+    r"(a(lso|nd)|but) (still )?love live( [a-z]+[a-z]){1,2}( ?(for\b|[^\w ])|$)|"
     # It's/What a ... to love live [something]
     r"(it['’]?s|what) a ([\w'’\-]+ +)+to love live [a-z]+[a-z]|"
+    # "love live music" at end of sentence but not "about/i(t)s/of/to love live music"
+    r"(?<!\babout )(?<!\bit['’]s )(?<!\bits )(?<!\bis )(?<!\bof )(?<!\bto )love live"
+    r" music *[^\w ]|"
     # Words/phrases starting with "love live"
     r"\blove live ("
     # - love live action
@@ -254,9 +257,8 @@ EXCLUDE_RE = re.compile(
     # - love live life/local/long/loud (music)
     # - "love live love" but not "love live love wing bell"
     r"l(ife|o(cal|ng|ud( music)?|ve(?! wing bell)))|"
-    # - "love live music" at end of sentence
-    # - love live music at
-    r"music ([^\w ]|$|at\b)|"
+        # - love live music at
+    r"music at\b|"
     # - love live oak(s)
     r"oaks?|"
     # - love "Live Rust" (album by Neil Young & Crazy Horse)
@@ -269,9 +271,9 @@ EXCLUDE_RE = re.compile(
     # - love "Live to Tell" (song by Madonna)
     # - love "Live Through This" (usually an album by Hole)
     r"t(ables|elevision|h(eat(er|re)|rough this)|o tell|v)|"
-    # - "love live the" as a typo of "long live the" but not "Love Live the School Idol"
-    #   or "Love Live the Musical"
-    r"the\b(?! school idol|musical)|"
+    # - "love live the" (usually typo of "long live the") but not "Love Live the
+    #   competition/Musical/School Idol"
+        r"the\b(?! (competition|musical|school idol)\b)|"
     # - love live tour/your
     r"[ty]our|"
     # - "love live ur" (usually typo of "long live ur") but not "Love Live UR ... card"
