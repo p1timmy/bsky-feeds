@@ -35,7 +35,7 @@ LOVELIVE_RE = re.compile(
     r"綺羅\s?ツバサ|優木\s?あんじゅ|統堂\s?英玲奈|"
     # Love Live! Sunshine!!
     # NOTE: AZALEA not included due to too many false positives
-    r"(^|[^三土])浦の星女?|uranohoshi|aq(ou|uo)rs|"
+    r"(^|[^三土])浦の星女?|uranohoshi|(\W|\b)aq(ou|uo)rs(\W|\b)|"
     r"(\W|\b)cyaron!?(\W|\b)|guilty\s?kiss([^a-z]|$)|"
     # YYY (You, Yoshiko/Yohane, RubY)
     r"(?<!わい)(?<!わーい)わいわいわい(?!わー?い)|"
@@ -195,10 +195,11 @@ CHARACTER_NAMES = set(
 
 EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
-    # - I('d)/he/she/they/you (all)/y'all/you'll/we (all/both)/gotta/got to/who/people
-    #   (in [some place])/[plural word] that
+    # - I('d)/he/she/they/you (all)/y'all/you'll/we (all/both)/gotta/got to/who, people
+    #   (in [some place]), [plural word] that, my ... and sister/brother/wife/etc.
     r"\b((i|s?he|they)(['’]d)?|y(ou(['’]ll)?|(ou |['’])all)|we( (all|both))?|"
-    r"got(ta| to)|who|people( in (the )?[a-z]+[a-z])?|[a-z]{3,}s( that)?)"
+    r"got(ta| to)|who|people( in (the )?[a-z]+[a-z])?|[a-z]{3,}s( that)?|"
+    r"my .+and [a-z]+[a-z])"
     # - *ing/*ly/bloody/also/always/do(es)/don't/happen(ed)/just/lowkey/still/tend to/
     #   too/will/would('ve)/... and
     r"(,? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|don['’]t|"
@@ -209,9 +210,10 @@ EXCLUDE_RE = re.compile(
     r"love live($|[^\s\w]| \w+))|"
     # Anyone ... love live music?
     r"anyone( .+)? love live music\?|"
-    # "love live music" at start of sentence or after "freaking/really/bloody/etc." but
-    # not "love live music is"
-    r"(^|([^\w ]|([a-z]+(ng?|ly)|bloody) ))love live music(?! is)\b|"
+    # "love live music/comedy" at start of sentence or after "[any emoji]/freaking/
+    # really/bloody/etc." but not "love live music/comedy is/was"
+    r"(^|[^\w ] *|(([a-z]+(ng?|ly)|bloody) +))love live (music|comedy)"
+    r"(?! ((i|wa)s\b))|"
     # "also/and/but (still) love live [something] (for)" at end of sentence
     r"(a(lso|nd)|but) (still )?love live( [a-z]+[a-z]){1,2}( ?(for\b|[^\w ])|$)|"
     # It's/What a ... to love live [something]
@@ -257,7 +259,7 @@ EXCLUDE_RE = re.compile(
     # - love live life/local/long/loud (music)
     # - "love live love" but not "love live love wing bell"
     r"l(ife|o(cal|ng|ud( music)?|ve(?! wing bell)))|"
-        # - love live music at
+    # - love live music at
     r"music at\b|"
     # - love live oak(s)
     r"oaks?|"
@@ -273,7 +275,7 @@ EXCLUDE_RE = re.compile(
     r"t(ables|elevision|h(eat(er|re)|rough this)|o tell|v)|"
     # - "love live the" (usually typo of "long live the") but not "Love Live the
     #   competition/Musical/School Idol"
-        r"the\b(?! (competition|musical|school idol)\b)|"
+    r"the\b(?! (competition|musical|school idol)\b)|"
     # - love live tour/your
     r"[ty]our|"
     # - "love live ur" (usually typo of "long live ur") but not "Love Live UR ... card"
@@ -384,17 +386,18 @@ EXCLUDE_RE = re.compile(
     # if you (live in/near/around [place name]) ... and/but love live (...) music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)|if you)\s+.+\s+)?(and|but)\s+love"
     r" live( .+)? (music|comedy)\b|"
-    # "love liver/live music/comedy" at beginning of sentence or after emoji
-    r"[^\w ]\s*love live( (music|comedy)|r)(?! ((i|wa)s)|are)|"
+    # "love liver(s and)" at beginning of sentence/after emoji and not before "is/are"
+    r"(^|[^\w ] *)love liver(s and)?(?! (are|is))\b|"
     # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
-    # love love [something]" but not "(and) love live also/always/are/could/did/does(n't)
-    # /doing/going/had/has/hates/I/in/is/made/make(s)/making/never/song(s)/tries/tried/
-    # was/would", "love liver" at beginning of sentence
-    r"(([^\w\s:]+? *?|^)(and )?(love )+liver?(?! (a(l(so|ways)|re)|[cw]ould|[dg]oing|"
-    r"i[ns]?|d(id|oes(n['’]?t)?)|ha([ds]|tes)|ma(de|k(es?|ing))|never|songs?|trie[ds]|"
-    r"was) )|([^\w\s'’,:]+?  ?|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
+    # love love [something]" but not "(and) love live also/always/are/could/did/
+    # does(n't)/doing/going/had/has/hates/I/in/is/made/make(s)/making/music is(/was)/
+    # never/song(s)/tries/tried/was/would"
+    r"(([^\w\s:]+? *|^)(and )?(love )+live(?! (a(l(so|ways)|re)|[cw]ould|[dg]oing|"
+    r"i[ns'’]?|d(id|oes(n['’]?t)?)|ha([ds]|tes)|m(a(de|k(es?|ing))|usic (i|wa)s)|"
+    r"never|songs?|trie[ds]|was)\b)|([^\w\s'’,:]+? +|^)(love )+live,)"
+    r"( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+live\b|"
     # ... and love live(s) here/there
@@ -418,7 +421,7 @@ EXCLUDE_RE = re.compile(
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
-    r"\b(grateful dead|phish)\b|"
+    r"\b(grateful dead|oasis|phish)\b|"
     # Love Live (rock music) Festival and its venue and bands
     r"\b(official )?love live festival\b|\blovelivefestival|"
     r"\b((black(pool| ?(lak|vultur)es?))|cancel ?the ?transmission|fugitive|"
