@@ -398,8 +398,8 @@ EXCLUDE_RE = re.compile(
     r"i[ns'’]?|d(id|oes(n['’]?t)?)|ha([ds]|tes)|m(a(de|k(es?|ing))|usic (i|wa)s)|"
     r"never|songs?|trie[ds]|was)\b)|([^\w\s'’,:]+? +|^)(love )+live,)"
     r"( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
-    # "love love live" at beginning of sentence
-    r"([^\w\s]+?  ?|^)love (love )+live\b|"
+    # "love love live(r)" at beginning of sentence
+    r"([^\w\s]+?  ?|^)love (love )+liver?\b|"
     # ... and love live(s) here/there
     r" (and|&) love lives? t?here\b|"
     # may your/his/her/their ... love live (on)
