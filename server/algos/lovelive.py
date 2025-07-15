@@ -324,8 +324,8 @@ EXCLUDE_RE = re.compile(
     # - his love live (usually typo of "his love life")
     # - "How Deep Is Your Love" live (usually song by Bee Gees)
     r"h(ow deep )?is|"
-    # - hope/joy/peace/unity and love live
-    r"(hope|joy|peace|unity),? and|"
+    # - hope/joy/pain/peace/unity and love live
+    r"(hope|joy|p(ain|eace)|unity),? and|"
     # - (that) I('d) love live [something] (all other cases not caught by the Great "I
     #   love live [something]" Hoarde pattern)
     r"(that)?\bI(['’]d)?|"
