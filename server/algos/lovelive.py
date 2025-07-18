@@ -7,10 +7,11 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z0-9\-_]|\b)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live([!\s]*(a(fter school\b|nime)|blue ?bird|c(osplay|haracter)s?|days|"
-    r"f(ans?\b|ranchise)|heardle|i(dols?|n general)|mention(ed)?\b|or (?!die)|ost|"
-    r"pl(aylist|ush(ies?))|references?|oc(g|\b)|tcg|s(e(ries|iyuus?)|ip([^a-z]|\b)|"
-    r"(ifs)?orter|ky|o(ng\b|undtrack)|potted|taff|u(nshine|per ?star)))|"
+    r"love\s?live([!\s]*(a(fter school\b|nime)|blue ?bird|c((d|osplay|haracter)s?|"
+    r"yber)|days|e(ra|tc)\b|f(ans?\b|ranchise)|heardle|i(dols?|n general)|"
+    r"m(ention(ed)?|ovies?)\b|nesoberis?|o(c(g|\b)|r(?! die)\b|st)|pl(aylist|"
+    r"ush(ies?))|references?|s(e(ries|iyuus?)|ip([^a-z]|\b)|(ifs)?orter|ky|"
+    r"o(ng\b|undtrack)|potted|taff|u(nshine|per ?star))|t(cg|hings)|u['’]s\b)|"
     r" ?!? +(vs|X)\b| fest?\b)|"
     # r"^(?!(.|\n)*\bjisoo\b(.|\n)*$)((.|\n)*\breal love live\b)|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
@@ -336,6 +337,8 @@ EXCLUDE_RE = re.compile(
     r"(that)?\bI(['’]d)?|"
     # - "I Feel Love" live (usually song by Donna Summer)
     r"I feel|"
+    # - "Kill for Love" live (usually song by Lady Gaga)
+    r"kill for|"
     # - laugh/let (that)/live love live
     # - "Lexicon of Love" live (album by ABC)
     # - "Love Hate Love" live (song by Alice In Chains)
