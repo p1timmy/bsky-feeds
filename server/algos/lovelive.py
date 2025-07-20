@@ -7,9 +7,9 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z0-9\-_]|\b)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live([!\s]*(a(fter school\b|nime)|blue ?bird|c((d|osplay|haracter)s?|"
-    r"yber)|days|e(ra|tc)\b|f(ans?\b|ranchise)|heardle|i(dols?|n general)|"
-    r"m(ention(ed)?|ovies?)\b|nesoberis?|o(c(g|\b)|r(?! die)\b|st)|pl(aylist|"
+    r"love\s?live([!\s]*(a(fter school\b|ll[ -]stars|nime)|blue ?bird|days|c(yber|"
+    r"(d|osplay|haracter)s?)|e(ra|tc)\b|f(ans?\b|ranchise)|heardle|i(dols?|n general)|"
+    r"m(ention(ed)?|ovies?)\b|nesoberis?|o(c(g|\b)|mf?g|r(?! die)\b|st)|pl(aylist|"
     r"ush(ies?))|references?|s(e(ries|iyuus?)|ip([^a-z]|\b)|(ifs)?orter|ky|"
     r"o(ng\b|undtrack)|potted|taff|u(nshine|per ?star))|t(cg|hings)|u['’]s\b)|"
     r" ?!? +(vs|X)\b| fest?\b)|"
@@ -54,7 +54,7 @@ LOVELIVE_RE = re.compile(
     r"鹿角\s?(理亞|聖良)|"
     # Nijigasaki
     r"虹ヶ咲(?!学園交通運輸研究部)|ニジガク|(アニ|エイ)ガサキ|(あに|えい)がさき|にじ(よん|ちず)|"
-    r"(nij|an|e)igasaki|niji(chizu|gaku|yon)|a・zu・na|qu4rtz|"
+    r"([^a-z]|\b)((nij|an|e)igasaki|niji(chizu|gaku|yon))([^a-z]|\b)|a・zu・na|qu4rtz|"
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(diver"
     r" ?diva|r3birth)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
     r"tokimeki r(unners|oadmap to the future)|"
@@ -216,8 +216,9 @@ EXCLUDE_RE = re.compile(
     # really/bloody/etc." but not "love live music/comedy is/was"
     r"(^|[^\w ] *|(([a-z]+(ng?|ly)|bloody) +))love live (music|comedy)"
     r"(?! ((i|wa)s\b))|"
-    # "also/and/but (still) love live [something] (for)" at end of sentence
-    r"(a(lso|nd)|but) (still )?love live( [a-z]+[a-z]){1,2}( ?(for\b|[^\w ])|$)|"
+    # "also/and/but (still) love live [something] (for)" at end of sentence but not
+    # "also/and/but love live is"
+    r"(a(lso|nd)|but) (still )?love live(?! is)( [a-z]+[a-z]){1,2}( for\b| ?[^\w ]|$)|"
     # It's/What a ... to love live [something]
     r"(it['’]?s|what) a ([\w'’\-]+ +)+to love live [a-z]+[a-z]|"
     # "love live music" at end of sentence but not "about/i(t)s/of/to love live music"
@@ -401,13 +402,13 @@ EXCLUDE_RE = re.compile(
     # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
-    # love love [something]" but not "(and) love live also/always/are/as/could/did/
+    # love love [something]" but not "(and) love live all/also/always/are/as/could/did/
     # does(n't)/doing/going/had/has/hates/I/in/is/made/make(s)/making/music is(/was)/
     # never/song(s)/tries/tried/UR ... card(s)/was/will/would"
-    r"(([^\w\s:]+? *|^)(and )?(love )+live(?! (a(l(so|ways)|re|s)|[cw]ould|[dg]oing|"
-    r"i[ns'’]?|d(id|oes(n['’]?t)?)|ha([ds]|tes)|m(a(de|k(es?|ing))|usic (i|wa)s)|"
-    r"never|songs?|trie[ds]|ur .*cards?|w(as|ill))\b)|([^\w\s'’,:]+? +|^)(love )+live,)"
-    r"( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
+    r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|"
+    r"re|s)|[cw]ould|[dg]oing|i[ns'’]?|d(id|oes(n['’]?t)?)|ha([ds]|tes)|m(a(de|"
+    r"k(es?|ing))|usic (i|wa)s)|never|songs?|trie[ds]|ur .*cards?|w(as|ill))\b)|"
+    r"([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live(r)" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+liver?\b|"
     # ... and love live(s) here/there
@@ -468,9 +469,17 @@ FAKE_CATCHU_RE = re.compile(
     r"\bto catchu with",
     re.IGNORECASE,
 )
-NSFW_KEYWORDS_RE = re.compile(
-    r"\b(bds&?m|c(ock(s|\b)|um(ming)?\b)|di(aper|ck|ldo)|(futanar|henta)i|GOP\b|n(sfw|ude)|"
-    r"p(enis|regnant)|republicans?|sex\b|trump)",
+BAD_KEYWORDS_RE = re.compile(
+    r"\b("
+    # Political keywords often used in "love live" false positives
+    r"GOP\b|republicans?|trump|"
+    # Gaza war victim fundraiser spam
+    r"ABD-GFM|GFM-ABD|"
+    # NSFW keywords
+    r"bds&?m|c(ock(s|\b)|um(ming)?\b)|di(aper|ck|ldo)|(futanar|henta)i|nude|"
+    r"p(enis|regnant)|sex\b"
+    # NSFW hashtags
+    r")|#(ecchi|nsfw|porn)",
     re.IGNORECASE,
 )
 
@@ -520,7 +529,7 @@ def filter(post: dict) -> bool:
     if not all_texts:
         return False
 
-    return not NSFW_KEYWORDS_RE.search(all_texts) and any(
+    return not BAD_KEYWORDS_RE.search(all_texts) and any(
         (
             LOVELIVE_NAME_EN_RE.search(all_texts) and not EXCLUDE_RE.search(all_texts),
             SUKUFEST_RE.search(all_texts) and "scrum" not in all_texts.lower(),
