@@ -16,7 +16,7 @@ LOVELIVE_RE = re.compile(
     # r"^(?!(.|\n)*\bjisoo\b(.|\n)*$)((.|\n)*\breal love live\b)|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|miss) love ?live\b|#lovelive_|"
-    r"\bLL(heardle|staff)|"
+    r"\bLL(heardle|s(ip|taff))|"
     # School idol
     r"スクールアイドル|(?<!middle )(?<!high )(?<!old )(?<!old-)"
     r"school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
@@ -45,10 +45,10 @@ LOVELIVE_RE = re.compile(
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)ai[♡ ]?scream\b|愛♡スクリ〜ム|"
     r"幻(日のヨハネ|ヨハ)|genjitsu\s?no\s?yohane|sunshine\sin\sthe\smirror|"
     r"^(?!(.|\n)*(shaman ?king|touhou)(.|\n)*$)"
-    r"((.|\n)*\byohane(?! mbatizati)\b(.|\n)*)|"
+    r"((.|\n)*\byohane(?! mbatizati)\b(.|\n)*)|#ヨハネ(生誕|誕生)祭|"
     r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?曜|津島\s?善子|"
     r"国木田\s?花丸|小原\s?鞠莉|"
-    r"がんば(ルビ|るび)|(^|[^@])ganbaruby|(daily|today['’]s) maru\b|maru's month|"
+    r"がんば(ルビ|るび)|(^|[^@])ganbaruby|today['’]s maru\b|maru's month|"
     r"(永久|\beikyuu\s?)(hours|stage)|"
     r"(?<!\bRT @)(?<!x.com/)saint\s?snow([^a-z]|$)|"
     r"鹿角\s?(理亞|聖良)|"
@@ -304,10 +304,11 @@ EXCLUDE_RE = re.compile(
     r"(art(ist)?|band|music|people|[a-z]+s) (i|you|they)( ([a-z]+[a-z],? )+(and|&))?|"
     # - can/could you not love live
     # - "Can't Buy Me Love" live (usually song by the Beatles)
+    # - "Caravan of Love" live (usually song by The Housemartins)
     # - "Can't Hide Love" live (different songs by different artists)
     # - complicated love live (typo of "complicated love life")
     # - "Computer Love" live (song by Kraftwerk)
-    r"c(an['’]?t (buy me|hide)|(an|ould) you not|omp(licated|uter))|"
+    r"c(a(n['’]?t (buy me|hide)|ravan of)|(an|ould) you not|omp(licated|uter))|"
     # - "Dangerously in Love" live (album by Beyonce)
     # - "Drunk in Love" live (song by Beyonce)
     # - "I'm Not in Love" live (usually song by 10cc)
@@ -342,8 +343,10 @@ EXCLUDE_RE = re.compile(
     r"kill for|"
     # - laugh/let (that)/live love live
     # - "Lexicon of Love" live (album by ABC)
-    # - "Love Hate Love" live (song by Alice In Chains)
-    r"l(augh|et( that)?|exicon of|ive|ove hate)|"
+    # - "Light of Love" live (usually song by Florence and the Machine)
+    # - "Love, Hate, Love" live (song by Alice In Chains)
+    # - "Love Meeting Love" live (song by Level 42)
+    r"l(augh|et( that)?|exicon of|i(ght of|ve)|ove(,? hate,?| meeting love))|"
     # - "life love live" but not "Link Life Love Live"
     r"(?<!link )life|"
     # - mad love live
