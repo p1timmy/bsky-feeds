@@ -48,7 +48,7 @@ LOVELIVE_RE = re.compile(
     r"((.|\n)*\byohane(?! mbatizati)\b(.|\n)*)|#ヨハネ(生誕|誕生)祭|"
     r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?曜|津島\s?善子|"
     r"国木田\s?花丸|小原\s?鞠莉|"
-    r"がんば(ルビ|るび)|(^|[^@])ganbaruby|today['’]s maru\b|maru's month|"
+    r"がんば(ルビ|るび)|(^|[^@])ganbaruby|today['’]s maru\b|maru's month|#よしまる|"
     r"(永久|\beikyuu\s?)(hours|stage)|"
     r"(?<!\bRT @)(?<!x.com/)saint\s?snow([^a-z]|$)|"
     r"鹿角\s?(理亞|聖良)|"
@@ -323,7 +323,8 @@ EXCLUDE_RE = re.compile(
     # - fight love live (usually Filoli, California historical marker)
     # - "Fool for Love" live
     # - "Friday I'm In Love" live (usually song by The Cure)
-    r"f(ake|ight|ool for love|riday i['’]?m in)|"
+    # - "Frozen Love" live (song by Buckingham Nicks)
+    r"f(ake|ight|ool for love|r(iday i['’]?m in|ozen))|"
     # - Gerry Love live (British live music performer)
     r"ger(ard|ry)|"
     # - his love live (usually typo of "his love life")
@@ -378,7 +379,9 @@ EXCLUDE_RE = re.compile(
     #   live [something]" Hoarde pattern)
     # - "The House of Love" live (usually song by Christine)
     # - "The Book of Love" live (usually song by Peter Gabriel or The Magnetic Fields)
-    r"the(y| (book|house) of)|"
+    # - "The House of Love" live (usually song by Christine)
+    # - "The Look of Love" live (song by different artists)
+    r"the(y| ([bl]ook|house) of)|"
     # - would love live [something] (all other cases not caught by the Great "I love
     #   live [something]" Hoarde pattern)
     # - "Wasted Love" live (song by JJ)
@@ -432,6 +435,8 @@ EXCLUDE_RE = re.compile(
     r"\bI(['’]d|ve)? ((([a-z]+ ){,2}to|gotta) hear|(have )?heard) ([\w'’]+ )+love live|"
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
     r"\bi ([a-z]+[a-z] )?love live (&|and) learn|"
+    # hashtags frequently used in #lovelive false positives including "#love live"
+    r"#(faith|hope|Love( live|IsBlind|r|Wins))\b|"
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
