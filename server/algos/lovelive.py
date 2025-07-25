@@ -357,7 +357,8 @@ EXCLUDE_RE = re.compile(
     r"no loss,? no|"
     # - "Prisoner of Love" live (at the Apollo) (song by James Brown)
     # - "Prophecy x This Love" live (song by Taylor Swift)
-    r"pr(isoner of|ophecy x this)|"
+    # - Pop the Balloon or/and/to/etc. Find Love live (dating show on YT/Netflix)
+    r"p(op [a-z]+ balloon [a-z]+ find|r(isoner of|ophecy x this))|"
     # - "Radar Love" live (song by Golden Earring)
     # - Radical Love Live (some religious podcast with a Bluesky presence)
     # - really love live [something]
@@ -436,7 +437,7 @@ EXCLUDE_RE = re.compile(
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
     r"\bi ([a-z]+[a-z] )?love live (&|and) learn|"
     # hashtags frequently used in #lovelive false positives including "#love live"
-    r"#(faith|hope|Love( live|IsBlind|r|Wins))\b|"
+    r"#(god|faith|hope|Love( live|IsBlind|r|Wins))\b|"
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
