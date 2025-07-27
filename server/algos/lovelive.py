@@ -330,9 +330,9 @@ EXCLUDE_RE = re.compile(
     r"(d(angerously|runk)|i['’]?m not|who live) in|"
     # - "Darker My Love" live (song by T.S.O.L.)
     # - "Darkness at the Heart of My Love" live (song by Ghost)
-    # - "Destination Love Live" (album by The Make-Up)
+    # - "Destination: Love Live" (album by The Make-Up)
     # - does not/doesn't love live [something]
-    r"d(ark(er my|ness at the heart of my)|estination|o(es)?( not|n['’]t))|"
+    r"d(ark(er my|ness at the heart of my)|estination:?|o(es)?( not|n['’]t))|"
     # - "Fake Love" live (song by BTS)
     # - fight love live (usually Filoli, California historical marker)
     # - "Fool for Love" live
