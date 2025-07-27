@@ -304,11 +304,25 @@ EXCLUDE_RE = re.compile(
     r"(art(ist)?|band|music|people|[a-z]+s) (i|you|they)( ([a-z]+[a-z],? )+(and|&))?|"
     # - can/could you not love live
     # - "Can't Buy Me Love" live (usually song by the Beatles)
-    # - "Caravan of Love" live (usually song by The Housemartins)
     # - "Can't Hide Love" live (different songs by different artists)
     # - complicated love live (typo of "complicated love life")
     # - "Computer Love" live (song by Kraftwerk)
-    r"c(a(n['’]?t (buy me|hide)|ravan of)|(an|ould) you not|omp(licated|uter))|"
+    r"c(an['’]?t (buy me|hide)|(an|ould) you not|omp(licated|uter))|"
+    # - stuff ending with "of love live":
+    #   - "Caravan of Love" live (usually song by The Housemartins)
+    #   - "Lexicon of Love" live (album by ABC)
+    #   - "Light of Love" live (usually song by Florence and the Machine)
+    #   - "Prisoner of Love" live (song by James Brown)
+    #   - "Songs of Love Live" (album by Mark Eitzel)
+    #   - that/what kind of love live (sometimes typo of "that/what kind of love life")
+    #   - "The Book of Love" live (usually song by Peter Gabriel or The Magnetic Fields)
+    #   - "The House of Love" live (usually song by Christine)
+    #   - "The Look of Love" live (song by different artists)
+    #   - "(Thee) Most Exalted Potentate of Love" live (song by The Cramps)
+    #   - this/what kind of love live
+    #   - "Tunnel of Love" live (usually song by Dire Straits or Bruce Springsteen)
+    r"(caravan|l(exicon|ight)|most exalted potentate|prisoner|songs|"
+    r"t(he ([bl]ook|house)|unnel)|([tw]hat|this) kind) of|"
     # - "Dangerously in Love" live (album by Beyonce)
     # - "Drunk in Love" live (song by Beyonce)
     # - "I'm Not in Love" live (usually song by 10cc)
@@ -343,11 +357,9 @@ EXCLUDE_RE = re.compile(
     # - "Kill for Love" live (usually song by Lady Gaga)
     r"kill for|"
     # - laugh/let (that)/live love live
-    # - "Lexicon of Love" live (album by ABC)
-    # - "Light of Love" live (usually song by Florence and the Machine)
     # - "Love, Hate, Love" live (song by Alice In Chains)
     # - "Love Meeting Love" live (song by Level 42)
-    r"l(augh|et( that)?|exicon of|i(ght of|ve)|ove(,? hate,?| meeting love))|"
+    r"l(augh|et( that)?|ive|ove(,? hate,?| meeting love))|"
     # - "life love live" but not "Link Life Love Live"
     r"(?<!link )life|"
     # - mad love live
@@ -355,10 +367,9 @@ EXCLUDE_RE = re.compile(
     r"m(ad|ike)|"
     # - "No Loss, No Love" live (song by Spiritbox)
     r"no loss,? no|"
-    # - "Prisoner of Love" live (at the Apollo) (song by James Brown)
     # - "Prophecy x This Love" live (song by Taylor Swift)
     # - Pop the Balloon or/and/to/etc. Find Love live (dating show on YT/Netflix)
-    r"p(op [a-z]+ balloon [a-z]+ find|r(isoner of|ophecy x this))|"
+    r"p(op [a-z]+ balloon [a-z]+ find|rophecy x this)|"
     # - "Radar Love" live (song by Golden Earring)
     # - Radical Love Live (some religious podcast with a Bluesky presence)
     # - really love live [something]
@@ -369,20 +380,15 @@ EXCLUDE_RE = re.compile(
     # - "Somebody to Love" live (usually song by Queen or Jefferson Airplane or any song
     #   name ending with that phrase)
     # - "Some Kinda Love" live (song by The Velvet Underground)
-    # - "Songs of Love Live" (album by Mark Eitzel)
     # - Stone Love live (usually Jamaican DJ group)
-    r"s(avage|how some|o(me(body to| kinda)|ngs of)|tone)|"
+    r"s(avage|how some|o(me(body to| kinda))|tone)|"
     # - saw [artist name] perform [song name ending with "Love"] live
     r"saw .+ perform .+|"
     # - that/what kind of love live (sometimes typo of "that/what kind of love life")
     r"[tw]hat kind of|"
     # - they love live [something] (all other cases not caught by the Great "I love
     #   live [something]" Hoarde pattern)
-    # - "The House of Love" live (usually song by Christine)
-    # - "The Book of Love" live (usually song by Peter Gabriel or The Magnetic Fields)
-    # - "The House of Love" live (usually song by Christine)
-    # - "The Look of Love" live (song by different artists)
-    r"the(y| ([bl]ook|house) of)|"
+    r"they|"
     # - would love live [something] (all other cases not caught by the Great "I love
     #   live [something]" Hoarde pattern)
     # - "Wasted Love" live (song by JJ)
@@ -397,6 +403,9 @@ EXCLUDE_RE = re.compile(
     # "Big Love" live (at) (song by Fleetwood Mac or Lindsey Buckingham)
     r"(fleetwood|buckingham)(.|\n)+big love live|"
     r"big love live( (in|at)|(.|\n)+(fleetwood|buckingham))|"
+    # "(The) Power of Love" live (different songs by different artists, except at end of line/
+    # post or before exclamation mark)
+    r"power of love live(?!!|$)|\b(frankie|huey).+power of love live|"
     # perform(s/ed/ing/ance of)/sing(s/ing) [song name ending with "Love"] live at/on/
     # in(side)/outside
     r"(perform(ance of|ed|ing|s)?|sing(ing|s)) .+ (?<!from )love live"
@@ -483,7 +492,7 @@ BAD_KEYWORDS_RE = re.compile(
     # Political keywords often used in "love live" false positives
     r"GOP\b|republicans?|trump|"
     # Gaza war victim fundraiser spam
-    r"ABD-GFM|GFM-ABD|"
+    r"abed|ABD-GFM|GFM-ABD|kutt\.it/|"
     # NSFW keywords
     r"bds&?m|c(ock(s|\b)|um(ming)?\b)|di(aper|ck|ldo)|(futanar|henta)i|nude|"
     r"p(enis|regnant)|sex\b"
