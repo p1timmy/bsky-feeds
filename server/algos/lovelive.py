@@ -494,8 +494,8 @@ BAD_KEYWORDS_RE = re.compile(
     # Gaza war victim fundraiser spam
     r"abed|ABD-GFM|GFM-ABD|kutt\.it/|"
     # NSFW keywords
-    r"bds&?m|c(ock(s|\b)|um(ming)?\b)|di(aper|ck|ldo)|(futanar|henta)i|nude|"
-    r"p(enis|regnant)|sex\b"
+    r"bds&?m|c(ock(s|\b)|um(ming)?([^a-z]|\b))|di(aper|ck|ldo)|(futanar|henta)i|nude|"
+    r"p(enis|regnant)|s(ex([^a-z]|\b)|lut)"
     # NSFW hashtags
     r")|#(ecchi|nsfw|porn)",
     re.IGNORECASE,
