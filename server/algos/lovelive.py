@@ -1,18 +1,22 @@
+import logging
 import re
 
+# from time import perf_counter
 from server import config
 from server.algos._base import get_post_texts
+
+logger = logging.getLogger(__name__)
 
 LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z0-9\-_]|\b)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
     r"love\s?live([!\s]*(a(fter school\b|ll[ -]stars|nime)|blue ?bird|days|c(yber|"
-    r"(d|osplay|haracter)s?)|e(ra|tc)\b|f(ans?\b|ranchise)|heardle|i(dols?|n general)|"
-    r"m(ention(ed)?|ovies?)\b|nesoberis?|o(c(g|\b)|mf?g|r(?! die)\b|st)|pl(aylist|"
-    r"ush(ies?))|references?|s(e(ries|iyuus?)|ip([^a-z]|\b)|(ifs)?orter|ky|"
-    r"o(ng\b|undtrack)|potted|taff|u(nshine|per ?star))|t(cg|hings)|u['’]s\b)|"
-    r" ?!? +(vs|X)\b| fest?\b)|"
+    r"(d|osplay|haracter)s?)|e(n|ra|tc)\b|f(ans?\b|ranchise)|global\b|heardle|"
+    r"i(dols?|n general)|m(ention(ed)?|ovies?)\b|nesoberis?|pl(aylist|ush(ies?))|"
+    r"o(c(g|\b)|mf?g|r(?! die)\b|st)|references?|s(e(ries|iyuus?)|ip([^a-z]|\b)|"
+    r"(ifs)?orter|ky|o(ng\b|undtrack)|potted|taff|u(nshine|per ?star))|t(cg|hings)|"
+    r"u['’]s\b)| ?!? +(vs|X)\b| fest?\b)|"
     # r"^(?!(.|\n)*\bjisoo\b(.|\n)*$)((.|\n)*\breal love live\b)|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|miss) love ?live\b|#lovelive_|"
@@ -45,7 +49,7 @@ LOVELIVE_RE = re.compile(
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)ai[♡ ]?scream\b|愛♡スクリ〜ム|"
     r"幻(日のヨハネ|ヨハ)|genjitsu\s?no\s?yohane|sunshine\sin\sthe\smirror|"
     r"^(?!(.|\n)*(shaman ?king|touhou)(.|\n)*$)"
-    r"((.|\n)*\byohane(?! mbatizati)\b(.|\n)*)|#ヨハネ(生誕|誕生)祭|"
+    r"((.|\n)*\byohane(?!(-label| mbatizati))\b(.|\n)*)|#ヨハネ(生誕|誕生)祭|"
     r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?曜|津島\s?善子|"
     r"国木田\s?花丸|小原\s?鞠莉|"
     r"がんば(ルビ|るび)|(^|[^@])ganbaruby|today['’]s maru\b|maru's month|#よしまる|"
@@ -370,6 +374,8 @@ EXCLUDE_RE = re.compile(
     # - "Prophecy x This Love" live (song by Taylor Swift)
     # - Pop the Balloon or/and/to/etc. Find Love live (dating show on YT/Netflix)
     r"p(op [a-z]+ balloon [a-z]+ find|rophecy x this)|"
+    # - Quest Love live (famous drummer/DJ)
+    r"quest|"
     # - "Radar Love" live (song by Golden Earring)
     # - Radical Love Live (some religious podcast with a Bluesky presence)
     # - really love live [something]
@@ -446,7 +452,8 @@ EXCLUDE_RE = re.compile(
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
     r"\bi ([a-z]+[a-z] )?love live (&|and) learn|"
     # hashtags frequently used in #lovelive false positives including "#love live"
-    r"#(god|faith|hope|Love( live|IsBlind|r|Wins))\b|"
+    r"#(god|faith|hope|Love( live|IsBlind|r|Wins)|motivation|positivity|"
+    r"[a-z]+vibes[a-z]*)\b|"
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
