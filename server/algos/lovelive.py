@@ -46,7 +46,9 @@ LOVELIVE_RE = re.compile(
     # YYY (You, Yoshiko/Yohane, RubY)
     r"(?<!わい)(?<!わーい)わいわいわい(?!わー?い)|"
     # AiScReam (Ayumu, Shiki, Ruby)
-    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)ai[♡ ]?scream\b|愛♡スクリ〜ム|"
+    r"([^a-z]|\b)((ai[♡-]?|(?-i:[Aa]i ))scream\b|(?-i:AI (SCREAM\b|(?i:scream!))))|"
+    r"愛♡スクリ〜ム|"
+    # Yohane the Parhelion
     r"幻(日のヨハネ|ヨハ)|genjitsu\s?no\s?yohane|sunshine\sin\sthe\smirror|"
     r"^(?!(.|\n)*(shaman ?king|touhou)(.|\n)*$)"
     r"((.|\n)*\byohane(?!(-label| mbatizati))\b(.|\n)*)|#ヨハネ(生誕|誕生)祭|"
@@ -237,7 +239,8 @@ EXCLUDE_RE = re.compile(
     # - love "Live and Dangerous" (album by Thin Lizzy)
     r"a(ction|mmo|nd (dangerous|fall)| live)|"
     # - Love Live Bleeding (typo of "Love Lies Bleeding")
-    r"bleeding|"
+    # - love live broadcasting
+    r"b(leeding|roadcasting)|"
     # - Love live Canada (typo of "Long live Canada")
     r"canada|"
     # - love live (and/or) die
@@ -424,11 +427,11 @@ EXCLUDE_RE = re.compile(
     # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
-    # love love [something]" but not "(and) love live all/also/always/are/as/could/did/
-    # does(n't)/doing/going/had/has/hates/I/in/is/made/make(s)/making/music is(/was)/
-    # never/song(s)/tries/tried/UR ... card(s)/was/will/would"
-    r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|"
-    r"re|s)|[cw]ould|[dg]oing|i[ns'’]?|d(id|oes(n['’]?t)?)|ha([ds]|tes)|m(a(de|"
+    # love love [something]" but not "(and) love live all/also/always/are/as/but/
+    # could/did/does(n't)/doing/going/had/has/hates/I/in/is/made/make(s)/making/
+    # music is(/was)/never/song(s)/tries/tried/UR ... card(s)/was/will/would"
+    r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|re|s)|"
+    r"but|[cw]ould|[dg]oing|i[ns'’]?|d(id|oes(n['’]?t)?)|ha([ds]|tes)|m(a(de|"
     r"k(es?|ing))|usic (i|wa)s)|never|songs?|trie[ds]|ur .*cards?|w(as|ill))\b)|"
     r"([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live(r)" at beginning of sentence
