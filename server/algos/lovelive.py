@@ -391,8 +391,8 @@ EXCLUDE_RE = re.compile(
     # - "Some Kinda Love" live (song by The Velvet Underground)
     # - Stone Love live (usually Jamaican DJ group)
     r"s(avage|how some|o(me(body to| kinda))|tone)|"
-    # - saw [artist name] perform [song name ending with "Love"] live
-    r"saw .+ perform .+|"
+    # - hear/saw/see [artist name] perform [song name ending with "Love"] live
+    r"(hear|s(aw|ee)) .+ perform .+|"
     # - that/what kind of love live (sometimes typo of "that/what kind of love life")
     r"[tw]hat kind of|"
     # - they love live [something] (all other cases not caught by the Great "I love
