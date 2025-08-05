@@ -77,7 +77,7 @@ LOVELIVE_RE = re.compile(
     r"聖澤悠奈|柊\s?摩央|"
     # Link! Like! Love Live! / Hasunosora
     # リンクラ but not リンクライン or katakana phrases with リンクラ character sequence
-    r"(^|[^\u30a1-\u30f6\u30fc])リンクラ(?!イン|ボ|ベル|ス)|"
+    r"(^|[^\u30a1-\u30f6\u30fc])リンクラ(?!イン|ボ|ベル|ス|ッ)|"
     r"hasu\s?no\s?sora|蓮ノ(空|休日)|"
     r"^(?!(.|\n)*\broses?\b(.|\n)*$)((.|\n)*\bcerise\s?bouquet\b(.|\n)*)|"
     r"スリーズブーケ|dollches(tra(?!-art)|\b)|ドルケストラ|mira-cra\spark!?|"
