@@ -454,13 +454,13 @@ EXCLUDE_RE = re.compile(
     r"\bI(['’]d|ve)? ((([a-z]+ ){,2}to|gotta) hear|(have )?heard) ([\w'’]+ )+love live|"
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
     r"\bi ([a-z]+[a-z] )?love live (&|and) learn|"
-    # hashtags frequently used in #lovelive false positives including "#love live"
-    r"#(god|faith|hope|Love( live|IsBlind|r|Wins)|motivation|positivity|"
-    r"[a-z]+vibes[a-z]*)\b|"
+    # hashtags frequently used in #lovelive/"(#)love live" false positives
+    r"#(bb27|god|faith|hope|L(ove( live|IsBlind|r|Wins)|ivemusic)|motivation|"
+    r"positivity|[a-z]+vibes[a-z]*)\b|"
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
-    r"\b(grateful dead|oasis|phish)\b|"
+    r"\b(grateful dead|marley|oasis|phish)\b|"
     # Love Live (rock music) Festival and its venue and bands
     r"\b(official )?love live festival\b|\blovelivefestival|"
     r"\b((black(pool| ?(lak|vultur)es?))|cancel ?the ?transmission|fugitive|"
