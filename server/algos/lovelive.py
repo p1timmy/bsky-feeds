@@ -12,11 +12,11 @@ LOVELIVE_NAME_EN_RE = re.compile(
 )
 LOVELIVE_RE = re.compile(
     r"love\s?live([!\s]*(a(fter school\b|ll[ -]stars|n(d more|ime)|pp)|blue ?bird|"
-    r"c(ollab|yber|(d|osplay|haracter)s?)|d(ays|rama\b)|e(n|ra|tc)\b|global\b|heardle|"
-    r"f(ans?\b|ranchise)|i(dols?|n general)|m(ention(ed)?|ovies?)\b|references?|"
-    r"n(esoberis?|ijigasaki)|o(c(g|\b)|mf?g|r(?! die)\b|st)|pl(aylist|ush(ies?))|"
-    r"s(e(ction|ries|iyuus?)|ip([^a-z]|\b)|(ifs)?orter|ky|o(ng\b|undtrack)|potted|"
-    r"taff|u(nshine|per ?star))|t(cg|hings)|u['’]s\b)| ?!? +(vs|X)\b| fest?\b)|"
+    r"c(ollab|yber|(d|osplay|haracter)s?)|d(ays|rama\b)|e(n|pisodes?|ra|tc)\b|global\b|"
+    r"heardle|f(ans?\b|ranchise)|i(dols?|n general)|m(e(rch|ntion(ed)?)|ovies?)\b|"
+    r"n(esoberis?|iji(gasaki)?)|o(c(g|\b)|mf?g|r(?! die)\b|st)|pl(aylist|ush(ies?))|"
+    r"references?|s(e(ction|ries|iyuus?)|ip([^a-z]|\b)|(ifs)?orter|ky|o(ng\b|undtrack)|"
+    r"potted|taff|u(nshine|per ?star))|t(cg|hings)|u['’]s\b)| ?!? +(vs|X)\b| fest?\b)|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|miss) love ?live\b|#lovelive_|"
     r"\bLL(heardle|s(ip|taff))|"
@@ -275,10 +275,9 @@ EXCLUDE_RE = re.compile(
     r"oaks?|"
     # - love "Live Rust" (album by Neil Young & Crazy Horse)
     r"rust|"
-    # - love live service
-    # - love live streaming/streams
+    # - love live service/sport(s)/streaming/streams
     # - love Live Score (some sports app)
-    r"s(core|ervice|tream(ing|s))|"
+    r"s(core|ervice|ports?|tream(ing|s))|"
     # - love live tables/theater/TV/television
     # - love "Live to Tell" (song by Madonna)
     # - love "Live Through This" (usually an album by Hole)
@@ -290,10 +289,10 @@ EXCLUDE_RE = re.compile(
     r"[ty]our|"
     # - "love live ur" (usually typo of "long live ur") but not "Love Live UR ... card"
     r"ur (?!.*\bcards?\b)|"
-    # - love live bands/gigs/mealworms/performances/shows/sports
+    # - love live bands/gigs/mealworms/performances/shows
     # - "Love Live in/from Paris" (misspelling of "Lover (Live from Paris)" album by
     #   Taylor Swift)
-    r"(band|gig|mealworm|performance|s(how|port)|(in|from) pari)s)|"
+    r"(band|gig|mealworm|performance|show|(in|from) pari)s)|"
     # [Artist] - [song name ending with "love"] live
     r"\w+ [\-\u2013] .+ love live\b[^!]|"
     # that/just love liver (body part or food)
@@ -415,9 +414,9 @@ EXCLUDE_RE = re.compile(
     # "(The) Power of Love" live (different songs by different artists, except at end
     # of line/post or before exclamation mark)
     r"power of love live(?!!|$)|\b(frankie|huey).+power of love live|"
-    # perform(s/ed/ing/ance of)/sing(s/ing) [song name ending with "Love"] live at/on/
-    # in(side)/outside
-    r"(perform(ance of|ed|ing|s)?|sing(ing|s)) .+ (?<!from )love live"
+    # perform(s/ed/ing/ance of)/sing(s/ing)/play(ing/s) [song name ending with "Love"]
+    #  live at/on/ in(side)/outside
+    r"(perform(ance of|ed|ing|s)?|(play|sing)(ing|s)) .+ (?<!from )love live"
     r"($| +(at|[io]n|(in|out)side)\b)|"
     # if you (live in/near/around [place name]) ... and/but love live (...) music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)|if you)\s+.+\s+)?(and|but)\s+love"
@@ -454,6 +453,8 @@ EXCLUDE_RE = re.compile(
     r"\bI(['’]d|ve)? ((([a-z]+ ){,2}to|gotta) hear|(have )?heard) ([\w'’]+ )+love live|"
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
     r"\bi ([a-z]+[a-z] )?love live (&|and) learn|"
+    # find love live and/your/etc.
+    r"\bfind love live \w{3,}\b|"
     # hashtags frequently used in #lovelive/"(#)love live" false positives
     r"#(bb27|god|faith|hope|L(ove( live|IsBlind|r|Wins)|ivemusic)|motivation|"
     r"positivity|[a-z]+vibes[a-z]*)\b|"
