@@ -319,6 +319,7 @@ EXCLUDE_RE = re.compile(
     #   - "Lexicon of Love" live (album by ABC)
     #   - "Light of Love" live (usually song by Florence and the Machine)
     #   - "Prisoner of Love" live (song by James Brown)
+    #   - "Satellite of Love" live (usually song by Lou Reed)
     #   - "Shot of Love" live (song by Bob Dylan)
     #   - "Songs of Love Live" (album by Mark Eitzel)
     #   - that/what kind of love live (sometimes typo of "that/what kind of love life")
@@ -328,7 +329,7 @@ EXCLUDE_RE = re.compile(
     #   - "(Thee) Most Exalted Potentate of Love" live (song by The Cramps)
     #   - this/that/what kind of love live
     #   - "Tunnel of Love" live (usually song by Dire Straits or Bruce Springsteen)
-    r"(caravan|l(exicon|ight)|most exalted potentate|prisoner|s(hot|ongs)|"
+    r"(caravan|l(exicon|ight)|most exalted potentate|prisoner|s(atellite|hot|ongs)|"
     r"t(he ([bl]ook|house)|unnel)|([tw]hat|this) kind) of|"
     # - "Dangerously in Love" live (album by Beyonce)
     # - "Drunk in Love" live (song by Beyonce)
@@ -365,8 +366,9 @@ EXCLUDE_RE = re.compile(
     r"kill for|"
     # - laugh/let (that)/live love live
     # - "Love, Hate, Love" live (song by Alice In Chains)
+    # - "Loud Love" live (song by Soundgarden)
     # - "Love Meeting Love" live (song by Level 42)
-    r"l(augh|et( that)?|ive|ove(,? hate,?| meeting love))|"
+    r"l(augh|et( that)?|ive|o(ud|ve(,? hate,?| meeting love)))|"
     # - "life love live" but not "Link Life Love Live"
     r"(?<!link )life|"
     # - mad love live
@@ -376,7 +378,8 @@ EXCLUDE_RE = re.compile(
     r"no loss,? no|"
     # - "Prophecy x This Love" live (song by Taylor Swift)
     # - Pop the Balloon or/and/to/etc. Find Love live (dating show on YT/Netflix)
-    r"p(op [a-z]+ balloon [a-z]+ find|rophecy x this)|"
+    # - "Punch-Drunk Love" live (romantic movie title)
+    r"p(op [a-z]+ balloon [a-z]+ find|rophecy x this|unch[ -]drunk love)|"
     # - Quest Love live (famous drummer/DJ)
     r"quest|"
     # - "Radar Love" live (song by Golden Earring)
@@ -456,8 +459,8 @@ EXCLUDE_RE = re.compile(
     # find love live and/your/etc.
     r"\bfind love live \w{3,}\b|"
     # hashtags frequently used in #lovelive/"(#)love live" false positives
-    r"#(bb27|god|faith|hope|L(ove( live|IsBlind|r|Wins)|ivemusic)|motivation|"
-    r"positivity|[a-z]+vibes[a-z]*)\b|"
+    r"#(bb27|god|faith|gratitude|hope|L(ove( live|IsBlind|r|Wins)|ivemusic)|"
+    r"motivation|positivity|[a-z]+vibes[a-z]*)\b|"
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
