@@ -49,9 +49,7 @@ LOVELIVE_RE = re.compile(
     r"([^a-z]|\b)((ai[♡-]?|(?-i:[Aa]i ))scream\b|(?-i:AI (SCREAM\b|(?i:scream!))))|"
     r"愛♡スクリ〜ム|"
     # Yohane the Parhelion
-    r"幻(日のヨハネ|ヨハ)|genjitsu\s?no\s?yohane|sunshine\sin\sthe\smirror|"
-    r"^(?!(.|\n)*(shaman ?king|touhou)(.|\n)*$)"
-    r"((.|\n)*\byohane(?!(-label| mbatizati))\b(.|\n)*)|#ヨハネ(生誕|誕生)祭|"
+    r"幻(日のヨハネ|ヨハ)|genjitsu ?no ?yohane|sunshine in the mirror|#ヨハネ(生誕|誕生)祭|"
     r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?曜|津島\s?善子|"
     r"国木田\s?花丸|小原\s?鞠莉|"
     r"がんば(ルビ|るび)|(^|[^@])ganbaruby|today['’]s maru\b|maru's month|#よしまる|"
@@ -102,6 +100,7 @@ LOVELIVE_RE = re.compile(
 SUKUFEST_RE = re.compile(
     r"(^|[^マア])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄|金沢|香川)"
 )
+YOHANE_RE = re.compile(r"\byohane(?!(-label| mbatizati))\b", re.IGNORECASE)
 CATCHU_RE = re.compile(
     r"([^A-Za-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(C[Aa]t[Cc][Hh]u|catchu|CATCHU)!?"
     r"([^A-Za-z\u00C0-\u024F\u1E00-\u1EFF]|\b)"
@@ -482,6 +481,8 @@ EXCLUDE_RE = re.compile(
     r"\blovelive\.[a-z]+[a-z]\b",
     re.IGNORECASE | re.MULTILINE,
 )
+FAKE_YOHANE_RE = re.compile(r"shaman ?king|touhou", re.IGNORECASE)
+HI_YOHANE_RE = re.compile(r"\bh(e(llo|y)|i+) yohane\b", re.IGNORECASE)
 FAKE_CATCHU_RE = re.compile(
     # Phrases ending with "catchu":
     # - coo coo(l) catchu
@@ -571,6 +572,12 @@ def filter(post: dict) -> bool:
             LOVELIVE_NAME_EN_RE.search(all_texts) and not EXCLUDE_RE.search(all_texts),
             SUKUFEST_RE.search(all_texts) and "scrum" not in all_texts.lower(),
             LOVELIVE_RE.search(all_texts),
+            YOHANE_RE.search(all_texts)
+            and not FAKE_YOHANE_RE.search(all_texts)
+            and not (
+                # Exclude replies (usually by @kanto141.bsky.social) that say "Hi Yohane"
+                post["record"].reply is not None and HI_YOHANE_RE.search(all_texts)
+            ),
             CATCHU_RE.search(all_texts) and not FAKE_CATCHU_RE.search(all_texts),
             CHARACTERS_EN_RE.search(all_texts),
         )
