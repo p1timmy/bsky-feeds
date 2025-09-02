@@ -11,12 +11,13 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z0-9\-_]|\b)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live([!\s]*(a(fter school\b|ll[ -]stars|n(d more|ime)|pp)|blue ?bird|"
-    r"c(ollab|yber|(d|osplay|haracter)s?)|d(ays|rama\b)|e(n|pisodes?|ra|tc)\b|global\b|"
-    r"heardle|f(ans?\b|ranchise)|i(dols?|n general)|m(e(rch|ntion(ed)?)|ovies?)\b|"
-    r"n(esoberis?|iji(gasaki)?)|o(c(g|\b)|mf?g|r(?! die)\b|st)|pl(aylist|ush(ies?))|"
-    r"references?|s(e(ction|ries|iyuus?)|ip([^a-z]|\b)|(ifs)?orter|ky|o(ng\b|undtrack)|"
-    r"potted|taff|u(nshine|per ?star))|t(cg|hings)|u['’]s\b)| ?!? +(vs|X)\b| fest?\b)|"
+    r"love\s?live([!\s]*(a(fter school\b|ll[ -]stars|n(d (idolm[a@]ster|more)|ime)|pp)|"
+    r"blue ?bird|c(ollab|yber|(d|osplay|haracter)s?)|e(n|pisodes?|ra|tc)\b|global\b|"
+    r"d(ays|rama\b)|heardle|f(ans?\b|ranchise)|i(ce cream|dols?|n general)|references?|"
+    r"m(e(rch|ntion(ed)?)|ovies?)\b|n(esoberis?|iji(gasaki)?)|pl(aylist|ush(ies?))|"
+    r"o(c(g|\b)|mf?g|r(?! die)\b|st)|s(e(ction|ries|iyuus?)|ip([^a-z]|\b)|(ifs)?orter|"
+    r"ky|o(ng\b|undtrack)|potted|taff|u(nshine|per ?star))|t(cg|hings)|u['’]s\b)|"
+    r" ?!? +(vs|X)\b| fest?\b)|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|miss) love ?live\b|#lovelive_|"
     r"\bLL(heardle|s(ip|taff))|"
@@ -62,7 +63,7 @@ LOVELIVE_RE = re.compile(
     r"([^a-z]|\b)((nij|an|e)igasaki|niji(chizu|gaku|yon))([^a-z]|\b)|a・zu・na|qu4rtz|"
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(diver"
     r" ?diva|r3birth)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
-    r"tokimeki r(unners|oadmap to the future)|"
+    r"tokimeki r(unners|oadmap to the future)|^me, a taylor\b|"
     r"高咲\s?侑|上原\s?歩夢|中須\s?かすみ|桜坂\s?しずく|朝香\s?果林|宮下\s?愛|近江\s?(彼方|遥)|"
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
     # Love Live! Superstar!!
@@ -366,9 +367,10 @@ EXCLUDE_RE = re.compile(
     r"kill for|"
     # - laugh/let (that)/live love live
     # - "Love, Hate, Love" live (song by Alice In Chains)
+    # - "Love and Only Love" live (song by Neil Young)
     # - "Loud Love" live (song by Soundgarden)
     # - "Love Meeting Love" live (song by Level 42)
-    r"l(augh|et( that)?|ive|o(ud|ve(,? hate,?| meeting love)))|"
+    r"l(augh|et( that)?|ive|o(ud|ve( and only love|,? hate,?| meeting love)))|"
     # - "life love live" but not "Link Life Love Live"
     r"(?<!link )life|"
     # - mad love live
@@ -393,7 +395,8 @@ EXCLUDE_RE = re.compile(
     #   name ending with that phrase)
     # - "Some Kinda Love" live (song by The Velvet Underground)
     # - Stone Love live (usually Jamaican DJ group)
-    r"s(avage|how some|o(me(body to| kinda))|tone)|"
+    # - "Strange Love" live (usually album by T.S.O.L.)
+    r"s(avage|how some|o(me(body to| kinda))|t(one|range))|"
     # - hear/saw/see(n) [artist name] perform [song name ending with "Love"] live
     r"(hear|s(aw|een?)) .+ perform .+|"
     # - they love live [something] (all other cases not caught by the Great "I love
@@ -452,8 +455,10 @@ EXCLUDE_RE = re.compile(
     r'\b((h(er|is)|their|your?)( [a-z]+ing)?|learn) love live([.,"”]|$| (i|wa)s\b)|'
     # playing [video game title ending with "Love"] live (on/at)
     r"\bplay(ing)? .+ love live (at|on)|"
-    # I('d/'ve) got/need/etc. to/gotta hear/have heard [song name ending with "Love"] live
-    r"\bI(['’]d|ve)? ((([a-z]+ ){,2}to|gotta) hear|(have )?heard) ([\w'’]+ )+love live|"
+    # I('d/'m/'ve) got/need/etc. to/gotta hear/have heard [song name ending with
+    # "Love"] live
+    r"\bI(['’][dm]|ve)? ((([a-z]+ ){,2}to|gotta) hear|(have )?heard)"
+    r" ([\w'’]+ )+love live|"
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
     r"\bi ([a-z]+[a-z] )?love live (&|and) learn|"
     # find love live and/your/etc.
