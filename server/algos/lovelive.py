@@ -11,8 +11,8 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z0-9\-_]|\b)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
-    r"love\s?live([!\s]*(a(fter school\b|ll[ -]stars|n(d (idolm[a@]ster|more)|ime)|pp)|"
-    r"blue ?bird|c(ollab|yber|(d|osplay|haracter)s?)|e(n|pisodes?|ra|tc)\b|global\b|"
+    r"love\s?live([!:\s]*(a(fter school\b|ll[ -]stars|n(d (idolm[a@]ster|more)|ime)|pp)"
+    r"|blue ?bird|c(ollab|yber|(d|osplay|haracter)s?)|e(n|pisodes?|ra|tc)\b|global\b|"
     r"d(ays|rama\b)|heardle|f(ans?\b|ranchise)|i(ce cream|dols?|n general)|references?|"
     r"m(e(rch|ntion(ed)?)|ovies?)\b|n(esoberis?|iji(gasaki)?)|pl(aylist|ush(ies?))|"
     r"o(c(g|\b)|mf?g|r(?! die)\b|st)|s(e(ction|ries|iyuus?)|ip([^a-z]|\b)|(ifs)?orter|"
@@ -442,8 +442,10 @@ EXCLUDE_RE = re.compile(
     r"([^\w\s]+?  ?|^)love (love )+liver?\b|"
     # ... and love live(s) here/there
     r" (and|&) love lives? t?here\b|"
-    # may your/his/her/their ... love live (on)
-    r"\bmay (h(is|er)|(thei|you)r) (.+ )?love live |"
+    # may your/our/his/her/their ... love live (on)
+    r"\bmay (h(is|er)|their|y?our) (.+ )?love live |"
+    # "our love live" at end of sentence/post
+    r"\bour love live *[^\w ]|"
     # may/my love live in
     r"\bma?y love live in\b|"
     # her/his/our/their/who(se)/yet ... (and) love live in/on/with
@@ -454,9 +456,9 @@ EXCLUDE_RE = re.compile(
     r'\b((h(er|is)|their|your?)( [a-z]+ing)?|learn) love live([.,"”]|$| (i|wa)s\b)|'
     # playing [video game title ending with "Love"] live (on/at)
     r"\bplay(ing)? .+ love live (at|on)|"
-    # I('d/'m/'ve) got/need/etc. to/gotta hear/have heard [song name ending with
-    # "Love"] live
-    r"\bI(['’][dm]|ve)? ((([a-z]+ ){,2}to|gotta) hear|(have )?heard)"
+    # I('d/'m/'ve) got/need/etc. to/gotta/gonna hear/see/have heard [song name ending
+    # with "Love"] live
+    r"\bI(['’][dm]|ve)? ((([a-z]+ ){,2}to|go(tt|nn)a) (hear|see)|(have )?heard)"
     r" ([\w'’]+ )+love live|"
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
     r"\bi ([a-z]+[a-z] )?love live (&|and) learn|"
