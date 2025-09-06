@@ -446,8 +446,10 @@ EXCLUDE_RE = re.compile(
     r"\bmay (h(is|er)|their|y?our) (.+ )?love live |"
     # "our love live" at end of sentence/post
     r"\bour love live *[^\w ]|"
-    # may/my love live in
-    r"\bma?y love live in\b|"
+    # in/may/my love live in, includes:
+    # - my ... in love live in (typo of "my ... in law live in")
+    # - who live in love live (1 John 4:16)
+    r"\b(in|ma?y) love live in\b|"
     # her/his/our/their/who(se)/yet ... (and) love live in/on/with
     r"(h(er|is)|(y?ou|thei)r|who(se)?|yet|\w+['’]s)( ([a-z]+[a-z]|.+ (and|&)))?"
     r" love lives? ([io]n|with)|"
@@ -466,7 +468,7 @@ EXCLUDE_RE = re.compile(
     r"\bfind love live \w{3,}\b|"
     # hashtags frequently used in #lovelive/"(#)love live" false positives
     r"#(bb27|god|faith|gratitude|hope|L(ove( live|IsBlind|r|Wins)|ivemusic)|"
-    r"motivation|positivity|[a-z]+vibes[a-z]*)\b|"
+    r"motivation|positivity|totp|[a-z]+vibes[a-z]*)\b|"
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
