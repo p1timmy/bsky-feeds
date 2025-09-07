@@ -334,8 +334,7 @@ EXCLUDE_RE = re.compile(
     # - "Dangerously in Love" live (album by Beyonce)
     # - "Drunk in Love" live (song by Beyonce)
     # - "I'm Not in Love" live (usually song by 10cc)
-    # - who live in love live (1 John 4:16)
-    r"(d(angerously|runk)|i['’]?m not|who live) in|"
+    r"(d(angerously|runk)|i['’]?m not) in|"
     # - "Darker My Love" live (song by T.S.O.L.)
     # - "Darkness at the Heart of My Love" live (song by Ghost)
     # - "Destination: Love Live" (album by The Make-Up)
@@ -512,7 +511,7 @@ FAKE_CATCHU_RE = re.compile(
     re.IGNORECASE,
 )
 BAD_KEYWORDS_RE = re.compile(
-    r"\b("
+    r"\b(europesays\.com\b|"
     # Political keywords often used in "love live" false positives
     r"GOP\b|republicans?|trump|"
     # Gaza war victim fundraiser spam
@@ -550,7 +549,7 @@ def make_characters_pattern() -> re.Pattern:
         r"^(?!.*\blazarus\b.*).*((?<!thank )you ?watanabe|"
         r"(?<!momo )(?<!shinichiro )(?<!akio )watanabe ?you(?!['’][a-z]+[a-z]|"
         r" ([a-z]+[a-z]n['’]?t|are|have)\b)).*|leah kazuno|"
-        r"(?<!\nby )(?<!^by )(?<!post by )mia taylor(?!.+arxiv)|"
+        r"(?<!\nby )(?<!^by )(?<!post by )(?<!\bby: )mia taylor(?!.+arxiv)|"
         r"keke ?tang(?!.+arxiv)|^(?!.*\bexpanse\b.*).*ren ?hazuki.*)\b",
         re.IGNORECASE | re.DOTALL,
     )
