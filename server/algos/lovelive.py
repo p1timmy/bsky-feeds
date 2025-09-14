@@ -13,11 +13,11 @@ LOVELIVE_NAME_EN_RE = re.compile(
 LOVELIVE_RE = re.compile(
     r"love\s?live([!:\s]*(a(fter school\b|ll[ -]stars|n(d (idolm[a@]ster|more)|ime)|pp)"
     r"|blue ?bird|c(ollab|yber|(d|osplay|haracter)s?)|e(n|pisodes?|ra|tc)\b|global\b|"
-    r"d(ays|rama\b)|heardle|f(ans?\b|ranchise)|i(ce cream|dols?|n general)|references?|"
+    r"d(ays|rama\b)|heardle|f(ans?\b|igures?|ranchise)|i(ce cream|dols?|n general)|"
     r"m(e(rch|ntion(ed)?)|ovies?)\b|n(esoberis?|iji(gasaki)?)|pl(aylist|ush(ies?))|"
-    r"o(c(g|\b)|mf?g|r(?! die)\b|st)|s(e(ction|ries|iyuus?)|ip([^a-z]|\b)|(ifs)?orter|"
-    r"ky|o(ng\b|undtrack)|potted|taff|u(nshine|per ?star))|t(cg|hings)|u['’]s\b)|"
-    r" ?!? +(vs|X)\b| fest?\b)|"
+    r"o(c(g|\b)|mf?g|r(?! die)\b|st)|references?|s(e(ction|ries|iyuus?)|ip([^a-z]|\b)|"
+    r"(ifs)?orter|ky|o(ng\b|undtrack)|potted|taff|u(nshine|per ?star))|t(cg|hings)|"
+    r"u['’]s\b)| ?!? +(vs|X)\b| fest?\b)|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|miss) love ?live\b|#lovelive_|"
     r"\bLL(heardle|s(ip|taff))|"
@@ -303,11 +303,15 @@ EXCLUDE_RE = re.compile(
     #   her/their love life/lives")
     r"(about|confess[a-z]*) (h(er|is)|their)|"
     # - absolutely love live [something]
+    # - "All My Love" live (usually song by Coldplay or any song name ending with
+    #   that phrase)
     # - "All Your Love" live (usually song by Otis Rush or any song name ending with
     #   that phrase)
-    r"a(bsolutely|ll your)|"
+    r"a(bsolutely|ll (my|your))|"
     # Art(ist(s))/band(s)/music/people/[some plural word] I/you/etc. (... and) love live
     r"(art(ist)?|band|music|people|[a-z]+s) (i|you|they)( ([a-z]+[a-z],? )+(and|&))?|"
+    # - "Bye Bye Love" live (usually song by The Everly Brothers or Simon & Garfunkel)
+    r"bye bye|"
     # - can/could you not love live
     # - "Can't Buy Me Love" live (usually song by the Beatles)
     # - "Can't Hide Love" live (usually song by D'Angelo)
@@ -316,6 +320,7 @@ EXCLUDE_RE = re.compile(
     r"c(an['’]?t (buy me|hide)|(an|ould) you not|omp(licated|uter))|"
     # - stuff ending with "of love live":
     #   - "Caravan of Love" live (usually song by The Housemartins)
+    #   - "Hazards of Love" live (album by The Decemberists)
     #   - "Lexicon of Love" live (album by ABC)
     #   - "Light of Love" live (usually song by Florence and the Machine)
     #   - "Prisoner of Love" live (song by James Brown)
@@ -324,13 +329,14 @@ EXCLUDE_RE = re.compile(
     #   - "Songs of Love Live" (album by Mark Eitzel)
     #   - that/what kind of love live (sometimes typo of "that/what kind of love life")
     #   - "The Book of Love" live (usually song by Peter Gabriel or The Magnetic Fields)
+    #   - "The Meaning of Love" live (song by Depreche Mode)
     #   - "The House of Love" live (usually song by Christine)
     #   - "The Look of Love" live (song by different artists)
     #   - "(Thee) Most Exalted Potentate of Love" live (song by The Cramps)
     #   - this/that/what kind of love live
     #   - "Tunnel of Love" live (usually song by Dire Straits or Bruce Springsteen)
-    r"(caravan|l(exicon|ight)|most exalted potentate|prisoner|s(atellite|hot|ongs)|"
-    r"t(he ([bl]ook|house)|unnel)|([tw]hat|this) kind) of|"
+    r"(caravan|hazards|l(exicon|ight)|most exalted potentate|prisoner|"
+    r"s(atellite|hot|ongs)|t(he ([bl]ook|house|meaning)|unnel)|([tw]hat|this) kind) of|"
     # - "Dangerously in Love" live (album by Beyonce)
     # - "Drunk in Love" live (song by Beyonce)
     # - "I'm Not in Love" live (usually song by 10cc)
@@ -341,11 +347,14 @@ EXCLUDE_RE = re.compile(
     # - does not/doesn't love live [something]
     r"d(ark(er my|ness at the heart of my)|estination:?|o(es)?( not|n['’]t))|"
     # - "Fake Love" live (song by BTS)
+    # - "(Can't Help) Falling in Love" live (song by different artists)
+    # - "Feel Like Makin' Love" live (song by Roberta Flack or Bad Company)
     # - fight love live (usually Filoli, California historical marker)
     # - "Fool for Love" live
     # - "Friday I'm In Love" live (usually song by The Cure)
     # - "Frozen Love" live (song by Buckingham Nicks)
-    r"f(ake|ight|ool for love|r(iday i['’]?m in|ozen))|"
+    r"f(a(ke|lling in)|eel like makin['’g]?|ight|ool for love|"
+    r"r(iday i['’]?m in|ozen))|"
     # - Gerry Love live (British live music performer)
     r"ger(ard|ry)|"
     # - his love live (usually typo of "his love life")
@@ -520,7 +529,7 @@ BAD_KEYWORDS_RE = re.compile(
     r"bds&?m|c(ock(s|\b)|um(ming)?([^a-z]|\b))|di(aper|ck|ldo)|(futanar|henta)i|nude|"
     r"p(enis|regnant)|s(ex([^a-z]|\b)|lut)"
     # NSFW hashtags
-    r")|#(ecchi|nsfw|porn)",
+    r")|#(ecchi|nsfw|porn|r18)",
     re.IGNORECASE,
 )
 
