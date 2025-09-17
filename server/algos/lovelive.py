@@ -14,28 +14,28 @@ LOVELIVE_RE = re.compile(
     r"love\s?live([!:\s]*(a(fter school\b|ll[ -]stars|n(d (idolm[a@]ster|more)|ime)|pp)"
     r"|blue ?bird|c(ollab|yber|(d|osplay|haracter)s?)|e(n|pisodes?|ra|tc)\b|global\b|"
     r"d(ays|rama\b)|heardle|f(ans?\b|igures?|ranchise)|i(ce cream|dols?|n general)|"
-    r"m(e(rch|ntion(ed)?)|ovies?)\b|n(esoberis?|iji(gasaki)?)|pl(aylist|ush(ies?))|"
-    r"o(c(g|\b)|mf?g|r(?! die)\b|st)|references?|s(e(ction|ries|iyuus?)|ip([^a-z]|\b)|"
-    r"(ifs)?orter|ky|o(ng\b|undtrack)|potted|taff|u(nshine|per ?star))|t(cg|hings)|"
-    r"u['’]s\b)| ?!? +(vs|X)\b| fest?\b)|"
+    r"m(aybe|e(rch|ntion(ed)?)|ovies?)\b|n(esoberis?|iji(gasaki)?)|references?|"
+    r"o(c(g|\b)|mf?g|r(?! die)\b|st)|pl(aylist|ush(ies?))|s(e(ction|ries|iyuus?)|"
+    r"hips?\b|ip([^a-z]|\b)|(ifs)?orter|ky|o(ng\b|undtrack)|potted|taff|"
+    r"u(nshine|per ?star))|t(cg|hings)|u['’]s\b)| ?!? +(vs|X)\b| fest?\b)|"
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
-    r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|miss) love ?live\b|#lovelive_|"
-    r"\bLL(heardle|s(ip|taff))|"
+    r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|(doe|is thi|mis)s) love ?live\b|"
+    r"#lovelive_|\bLL(heardle|s(ip|taff))|"
     # School idol
-    r"スクールアイドル|(?<!middle )(?<!high )(?<!old )(?<!old-)"
+    r"スクールアイドル|(?<!middle )(?<!high )(?<!old )(?<!old-)(?<!your )"
     r"school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
     # Games
     r"\bl(l|ove ?live ?)sif2?\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|puchiguru|"
     # ぷちぐる but not ぷちぐるみ
     r"ぷちぐる([^み]|$)|"
-    # スクスタ/スクミュ but not words with マスク/スタンド/スタンプ/スタイル/スタッフ
-    r"(^|[^マタ])スク(スタ(?!ン[ドプ]|イル|ッフ|ート)|ミュ)|"
+    # スクスタ/スクミュ but not words with マスク/デスク/スタンド/スタンプ/スタイル/スタッフ
+    r"(^|[^マタデ])スク(スタ(?!ン[ドプ]|イル|ッフ|ート)|ミュ)|"
     # Love Live! School Idol Project
     # NOTE: Printemps, lily white, BiBi not included due to too many false positives
     r"音ノ木坂?|otonokizaka|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)[μµ]['’‘`´′]s|"
     r"高坂\s?穂乃果|絢瀬\s?絵里|南\s?ことり|園田\s?海未|星空\s?凛|西木野\s?真姫|東條\s?希|"
-    r"小泉\s?花陽|矢澤\s?にこ|nico\snico\sni+\b|#niconiconi+\b|エリーチカ|\belichika\b|"
-    r"にこりんぱな|nicorinpana|金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
+    r"小泉\s?花陽|矢澤\s?にこ|nico\snico\sni+\b|#niconiconi+\b|minalinsky|ミナリンスキー|"
+    r"エリーチカ|\belichika\b|にこりんぱな|nicorinpana|金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
     r"snow\s?halation([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
     r"(^|[^a-z\u00C0-\u024F\u1E00-\u1EFF\-])a[-\u2010]rise([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|$)|"
     r"綺羅\s?ツバサ|優木\s?あんじゅ|統堂\s?英玲奈|"
@@ -358,8 +358,10 @@ EXCLUDE_RE = re.compile(
     # - Gerry Love live (British live music performer)
     r"ger(ard|ry)|"
     # - his love live (usually typo of "his love life")
+    r"his|"
     # - "How Deep Is Your Love" live (usually song by Bee Gees)
-    r"h(ow deep )?is|"
+    # - "Sunshine of Your Love" live (usually song by Cream)
+    r"(how deep is|sunshine of) your|"
     # - hope/joy/pain/peace/unity and love live
     r"(hope|joy|p(ain|eace)|unity),? and|"
     # - "How To Love" live (usually song by Lil Wayne or any song name ending with
