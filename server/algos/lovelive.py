@@ -253,8 +253,9 @@ EXCLUDE_RE = re.compile(
     # - love live fact checking
     # - love "Live Free and Die Hard"
     # - love live folk
-    # - love "Live from Daryl's House"
-    r"f(act checking|olk\b|r(ee (and|&) die hard|om daryl['’]?s))|"
+    # - love "Live from Daryl's House" (MTV show)
+    # - love "Live from Tubby's House" (weekly live music stream)
+    r"f(act checking|olk\b|r(ee (and|&) die hard|om (daryl|tubby)['’]?s))|"
     # - love live him
     r"him|"
     # - love live interaction
