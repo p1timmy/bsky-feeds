@@ -11,25 +11,28 @@ LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z0-9\-_]|\b)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
+    # "Love Live" + other related words
     r"love\s?live([!:\s]*(a(fter school\b|ll[ -]stars|n(d (idolm[a@]ster|more)|ime)|pp)"
     r"|blue ?bird|c(ollab|yber|(d|osplay|haracter)s?)|e(n|pisodes?|ra|tc)\b|global\b|"
     r"d(ays|rama\b)|heardle|f(ans?\b|igures?|ranchise)|i(ce cream|dols?|n general)|"
-    r"m(aybe|e(rch|ntion(ed)?)|ovies?)\b|n(esoberis?|iji(gasaki)?)|references?|"
-    r"o(c(g|\b)|mf?g|r(?! die)\b|st)|pl(aylist|ush(ies?))|s(e(ction|ries|iyuus?)|"
-    r"hips?\b|ip([^a-z]|\b)|(ifs)?orter|ky|o(ng\b|undtrack)|potted|taff|"
-    r"u(nshine|per ?star))|t(cg|hings)|u['’]s\b)| ?!? +(vs|X)\b| fest?\b)|"
-    r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
+    r"jumpscare|m(aybe|e(rch|ntion(ed)?)|ovies?)\b|n(esoberis?|iji(gasaki)?)|"
+    r"o(c(g|\b)|mf?g|r(?! die)\b|st)|pl(aylist|ush(ies?))|references?|"
+    r"s(chool ?idol|e(ction|ries|iyuus?)|hips?\b|ip([^a-z]|\b)|(ifs)?orter|ky|"
+    r"o(ng\b|undtrack)|potted|taff|u(nshine|per ?star))|t(cg|hings)|u['’]s\b)|"
+    r" ?!? +(vs|X)\b| fest?\b)|"
     r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|(doe|is thi|mis)s) love ?live\b|"
     r"#lovelive_|\bLL(heardle|s(ip|taff))|"
+    # ラブライブ but not クラブライブ (club live)
+    r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     # School idol
     r"スクールアイドル|(?<!middle )(?<!high )(?<!old )(?<!old-)(?<!your )"
-    r"school\s?idol(s?\b|\s?((festiv|music)al|project))?|"
+    r"\b(#\w+)?school ?idol(?! story\b)(s\b| ?((festiv|music)al|project))?|"
     # Games
     r"\bl(l|ove ?live ?)sif2?\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|puchiguru|"
     # ぷちぐる but not ぷちぐるみ
     r"ぷちぐる([^み]|$)|"
-    # スクスタ/スクミュ but not words with マスク/デスク/スタンド/スタンプ/スタイル/スタッフ
-    r"(^|[^マタデ])スク(スタ(?!ン[ドプ]|イル|ッフ|ート)|ミュ)|"
+    # スクスタ/スクミュ but not words with マスク/デ(ィ)スク/スタンド/スタンプ/スタイル/スタッフ
+    r"(^|[^マタケデ])(?<!ディ)スク(スタ(?!ン[ドプ]|イル|ッフ|ート)|ミュ)|"
     # Love Live! School Idol Project
     # NOTE: Printemps, lily white, BiBi not included due to too many false positives
     r"音ノ木坂?|otonokizaka|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)[μµ]['’‘`´′]s|"
@@ -276,8 +279,9 @@ EXCLUDE_RE = re.compile(
     r"music at\b|"
     # - love live oak(s)
     r"oaks?|"
+    # - love live rock (typo of "long live rock")
     # - love "Live Rust" (album by Neil Young & Crazy Horse)
-    r"rust|"
+    r"r(ock|ust)|"
     # - love live service/sport(s)/streaming/streams
     # - love Live Score (some sports app)
     r"s(core|ervice|ports?|tream(ing|s))|"
@@ -340,28 +344,31 @@ EXCLUDE_RE = re.compile(
     #   - "Tunnel of Love" live (usually song by Dire Straits or Bruce Springsteen)
     r"(caravan|hazards|l(exicon|ight)|most exalted potentate|prisoner|"
     r"s(atellite|hot|ongs)|t(he ([bl]ook|house|meaning)|unnel)|([tw]hat|this) kind) of|"
-    # - "Dangerously in Love" live (album by Beyonce)
-    # - "Drunk in Love" live (song by Beyonce)
-    # - "I'm Not in Love" live (usually song by 10cc)
-    r"(d(angerously|runk)|i['’]?m not) in|"
+    # - stuff ending with "in love live":
+    #   - "Dangerously in Love" live (album by Beyonce)
+    #   - "Drunk in Love" live (song by Beyonce)
+    #   - "Fall in Love" live (different songs by different artists or any song name
+    #     ending with that phrase)
+    #   - "(Can't Help) Falling in Love" live (song by different artists)
+    #   - "Friday I'm In Love" live (usually song by The Cure)
+    #   - "I'm Not in Love" live (usually song by 10cc)
+    r"(d(angerously|runk)|f(all(ing)?|riday i['’]?m)|i['’]?m not) in|"
     # - "Darker My Love" live (song by T.S.O.L.)
     # - "Darkness at the Heart of My Love" live (song by Ghost)
     # - "Destination: Love Live" (album by The Make-Up)
     # - does not/doesn't love live [something]
     r"d(ark(er my|ness at the heart of my)|estination:?|o(es)?( not|n['’]t))|"
     # - "Fake Love" live (song by BTS)
-    # - "(Can't Help) Falling in Love" live (song by different artists)
     # - "Feel Like Makin' Love" live (song by Roberta Flack or Bad Company)
     # - fight love live (usually Filoli, California historical marker)
     # - "Fool for Love" live
-    # - "Friday I'm In Love" live (usually song by The Cure)
     # - "Frozen Love" live (song by Buckingham Nicks)
-    r"f(a(ke|lling in)|eel like makin['’g]?|ight|ool for love|"
-    r"r(iday i['’]?m in|ozen))|"
+    r"f(ake|eel like makin['’g]?|ight|ool for|rozen)|"
     # - Gerry Love live (British live music performer)
     r"ger(ard|ry)|"
+    # - Helen Love live (Welsh rock band)
     # - his love live (usually typo of "his love life")
-    r"his|"
+    r"h(elen|is)|"
     # - "How Deep Is Your Love" live (usually song by Bee Gees)
     # - "Sunshine of Your Love" live (usually song by Cream)
     r"(how deep is|sunshine of) your|"
@@ -389,7 +396,8 @@ EXCLUDE_RE = re.compile(
     # - Mike Love live (some reggae artist)
     r"m(ad|ike)|"
     # - "No Loss, No Love" live (song by Spiritbox)
-    r"no loss,? no|"
+    # - "No Ordinary Love" live (song by Sade)
+    r"no (loss,? no|ordinary)|"
     # - "Prophecy x This Love" live (song by Taylor Swift)
     # - Pop the Balloon or/and/to/etc. Find Love live (dating show on YT/Netflix)
     # - "Punch-Drunk Love" live (romantic movie title)
@@ -527,7 +535,7 @@ FAKE_CATCHU_RE = re.compile(
 BAD_KEYWORDS_RE = re.compile(
     r"\b(europesays\.com\b|"
     # Political keywords often used in "love live" false positives
-    r"GOP\b|republicans?|trump|"
+    r"GOP\b|republicans?|trump\b|charlie ?kirk|"
     # Gaza war victim fundraiser spam
     r"abed|ABD-GFM|GFM-ABD|kutt\.it/|"
     # NSFW keywords
