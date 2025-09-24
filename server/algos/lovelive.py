@@ -234,9 +234,11 @@ EXCLUDE_RE = re.compile(
     # - love live action
     # - love Live A Live (video game title)
     # - love live ammo (usually "Republicans love live ammo and dead kids")
-    # - love "LIVE and FALL" (album by Xdinary Heroes)
     # - love "Live and Dangerous" (album by Thin Lizzy)
-    r"a(ction|mmo|nd (dangerous|fall)| live)|"
+    # - love "LIVE and FALL" (album by Xdinary Heroes)
+    # - love live at (usually songs ending with "Love" + "live at [some place]" but not
+    #   "love live at it(')s")
+    r"a(ction|mmo|nd (dangerous|fall)|t\b(?!it['’]?s\b)| live)|"
     # - Love Live Bleeding (typo of "Love Lies Bleeding")
     # - love live broadcasting
     r"b(leeding|roadcasting)|"
@@ -424,16 +426,16 @@ EXCLUDE_RE = re.compile(
     r"w(asted|e( found)?|h(at time is|ole lotta)|ould)|"
     # - you are/you're in love live
     r"you( a|['’])re in) love live\b|"
-    # "Big Love" live (at/in) (song by Fleetwood Mac or Lindsey Buckingham)
+    # "Big Love" live (in) (song by Fleetwood Mac or Lindsey Buckingham)
     r"(fleetwood|linds[ae]y|buckingham)(.|\n)+big love live|"
-    r"big love live( (in|at)|(.|\n)+(fleetwood|linds[ae]y|buckingham))|"
+    r"big love live( in|(.|\n)+(fleetwood|linds[ae]y|buckingham))|"
     # "(The) Power of Love" live (different songs by different artists, except at end
     # of line/post or before exclamation mark)
     r"power of love live(?!!|$)|\b(frankie|huey).+power of love live|"
     # perform(s/ed/ing/ance of)/sing(s/ing)/play(ing/s) [song name ending with "Love"]
-    #  live at/on/ in(side)/outside
+    #  live on/in(side)/outside/with
     r"(perform(ance of|ed|ing|s)?|(play|sing)(ing|s)) .+ (?<!from )love live"
-    r"($| +(at|[io]n|(in|out)side)\b)|"
+    r"($| +([io]n|(in|out)side|with)\b)|"
     # if you (live in/near/around [place name]) ... and/but love live (...) music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)|if you)\s+.+\s+)?(and|but)\s+love"
     r" live( .+)? (music|comedy)\b|"
@@ -467,8 +469,8 @@ EXCLUDE_RE = re.compile(
     # "his/her/their/you(r) (...ing) love live" (sometimes a typo of "love life/lives")
     # or "learn love live" before period/comma/quote mark/"is/was" or at end of post
     r'\b((h(er|is)|their|your?)( [a-z]+ing)?|learn) love live([.,"”]|$| (i|wa)s\b)|'
-    # playing [video game title ending with "Love"] live (on/at)
-    r"\bplay(ing)? .+ love live (at|on)|"
+    # playing [video game title ending with "Love"] live on
+    r"\bplay(ing)? .+ love live on|"
     # I('d/'m/'ve) got/need/etc. to/gotta/gonna hear/see/have heard [song name ending
     # with "Love"] live
     r"\bI(['’][dm]|ve)? ((([a-z]+ ){,2}to|go(tt|nn)a) (hear|see)|(have )?heard)"
