@@ -237,11 +237,12 @@ EXCLUDE_RE = re.compile(
     # - love live action
     # - love Live A Live (video game title)
     # - love live ammo (usually "Republicans love live ammo and dead kids")
+    # - love live and be happy/nice/etc.
     # - love "Live and Dangerous" (album by Thin Lizzy)
     # - love "LIVE and FALL" (album by Xdinary Heroes)
     # - love live at (usually songs ending with "Love" + "live at [some place]" but not
     #   "love live at it(')s")
-    r"a(ction|mmo|nd (dangerous|fall)|t\b(?!it['’]?s\b)| live)|"
+    r"a(ction|mmo|nd (be\b|dangerous|fall)|t\b(?!it['’]?s\b)| live)|"
     # - Love Live Bleeding (typo of "Love Lies Bleeding")
     # - love live broadcasting
     r"b(leeding|roadcasting)|"
@@ -345,6 +346,7 @@ EXCLUDE_RE = re.compile(
     r"(caravan|hazards|l(exicon|ight)|most exalted potentate|prisoner|"
     r"s(atellite|hot|ongs)|t(he ([bl]ook|house|meaning)|unnel)|([tw]hat|this) kind) of|"
     # - stuff ending with "in love live":
+    #   - "Crazy in Love" live (song by Beyonce)
     #   - "Dangerously in Love" live (album by Beyonce)
     #   - "Drunk in Love" live (song by Beyonce)
     #   - "Fall in Love" live (different songs by different artists or any song name
@@ -352,7 +354,7 @@ EXCLUDE_RE = re.compile(
     #   - "(Can't Help) Falling in Love" live (song by different artists)
     #   - "Friday I'm In Love" live (usually song by The Cure)
     #   - "I'm Not in Love" live (usually song by 10cc)
-    r"(d(angerously|runk)|f(all(ing)?|riday i['’]?m)|i['’]?m not) in|"
+    r"(crazy|d(angerously|runk)|f(all(ing)?|riday i['’]?m)|i['’]?m not) in|"
     # - "Darker My Love" live (song by T.S.O.L.)
     # - "Darkness at the Heart of My Love" live (song by Ghost)
     # - "Destination: Love Live" (album by The Make-Up)
@@ -364,8 +366,9 @@ EXCLUDE_RE = re.compile(
     # - "Fool for Love" live
     # - "Frozen Love" live (song by Buckingham Nicks)
     r"f(ake|eel like makin['’g]?|ight|ool for|rozen)|"
-    # - Gerry Love live (British live music performer)
-    r"ger(ard|ry)|"
+    # - G. Love live (American singer/rapper)
+    # - Gerry Love live (British rock singer/bass guitar player)
+    r"g(er(ard|ry)|\.?)|"
     # - Helen Love live (Welsh rock band)
     # - his love live (usually typo of "his love life")
     r"h(elen|is)|"
@@ -415,8 +418,9 @@ EXCLUDE_RE = re.compile(
     #   name ending with that phrase)
     # - "Some Kinda Love" live (song by The Velvet Underground)
     # - Stone Love live (usually Jamaican DJ group)
+    # - Simon Love live (some random British artist with an official Bluesky account)
     # - "Strange Love" live (usually album by T.S.O.L.)
-    r"s(avage|how some|o(me(body to| kinda))|t(one|range))|"
+    r"s(avage|how some|imon|o(me(body to| kinda))|t(one|range))|"
     # - hear/saw/see(n) [artist name] perform [song name ending with "Love"] live
     r"(hear|s(aw|een?)) .+ perform .+|"
     # - they love live [something] (all other cases not caught by the Great "I love
@@ -440,9 +444,9 @@ EXCLUDE_RE = re.compile(
     # "(The) Power of Love" live (different songs by different artists, except at end
     # of line/post or before exclamation mark)
     r"power of love live(?!!|$)|\b(frankie|huey).+power of love live|"
-    # perform(s/ed/ing/ance of)/sing(s/ing)/play(ing/s) [song name ending with "Love"]
-    #  live on/in(side)/outside/with
-    r"(perform(ance of|ed|ing|s)?|(play|sing)(ing|s)) .+ (?<!from )love live"
+    # perform(s/ed/ing/ance of)/sing(s/ing)/play(ing/s)/covers [song name ending with
+    # "Love"] live on/in(side)/outside/with
+    r"(perform(ance of|ed|ing|s)?|(play|sing)(ing|s)|covers) .+ (?<!from )love live"
     r"($| +([io]n|(in|out)side|with)\b)|"
     # if you (live in/near/around [place name]) ... and/but love live (...) music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)|if you)\s+.+\s+)?(and|but)\s+love"
@@ -493,7 +497,7 @@ EXCLUDE_RE = re.compile(
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
-    r"\b(grateful dead|marley|oasis|phish)\b|"
+    r"\b(floyd|grateful dead|marley|oasis|phish)\b|"
     # Love Live (rock music) Festival and its venue and bands
     r"\b(official )?love live festival\b|\blovelivefestival|"
     r"\b((black(pool| ?(lak|vultur)es?))|cancel ?the ?transmission|fugitive|"
@@ -529,7 +533,7 @@ FAKE_CATCHU_RE = re.compile(
     # - "catchu up" but not "CatChu up close/next"
     # - catchu p (typo of "catch up")
     r"catchu +(all|catchme|later|ricky|slippin|the future|u?p\b(?! (close|next)))|"
-    r"\bto catchu with",
+    r"\bto catchu with|\bpinky[ -]catchu\b",
     re.IGNORECASE,
 )
 BAD_KEYWORDS_RE = re.compile(
