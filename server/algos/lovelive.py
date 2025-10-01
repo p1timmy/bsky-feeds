@@ -37,7 +37,7 @@ LOVELIVE_RE = re.compile(
     # NOTE: Printemps, lily white, BiBi not included due to too many false positives
     r"音ノ木坂?|otonokizaka|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)[μµ]['’‘`´′]s|"
     r"高坂\s?穂乃果|絢瀬\s?絵里|南\s?ことり|園田\s?海未|星空\s?凛|西木野\s?真姫|東條\s?希|"
-    r"小泉\s?花陽|矢澤\s?にこ|nico\snico\sni+\b|#niconiconi+\b|minalinsky|ミナリンスキー|"
+    r"小泉\s?花陽|矢澤\s?にこ|nico\snico\sni+\b|#niconiconi+\b|\bminalinsky\b|ミナリンスキー|"
     r"エリーチカ|\belichika\b|にこりんぱな|nicorinpana|金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
     r"snow\s?halation([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
     r"(^|[^a-z\u00C0-\u024F\u1E00-\u1EFF\-])a[-\u2010]rise([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|$)|"
