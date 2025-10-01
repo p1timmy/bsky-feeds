@@ -97,7 +97,7 @@ LOVELIVE_RE = re.compile(
     r"異次元フェス|ijigen\sfest?|#llsat_|"
     # Community stuff
     r"\bteam onibe\b|\bonib(e|ased)([^a-z’]|$)|schoolido\.lu|idol\.st(?!/user/\d+)|"
-    r"#HasuTH_Tran|([^a-z]|\b)OurSIF([^a-z]|$)",
+    r"#HasuTH_Tran|([^a-z]|\b)OurSIF([^a-z]|$)|\bidoltober",
     re.IGNORECASE,
 )
 SUKUFEST_RE = re.compile(
@@ -158,9 +158,7 @@ CHARACTER_NAMES = set(
         ("Lanzhu", "Zhong", False),
         # Liella
         ("Kanon", "Shibuya", False),
-        # NOTE: Keke Tang included in pattern builder to prevent posts containing
-        # "arxiv" anywhere in post from being added
-        ("Tang", "Keke", True),
+        ("Keke", "Tang", False),
         ("Chisato", "Arashi", False),
         ("Sumire", "Heanna", False),
         # NOTE: Ren Hazuki included in pattern builder to try to prevent posts about
@@ -497,7 +495,7 @@ EXCLUDE_RE = re.compile(
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
-    r"\b(floyd|grateful dead|marley|oasis|phish)\b|"
+    r"\b(floyd|grateful dead|kahan|marley|oasis|phish)\b|"
     # Love Live (rock music) Festival and its venue and bands
     r"\b(official )?love live festival\b|\blovelivefestival|"
     r"\b((black(pool| ?(lak|vultur)es?))|cancel ?the ?transmission|fugitive|"
@@ -537,11 +535,13 @@ FAKE_CATCHU_RE = re.compile(
     re.IGNORECASE,
 )
 BAD_KEYWORDS_RE = re.compile(
-    r"\b(europesays\.com\b|"
-    # Political keywords often used in "love live" false positives
-    r"GOP\b|republicans?|trump\b|charlie ?kirk|"
+    r"\b(arxiv\b|europesays\.com\b|"
+    # Political keywords often used in "love live"/"Mia Taylor" false positives
+    r"charlie ?kirk|GOP\b|MAGA\b|netanyahu|republicans?|trump\b|"
     # Gaza war victim fundraiser spam
     r"abed|ABD-GFM|GFM-ABD|kutt\.it/|"
+    # Jel Kawasaki bot posts
+    r"\[商品リンク\]|"
     # NSFW keywords
     r"bds&?m|c(ock(s|\b)|um(ming)?([^a-z]|\b))|di(aper|ck|ldo)|(futanar|henta)i|nude|"
     r"p(enis|regnant)|s(ex([^a-z]|\b)|lut)"
@@ -574,9 +574,9 @@ def make_characters_pattern() -> re.Pattern:
         f"(?:^|[^@a-z])(?:{'|'.join(patterns)}|"
         r"^(?!.*\blazarus\b.*).*((?<!thank )you ?watanabe|"
         r"(?<!momo )(?<!shinichiro )(?<!akio )watanabe ?you(?!['’][a-z]+[a-z]|"
-        r" ([a-z]+[a-z]n['’]?t|are|have)\b)).*|leah kazuno|"
-        r"(?<!\nby )(?<!^by )(?<!post by )(?<!\bby: )mia taylor(?!.+arxiv)|"
-        r"keke ?tang(?!.+arxiv)|^(?!.*\bexpanse\b.*).*ren ?hazuki.*)\b",
+        r" ([a-z]+[a-z]n['’]?t|are|have|will)\b)).*|leah kazuno|"
+        r"(?<!\nby )(?<!^by )(?<!post by )(?<!\bby: )mia taylor|"
+        r"^(?!.*\bexpanse\b.*).*ren ?hazuki.*)\b",
         re.IGNORECASE | re.DOTALL,
     )
 
