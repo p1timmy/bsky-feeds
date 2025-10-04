@@ -21,7 +21,7 @@ LOVELIVE_RE = re.compile(
     r"o(ng\b|undtrack)|potted|taff|u(nshine|per ?star))|t(cg|hings)|u['’]s\b)|"
     r" ?!? +(vs|X)\b| fest?\b)|"
     r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|(doe|is thi|mis)s) love ?live\b|"
-    r"#lovelive_|\bLL(heardle|s(ip|taff))|"
+    r"#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
     # ラブライブ but not クラブライブ (club live)
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     # School idol
@@ -295,6 +295,8 @@ EXCLUDE_RE = re.compile(
     r"[ty]our|"
     # - "love live ur" (usually typo of "long live ur") but not "Love Live UR ... card"
     r"ur (?!.*\bcards?\b)|"
+    # - love live versions
+    r"versions|"
     # - love live bands/gigs/mealworms/performances/shows
     # - "Love Live in/from Paris" (misspelling of "Lover (Live from Paris)" album by
     #   Taylor Swift)
@@ -316,6 +318,8 @@ EXCLUDE_RE = re.compile(
     r"a(bsolutely|ll (my|your))|"
     # Art(ist(s))/band(s)/music/people/[some plural word] I/you/etc. (... and) love live
     r"(art(ist)?|band|music|people|[a-z]+s) (i|you|they)( ([a-z]+[a-z],? )+(and|&))?|"
+    # - "Bad Love" live (usually song by Key or Eric Clapton) but not "how bad Love Live"
+    r"(?<!how )bad|"
     # - "Bye Bye Love" live (usually song by The Everly Brothers or Simon & Garfunkel)
     r"bye bye|"
     # - can/could you not love live
@@ -439,6 +443,9 @@ EXCLUDE_RE = re.compile(
     # "Big Love" live (in) (song by Fleetwood Mac or Lindsey Buckingham)
     r"(fleetwood|linds[ae]y|buckingham)(.|\n)+big love live|"
     r"big love live( in|(.|\n)+(fleetwood|linds[ae]y|buckingham))|"
+    # "I Need Love" live (different songs by different artists) but not "I need Love
+    # Live ([some plural word]) to ..."
+    r"\bI need love live\b(?! ([a-z]+s )?(to|2)\b)|"
     # "(The) Power of Love" live (different songs by different artists, except at end
     # of line/post or before exclamation mark)
     r"power of love live(?!!|$)|\b(frankie|huey).+power of love live|"
@@ -542,6 +549,8 @@ BAD_KEYWORDS_RE = re.compile(
     r"abed|ABD-GFM|GFM-ABD|kutt\.it/|"
     # Jel Kawasaki bot posts
     r"\[商品リンク\]|"
+    # "Buy Anything From Amazon" spam
+    r"zort\.my/|"
     # NSFW keywords
     r"bds&?m|c(ock(s|\b)|um(ming)?([^a-z]|\b))|di(aper|ck|ldo)|(futanar|henta)i|nude|"
     r"p(enis|regnant)|s(ex([^a-z]|\b)|lut)"
