@@ -101,7 +101,7 @@ LOVELIVE_RE = re.compile(
     re.IGNORECASE,
 )
 SUKUFEST_RE = re.compile(
-    r"(^|[^マア])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄|金沢|香川)"
+    r"(^|[^マア])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄|金沢|香川|ニセコ)"
 )
 YOHANE_RE = re.compile(r"\byohane(?!(-label| mbatizati))\b", re.IGNORECASE)
 CATCHU_RE = re.compile(
