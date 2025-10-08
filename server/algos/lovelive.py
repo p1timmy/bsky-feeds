@@ -26,7 +26,7 @@ LOVELIVE_RE = re.compile(
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     # School idol
     r"スクールアイドル|(?<!middle )(?<!high )(?<!old )(?<!old-)(?<!your )"
-    r"\b(#\w+)?school ?idol(?! story\b)(s\b| ?((festiv|music)al|project))?|"
+    r"\b(?<!@)(#\w+)?school ?idol(?! story\b)(s\b| ?((festiv|music)al|project))?|"
     # Games
     r"\bl(l|ove ?live ?)sif2?\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|puchiguru|"
     # ぷちぐる but not ぷちぐるみ
