@@ -497,7 +497,7 @@ EXCLUDE_RE = re.compile(
     # find love live and/your/etc.
     r"\bfind love live \w{3,}\b|"
     # hashtags frequently used in #lovelive/"(#)love live" false positives
-    r"#(bb27|god|faith|gratitude|hope|L(ove( live|IsBlind|r|Wins)|ivemusic)|"
+    r"#(bb27|eaglerock|god|faith|gratitude|hope|L(ove( live|IsBlind|r|Wins)|ivemusic)|"
     r"motivation|positivity|totp|[a-z]+vibes[a-z]*)\b|"
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
