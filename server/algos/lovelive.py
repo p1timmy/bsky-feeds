@@ -13,13 +13,13 @@ LOVELIVE_NAME_EN_RE = re.compile(
 LOVELIVE_RE = re.compile(
     # "Love Live" + other related words
     r"love\s?live([!:\s]*(a(fter school\b|ll[ -]stars|n(d (idolm[a@]ster|more)|ime)|pp)"
-    r"|blue ?bird|c(ollab|yber|(d|osplay|haracter)s?)|e(n|pisodes?|ra|tc)\b|global\b|"
-    r"d(ays|rama\b)|heardle|f(ans?\b|igures?|ranchise)|i(ce cream|dols?|n general)|"
-    r"jumpscare|m(aybe|e(rch|ntion(ed)?)|ovies?)\b|n(esoberis?|iji(gasaki)?)|"
-    r"o(c(g|\b)|mf?g|r(?! die)\b|st)|pl(aylist|ush(ies?))|references?|"
-    r"s(chool ?idol|e(ction|ries|iyuus?)|hips?\b|ip([^a-z]|\b)|(ifs)?orter|ky|"
-    r"o(ng\b|undtrack)|potted|taff|u(nshine|per ?star))|t(cg|hings)|u['’]s\b)|"
-    r" ?!? +(vs|X)\b| fest?\b)|"
+    r"|blue ?bird|c(ollab|yber|(d|osplay|haracter)s?)|d(ays|rama\b)|heardle|"
+    r"e(n|pisodes?|ra|tc)\b|f(ans?\b|(an)?fic\b|igures?|ranchise)|g(i(f|rls?)|lobal)\b|"
+    r"i(ce cream|dols?|n general)|jumpscare|m(aybe|e(rch|ntion(ed)?)|ovies?)\b|"
+    r"n(esoberis?|iji(gasaki)?)|o(c(g|\b)|mf?g|r(?! die)\b|s(hi|t))|references?|"
+    r"pl(aylist|ush(ies?))|s(chool ?idol|e(ction|ries|iyuus?)|hips?\b|ip([^a-z]|\b)|"
+    r"(ifs)?orter|ky|o(ng\b|undtrack)|potted|taff|u(nshine|per ?star))|t(cg|hings)|"
+    r"u['’]s|waifus?\b)| ?!? +(vs|X)\b| fest?\b)|"
     r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|(doe|is thi|mis)s) love ?live\b|"
     r"#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
     # ラブライブ but not クラブライブ (club live)
@@ -307,6 +307,8 @@ EXCLUDE_RE = re.compile(
     r"\b(jus|tha)t ([a-z]+[a-z] )?love liver\b|"
     # Words/phrases ending with "love live"
     r"\b("
+    # - "2Kindsa Love" live (song by The Jon Spencer Blues Explosion)
+    r"2 ?kindsa|"
     # - about/confess(ed/es/ing) his/her/their love live (usually typo of "about his/
     #   her/their love life/lives")
     r"(about|confess[a-z]*) (h(er|is)|their)|"
@@ -377,8 +379,8 @@ EXCLUDE_RE = re.compile(
     # - "How Deep Is Your Love" live (usually song by Bee Gees)
     # - "Sunshine of Your Love" live (usually song by Cream)
     r"(how deep is|sunshine of) your|"
-    # - hope/joy/pain/peace/unity and love live
-    r"(hope|joy|p(ain|eace)|unity),? and|"
+    # - compassion/hope/joy/kindness/pain/peace/unity and love live
+    r"(compassion|hope|joy|kindness|p(ain|eace)|unity),? (and|&)|"
     # - "How To Love" live (usually song by Lil Wayne or any song name ending with
     #   that phrase)
     r"how to|"
@@ -397,8 +399,11 @@ EXCLUDE_RE = re.compile(
     r"l(augh|et( that)?|ive|o(ud|ve( and only love|,? hate,?| meeting love)))|"
     # - "life love live" but not "Link Life Love Live"
     r"(?<!link )life|"
-    # - mad love live
-    # - Mike Love live (some reggae artist)
+    # - "Lotta Love" live (song by either Neil Young or Nicolette Larson) or "Whole
+    #   Lotta Love" live (usually song by Led Zeppelin)
+    r"(whole )? lotta love|"
+    # - "Mad Love" live (usually album by Linda Ronstadt)
+    # - Mike Love live (American reggae artist)
     r"m(ad|ike)|"
     # - "No Loss, No Love" live (song by Spiritbox)
     # - "No Ordinary Love" live (song by Sade)
@@ -436,8 +441,7 @@ EXCLUDE_RE = re.compile(
     # - "We Found Love" live (song by Rihanna feat. Calvin Harris or any song name
     #   ending with that phrase)
     # - "What Time Is Love" live (usually song by The KLF)
-    # - "Whole Lotta Love" live (usually song by Led Zeppelin)
-    r"w(asted|e( found)?|h(at time is|ole lotta)|ould)|"
+    r"w(asted|e( found)?|hat time is|ould)|"
     # - you are/you're in love live
     r"you( a|['’])re in) love live\b|"
     # "Big Love" live (in) (song by Fleetwood Mac or Lindsey Buckingham)
@@ -446,6 +450,8 @@ EXCLUDE_RE = re.compile(
     # "I Need Love" live (different songs by different artists) but not "I need Love
     # Live ([some plural word]) to ..."
     r"\bI need love live\b(?! ([a-z]+s )?(to|2)\b)|"
+    # "Modern Love" live (song by David Bowie)
+    r"bowie(.|\n)+\bmodern love live|\bmodern love live(.|\n)+bowie|"
     # "(The) Power of Love" live (different songs by different artists, except at end
     # of line/post or before exclamation mark)
     r"power of love live(?!!|$)|\b(frankie|huey).+power of love live|"
@@ -472,8 +478,8 @@ EXCLUDE_RE = re.compile(
     r"([^\w\s]+?  ?|^)love (love )+liver?\b|"
     # ... and love live(s) here/there
     r" (and|&) love lives? t?here\b|"
-    # may your/our/his/her/their ... love live (on)
-    r"\bmay (h(is|er)|their|y?our) (.+ )?love live |"
+    # may/on your/our/his/her/their ... love live
+    r"\b(may|on) (h(is|er)|their|y?our) (.+ )?love live |"
     # "our love live" at end of sentence/post
     r"\bour love live *[^\w ]|"
     # in/may/my love live in, includes:
@@ -484,7 +490,8 @@ EXCLUDE_RE = re.compile(
     r"(h(er|is)|(y?ou|thei)r|who(se)?|yet|\w+['’]s)( ([a-z]+[a-z]|.+ (and|&)))?"
     r" love lives? ([io]n|with)|"
     # "his/her/their/you(r) (...ing) love live" (sometimes a typo of "love life/lives")
-    # or "learn love live" before period/comma/quote mark/"is/was" or at end of post
+    # or "learn love live" before period/comma/quote mark/"is/was" at end of sentence
+    # or post
     r'\b((h(er|is)|their|your?)( [a-z]+ing)?|learn) love live([.,"”]|$| (i|wa)s\b)|'
     # playing [video game title ending with "Love"] live on
     r"\bplay(ing)? .+ love live on|"
@@ -498,7 +505,7 @@ EXCLUDE_RE = re.compile(
     r"\bfind love live \w{3,}\b|"
     # hashtags frequently used in #lovelive/"(#)love live" false positives
     r"#(bb27|eaglerock|god|faith|gratitude|hope|L(ove( live|IsBlind|r|Wins)|ivemusic)|"
-    r"motivation|positivity|totp|[a-z]+vibes[a-z]*)\b|"
+    r"motivation|OwnOurVenues|positivity|totp|[a-z]+vibes[a-z]*)\b|"
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
