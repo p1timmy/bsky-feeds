@@ -47,7 +47,7 @@ LOVELIVE_RE = re.compile(
     # ぷちぐる but not ぷちぐるみ
     r"ぷちぐる([^み]|$)|"
     # スクスタ/スクミュ but not words with マスク/デ(ィ)スク/スタンド/スタンプ/スタイル/スタッフ
-    r"(^|[^マタケデ])(?<!ディ)スク(スタ(?!ン[ドプ]|イル|ッフ|ート)|ミュ)|"
+    r"(^|[^\u30a1-\u30f6\u30fc])スク(スタ(?!ン[ドプ]|イル|ッフ|ート)|ミュ)|"
     # Love Live! School Idol Project
     # NOTE: Printemps, lily white, BiBi not included due to too many false positives
     r"音ノ木坂?|otonokizaka|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)[μµ]['’‘`´′]s|"
