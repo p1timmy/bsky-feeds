@@ -420,9 +420,10 @@ EXCLUDE_RE = re.compile(
     # - "Mad Love" live (usually album by Linda Ronstadt)
     # - Mike Love live (American reggae artist)
     r"m(ad|ike)|"
+    # - "Network Love" live (K-pop song by Seventeen)
     # - "No Loss, No Love" live (song by Spiritbox)
     # - "No Ordinary Love" live (song by Sade)
-    r"no (loss,? no|ordinary)|"
+    r"n(etwork|o (loss,? no|ordinary))|"
     # - "Prophecy x This Love" live (song by Taylor Swift)
     # - Pop the Balloon or/and/to/etc. Find Love live (dating show on YT/Netflix)
     # - "Punch-Drunk Love" live (romantic movie title)
