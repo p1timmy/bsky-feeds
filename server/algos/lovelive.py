@@ -487,9 +487,9 @@ EXCLUDE_RE = re.compile(
     # collab(s)/could/did/does(n't)/doing/going/had/has/hates/I/in/is/made/make(s)/
     # making/music is(/was)/never/song(s)/tries/tried/UR ... card(s)/was/will/would"
     r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|re|s)|"
-    r"but|collabs?|[cw]ould|[dg]oing|i[ns'’]?|d(id|oes(n['’]?t)?)|ha([ds]|tes)|m(a(de|"
-    r"k(es?|ing))|usic (i|wa)s)|never|songs?|trie[ds]|ur .*cards?|w(as|ill))\b)|"
-    r"([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
+    r"but|collabs?|[csw]ould|[dg]oing|i[ns'’]?|d(id|oes(n['’]?t)?)|ha([ds]|tes)|"
+    r"m(a(de|k(es?|ing))|usic (i|wa)s)|never|songs?|trie[ds]|ur .*cards?|"
+    r"w(as|ill))\b)|([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live(r)" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+liver?\b|"
     # ... and love live(s) here/there
