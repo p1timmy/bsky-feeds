@@ -19,7 +19,7 @@ LOVELIVE_RE = re.compile(
     r"d(ays|rama\b)|"
     r"heardle|"
     r"e(n|pisodes?|ra|tc)\b|"
-    r"f(ans?\b|(an)?fic\b|igures?|ranchise)|"
+    r"f(an(art|s)?\b|(an)?fic\b|igures?|ranchise)|"
     r"g(i(f|rls?)|lobal)\b|"
     r"i(ce cream|dols?|n general)|"
     r"jumpscare|"
@@ -35,7 +35,7 @@ LOVELIVE_RE = re.compile(
     r"waifus?\b"
     r")| ?!? +(vs|X)\b| fest?\b)|"
     r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|"
-    r"(doe|is thi|mis)s) love ?live\b|"
+    r"(doe|is thi|mis|variou)s) love ?live\b|"
     r"#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
     # ラブライブ but not クラブライブ (club live)
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
