@@ -296,9 +296,9 @@ EXCLUDE_RE = re.compile(
     # - love live rock (typo of "long live rock")
     # - love "Live Rust" (album by Neil Young & Crazy Horse)
     r"r(ock|ust)|"
-    # - love live service/sport(s)/streaming/streams
+    # - love live service/sport(s)/streaming/streams/strings
     # - love Live Score (some sports app)
-    r"s(core|ervice|ports?|tream(ing|s))|"
+    r"s(core|ervice|ports?|tr(eam(ing|s)|ings))|"
     # - love live tables/theater/TV/television
     # - love "Live to Tell" (song by Madonna)
     # - love "Live Through This" (usually an album by Hole)
@@ -483,13 +483,14 @@ EXCLUDE_RE = re.compile(
     # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
-    # love love [something]" but not "(and) love live all/also/always/are/as/but/
-    # collab(s)/could/did/does(n't)/doing/going/had/has/hates/I/in/is/made/make(s)/
-    # making/music is(/was)/never/song(s)/tries/tried/UR ... card(s)/was/will/would"
-    r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|re|s)|"
-    r"but|collabs?|[csw]ould|[dg]oing|i[ns'’]?|d(id|oes(n['’]?t)?)|ha([ds]|tes)|"
-    r"m(a(de|k(es?|ing))|usic (i|wa)s)|never|songs?|trie[ds]|ur .*cards?|"
-    r"w(as|ill))\b)|([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
+    # love love [something]" but not "(and) love live all/also/always/are/as/auf/but/
+    # could/did/does(n't)/doing/going/had/has/hates/I/in/is(t)/I'll/I'm/made/make(s)/
+    # making/music is(/was)/needs/never/should/song(s)/tries/tried/UR ... card(s)/was/
+    # will/would"
+    r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|re|s|uf)|"
+    r"but|[csw]ould|[dg]oing|i([n'’]|st?)?|d(id|oes(n['’]?t)?)|ha([ds]|tes)|ne(eds|ver)|"
+    r"m(a(de|k(es?|ing))|usic (i|wa)s)|songs?|trie[ds]|ur .*cards?|w(as|ill))\b)|"
+    r"([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live(r)" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+liver?\b|"
     # ... and love live(s) here/there
