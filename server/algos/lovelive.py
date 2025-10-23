@@ -220,7 +220,7 @@ EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
     # - I('d)/he/she/they/you (all)/y'all/you'll/we (all/both)/gotta/got to/who, people
     #   (in [some place]), [plural word] that, my ... and sister/brother/wife/etc.
-    r"\b((i|s?he|they)(['’]d)?|y(ou(['’]ll)?|(ou |['’])all)|we( (all|both))?|"
+    r"\b((i|s?he|they)(['’]?d)?|y(ou(['’]ll)?|(ou |['’])all)|we( (all|both))?|"
     r"got(ta| to)|who|people( in (the )?[a-z]+[a-z])?|[a-z]{3,}s( that)?|"
     r"my .+and [a-z]+[a-z])"
     # - *ing/*ly/bloody/also/always/do(es)/don't/happen(ed)/just/lowkey/still/tend to/
@@ -388,6 +388,8 @@ EXCLUDE_RE = re.compile(
     # - G. Love live (American singer/rapper)
     # - Gerry Love live (British rock singer/bass guitar player)
     r"g(er(ard|ry)|\.?)|"
+    # - give/show (them/me/etc.) some love live
+    r"(give|show) (\w+ )?some|"
     # - Helen Love live (Welsh rock band)
     # - his love live (usually typo of "his love life")
     r"h(elen|is)|"
@@ -436,14 +438,13 @@ EXCLUDE_RE = re.compile(
     # - Rinku Love Live (NSFW/R18 AI artist sometimes featured on @mikubot.bsky.social)
     r"r(ad(ar|ical)|eally|inku)|"
     # - Savage Love Live (sex advice podcast by Dan Savage)
-    # - show some love live
     # - "Somebody to Love" live (usually song by Queen or Jefferson Airplane or any song
     #   name ending with that phrase)
     # - "Some Kinda Love" live (song by The Velvet Underground)
     # - Stone Love live (usually Jamaican DJ group)
     # - Simon Love live (some random British artist with an official Bluesky account)
     # - "Strange Love" live (usually album by T.S.O.L.)
-    r"s(avage|how some|imon|o(me(body to| kinda))|t(one|range))|"
+    r"s(avage|imon|o(me(body to| kinda))|t(one|range))|"
     # - hear/saw/see(n) [artist name] perform [song name ending with "Love"] live
     r"(hear|s(aw|een?)) .+ perform .+|"
     # - they love live [something] (all other cases not caught by the Great "I love
