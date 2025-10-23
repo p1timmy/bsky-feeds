@@ -218,11 +218,12 @@ CHARACTER_NAMES = set(
 
 EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
-    # - I('d)/he/she/they/you (all)/y'all/you'll/we (all/both)/gotta/got to/who, people
-    #   (in [some place]), [plural word] that, my ... and sister/brother/wife/etc.
-    r"\b((i|s?he|they)(['’]?d)?|y(ou(['’]ll)?|(ou |['’])all)|we( (all|both))?|"
-    r"got(ta| to)|who|people( in (the )?[a-z]+[a-z])?|[a-z]{3,}s( that)?|"
-    r"my .+and [a-z]+[a-z])"
+    # - I('d)/he/she/they/you (all)/y'all/you'll/we (all/both)/gotta/got to/have to/
+    #   learn(ed) to/like to/who, people (in [some place]), [plural word] that, my ...
+    #   and sister/brother/wife/etc.
+    r"\b((i|s?he|they)(['’]?d)?|y(ou(['’]ll)?|(ou |['’])all)|we( (all|both))?|gotta|"
+    r"(got|have|l(earn(ed)?|ike)) to|who|people( in (the )?[a-z]+[a-z])?|"
+    r"[a-z]{3,}s( that)?|my .+and [a-z]+[a-z])"
     # - *ing/*ly/bloody/also/always/do(es)/don't/happen(ed)/just/lowkey/still/tend to/
     #   too/will/would('ve)/... and
     r"(,? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|don['’]t|"
