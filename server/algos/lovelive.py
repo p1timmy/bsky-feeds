@@ -32,7 +32,8 @@ LOVELIVE_RE = re.compile(
     r"o(ng\b|undtrack)|taff|u(nshine|per ?star))|"
     r"t(cg|hings)|"
     r"u['’]s|"
-    r"waifus?\b"
+    r"waifus?\b|"
+    r"yuri\b"
     r")| ?!? +(vs|X)\b| fest?\b)|"
     r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|"
     r"(doe|is thi|mis|variou)s) love ?live\b|"
@@ -294,16 +295,17 @@ EXCLUDE_RE = re.compile(
     r"music at\b|"
     # - love live oak(s)
     r"oaks?|"
+    # - love live renditions
     # - love live rock (typo of "long live rock")
     # - love "Live Rust" (album by Neil Young & Crazy Horse)
-    r"r(ock|ust)|"
+    r"r(enditions|ock|ust)|"
     # - love live service/sport(s)/streaming/streams/strings
     # - love Live Score (some sports app)
     r"s(core|ervice|ports?|tr(eam(ing|s)|ings))|"
-    # - love live tables/theater/TV/television
+    # - love live tables/theater/TV/television/texting
     # - love "Live to Tell" (song by Madonna)
     # - love "Live Through This" (usually an album by Hole)
-    r"t(ables|elevision|h(eat(er|re)|rough this)|o tell|v)|"
+    r"t(ables|e(levision|xting)|h(eat(er|re)|rough this)|o tell|v)|"
     # - "love live the" (usually typo of "long live the") but not "Love Live the
     #   competition/Musical/School Idol"
     r"the\b(?! (competition|musical|school idol)\b)|"
@@ -563,8 +565,9 @@ FAKE_CATCHU_RE = re.compile(
     # - Catchu The Future
     # - "catchu up" but not "CatChu up close/next"
     # - catchu p (typo of "catch up")
+    # - catchu with (typo of "catchup with")
     r"catchu +(all|catchme|later|ricky|slippin|the future|u?p\b(?! (close|next)))|"
-    r"\bto catchu with|\bpinky[ -]catchu\b",
+    r"\b(to )?catchu with|\bpinky[ -]catchu\b",
     re.IGNORECASE,
 )
 BAD_KEYWORDS_RE = re.compile(
