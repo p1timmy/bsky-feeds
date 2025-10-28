@@ -84,7 +84,7 @@ LOVELIVE_RE = re.compile(
     r"高咲\s?侑|上原\s?歩夢|中須\s?かすみ|桜坂\s?しずく|朝香\s?果林|宮下\s?愛|近江\s?(彼方|遥)|"
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
     # Love Live! Superstar!!
-    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(or|tuto)?liella(?!(nd| kelly))[!！]?|"
+    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(or|tuto)?liella(?!(nd|tte| kelly))[!！]?|"
     r"結ヶ丘|yuigaoka|5yncri5e!?|kaleidoscore|トマカノーテ|tomakanote|スパスタ[3３]期|"
     r"澁谷\s?かのん|唐\s?可可|嵐千\s?砂都|平安名\s?すみれ|葉月\s?恋|桜小路\s?きな子|米女\s?メイ|"
     r"若菜\s?四季|鬼塚\s?(夏美|冬毬)|ウィーン・?マルガレーテ|"
@@ -525,8 +525,8 @@ EXCLUDE_RE = re.compile(
     # find love live and/your/etc.
     r"\bfind love live \w{3,}\b|"
     # hashtags frequently used in #lovelive/"(#)love live" false positives
-    r"#(bb27|eaglerock|god|faith|gratitude|hope|L(ove( live|IsBlind|r|Wins)|ivemusic)|"
-    r"motivation|OwnOurVenues|positivity|totp|[a-z]+vibes[a-z]*)\b|"
+    r"#(b(b27|eyondthegates)|eaglerock|god|faith|gratitude|hope|L(ove( live|IsBlind|r|Wins)"
+    r"|ivemusic)|motivation|OwnOurVenues|positivity|totp|[a-z]+vibes[a-z]*)\b|"
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
@@ -571,7 +571,7 @@ FAKE_CATCHU_RE = re.compile(
     re.IGNORECASE,
 )
 BAD_KEYWORDS_RE = re.compile(
-    r"\b(arxiv\b|europesays\.com\b|"
+    r"\b(arxiv\b|europesays\.com\b|zmedia\.(twitren\.com|jp)\b|"
     # Political keywords often used in "love live"/"Mia Taylor" false positives
     r"charlie ?kirk|GOP\b|MAGA\b|netanyahu|republicans?|trump\b|"
     # Gaza war victim fundraiser spam
