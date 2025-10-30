@@ -29,7 +29,7 @@ LOVELIVE_RE = re.compile(
     r"pl(aylist|ush(ies?))|"
     r"references?|"
     r"s(chool ?idol|e(ction|ries|iyuus?)|hips?\b|ip([^a-z]|\b)|(ifs)?orter|ky|potted|"
-    r"o(ng\b|undtrack)|taff|u(nshine|per ?star))|"
+    r"o(ng\b|undtrack)|taff|u(b ?units?|nshine|per ?star))|"
     r"t(cg|hings)|"
     r"u['’]s|"
     r"waifus?\b|"
@@ -593,6 +593,7 @@ BAD_KEYWORDS_RE = re.compile(
 LOVELIVENEWS_BSKY_SOCIAL = "did:plc:yfmm2mamtdjxyp4pbvdigpin"
 DEDICATED_USERS = set({LOVELIVENEWS_BSKY_SOCIAL})
 IGNORE_USERS: set[str] = set()
+SOLOVON_DILL_BURGGIT_MOE_AP_BRID_GY = "did:plc:dvxbc7qhvo7c2vf3pmzmswd6"
 
 uri = config.LOVELIVE_URI
 dedicated_userlist_uri = config.LOVELIVE_INCLUDE_LIST_URI
@@ -627,7 +628,7 @@ def filter(post: dict) -> bool:
     if author in DEDICATED_USERS:
         return True
 
-    if author in IGNORE_USERS:
+    if author in IGNORE_USERS or author == SOLOVON_DILL_BURGGIT_MOE_AP_BRID_GY:
         return False
 
     all_texts = "\n".join(get_post_texts(post))
