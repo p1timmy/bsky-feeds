@@ -41,8 +41,8 @@ LOVELIVE_RE = re.compile(
     # ラブライブ but not クラブライブ (club live)
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     # School idol
-    r"スクールアイドル|(?<!middle )(?<!high )(?<!old )(?<!old-)(?<!your )"
-    r"\b(?<!@)(#\w+)?school ?idol(?! (story|book)\b)(s\b| ?((festiv|music)al|project))?|"
+    r"スクールアイドル|(?<!middle )(?<!high )(?<!old )(?<!old-)(?<!your )\b"
+    r"(?<!@)(#\w+)?school ?idol(?! (story|book)\b)(s\b| ?((festiv|music)al|project))?|"
     # Games
     r"\bl(l|ove ?live ?)sif2?\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|puchiguru|"
     # ぷちぐる but not ぷちぐるみ
@@ -68,7 +68,8 @@ LOVELIVE_RE = re.compile(
     r"([^a-z]|\b)((ai[♡-]?|(?-i:[Aa]i ))scream\b|(?-i:AI (SCREAM\b|(?i:scream!))))|"
     r"愛♡スクリ〜ム|"
     # Yohane the Parhelion
-    r"幻(日のヨハネ|ヨハ)|genjitsu ?no ?yohane|sunshine in the mirror|#ヨハネ(生誕|誕生)祭|"
+    r"幻(日のヨハネ|ヨハ)|genjitsu ?no ?yohane|sunshine in the mirror|"
+    r"#ヨハネ(生誕|誕生)祭|"
     r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?曜|津島\s?善子|"
     r"国木田\s?花丸|小原\s?鞠莉|"
     r"がんば(ルビ|るび)|(^|[^@])ganbaruby|today['’]s maru\b|maru's month|#よしまる|"
@@ -224,7 +225,7 @@ EXCLUDE_RE = re.compile(
     #   and sister/brother/wife/etc.
     r"\b((i|s?he|they)(['’]?d)?|y(ou(['’]ll)?|(ou |['’])all)|we( (all|both))?|gotta|"
     r"(got|have|l(earn(ed)?|ike)) to|who|people( in (the )?[a-z]+[a-z])?|"
-    r"[a-z]{3,}s( that)?|my .+and [a-z]+[a-z])"
+    r"[a-z]{3,}(?<!a)(?<!e)s( that)?|my .+and [a-z]+[a-z])"
     # - *ing/*ly/bloody/also/always/do(es)/don't/happen(ed)/just/lowkey/still/tend to/
     #   too/will/would('ve)/... and
     r"(,? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|don['’]t|"
@@ -428,7 +429,8 @@ EXCLUDE_RE = re.compile(
     # - "Network Love" live (K-pop song by Seventeen)
     # - "No Loss, No Love" live (song by Spiritbox)
     # - "No Ordinary Love" live (song by Sade)
-    r"n(etwork|o (loss,? no|ordinary))|"
+    # - "Nothing Without Your Love" live (K-pop song by (Seok-)Jin)
+    r"n(etwork|o( (loss,? no|ordinary)|thing without your))|"
     # - "Prophecy x This Love" live (song by Taylor Swift)
     # - Pop the Balloon or/and/to/etc. Find Love live (dating show on YT/Netflix)
     # - "Punch-Drunk Love" live (romantic movie title)
@@ -476,9 +478,9 @@ EXCLUDE_RE = re.compile(
     # of line/post or before exclamation mark)
     r"power of love live(?!!|$)|\b(frankie|huey).+power of love live|"
     # perform(s/ed/ing/ance of)/sing(s/ing)/play(ing/s)/covers [song name ending with
-    # "Love"] live on/in(side)/outside/with
+    # "Love"] live on/in(side)/outside/with/again
     r"(perform(ance of|ed|ing|s)?|(play|sing)(ing|s)|covers) .+ (?<!from )love live"
-    r"($| +([io]n|(in|out)side|with)\b)|"
+    r"($| +([io]n|(in|out)side|with|again)\b)|"
     # if you (live in/near/around [place name]) ... and/but love live (...) music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)|if you)\s+.+\s+)?(and|but)\s+love"
     r" live( .+)? (music|comedy)\b|"
@@ -488,13 +490,13 @@ EXCLUDE_RE = re.compile(
     r"whether you.+ or (just )?love live |"
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
     # love love [something]" but not "(and) love live all/also/always/are/as/auf/but/
-    # could/did/does(n't)/doing/going/had/has/hates/I/in/is(t)/I'll/I'm/made/make(s)/
-    # making/music is(/was)/needs/never/should/song(s)/tries/tried/UR ... card(s)/was/
-    # will/would"
+    # could/did/does(n't)/doing/going/had/has/hates/I/in/is(t)/I'll/I'm/kinda/kind of/
+    # made/make(s)/ making/music is(/was)/needs/never/really/should/song(s)/tries/tried/
+    # UR ... card(s)/was/will/would"
     r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|re|s|uf)|"
     r"but|[csw]ould|[dg]oing|i([n'’]|st?)?|d(id|oes(n['’]?t)?)|ha([ds]|tes)|ne(eds|ver)|"
-    r"m(a(de|k(es?|ing))|usic (i|wa)s)|songs?|trie[ds]|ur .*cards?|w(as|ill))\b)|"
-    r"([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
+    r"kind(a| of)|m(a(de|k(es?|ing))|usic (i|wa)s)|really|songs?|trie[ds]|ur .*cards?|"
+    r"w(as|ill))\b)|([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live(r)" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+liver?\b|"
     # ... and love live(s) here/there
@@ -525,8 +527,9 @@ EXCLUDE_RE = re.compile(
     # find love live and/your/etc.
     r"\bfind love live \w{3,}\b|"
     # hashtags frequently used in #lovelive/"(#)love live" false positives
-    r"#(b(b27|eyondthegates)|eaglerock|god|faith|gratitude|hope|L(ove( live|IsBlind|r|Wins)"
-    r"|ivemusic)|motivation|OwnOurVenues|positivity|totp|[a-z]+vibes[a-z]*)\b|"
+    r"#(b(b27|eyondthegates)|eaglerock|god|faith|gratitude|hope|"
+    r"L(ove( live|IsBlind|r|Wins)|ivemusic)|motivation|OwnOurVenues|positivity|totp|"
+    r"[a-z]+vibes[a-z]*)\b|"
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
