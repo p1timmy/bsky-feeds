@@ -65,8 +65,8 @@ LOVELIVE_RE = re.compile(
     # YYY (You, Yoshiko/Yohane, RubY)
     r"(?<!わい)(?<!わーい)わいわいわい(?!わー?い)|"
     # AiScReam (Ayumu, Shiki, Ruby)
-    r"([^a-z]|\b)((ai[♡-]?|(?-i:[Aa]i ))scream\b|(?-i:AI (SCREAM\b|(?i:scream!))))|"
-    r"愛♡スクリ〜ム|"
+    r"([^a-z]|\b)((ai[♡-]?|(?-i:[Aa]i ))scream(?! queens)\b|"
+    r"(?-i:AI (SCREAM\b|(?i:scream!))))|愛♡スクリ〜ム|"
     # Yohane the Parhelion
     r"幻(日のヨハネ|ヨハ)|genjitsu ?no ?yohane|sunshine in the mirror|"
     r"#ヨハネ(生誕|誕生)祭|"
