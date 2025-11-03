@@ -36,7 +36,7 @@ LOVELIVE_RE = re.compile(
     r"yuri\b"
     r")| ?!? +(vs|X)\b| fest?\b)|"
     r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|"
-    r"(doe|is thi|mis|variou)s) love ?live\b|"
+    r"(doe|is thi|mis|variou|wa)s) love ?live\b|"
     r"#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
     # ラブライブ but not クラブライブ (club live)
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
