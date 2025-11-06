@@ -20,7 +20,7 @@ LOVELIVE_RE = re.compile(
     r"heardle|"
     r"e(n|pisodes?|ra|tc)\b|"
     r"f(an(art|s)?\b|(an)?fic\b|igures?|ranchise)|"
-    r"g(i(f|rls?)|lobal)\b|"
+    r"g(ame|i(f|rls?)|lobal)\b|"
     r"i(ce cream|dols?|n general)|"
     r"jumpscare|"
     r"m(aybe|e(rch|ntion(ed)?)|ovies?)\b|"
@@ -36,7 +36,7 @@ LOVELIVE_RE = re.compile(
     r"yuri\b"
     r")| ?!? +(vs|X)\b| fest?\b)|"
     r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|"
-    r"(doe|is thi|mis|variou|wa)s) love ?live\b|"
+    r"(doe|hate|is thi|love|m(eet|is)|variou|wa)s) love ?live\b|"
     r"#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
     # ラブライブ but not クラブライブ (club live)
     r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
@@ -55,7 +55,7 @@ LOVELIVE_RE = re.compile(
     r"高坂\s?穂乃果|絢瀬\s?絵里|南\s?ことり|園田\s?海未|星空\s?凛|西木野\s?真姫|東條\s?希|"
     r"小泉\s?花陽|矢澤\s?にこ|nico\snico\sni+\b|#niconiconi+\b|\bminalinsky\b|ミナリンスキー|"
     r"エリーチカ|\belichika\b|にこりんぱな|nicorinpana|金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
-    r"snow\s?halation([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
+    r"#にこまき|snow\s?halation([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
     r"(^|[^a-z\u00C0-\u024F\u1E00-\u1EFF\-])a[-\u2010]rise([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|$)|"
     r"綺羅\s?ツバサ|優木\s?あんじゅ|統堂\s?英玲奈|"
     # Love Live! Sunshine!!
@@ -85,7 +85,8 @@ LOVELIVE_RE = re.compile(
     r"高咲\s?侑|上原\s?歩夢|中須\s?かすみ|桜坂\s?しずく|朝香\s?果林|宮下\s?愛|近江\s?(彼方|遥)|"
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
     # Love Live! Superstar!!
-    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(or|tuto)?liella(?!(nd|tte| kelly))[!！]?|"
+    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(or|tuto|w+)?liella"
+    r"(?!(nd|tte| kelly))[!！]?|"
     r"結ヶ丘|yuigaoka|5yncri5e!?|kaleidoscore|トマカノーテ|tomakanote|スパスタ[3３]期|"
     r"澁谷\s?かのん|唐\s?可可|嵐千\s?砂都|平安名\s?すみれ|葉月\s?恋|桜小路\s?きな子|米女\s?メイ|"
     r"若菜\s?四季|鬼塚\s?(夏美|冬毬)|ウィーン・?マルガレーテ|"
@@ -154,8 +155,8 @@ CHARACTER_NAMES = set(
         ("Mari", "Ohara", False),
         # Saint Snow
         ("Kazuno", "Leah", True),
-        # NOTE: Leah Kazuno included in pattern builder to try to skip posts about a
-        # speedrunner named "LeahKazuno"
+        # NOTE: Leah Kazuno included in pattern builder to try to skip posts containing
+        # both "Donkey/Diddy Kong" and a speedrunner named "LeahKazuno"
         ("Sarah", "Kazuno", False),
         # Nijigasaki
         ("Yuu?", "Takasaki", False),
@@ -358,6 +359,7 @@ EXCLUDE_RE = re.compile(
     #   - "Satellite of Love" live (usually song by Lou Reed)
     #   - "Shot of Love" live (song by Bob Dylan)
     #   - "Songs of Love Live" (album by Mark Eitzel)
+    #   - "Sunday Kind of Love" live (song by different artists, usually Etta James)
     #   - that/what kind of love live (sometimes typo of "that/what kind of love life")
     #   - "The Book of Love" live (usually song by Peter Gabriel or The Magnetic Fields)
     #   - "The Meaning of Love" live (song by Depreche Mode)
@@ -367,7 +369,8 @@ EXCLUDE_RE = re.compile(
     #   - this/that/what kind of love live
     #   - "Tunnel of Love" live (usually song by Dire Straits or Bruce Springsteen)
     r"(caravan|hazards|l(exicon|ight)|most exalted potentate|prisoner|"
-    r"s(atellite|hot|ongs)|t(he ([bl]ook|house|meaning)|unnel)|([tw]hat|this) kind) of|"
+    r"s(atellite|hot|ongs)|t(he ([bl]ook|house|meaning)|unnel)|"
+    r"(sunday|[tw]hat|this) kind) of|"
     # - stuff ending with "in love live":
     #   - "Crazy in Love" live (song by Beyonce)
     #   - "Dangerously in Love" live (album by Beyonce)
@@ -379,10 +382,12 @@ EXCLUDE_RE = re.compile(
     #   - "I'm Not in Love" live (usually song by 10cc)
     r"(crazy|d(angerously|runk)|f(all(ing)?|riday i['’]?m)|i['’]?m not) in|"
     # - "Darker My Love" live (song by T.S.O.L.)
+    # - "Dance Me to the End of Love" live (song by Leonard Cohen)
     # - "Darkness at the Heart of My Love" live (song by Ghost)
     # - "Destination: Love Live" (album by The Make-Up)
     # - does not/doesn't love live [something]
-    r"d(ark(er my|ness at the heart of my)|estination:?|o(es)?( not|n['’]t))|"
+    r"d(a(nce me to the end of|rk(er my|ness at the heart of my))|estination:?|"
+    r"o(es)?( not|n['’]t))|"
     # - "Fake Love" live (song by BTS)
     # - "Feel Like Makin' Love" live (song by Roberta Flack or Bad Company)
     # - fight love live (usually Filoli, California historical marker)
@@ -442,14 +447,16 @@ EXCLUDE_RE = re.compile(
     # - really love live [something]
     # - Rinku Love Live (NSFW/R18 AI artist sometimes featured on @mikubot.bsky.social)
     r"r(ad(ar|ical)|eally|inku)|"
+    # - "Same Old Love" live (song by Selena Gomez)
     # - Savage Love Live (sex advice podcast by Dan Savage)
+    # - "Show Me Love" live (usually song by Robin S.)
+    # - Simon Love live (some random British artist with an official Bluesky account)
     # - "Somebody to Love" live (usually song by Queen or Jefferson Airplane or any song
     #   name ending with that phrase)
     # - "Some Kinda Love" live (song by The Velvet Underground)
     # - Stone Love live (usually Jamaican DJ group)
-    # - Simon Love live (some random British artist with an official Bluesky account)
     # - "Strange Love" live (usually album by T.S.O.L.)
-    r"s(avage|imon|o(me(body to| kinda))|t(one|range))|"
+    r"s(a(me old|vage)|imon|how me|o(me(body to| kinda))|t(one|range))|"
     # - hear/saw/see(n) [artist name] perform [song name ending with "Love"] live
     r"(hear|s(aw|een?)) .+ perform .+|"
     # - they love live [something] (all other cases not caught by the Great "I love
@@ -491,12 +498,13 @@ EXCLUDE_RE = re.compile(
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
     # love love [something]" but not "(and) love live all/also/always/are/as/auf/but/
     # could/did/does(n't)/doing/going/had/has/hates/I/in/is(t)/I'll/I'm/kinda/kind of/
-    # made/make(s)/ making/music is(/was)/needs/never/really/should/song(s)/tries/tried/
-    # UR ... card(s)/was/will/would"
+    # made/make(s)/ making/music is(/was)/needs/never/really/siempre/should/song(s)/
+    # tries/tried/UR ... card(s)/was/will/would"
     r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|re|s|uf)|"
     r"but|[csw]ould|[dg]oing|i([n'’]|st?)?|d(id|oes(n['’]?t)?)|ha([ds]|tes)|ne(eds|ver)|"
-    r"kind(a| of)|m(a(de|k(es?|ing))|usic (i|wa)s)|really|songs?|trie[ds]|ur .*cards?|"
-    r"w(as|ill))\b)|([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
+    r"kind(a| of)|m(a(de|k(es?|ing))|usic (i|wa)s)|really|s(iempre|ongs?)|trie[ds]|"
+    r"ur .*cards?|w(as|ill))\b)|"
+    r"([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live(r)" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+liver?\b|"
     # ... and love live(s) here/there
@@ -562,19 +570,21 @@ FAKE_CATCHU_RE = re.compile(
     r"(coo cool?|don['’]t|go((nn|tt)a)?|i(['’](ll|m)|s [a-z]+)?|le(m|t )me|w(anna|ill)|"
     r"(need|tr(ied|y(ing)?)|w(a(it|nt))) to) +catchu|"
     # Phrases starting with "catchu":
-    # - catchu all/catchme/later
+    # - catchu all/at the/catchme/later
     # - (Ricky when I) catchu Ricky
     # - (Don't) catchu slippin (up)
     # - Catchu The Future
     # - "catchu up" but not "CatChu up close/next"
     # - catchu p (typo of "catch up")
     # - catchu with (typo of "catchup with")
-    r"catchu +(all|catchme|later|ricky|slippin|the future|u?p\b(?! (close|next)))|"
-    r"\b(to )?catchu with|\bpinky[ -]catchu\b",
+    r"catchu +((@|at) the|all|catchme|later|ricky|slippin|the future|"
+    r"u?p\b(?! (close|next)))|\b(to )?catchu with|\bpinky[ -]catchu\b",
     re.IGNORECASE,
 )
 BAD_KEYWORDS_RE = re.compile(
-    r"\b(arxiv\b|europesays\.com\b|zmedia\.(twitren\.com|jp)\b|"
+    r"\b(arxiv\b|(europesays|newsbeep)\.com\b|zmedia\.(twitren\.com|jp)\b|"
+    # Moths with species names containing "liella" substring
+    r"#teammoth|"
     # Political keywords often used in "love live"/"Mia Taylor" false positives
     r"charlie ?kirk|GOP\b|MAGA\b|netanyahu|republicans?|trump\b|"
     # Gaza war victim fundraiser spam
@@ -616,7 +626,8 @@ def make_characters_pattern() -> re.Pattern:
         f"(?:^|[^@a-z])(?:{'|'.join(patterns)}|"
         r"^(?!.*\blazarus\b.*).*((?<!thank )you ?watanabe|"
         r"(?<!momo )(?<!shinichiro )(?<!akio )watanabe ?you(?!['’][a-z]+[a-z]|"
-        r" ([a-z]+[a-z]n['’]?t|are|have|will)\b)).*|leah kazuno|"
+        r" ([a-z]+[a-z]n['’]?t|are|have|will)\b)).*|"
+        r"^(?!.*\bkong\b.*).*\bleah ?kazuno|"
         r"(?<!\nby )(?<!^by )(?<!post by )(?<!\bby: )mia taylor|"
         r"^(?!.*\bexpanse\b.*).*ren ?hazuki.*)\b",
         re.IGNORECASE | re.DOTALL,
