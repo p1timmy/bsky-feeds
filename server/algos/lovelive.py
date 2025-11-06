@@ -627,7 +627,7 @@ def make_characters_pattern() -> re.Pattern:
         r"^(?!.*\blazarus\b.*).*((?<!thank )you ?watanabe|"
         r"(?<!momo )(?<!shinichiro )(?<!akio )watanabe ?you(?!['’][a-z]+[a-z]|"
         r" ([a-z]+[a-z]n['’]?t|are|have|will)\b)).*|"
-        r"^(?!.*\bkong\b.*).*\bleah ?kazuno|"
+        r"^(?!.*\b(kong|wario)\b.*).*\bleah kazuno|#leahkazuno|"
         r"(?<!\nby )(?<!^by )(?<!post by )(?<!\bby: )mia taylor|"
         r"^(?!.*\bexpanse\b.*).*ren ?hazuki.*)\b",
         re.IGNORECASE | re.DOTALL,
