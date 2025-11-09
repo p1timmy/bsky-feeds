@@ -227,11 +227,11 @@ EXCLUDE_RE = re.compile(
     r"\b((i|s?he|they)(['’]?d)?|y(ou(['’]ll)?|(ou |['’])all)|we( (all|both))?|gotta|"
     r"(got|have|l(earn(ed)?|ike)) to|who|people( in (the )?[a-z]+[a-z])?|"
     r"[a-z]{3,}(?<!a)(?<!e)s( that)?|my .+and [a-z]+[a-z])"
-    # - *ing/*ly/bloody/also/always/do(es)/don't/happen(ed)/just/lowkey/still/tend to/
-    #   too/will/would('ve)/... and
-    r"(,? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|do(es)?|bloody|don['’]t|"
-    r"((ha(ve|ppen(ed)?)|used?|grew) t|s|t(o|end t))o|would(['’]ve)?|even|lowkey|"
-    r"[a-z]+[a-z] (and|&))\,?)*"
+    # - *ing/*ly/bloody/also/always/(sure) do/does/don't (but not "don't do")/grew to
+    #   happen(ed)/just/lowkey/still/(have/used/tend) to/too/will/would('ve)/... and
+    r"(,? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|(sure )?do|does|bloody|"
+    r"don['’]t(?! do\b)|((ha(ve|ppen(ed)?)|used?|grew) t|s|t(o|end t))o|even|lowkey|"
+    r"would(['’]ve)?|[a-z]+[a-z] (and|&))\,?)*"
     # - love live [something]/love liver(s)/love Live (as in Ableton Live software)
     r" ((love )+live((?! (so |a(nd|s well)|but)\b),? &? ?#?\w+\b|rs?)|"
     r"love live($|[^\s\w]| \w+))|"
@@ -304,10 +304,10 @@ EXCLUDE_RE = re.compile(
     # - love live service/sport(s)/streaming/streams/strings
     # - love Live Score (some sports app)
     r"s(core|ervice|ports?|tr(eam(ing|s)|ings))|"
-    # - love live tables/theater/TV/television/texting
+    # - love live tables/theater/TV/television/texting/tweeting
     # - love "Live to Tell" (song by Madonna)
     # - love "Live Through This" (usually an album by Hole)
-    r"t(ables|e(levision|xting)|h(eat(er|re)|rough this)|o tell|v)|"
+    r"t(ables|elevision|(ex|wee)ting|h(eat(er|re)|rough this)|o tell|v)|"
     # - "love live the" (usually typo of "long live the") but not "Love Live the
     #   competition/Musical/School Idol"
     r"the\b(?! (competition|musical|school idol)\b)|"
@@ -320,7 +320,9 @@ EXCLUDE_RE = re.compile(
     # - love live bands/gigs/mealworms/performances/shows
     # - "Love Live in/from Paris" (misspelling of "Lover (Live from Paris)" album by
     #   Taylor Swift)
-    r"(band|gig|mealworm|performance|show|(in|from) pari)s)|"
+    r"(band|gig|mealworm|performance|show|(in|from) pari)s|"
+    # - 196x/197x after "love live" (usually live concert recordings)
+    r".*\b19[67][0-9]\b)|"
     # [Artist] - [song name ending with "love"] live
     r"\w+ [\-\u2013] .+ love live\b[^!]|"
     # that/just love liver (body part or food)
@@ -402,9 +404,10 @@ EXCLUDE_RE = re.compile(
     # - Helen Love live (Welsh rock band)
     # - his love live (usually typo of "his love life")
     r"h(elen|is)|"
+    # - "[song name ending with "For Your Love"]" live
     # - "How Deep Is Your Love" live (usually song by Bee Gees)
     # - "Sunshine of Your Love" live (usually song by Cream)
-    r"(how deep is|sunshine of) your|"
+    r"(for|how deep is|sunshine of) your|"
     # - compassion/hope/joy/kindness/pain/peace/unity and love live
     r"(compassion|hope|joy|kindness|p(ain|eace)|unity),? (and|&)|"
     # - "How To Love" live (usually song by Lil Wayne or any song name ending with
