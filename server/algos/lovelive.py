@@ -70,7 +70,7 @@ LOVELIVE_RE = re.compile(
     # Yohane the Parhelion
     r"幻(日のヨハネ|ヨハ)|genjitsu ?no ?yohane|sunshine in the mirror|"
     r"#ヨハネ(生誕|誕生)祭|"
-    r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?(曜|月生)|津島\s?善子|"
+    r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?[曜月]|津島\s?善子|"
     r"国木田\s?花丸|小原\s?鞠莉|"
     r"がんば(ルビ|るび)|(^|[^@])ganbaruby|today['’]s maru\b|maru's month|#よしまる|"
     r"(永久|\beikyuu\s?)(hours|stage)|"
