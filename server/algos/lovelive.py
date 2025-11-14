@@ -23,11 +23,11 @@ LOVELIVE_RE = re.compile(
     r"g(ame|i(f|rls?)|lobal)\b|"
     r"i(ce cream|dols?|n general)|"
     r"jumpscare|"
-    r"m(aybe|e(rch|ntion(ed)?)|ovies?)\b|"
+    r"m(aybe|e(ntion(ed)?|rch|troidvania)|ovies?)\b|"
     r"n(esoberis?|iji(gasaki)?)|"
     r"o(c(g|\b)|mf?g|r(?! die)\b|s(hi|t))|"
     r"pl(aylist|ush(ies?))|"
-    r"references?|"
+    r"referenc(es?|ia)|"
     r"s(chool ?idol|e(ction|ries|iyuus?)|hips?\b|ip([^a-z]|\b)|(ifs)?orter|ky|potted|"
     r"o(ng\b|undtrack)|taff|u(b ?units?|nshine|per ?star))|"
     r"t(cg|hings)|"
@@ -70,7 +70,7 @@ LOVELIVE_RE = re.compile(
     # Yohane the Parhelion
     r"幻(日のヨハネ|ヨハ)|genjitsu ?no ?yohane|sunshine in the mirror|"
     r"#ヨハネ(生誕|誕生)祭|"
-    r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?曜|津島\s?善子|"
+    r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?(曜|月生)|津島\s?善子|"
     r"国木田\s?花丸|小原\s?鞠莉|"
     r"がんば(ルビ|るび)|(^|[^@])ganbaruby|today['’]s maru\b|maru's month|#よしまる|"
     r"(永久|\beikyuu\s?)(hours|stage)|"
@@ -150,6 +150,7 @@ CHARACTER_NAMES = set(
         # NOTE: Watanabe You/You Watanabe included in pattern builder to try to skip
         # posts mentioning other people with Watanabe in their names, has the phrase
         # "thank you Watanabe", or contains "Lazarus" anywhere in the post
+        ("Tsuki", "Watanabe", False),
         ("Yoshiko", "Tsushima", False),
         ("Hanamaru", "Kunikida", False),
         ("Mari", "Ohara", False),
@@ -269,10 +270,10 @@ EXCLUDE_RE = re.compile(
     # - love "Live and Let Die" (James Bond movie title)
     # - love "Live Die Repeat" (alt name of "Edge of Tomorrow" movie)
     r"((and|&|or) (let )?)?die( repeat)?\b|"
+    # - love live demos/dragons
+    r"d(emo|ragon)s|"
     # - love live entertainment
     r"entertainment|"
-    # - love live dragons
-    r"dragons|"
     # - love live fact checking
     # - love "Live Free and Die Hard"
     # - love live folk
@@ -304,10 +305,10 @@ EXCLUDE_RE = re.compile(
     # - love live service/sport(s)/streaming/streams/strings
     # - love Live Score (some sports app)
     r"s(core|ervice|ports?|tr(eam(ing|s)|ings))|"
-    # - love live tables/theater/TV/television/texting/tweeting
+    # - love live tables/tapes/theater/TV/television/texting/tweeting
     # - love "Live to Tell" (song by Madonna)
     # - love "Live Through This" (usually an album by Hole)
-    r"t(ables|elevision|(ex|wee)ting|h(eat(er|re)|rough this)|o tell|v)|"
+    r"t(a(bl|p)es|elevision|(ex|wee)ting|h(eat(er|re)|rough this)|o tell|v)|"
     # - "love live the" (usually typo of "long live the") but not "Love Live the
     #   competition/Musical/School Idol"
     r"the\b(?! (competition|musical|school idol)\b)|"
