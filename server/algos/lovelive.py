@@ -422,11 +422,12 @@ EXCLUDE_RE = re.compile(
     # - "Kill for Love" live (usually song by Lady Gaga)
     r"kill for|"
     # - laugh/let (that)/live love live
+    # - "La La Love" live (K-pop song by NCT DREAM)
     # - "Love, Hate, Love" live (song by Alice In Chains)
     # - "Love and Only Love" live (song by Neil Young)
     # - "Loud Love" live (song by Soundgarden)
     # - "Love Meeting Love" live (song by Level 42)
-    r"l(augh|et( that)?|ive|o(ud|ve( and only love|,? hate,?| meeting love)))|"
+    r"l(a( la|ugh)|et( that)?|ive|o(ud|ve( and only love|,? hate,?| meeting love)))|"
     # - "life love live" but not "Link Life Love Live"
     r"(?<!link )life|"
     # - "Lotta Love" live (song by either Neil Young or Nicolette Larson) or "Whole
