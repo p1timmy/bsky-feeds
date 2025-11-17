@@ -304,7 +304,8 @@ EXCLUDE_RE = re.compile(
     r"r(enditions|ock|ust)|"
     # - love live service/sport(s)/streaming/streams/strings
     # - love Live Score (some sports app)
-    r"s(core|ervice|ports?|tr(eam(ing|s)|ings))|"
+    # - Love Live Sweets (unrelated local bakery in New Jersey)
+    r"s(core|ervice|ports?|tr(eam(ing|s)|ings)|weets)|"
     # - love live tables/tapes/theater/TV/television/texting/tweeting
     # - love "Live to Tell" (song by Madonna)
     # - love "Live Through This" (usually an album by Hole)
