@@ -228,11 +228,12 @@ EXCLUDE_RE = re.compile(
     r"\b((i|s?he|they)(['’]?d)?|y(ou(['’]ll)?|(ou |['’])all)|we( (all|both))?|gotta|"
     r"(got|have|l(earn(ed)?|ike)) to|who|people( in (the )?[a-z]+[a-z])?|"
     r"[a-z]{3,}(?<!a)(?<!e)s( that)?|my .+and [a-z]+[a-z])"
-    # - *ing/*ly/bloody/also/always/(sure) do/does/don't (but not "don't do")/grew to
-    #   happen(ed)/just/lowkey/still/(have/used/tend) to/too/will/would('ve)/... and
+    # - *ing/*ly/bloody/also/always/can't/cannot/(sure) do/does/don't (but not "don't
+    #   do")/grew to happen(ed)/just/lowkey/still/(have/used/tend) to/too/will/
+    #   would('ve)/... and
     r"(,? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|(sure )?do|does|bloody|"
     r"don['’]t(?! do\b)|((ha(ve|ppen(ed)?)|used?|grew) t|s|t(o|end t))o|even|lowkey|"
-    r"would(['’]ve)?|[a-z]+[a-z] (and|&))\,?)*"
+    r"would(['’]ve)?|can(['’]|((['’]?t)? )?no)t|[a-z]+[a-z] (and|&))\,?)*"
     # - love live [something]/love liver(s)/love Live (as in Ableton Live software)
     r" ((love )+live((?! (so |a(nd|s well)|but)\b),? &? ?#?\w+\b|rs?)|"
     r"love live($|[^\s\w]| \w+))|"
