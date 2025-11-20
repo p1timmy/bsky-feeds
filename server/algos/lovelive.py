@@ -38,8 +38,8 @@ LOVELIVE_RE = re.compile(
     r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|"
     r"(doe|hate|is thi|love|m(eet|is)|variou|wa)s) love ?live\b|"
     r"#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
-    # ラブライブ but not クラブライブ (club live)
-    r"([^ク]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
+    # ラブライブ but not クラブライブ (club live) or イコラブライブ (Ikolab Live)
+    r"([^クコ]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     # School idol
     r"スクールアイドル|(?<!middle )(?<!high )(?<!old )(?<!old-)(?<!your )\b"
     r"(?<!@)(#\w+)?school ?idol(?! (story|book)\b)(s\b| ?((festiv|music)al|project))?|"
@@ -72,7 +72,8 @@ LOVELIVE_RE = re.compile(
     r"#ヨハネ(生誕|誕生)祭|"
     r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?[曜月]|津島\s?善子|"
     r"国木田\s?花丸|小原\s?鞠莉|"
-    r"がんば(ルビ|るび)|(^|[^@])ganbaruby|today['’]s maru\b|maru's month|#よしまる|"
+    r"がんば(ルビ|るび)|(^|[^@])ganbaruby|today['’]s maru\b|maru's month|"
+    r"#よし(まる|りこ)|るびまる|\b((ruby|yoha)maru|yo((shi|ha)riko|u(chika|riko))|diamari)\b|"
     r"(永久|\beikyuu\s?)(hours|stage)|"
     r"(?<!\bRT @)(?<!x.com/)saint\s?snow([^a-z]|$)|"
     r"鹿角\s?(理亞|聖良)|"
@@ -101,7 +102,8 @@ LOVELIVE_RE = re.compile(
     r"^(?!(.|\n)*\broses?\b(.|\n)*$)((.|\n)*\bcerise\s?bouquet\b(.|\n)*)|"
     r"スリーズブーケ|dollches(tra(?!-art)|\b)|ドルケストラ|mira-cra\spark!?|"
     r"みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|\bedel\s?note\b|"
-    r"るりのとゆかいなつづりたち|#新メンバーお披露目105期|"
+    r"るりのとゆかいなつづりたち|ruri&to|PRINCEε＞ε＞|Nεw\sBlack|ichigo\smilk\slove|"
+    r"#新メンバーお披露目105期|"
     r"乙宗\s?梢|夕霧\s?綴理|藤島\s?慈|日野下\s?花帆|村野\s?さやか|大沢\s?瑠璃乃|百生\s?吟子|"
     r"徒町\s?小鈴|安養寺\s?姫芽|大賀美沙知|桂城\s?泉|セラス[・\s]?柳田[・\s]?リリエンフェルト|"
     # Love Live! Bluebird
@@ -119,7 +121,7 @@ LOVELIVE_RE = re.compile(
     re.IGNORECASE,
 )
 SUKUFEST_RE = re.compile(
-    r"(^|[^マア])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄|金沢|香川|ニセコ)"
+    r"(^|[^マアレ])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄|金沢|香川|ニセコ)"
 )
 YOHANE_RE = re.compile(r"\byohane(?!(-label| mbatizati))\b", re.IGNORECASE)
 CATCHU_RE = re.compile(
@@ -276,11 +278,12 @@ EXCLUDE_RE = re.compile(
     # - love live entertainment
     r"entertainment|"
     # - love live fact checking
-    # - love "Live Free and Die Hard"
+    # - Love Live Festival (usually rock music festival by @solidents.bsky.social)
     # - love live folk
+    # - love "Live Free and Die Hard"
     # - love "Live from Daryl's House" (MTV show)
     # - love "Live from Tubby's House" (weekly live music stream)
-    r"f(act checking|olk\b|r(ee (and|&) die hard|om (daryl|tubby)['’]?s))|"
+    r"f(act checking|estival|olk\b|r(ee (and|&) die hard|om (daryl|tubby)['’]?s))|"
     # - love live him
     r"him|"
     # - love live interaction
@@ -297,8 +300,8 @@ EXCLUDE_RE = re.compile(
     r"l(ife|o(cal|ng|ud( music)?|ve(?! wing bell)))|"
     # - love live music at
     r"music at\b|"
-    # - love live oak(s)
-    r"oaks?|"
+    # - love live oak(s)/on stage
+    r"o(aks?|n stage)|"
     # - love live renditions
     # - love live rock (typo of "long live rock")
     # - love "Live Rust" (album by Neil Young & Crazy Horse)
@@ -347,8 +350,9 @@ EXCLUDE_RE = re.compile(
     r"(art(ist)?|band|music|people|[a-z]+s) (i|you|they)( ([a-z]+[a-z],? )+(and|&))?|"
     # - "Bad Love" live (usually song by Key or Eric Clapton) but not "how bad Love Live"
     r"(?<!how )bad|"
+    # - "Blind Love" live (different songs by different artists)
     # - "Bye Bye Love" live (usually song by The Everly Brothers or Simon & Garfunkel)
-    r"bye bye|"
+    r"b(lind|ye bye)|"
     # - can/could you not love live
     # - "Can't Buy Me Love" live (usually song by the Beatles)
     # - "Can't Hide Love" live (usually song by D'Angelo)
@@ -357,6 +361,7 @@ EXCLUDE_RE = re.compile(
     r"c(an['’]?t (buy me|hide)|(an|ould) you not|omp(licated|uter))|"
     # - stuff ending with "of love live":
     #   - "Caravan of Love" live (usually song by The Housemartins)
+    #   - "Genius of Love" live (song by Tom Tom Club)
     #   - "Hazards of Love" live (album by The Decemberists)
     #   - "Lexicon of Love" live (album by ABC)
     #   - "Light of Love" live (usually song by Florence and the Machine)
@@ -373,7 +378,7 @@ EXCLUDE_RE = re.compile(
     #   - "(Thee) Most Exalted Potentate of Love" live (song by The Cramps)
     #   - this/that/what kind of love live
     #   - "Tunnel of Love" live (usually song by Dire Straits or Bruce Springsteen)
-    r"(caravan|hazards|l(exicon|ight)|most exalted potentate|prisoner|"
+    r"(caravan|genius|hazards|l(exicon|ight)|most exalted potentate|prisoner|"
     r"s(atellite|hot|ongs)|t(he ([bl]ook|house|meaning)|unnel)|"
     r"(sunday|[tw]hat|this) kind) of|"
     # - stuff ending with "in love live":
@@ -385,7 +390,8 @@ EXCLUDE_RE = re.compile(
     #   - "(Can't Help) Falling in Love" live (song by different artists)
     #   - "Friday I'm In Love" live (usually song by The Cure)
     #   - "I'm Not in Love" live (usually song by 10cc)
-    r"(crazy|d(angerously|runk)|f(all(ing)?|riday i['’]?m)|i['’]?m not) in|"
+    #   - "(I) Think I'm In Love" live (usually song by Eddie Money)
+    r"(crazy|d(angerously|runk)|fall(ing)?|(friday|think) i['’]?m|i['’]?m not) in|"
     # - "Darker My Love" live (song by T.S.O.L.)
     # - "Dance Me to the End of Love" live (song by Leonard Cohen)
     # - "Darkness at the Heart of My Love" live (song by Ghost)
@@ -396,9 +402,18 @@ EXCLUDE_RE = re.compile(
     # - "Fake Love" live (song by BTS)
     # - "Feel Like Makin' Love" live (song by Roberta Flack or Bad Company)
     # - fight love live (usually Filoli, California historical marker)
-    # - "Fool for Love" live
     # - "Frozen Love" live (song by Buckingham Nicks)
-    r"f(ake|eel like makin['’g]?|ight|ool for|rozen)|"
+    r"f(ake|eel like makin['’g]?|ight|rozen)|"
+    # - stuff ending with "for love live":
+    #   - "Exist for Love" live (song by Aurora)
+    #   - "Fool for Love" live (different songs by different artists)
+    #   - "Kill for Love" live (usually song by Lady Gaga)
+    #   - "Out for Love" live (song from "Hazbin Hotel" animated series, but not "came
+    #     out for love live")
+    #   - "(Bardic) Quest for Love" live (indie visual novel game)
+    #   - "Ready for Love" live (usually song by Bad Company, but not "get(ting) ready
+    #     for love live")
+    r"(exist|(foo|kil)l|(?<!\bcame )out|quest|(?<!\bget )(?<!\bgetting )ready) for|"
     # - G. Love live (American singer/rapper)
     # - Gerry Love live (British rock singer/bass guitar player)
     r"g(er(ard|ry)|\.?)|"
@@ -421,20 +436,18 @@ EXCLUDE_RE = re.compile(
     r"(that)?\bI(['’]d)?|"
     # - "I Feel Love" live (usually song by Donna Summer)
     r"I feel|"
-    # - "Kill for Love" live (usually song by Lady Gaga)
-    r"kill for|"
     # - laugh/let (that)/live love live
     # - "La La Love" live (K-pop song by NCT DREAM)
     # - "Love, Hate, Love" live (song by Alice In Chains)
     # - "Love and Only Love" live (song by Neil Young)
     # - "Loud Love" live (song by Soundgarden)
     # - "Love Meeting Love" live (song by Level 42)
-    r"l(a( la|ugh)|et( that)?|ive|o(ud|ve( and only love|,? hate,?| meeting love)))|"
+    r"l(a( la|ugh)|et( that)?|ive|o(ud|ve( and only|,? hate,?| meeting)))|"
     # - "life love live" but not "Link Life Love Live"
     r"(?<!link )life|"
     # - "Lotta Love" live (song by either Neil Young or Nicolette Larson) or "Whole
     #   Lotta Love" live (usually song by Led Zeppelin)
-    r"(whole )? lotta love|"
+    r"(whole )?lotta|"
     # - "Mad Love" live (usually album by Linda Ronstadt)
     # - Mike Love live (American reggae artist)
     r"m(ad|ike)|"
@@ -446,7 +459,7 @@ EXCLUDE_RE = re.compile(
     # - "Prophecy x This Love" live (song by Taylor Swift)
     # - Pop the Balloon or/and/to/etc. Find Love live (dating show on YT/Netflix)
     # - "Punch-Drunk Love" live (romantic movie title)
-    r"p(op [a-z]+ balloon [a-z]+ find|rophecy x this|unch[ -]drunk love)|"
+    r"p(op [a-z]+ balloon [a-z]+ find|rophecy x this|unch[ -]drunk)|"
     # - Quest Love live (famous drummer/DJ)
     r"quest|"
     # - "Radar Love" live (song by Golden Earring)
@@ -549,14 +562,8 @@ EXCLUDE_RE = re.compile(
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
     r"\b(floyd|grateful dead|kahan|marley|oasis|phish)\b|"
-    # Love Live (rock music) Festival and its venue and bands
-    r"\b(official )?love live festival\b|\blovelivefestival|"
-    r"\b((black(pool| ?(lak|vultur)es?))|cancel ?the ?transmission|fugitive|"
-    r"darker ?my ?horizon|g(in ?annie|r(a(ham ?oliver|nd ?slam)|eyfox))|"
-    r"j(a(nice ?lee|yler)|oan ?of ?arc)|king ?voodoo|m(chale['‘’`]?s|idnite)|nazareth|"
-    r"p(an ?tang|hil ?campbell)|r(amblin|e(d ?giant|venant))|screaming ?eagles|"
-    r"t(akeaway ?thieve|his ?house ?we ?built|r(oy ?redfern|ucker ?diablo)|ygers)|"
-    r"urban ?commandos?|zac ?the ?locust|winter ?gardens)|"
+    # Venue of Love Live (rock music) Festival
+    r"\bblackpool|"
     # lovelive.com/net/org/etc.
     r"\blovelive\.[a-z]+[a-z]\b",
     re.IGNORECASE | re.MULTILINE,
@@ -601,8 +608,8 @@ BAD_KEYWORDS_RE = re.compile(
     # "Buy Anything From Amazon" spam
     r"zort\.my/|"
     # NSFW keywords
-    r"bds&?m|c(ock(s|\b)|um(ming)?([^a-z]|\b))|di(aper|ck|ldo)|(futanar|henta)i|nude|"
-    r"p(enis|regnant)|s(ex([^a-z]|\b)|lut)"
+    r"bds&?m|c(am ?girl|ock(s|\b)|um(ming)?([^a-z]|\b))|di(aper|ck|ldo)|(futanar|henta)i|"
+    r"jock[sa]traps?|nude|p(enis|regnant)|s(ex([^a-z]|\b)|lut)"
     # NSFW hashtags
     r")|#(ecchi|nsfw|porn|r18)",
     re.IGNORECASE,
