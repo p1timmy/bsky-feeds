@@ -449,8 +449,9 @@ EXCLUDE_RE = re.compile(
     #   Lotta Love" live (usually song by Led Zeppelin)
     r"(whole )?lotta|"
     # - "Mad Love" live (usually album by Linda Ronstadt)
+    # - Maji Love Live (live concerts by ST☆RISH from Uta no Prince-sama)
     # - Mike Love live (American reggae artist)
-    r"m(ad|ike)|"
+    r"m(a(d|ji)|ike)|"
     # - "Network Love" live (K-pop song by Seventeen)
     # - "No Loss, No Love" live (song by Spiritbox)
     # - "No Ordinary Love" live (song by Sade)
