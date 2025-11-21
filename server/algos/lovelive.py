@@ -302,10 +302,11 @@ EXCLUDE_RE = re.compile(
     r"music at\b|"
     # - love live oak(s)/on stage
     r"o(aks?|n stage)|"
+    # - love live reaction(s)
     # - love live renditions
     # - love live rock (typo of "long live rock")
     # - love "Live Rust" (album by Neil Young & Crazy Horse)
-    r"r(enditions|ock|ust)|"
+    r"r(e(actions?|nditions)|ock|ust)|"
     # - love live service/sport(s)/streaming/streams/strings
     # - love Live Score (some sports app)
     # - Love Live Sweets (unrelated local bakery in New Jersey)
@@ -488,10 +489,11 @@ EXCLUDE_RE = re.compile(
     # - "Wasted Love" live (song by JJ)
     # - we love live [something] (all other cases not caught by the Great "I love live
     #   [something]" Hoarde pattern)
+    # - "We Are Love" live (album by The Charlatans)
     # - "We Found Love" live (song by Rihanna feat. Calvin Harris or any song name
     #   ending with that phrase)
     # - "What Time Is Love" live (usually song by The KLF)
-    r"w(asted|e( found)?|hat time is|ould)|"
+    r"w(asted|e( (are|found))?|hat time is|ould)|"
     # - you are/you're in love live
     r"you( a|['’])re in) love live\b|"
     # "Big Love" live (in) (song by Fleetwood Mac or Lindsey Buckingham)
