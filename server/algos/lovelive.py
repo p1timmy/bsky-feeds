@@ -228,16 +228,17 @@ EXCLUDE_RE = re.compile(
     # - I('d)/he/she/they/you (all)/y'all/you'll/we (all/both)/gotta/got to/have to/
     #   learn(ed) to/like to/who, people (in [some place]), [plural word] that, my ...
     #   and sister/brother/wife/etc.
-    r"\b((i|s?he|they)(['’]?d)?|y(ou(['’]ll)?|(ou |['’])all)|we( (all|both))?|gotta|"
-    r"(got|have|l(earn(ed)?|ike)) to|who|people( in (the )?[a-z]+[a-z])?|"
+    r"\b((i|s?he|they)(['’]?(d|ve))?|y(ou(['’]ll)?|(ou |['’])all)|we( (all|both))?|"
+    r"gotta|(got|have|l(earn(ed)?|ike)) to|who|people( in (the )?[a-z]+[a-z])?|"
     r"[a-z]{3,}(?<!a)(?<!e)s( that)?|my .+and [a-z]+[a-z])"
     # - *ing/*ly/bloody/also/always/can't/cannot/(sure) do/does/don't (but not "don't
-    #   do")/grew to happen(ed)/just/lowkey/still/(have/used/tend) to/too/will/
+    #   do")/just/lowkey/still/(came/come/grew/have/happened/use(d)/tend) to/too/will/
     #   would('ve)/... and
     r"(,? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|(sure )?do|does|bloody|"
-    r"don['’]t(?! do\b)|((ha(ve|ppen(ed)?)|used?|grew) t|s|t(o|end t))o|even|lowkey|"
-    r"would(['’]ve)?|can(['’]|((['’]?t)? )?no)t|[a-z]+[a-z] (and|&))\,?)*"
-    # - love live [something]/love liver(s)/love Live (as in Ableton Live software)
+    r"don['’]t(?! do\b)|((c[ao]me|ha(ve|ppen(ed)?)|used?|grew) t|s|t(o|end t))o|even|"
+    r"lowkey|would(['’]ve)?|can(['’]|((['’]?t)? )?no)t|[a-z]+[a-z] (and|&))\,?)*"
+    # - love live [something]/love liver(s)/love Live (as in a band named LĪVE, Ableton
+    #   Live music software, or typo of "love life")
     r" ((love )+live((?! (so |a(nd|s well)|but)\b),? &? ?#?\w+\b|rs?)|"
     r"love live($|[^\s\w]| \w+))|"
     # Anyone ... love live music?
@@ -482,9 +483,10 @@ EXCLUDE_RE = re.compile(
     r"s(a(me old|vage)|imon|how me|o(me(body to| kinda))|t(one|range))|"
     # - hear/saw/see(n) [artist name] perform [song name ending with "Love"] live
     r"(hear|s(aw|een?)) .+ perform .+|"
+    # - Team Love Live (typo of "Team Love Life")
     # - they love live [something] (all other cases not caught by the Great "I love
     #   live [something]" Hoarde pattern)
-    r"they|"
+    r"t(eam|hey)|"
     # - would love live [something] (all other cases not caught by the Great "I love
     #   live [something]" Hoarde pattern)
     # - "Wasted Love" live (song by JJ)
