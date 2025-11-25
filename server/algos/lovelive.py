@@ -259,13 +259,14 @@ EXCLUDE_RE = re.compile(
     r"\blove live ("
     # - love live action
     # - love Live A Live (video game title)
+    # - Love Live Alive (Genesis Climber MOSPEADA OVA)
     # - love live ammo (usually "Republicans love live ammo and dead kids")
     # - love live and be happy/nice/etc.
     # - love "Live and Dangerous" (album by Thin Lizzy)
     # - love "LIVE and FALL" (album by Xdinary Heroes)
     # - love live at (usually songs ending with "Love" + "live at [some place]" but not
     #   "love live at it(')s")
-    r"a(ction|mmo|nd (be\b|dangerous|fall)|t\b(?!it['’]?s\b)| live)|"
+    r"a(ction|mmo|nd (be\b|dangerous|fall)|t\b(?!it['’]?s\b)| ?live)|"
     # - Love Live Bleeding (typo of "Love Lies Bleeding")
     # - love live broadcasting
     r"b(leeding|roadcasting)|"
