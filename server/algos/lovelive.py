@@ -271,7 +271,8 @@ EXCLUDE_RE = re.compile(
     # - love live broadcasting
     r"b(leeding|roadcasting)|"
     # - Love live Canada (typo of "Long live Canada")
-    r"canada|"
+    # - love live cricket
+    r"c(anada|ricket)|"
     # - love live (and/or) die
     # - love "Live and Let Die" (James Bond movie title)
     # - love "Live Die Repeat" (alt name of "Edge of Tomorrow" movie)
@@ -288,7 +289,8 @@ EXCLUDE_RE = re.compile(
     # - love "Live from Tubby's House" (weekly live music stream)
     r"f(act checking|estival|olk\b|r(ee (and|&) die hard|om (daryl|tubby)['’]?s))|"
     # - love live him
-    r"him|"
+    # - love live hockey
+    r"h(im|ockey)|"
     # - love live interaction
     r"interaction|"
     # - Love Live Italian
@@ -335,9 +337,9 @@ EXCLUDE_RE = re.compile(
     r".*\b19[67][0-9]\b)|"
     # [Artist] - [song name ending with "love"] live
     r"\w+ [\-\u2013] .+ love live\b[^!]|"
-    # that/just love liver (body part or food)
-    r"\b(jus|tha)t ([a-z]+[a-z] )?love liver\b|"
     # Words/phrases ending with "love live"
+    # that/just/my ... love liver (body part or food)
+    r"\b((jus|tha)t( [a-z]+[a-z])?|my( ([a-z,'’]+|&))+) love liver\b|"
     r"\b("
     # - "2Kindsa Love" live (song by The Jon Spencer Blues Explosion)
     r"2 ?kindsa|"
@@ -345,11 +347,12 @@ EXCLUDE_RE = re.compile(
     #   her/their love life/lives")
     r"(about|confess[a-z]*) (h(er|is)|their)|"
     # - absolutely love live [something]
+    # - "Ain't Talkin' 'bout Love" live (song by Velvet Revolver or Van Halen)
     # - "All My Love" live (usually song by Coldplay or any song name ending with
     #   that phrase)
     # - "All Your Love" live (usually song by Otis Rush or any song name ending with
     #   that phrase)
-    r"a(bsolutely|ll (my|your))|"
+    r"a(bsolutely|in['’]?t talkin['’]? ['‘’]?bout|ll (my|your))|"
     # Art(ist(s))/band(s)/music/people/[some plural word] I/you/etc. (... and) love live
     r"(art(ist)?|band|music|people|[a-z]+s) (i|you|they)( ([a-z]+[a-z],? )+(and|&))?|"
     # - "Bad Love" live (usually song by Key or Eric Clapton) but not "how bad Love Live"
@@ -389,13 +392,13 @@ EXCLUDE_RE = re.compile(
     #   - "Crazy in Love" live (song by Beyonce)
     #   - "Dangerously in Love" live (album by Beyonce)
     #   - "Drunk in Love" live (song by Beyonce)
-    #   - "Fall in Love" live (different songs by different artists or any song name
-    #     ending with that phrase)
+    #   - "Fall(s) in Love" live (usually different songs by different artists or any
+    #     song name ending with that phrase)
     #   - "(Can't Help) Falling in Love" live (song by different artists)
     #   - "Friday I'm In Love" live (usually song by The Cure)
     #   - "I'm Not in Love" live (usually song by 10cc)
     #   - "(I) Think I'm In Love" live (usually song by Eddie Money)
-    r"(crazy|d(angerously|runk)|fall(ing)?|(friday|think) i['’]?m|i['’]?m not) in|"
+    r"(crazy|d(angerously|runk)|fall(ing|s)?|(friday|think) i['’]?m|i['’]?m not) in|"
     # - "Darker My Love" live (song by T.S.O.L.)
     # - "Dance Me to the End of Love" live (song by Leonard Cohen)
     # - "Darkness at the Heart of My Love" live (song by Ghost)
@@ -461,10 +464,11 @@ EXCLUDE_RE = re.compile(
     # - "No Ordinary Love" live (song by Sade)
     # - "Nothing Without Your Love" live (K-pop song by (Seok-)Jin)
     r"n(etwork|o( (loss,? no|ordinary)|thing without your))|"
-    # - "Prophecy x This Love" live (song by Taylor Swift)
+    # - "Pirate Love" live (song by The Heartbreakers)
     # - Pop the Balloon or/and/to/etc. Find Love live (dating show on YT/Netflix)
+    # - "Prophecy x This Love" live (song by Taylor Swift)
     # - "Punch-Drunk Love" live (romantic movie title)
-    r"p(op [a-z]+ balloon [a-z]+ find|rophecy x this|unch[ -]drunk)|"
+    r"p(irate|op [a-z]+ balloon [a-z]+ find|rophecy x this|unch[ -]drunk)|"
     # - Quest Love live (famous drummer/DJ)
     r"quest|"
     # - "Radar Love" live (song by Golden Earring)
@@ -485,9 +489,10 @@ EXCLUDE_RE = re.compile(
     # - hear/saw/see(n) [artist name] perform [song name ending with "Love"] live
     r"(hear|s(aw|een?)) .+ perform .+|"
     # - Team Love Live (typo of "Team Love Life")
+    # - "The One I Love" live (song by R.E.M.)
     # - they love live [something] (all other cases not caught by the Great "I love
     #   live [something]" Hoarde pattern)
-    r"t(eam|hey)|"
+    r"t(eam|he( one i|y))|"
     # - would love live [something] (all other cases not caught by the Great "I love
     #   live [something]" Hoarde pattern)
     # - "Wasted Love" live (song by JJ)
