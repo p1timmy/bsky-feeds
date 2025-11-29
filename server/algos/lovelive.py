@@ -370,6 +370,7 @@ EXCLUDE_RE = re.compile(
     #   - "Caravan of Love" live (usually song by The Housemartins)
     #   - "Genius of Love" live (song by Tom Tom Club)
     #   - "Hazards of Love" live (album by The Decemberists)
+    #   - "(The) House of Love" live (usually British alt rock band or song by Christine)
     #   - "Lexicon of Love" live (album by ABC)
     #   - "Light of Love" live (usually song by Florence and the Machine)
     #   - "Prisoner of Love" live (song by James Brown)
@@ -380,13 +381,12 @@ EXCLUDE_RE = re.compile(
     #   - that/what kind of love live (sometimes typo of "that/what kind of love life")
     #   - "The Book of Love" live (usually song by Peter Gabriel or The Magnetic Fields)
     #   - "The Meaning of Love" live (song by Depreche Mode)
-    #   - "The House of Love" live (usually song by Christine)
     #   - "The Look of Love" live (song by different artists)
     #   - "(Thee) Most Exalted Potentate of Love" live (song by The Cramps)
     #   - this/that/what kind of love live
     #   - "Tunnel of Love" live (usually song by Dire Straits or Bruce Springsteen)
-    r"(caravan|genius|hazards|l(exicon|ight)|most exalted potentate|prisoner|"
-    r"s(atellite|hot|ongs)|t(he ([bl]ook|house|meaning)|unnel)|"
+    r"(caravan|genius|h(azards|ouse)|l(exicon|ight)|most exalted potentate|prisoner|"
+    r"s(atellite|hot|ongs)|t(he ([bl]ook|meaning)|unnel)|"
     r"(sunday|[tw]hat|this) kind) of|"
     # - stuff ending with "in love live":
     #   - "Crazy in Love" live (song by Beyonce)
