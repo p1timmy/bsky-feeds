@@ -235,7 +235,7 @@ EXCLUDE_RE = re.compile(
     #   do")/just/lowkey/still/(came/come/grew/have/happened/use(d)/tend) to/too/will/
     #   would('ve)/... and
     r"(,? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|(sure )?do|does|bloody|"
-    r"don['’]t(?! do\b)|((c[ao]me|ha(ve|ppen(ed)?)|used?|grew) t|s|t(o|end t))o|even|"
+    r"don['’]?t(?! do\b)|((c[ao]me|ha(ve|ppen(ed)?)|used?|grew) t|s|t(o|end t))o|even|"
     r"lowkey|would(['’]ve)?|can(['’]|((['’]?t)? )?no)t|[a-z]+[a-z] (and|&))\,?)*"
     # - love live [something]/love liver(s)/love Live (as in a band named LĪVE, Ableton
     #   Live music software, or typo of "love life")
@@ -485,7 +485,8 @@ EXCLUDE_RE = re.compile(
     # - "Some Kinda Love" live (song by The Velvet Underground)
     # - Stone Love live (usually Jamaican DJ group)
     # - "Strange Love" live (usually album by T.S.O.L.)
-    r"s(a(me old|vage)|imon|how me|o(me(body to| kinda))|t(one|range))|"
+    # - "Super Duper Love" live (song by Sugar Billy or Joss Stone)
+    r"s(a(me old|vage)|imon|how me|o(me(body to| kinda))|t(one|range)|uper duper)|"
     # - hear/saw/see(n) [artist name] perform [song name ending with "Love"] live
     r"(hear|s(aw|een?)) .+ perform .+|"
     # - Team Love Live (typo of "Team Love Life")
@@ -560,10 +561,10 @@ EXCLUDE_RE = re.compile(
     r'\b((h(er|is)|their|your?)( [a-z]+ing)?|learn) love live([.,"”]|$| (i|wa)s\b)|'
     # playing [video game title ending with "Love"] live on
     r"\bplay(ing)? .+ love live on|"
-    # I('d/'m/'ve) got/need/etc. to/gotta/gonna hear/see/have heard [song name ending
-    # with "Love"] live
-    r"\bI(['’][dm]|ve)? ((([a-z]+ ){,2}to|go(tt|nn)a) (hear|see)|(have )?heard)"
-    r" ([\w'’]+ )+love live|"
+    # I('d/'m/'ve)/My ... [got/need/went/etc.] to/gotta/gonna [hear/saw/see/have] heard
+    # [song/artist name ending with "Love"] live
+    r"\b(I(['’][dm]|ve)?|my( [a-z'’,&]+)+) ((([a-z]+ ){,2}to|go(tt|nn)a) "
+    r"(h((ave h)?eard|ear)|s(aw|ee))) ([\w'’]+ )+love live|"
     # I love Live and Learn (as in Sonic Adventure 2 theme song)
     r"\bi ([a-z]+[a-z] )?love live (&|and) learn|"
     # find love live and/your/etc.
@@ -575,7 +576,7 @@ EXCLUDE_RE = re.compile(
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
-    r"\b(floyd|grateful dead|kahan|marley|oasis|phish)\b|"
+    r"\b(floyd|grateful dead|hot mulligan|kahan|marley|oasis|phish)\b|"
     # Venue of Love Live (rock music) Festival
     r"\bblackpool|"
     # lovelive.com/net/org/etc.
