@@ -25,7 +25,7 @@ LOVELIVE_RE = re.compile(
     r"jumpscare|"
     r"m(aybe|e(ntion(ed)?|rch|troidvania)|ovies?)\b|"
     r"n(esoberis?|iji(gasaki)?)|"
-    r"o(c(g|\b)|mf?g|r(?! die)\b|s(hi|t))|"
+    r"o(c(g|s?\b)|mf?g|r(?! die)\b|s(hi|t))|"
     r"pl(aylist|ush(ies?))|"
     r"referenc(es?|ia)|"
     r"s(chool ?idol|e(ction|ries|iyuus?)|hips?\b|ip([^a-z]|\b)|(ifs)?orter|ky|potted|"
@@ -54,8 +54,8 @@ LOVELIVE_RE = re.compile(
     r"音ノ木坂?|otonokizaka|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)[μµ]['’‘`´′]s|"
     r"高坂\s?穂乃果|絢瀬\s?絵里|南\s?ことり|園田\s?海未|星空\s?凛|西木野\s?真姫|東條\s?希|"
     r"小泉\s?花陽|矢澤\s?にこ|nico\snico\sni+\b|#niconiconi+\b|\bminalinsky\b|ミナリンスキー|"
-    r"エリーチカ|\belichika\b|にこりんぱな|nicorinpana|金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
-    r"#にこまき|snow\s?halation([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
+    r"エリーチカ|\belichika\b|りんぱな|\b(nico)?rinpana\b|金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
+    r"#にこまき|ほのまき|snow\s?halation([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
     r"(^|[^a-z\u00C0-\u024F\u1E00-\u1EFF\-])a[-\u2010]rise([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|$)|"
     r"綺羅\s?ツバサ|優木\s?あんじゅ|統堂\s?英玲奈|"
     # Love Live! Sunshine!!
@@ -365,7 +365,8 @@ EXCLUDE_RE = re.compile(
     # - "Can't Hide Love" live (usually song by D'Angelo)
     # - complicated love live (typo of "complicated love life")
     # - "Computer Love" live (song by Kraftwerk)
-    r"c(an['’]?t (buy me|hide)|(an|ould) you not|omp(licated|uter))|"
+    # - "Cosmic Love" live (usually song by Florence + The Machine)
+    r"c(an['’]?t (buy me|hide)|(an|ould) you not|o(mp(licated|uter)|smic))|"
     # - stuff ending with "of love live":
     #   - "Caravan of Love" live (usually song by The Housemartins)
     #   - "Genius of Love" live (song by Tom Tom Club)
