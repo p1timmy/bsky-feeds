@@ -15,7 +15,7 @@ LOVELIVE_RE = re.compile(
     r"love\s?live([!:\s]*("
     r"a(fter school\b|ll[ -]stars|n(d (idolm[a@]ster|more)|ime)|pp)|"
     r"blue ?bird|"
-    r"c(ollab|yber|(d|osplay|haracter)s?)|"
+    r"c(anon|ollab|yber|(d|osplay|haracter)s?)|"
     r"d(ays|rama\b)|"
     r"heardle|"
     r"e(n|pisodes?|ra|tc)\b|"
@@ -257,6 +257,8 @@ EXCLUDE_RE = re.compile(
     r" music *[^\w ]|"
     # Words/phrases starting with "love live"
     r"\blove live ("
+    # - love Live 2D (as in Live2D animation technique/software)
+    r"2d|"
     # - love live action
     # - love Live A Live (video game title)
     # - Love Live Alive (Genesis Climber MOSPEADA OVA)
@@ -285,9 +287,9 @@ EXCLUDE_RE = re.compile(
     # - Love Live Festival (usually rock music festival by @solidents.bsky.social)
     # - love live folk
     # - love "Live Free and Die Hard"
-    # - love "Live from Daryl's House" (MTV show)
-    # - love "Live from Tubby's House" (weekly live music stream)
-    r"f(act checking|estival|olk\b|r(ee (and|&) die hard|om (daryl|tubby)['’]?s))|"
+    # - love live from (usually songs ending with "Love" + "live from [some place]",
+    #   also includes "love Live from Daryl's/Tubby's House")
+    r"f(act checking|estival|olk\b|r(ee (and|&) die hard|om))|"
     # - love live him
     # - love live hockey
     r"h(im|ockey)|"
@@ -317,9 +319,10 @@ EXCLUDE_RE = re.compile(
     # - Love Live Sweets (unrelated local bakery in New Jersey)
     r"s(core|ervice|ports?|tr(eam(ing|s)|ings)|weets)|"
     # - love live tables/tapes/theater/TV/television/texting/tweeting
+    # - love "Live to Live" (song from Hazbin Hotel S2)
     # - love "Live to Tell" (song by Madonna)
     # - love "Live Through This" (usually an album by Hole)
-    r"t(a(bl|p)es|elevision|(ex|wee)ting|h(eat(er|re)|rough this)|o tell|v)|"
+    r"t(a(bl|p)es|elevision|(ex|wee)ting|h(eat(er|re)|rough this)|o (live|tell)|v)|"
     # - "love live the" (usually typo of "long live the") but not "Love Live the
     #   competition/Musical/School Idol"
     r"the\b(?! (competition|musical|school idol)\b)|"
@@ -330,17 +333,17 @@ EXCLUDE_RE = re.compile(
     # - love live versions
     r"versions|"
     # - love live bands/gigs/mealworms/performances/shows
-    # - "Love Live in/from Paris" (misspelling of "Lover (Live from Paris)" album by
+    # - "Love Live in Paris" (misspelling of "Lover (Live from Paris)" album by
     #   Taylor Swift)
-    r"(band|gig|mealworm|performance|show|(in|from) pari)s|"
+    r"(band|gig|mealworm|performance|show|in pari)s|"
     # - 196x/197x after "love live" (usually live concert recordings)
     r".*\b19[67][0-9]\b)|"
     # [Artist] - [song name ending with "love"] live
     r"\w+ [\-\u2013] .+ love live\b[^!]|"
-    # Words/phrases ending with "love live"
     # that/just/my ... love liver (body part or food)
     r"\b((jus|tha)t( [a-z]+[a-z])?|my( ([a-z,'’]+|&))+) love liver\b|"
     r"\b("
+    # Words/phrases ending with "love live"
     # - "2Kindsa Love" live (song by The Jon Spencer Blues Explosion)
     r"2 ?kindsa|"
     # - about/confess(ed/es/ing) his/her/their love live (usually typo of "about his/
@@ -348,11 +351,15 @@ EXCLUDE_RE = re.compile(
     r"(about|confess[a-z]*) (h(er|is)|their)|"
     # - absolutely love live [something]
     # - "Ain't Talkin' 'bout Love" live (song by Velvet Revolver or Van Halen)
-    # - "All My Love" live (usually song by Coldplay or any song name ending with
+    r"a(bsolutely|in['’]?t talkin['’]? ['‘’]?bout)|"
+    # - stuff ending with "my love live":
+    #   - "All My Love" live (usually song by Coldplay or any song name ending with
     #   that phrase)
-    # - "All Your Love" live (usually song by Otis Rush or any song name ending with
-    #   that phrase)
-    r"a(bsolutely|in['’]?t talkin['’]? ['‘’]?bout|ll (my|your))|"
+    #   - "Darker My Love" live (song by T.S.O.L.)
+    #   - "Darkness at the Heart of My Love" live (song by Ghost)
+    #   - "Make You Feel My Love" live (song by Adele)
+    #   - "To Bring You My Love" live (song by PJ Harvey)
+    r"(all|dark(er|ness at the heart of)|make you feel|to bring you) my|"
     # Art(ist(s))/band(s)/music/people/[some plural word] I/you/etc. (... and) love live
     r"(art(ist)?|band|music|people|[a-z]+s) (i|you|they)( ([a-z]+[a-z],? )+(and|&))?|"
     # - "Bad Love" live (usually song by Key or Eric Clapton) but not "how bad Love Live"
@@ -369,6 +376,7 @@ EXCLUDE_RE = re.compile(
     r"c(an['’]?t (buy me|hide)|(an|ould) you not|o(mp(licated|uter)|smic))|"
     # - stuff ending with "of love live":
     #   - "Caravan of Love" live (usually song by The Housemartins)
+    #   - "Dance Me to the End of Love" live (song by Leonard Cohen)
     #   - "Genius of Love" live (song by Tom Tom Club)
     #   - "Hazards of Love" live (album by The Decemberists)
     #   - "(The) House of Love" live (usually British alt rock band or song by Christine)
@@ -386,8 +394,8 @@ EXCLUDE_RE = re.compile(
     #   - "(Thee) Most Exalted Potentate of Love" live (song by The Cramps)
     #   - this/that/what kind of love live
     #   - "Tunnel of Love" live (usually song by Dire Straits or Bruce Springsteen)
-    r"(caravan|genius|h(azards|ouse)|l(exicon|ight)|most exalted potentate|prisoner|"
-    r"s(atellite|hot|ongs)|t(he ([bl]ook|meaning)|unnel)|"
+    r"(caravan|dance me to the end|genius|h(azards|ouse)|l(exicon|ight)|prisoner|"
+    r"most exalted potentate|s(atellite|hot|ongs)|t(he ([bl]ook|meaning)|unnel)|"
     r"(sunday|[tw]hat|this) kind) of|"
     # - stuff ending with "in love live":
     #   - "Crazy in Love" live (song by Beyonce)
@@ -400,13 +408,9 @@ EXCLUDE_RE = re.compile(
     #   - "I'm Not in Love" live (usually song by 10cc)
     #   - "(I) Think I'm In Love" live (usually song by Eddie Money)
     r"(crazy|d(angerously|runk)|fall(ing|s)?|(friday|think) i['’]?m|i['’]?m not) in|"
-    # - "Darker My Love" live (song by T.S.O.L.)
-    # - "Dance Me to the End of Love" live (song by Leonard Cohen)
-    # - "Darkness at the Heart of My Love" live (song by Ghost)
     # - "Destination: Love Live" (album by The Make-Up)
     # - does not/doesn't love live [something]
-    r"d(a(nce me to the end of|rk(er my|ness at the heart of my))|estination:?|"
-    r"o(es)?( not|n['’]t))|"
+    r"d(estination:?|o(es)?( not|n['’]t))|"
     # - "Fake Love" live (song by BTS)
     # - "Feel Like Makin' Love" live (song by Roberta Flack or Bad Company)
     # - fight love live (usually Filoli, California historical marker)
@@ -430,10 +434,14 @@ EXCLUDE_RE = re.compile(
     # - Helen Love live (Welsh rock band)
     # - his love live (usually typo of "his love life")
     r"h(elen|is)|"
-    # - "[song name ending with "For Your Love"]" live
-    # - "How Deep Is Your Love" live (usually song by Bee Gees)
-    # - "Sunshine of Your Love" live (usually song by Cream)
-    r"(for|how deep is|sunshine of) your|"
+    # - stuff ending with "your love live":
+    #   - "All Your Love" live (usually song by Otis Rush or any song name ending with
+    #     that phrase)
+    #   - "[song name ending with "For Your Love"]" live
+    #   - "How Deep Is Your Love" live (usually song by Bee Gees)
+    #   - in your love live (sometimes typo of "in your love life")
+    #   - "Sunshine of Your Love" live (usually song by Cream)
+    r"(all|for|how deep is|in|sunshine of) your|"
     # - compassion/hope/joy/kindness/pain/peace/unity and love live
     r"(compassion|hope|joy|kindness|p(ain|eace)|unity),? (and|&)|"
     # - "How To Love" live (usually song by Lil Wayne or any song name ending with
@@ -525,8 +533,8 @@ EXCLUDE_RE = re.compile(
     # if you (live in/near/around [place name]) ... and/but love live (...) music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)|if you)\s+.+\s+)?(and|but)\s+love"
     r" live( .+)? (music|comedy)\b|"
-    # love liver and onions
-    r"love liver( (and|&)|,)? onions|"
+    # love liver and/with onions
+    r"love liver( (and|&|with)|,)? onions|"
     # "love liver(s and)" at beginning of sentence/after emoji and not before "is/are"
     r"(^|[^\w ] *)love liver(s and)?(?! (are|is))\b|"
     # whether you('re) ... or (just) love live [something]
@@ -577,7 +585,7 @@ EXCLUDE_RE = re.compile(
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
-    r"\b(floyd|grateful dead|hot mulligan|kahan|marley|oasis|phish)\b|"
+    r"\b(floyd|grateful dead|hot mulligan|kahan|marley|nick cave|oasis|phish)\b|"
     # Venue of Love Live (rock music) Festival
     r"\bblackpool|"
     # lovelive.com/net/org/etc.
@@ -616,7 +624,7 @@ BAD_KEYWORDS_RE = re.compile(
     # Moths with species names containing "liella" substring
     r"#teammoth|"
     # Political keywords often used in "love live"/"Mia Taylor" false positives
-    r"charlie ?kirk|GOP\b|MAGA\b|netanyahu|republicans?|trump\b|"
+    r"charlie ?kirk|democrats?\b|GOP\b|MAGA\b|netanyahu|republicans?|trump\b|"
     # Gaza war victim fundraiser spam
     r"abed|ABD-GFM|GFM-ABD|kutt\.it/|"
     # Jel Kawasaki bot posts
