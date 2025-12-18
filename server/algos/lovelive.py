@@ -225,11 +225,11 @@ CHARACTER_NAMES = set(
 
 EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
-    # - I('d)/he/she/they/you (all)/y'all/you'll/we (all/both)/gotta/got to/have to/
-    #   learn(ed) to/like to/who, people (in [some place]), [plural word] that, my ...
-    #   and sister/brother/wife/etc.
+    # - I('d/'ve)/he/she/they/you (all)/y'all/you'll/we (all/both)/gotta/got to/have to/
+    #   learn(ed) to/like to/who, people/ppl (in [some place]), [plural word] that,
+    #   my ... and sister/brother/wife/etc.
     r"\b((i|s?he|they)(['’]?(d|ve))?|y(ou(['’]ll)?|(ou |['’])all)|we( (all|both))?|"
-    r"gotta|(got|have|l(earn(ed)?|ike)) to|who|people( in (the )?[a-z]+[a-z])?|"
+    r"gotta|(got|have|l(earn(ed)?|ike)) to|who|p(eople|pl)( in (the )?[a-z]+[a-z])?|"
     r"[a-z]{3,}(?<!a)(?<!e)s( that)?|my .+and [a-z]+[a-z])"
     # - *ing/*ly/bloody/also/always/can't/cannot/(sure) do/does/don't (but not "don't
     #   do")/just/lowkey/still/(came/come/grew/have/happened/use(d)/tend) to/too/will/
@@ -369,11 +369,13 @@ EXCLUDE_RE = re.compile(
     r"b(lind|ye bye)|"
     # - can/could you not love live
     # - "Can't Buy Me Love" live (usually song by the Beatles)
+    # - "Can't Get Enough of Your Love" live (song by Bad Company)
     # - "Can't Hide Love" live (usually song by D'Angelo)
     # - complicated love live (typo of "complicated love life")
     # - "Computer Love" live (song by Kraftwerk)
     # - "Cosmic Love" live (usually song by Florence + The Machine)
-    r"c(an['’]?t (buy me|hide)|(an|ould) you not|o(mp(licated|uter)|smic))|"
+    r"c(an['’]?t (buy me|get enough of your|hide)|(an|ould) you not|"
+    r"o(mp(licated|uter)|smic))|"
     # - stuff ending with "of love live":
     #   - "Caravan of Love" live (usually song by The Housemartins)
     #   - "Dance Me to the End of Love" live (song by Leonard Cohen)
@@ -420,12 +422,14 @@ EXCLUDE_RE = re.compile(
     #   - "Exist for Love" live (song by Aurora)
     #   - "Fool for Love" live (different songs by different artists)
     #   - "Kill for Love" live (usually song by Lady Gaga)
+    #   - "Living for Love" live (song by Madonna)
     #   - "Out for Love" live (song from "Hazbin Hotel" animated series, but not "came
     #     out for love live")
     #   - "(Bardic) Quest for Love" live (indie visual novel game)
     #   - "Ready for Love" live (usually song by Bad Company, but not "get(ting) ready
     #     for love live")
-    r"(exist|(foo|kil)l|(?<!\bcame )out|quest|(?<!\bget )(?<!\bgetting )ready) for|"
+    r"(exist|(foo|kil)l|living|(?<!\bcame )out|quest|(?<!\bget )(?<!\bgetting )ready)"
+    r" for|"
     # - G. Love live (American singer/rapper)
     # - Gerry Love live (British rock singer/bass guitar player)
     r"g(er(ard|ry)|\.?)|"
@@ -533,8 +537,8 @@ EXCLUDE_RE = re.compile(
     # if you (live in/near/around [place name]) ... and/but love live (...) music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)|if you)\s+.+\s+)?(and|but)\s+love"
     r" live( .+)? (music|comedy)\b|"
-    # love liver and/with onions
-    r"love liver( (and|&|with)|,)? onions|"
+    # love liver and/with onions, love liver disease
+    r"love liver(( (and|&|with)|,)? onions| disease)|"
     # "love liver(s and)" at beginning of sentence/after emoji and not before "is/are"
     r"(^|[^\w ] *)love liver(s and)?(?! (are|is))\b|"
     # whether you('re) ... or (just) love live [something]
@@ -570,6 +574,8 @@ EXCLUDE_RE = re.compile(
     r'\b((h(er|is)|their|your?)( [a-z]+ing)?|learn) love live([.,"”]|$| (i|wa)s\b)|'
     # playing [video game title ending with "Love"] live on
     r"\bplay(ing)? .+ love live on|"
+    # "love live on" at end of sentence/post
+    r"\blove live on *[^\w ]|"
     # I('d/'m/'ve)/My ... [got/need/went/etc.] to/gotta/gonna [hear/saw/see/have] heard
     # [song/artist name ending with "Love"] live
     r"\b(I(['’][dm]|ve)?|my( [a-z'’,&]+)+) ((([a-z]+ ){,2}to|go(tt|nn)a) "
@@ -579,7 +585,7 @@ EXCLUDE_RE = re.compile(
     # find love live and/your/etc.
     r"\bfind love live \w{3,}\b|"
     # hashtags frequently used in #lovelive/"(#)love live" false positives
-    r"#(b(b27|eyondthegates)|eaglerock|god|faith|gratitude|hope|"
+    r"#(AEW(Dynamite)?|b(b27|eyondthegates)|eaglerock|faith|g(od|ratitude)|hope|"
     r"L(ove( live|IsBlind|r|Wins)|ivemusic)|motivation|OwnOurVenues|positivity|totp|"
     r"[a-z]+vibes[a-z]*)\b|"
     # hashtags starting with #Sunday and #lovelive in the same post
@@ -624,7 +630,7 @@ BAD_KEYWORDS_RE = re.compile(
     # Moths with species names containing "liella" substring
     r"#teammoth|"
     # Political keywords often used in "love live"/"Mia Taylor" false positives
-    r"charlie ?kirk|democrats?\b|GOP\b|MAGA\b|netanyahu|republicans?|trump\b|"
+    r"charlie ?kirk|democrats?\b|GOP\b|MAGAs?\b|netanyahu|republicans?|trump\b|"
     # Gaza war victim fundraiser spam
     r"abed|ABD-GFM|GFM-ABD|kutt\.it/|"
     # Jel Kawasaki bot posts
