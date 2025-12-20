@@ -290,9 +290,10 @@ EXCLUDE_RE = re.compile(
     # - love live from (usually songs ending with "Love" + "live from [some place]",
     #   also includes "love Live from Daryl's/Tubby's House")
     r"f(act checking|estival|olk\b|r(ee (and|&) die hard|om))|"
+    # - love live happily (ever after)
     # - love live him
     # - love live hockey
-    r"h(im|ockey)|"
+    r"h(appily|im|ockey)|"
     # - love live interaction
     r"interaction|"
     # - Love Live Italian
@@ -595,7 +596,9 @@ EXCLUDE_RE = re.compile(
     # Venue of Love Live (rock music) Festival
     r"\bblackpool|"
     # lovelive.com/net/org/etc.
-    r"\blovelive\.[a-z]+[a-z]\b",
+    r"\blovelive\.[a-z]+[a-z](?:[^.a-z0-9\-]|$)|"
+    # "Lush" and "Lovelive" (typo of "Lovelife" album) in the same post
+    r"\b(lush\b.+\blovelive|lovelive.+\blush)\b",
     re.IGNORECASE | re.MULTILINE,
 )
 FAKE_YOHANE_RE = re.compile(r"shaman ?king|touhou", re.IGNORECASE)
