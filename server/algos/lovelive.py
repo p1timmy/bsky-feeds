@@ -38,8 +38,9 @@ LOVELIVE_RE = re.compile(
     r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|"
     r"(doe|hate|is thi|love|m(eet|is)|variou|wa)s) love ?live\b|"
     r"#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
-    # ラブライブ but not クラブライブ (club live) or イコラブライブ (Ikolab Live)
-    r"([^クコ]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
+    # ラブライブ but not クラブライブ (club live)/イコラブライブ (Ikolab Live)/
+    # マジラブライブ (Maji Love Live)
+    r"([^クコジ]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     # School idol
     r"スクールアイドル|(?<!middle )(?<!high )(?<!old )(?<!old-)(?<!your )\b"
     r"(?<!@)(#\w+)?school ?idol(?! (story|book)\b)(s\b| ?((festiv|music)al|project))?|"
@@ -531,6 +532,8 @@ EXCLUDE_RE = re.compile(
     # "(The) Power of Love" live (different songs by different artists, except at end
     # of line/post or before exclamation mark)
     r"power of love live(?!!|$)|\b(frankie|huey).+power of love live|"
+    # Trivia:Love Live (song by BTS)
+    r"\btrivia( ?承)?[: ]{1,2}love live|"
     # perform(s/ed/ing/ance of)/sing(s/ing)/play(ing/s)/covers [song name ending with
     # "Love"] live on/in(side)/outside/with/again
     r"(perform(ance of|ed|ing|s)?|(play|sing)(ing|s)|covers) .+ (?<!from )love live"
