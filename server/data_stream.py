@@ -2,6 +2,7 @@ from collections import defaultdict
 from collections.abc import Callable
 from datetime import UTC, datetime
 from threading import Event
+from time import sleep
 from typing import Optional
 
 from atproto import (
@@ -224,11 +225,14 @@ def run(service_did: str, on_message_callback, stream_stop_event=None, labels=Fa
             client_func(service_did, on_message_callback, stream_stop_event)
         except FirehoseError:
             # Log error details and reconnect to firehose
+            reconnect = stream_stop_event and not stream_stop_event.is_set()
             log_header = "Error encountered in data stream"
-            if stream_stop_event and not stream_stop_event.is_set():
+            if reconnect:
                 log_header = f"{log_header}, reconnecting..."
 
-            logger.error(style(log_header, fg="red", bold=True), exc_info=True)
+            logger.exception(style(log_header, fg="red", bold=True))
+            if reconnect:
+                sleep(3)
 
     logger.info(
         style("%s firehose data stream stopped", fg="yellow"),
