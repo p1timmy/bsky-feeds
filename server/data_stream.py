@@ -17,6 +17,7 @@ from atproto import (
 )
 from atproto.exceptions import FirehoseError
 from atproto_client.models.dot_dict import DotDict
+from atproto_firehose.firehose import SubscribeLabelsMessage, SubscribeReposMessage
 from click import style
 
 from server.database import FirehoseType, SubscriptionState
@@ -89,6 +90,31 @@ def _get_commit_ops_by_type(
     return operation_by_type
 
 
+def _log_message_error(
+    message_data: SubscribeReposMessage | SubscribeLabelsMessage | None = None,
+):
+    if message_data is not None:
+        if isinstance(message_data, models.ComAtprotoSyncSubscribeRepos.Commit):
+            ops = "\n".join(
+                [f"  - {op.action} {op.path} ({op.cid})" for op in message_data.ops]
+            )
+            commit_info = f"\nRepo: {message_data.repo}\nOperations:\n{ops}"
+        else:
+            commit_info = ""
+
+        logger.exception(
+            "%s\nType: %s%s%s",
+            style("Failed to process firehose message", fg="red", bold=True),
+            message_data.py_type,
+            f" @ cursor {message_data.seq}" if hasattr(message_data, "seq") else "",
+            commit_info,
+        )
+    else:
+        logger.exception(
+            style("Error in firehose message handler", fg="red", bold=True)
+        )
+
+
 def _run_repos_client(
     service_did: str, operations_callback, stream_stop_event: Optional[Event] = None
 ):
@@ -107,42 +133,48 @@ def _run_repos_client(
             service=service_did, cursor=0, firehose_type=FirehoseType.REPOS
         )
 
+    msg_data: SubscribeReposMessage | None = None
+
     def on_message_handler(message: firehose_models.MessageFrame) -> None:
         # stop on next message if requested
         if stream_stop_event and stream_stop_event.is_set():
             client.stop()
             return
 
-        # BUG: Random model validation errors caused by broken/blank messages
-        # (https://github.com/MarshalX/atproto/issues/186)
-        commit = parse_subscribe_repos_message(message)
+        nonlocal msg_data
+        msg_data = parse_subscribe_repos_message(message)
 
         global repos_last_message_time
-        message_ts = datetime.fromisoformat(commit.time)
+        message_ts = datetime.fromisoformat(msg_data.time)
         if message_ts > repos_last_message_time:
             repos_last_message_time = message_ts
 
-        if not isinstance(commit, models.ComAtprotoSyncSubscribeRepos.Commit):
+        # We no longer need the message unless if it's a commit
+        if not isinstance(msg_data, models.ComAtprotoSyncSubscribeRepos.Commit):
             return
 
-        # Update stored state every ~1000 events (up from 20 due to recent increase in
-        # network activity)
-        if commit.seq % 1000 == 0:
+        # Update stored state every ~1000 messages in case we get disconnected
+        if msg_data.seq % 1000 == 0:
             client.update_params(
-                models.ComAtprotoSyncSubscribeRepos.Params(cursor=commit.seq)
+                models.ComAtprotoSyncSubscribeRepos.Params(cursor=msg_data.seq)
             )
-            logger.debug("Updated repos cursor for %s to %s", service_did, commit.seq)
+            logger.debug("Updated repos cursor for %s to %s", service_did, msg_data.seq)
 
-            SubscriptionState.update(cursor=commit.seq).where(
+            SubscriptionState.update(cursor=msg_data.seq).where(
                 SubscriptionState.service == service_did
             ).where(SubscriptionState.firehose_type == FirehoseType.REPOS).execute()
 
-        if not commit.blocks:
+        # Skip commits with empty blocks, any commit containing data for the necessary
+        # record types will always have CAR blocks
+        if not msg_data.blocks:
             return
 
-        operations_callback(_get_commit_ops_by_type(commit))
+        operations_callback(_get_commit_ops_by_type(msg_data))
 
-    client.start(on_message_handler)
+    def on_error_handler(error: BaseException):
+        _log_message_error(msg_data)
+
+    client.start(on_message_handler, on_error_handler)
 
 
 def _run_labels_client(
@@ -167,6 +199,7 @@ def _run_labels_client(
             service=service_did, cursor=0, firehose_type=FirehoseType.LABELS
         )
 
+    msg_data: SubscribeLabelsMessage | None = None
     queued_cursor: int = state.cursor
 
     def on_message_handler(message: firehose_models.MessageFrame):
@@ -175,16 +208,17 @@ def _run_labels_client(
             client.stop()
             return
 
-        labels_message = parse_subscribe_labels_message(message)
-        if not isinstance(labels_message, models.ComAtprotoLabelSubscribeLabels.Labels):
+        nonlocal msg_data
+        msg_data = parse_subscribe_labels_message(message)
+        if not isinstance(msg_data, models.ComAtprotoLabelSubscribeLabels.Labels):
             return
 
         nonlocal queued_cursor
         prev_cursor = queued_cursor
-        queued_cursor = labels_message_callback(labels_message) // 10 * 10
+        queued_cursor = labels_message_callback(msg_data) // 10 * 10
 
         # Update cursor every ~10 messages in case we get disconnected
-        current_cursor = labels_message.seq
+        current_cursor = msg_data.seq
         if current_cursor % 10 == 0:
             client.update_params(
                 models.ComAtprotoLabelSubscribeLabels.Params(cursor=current_cursor)
@@ -203,7 +237,10 @@ def _run_labels_client(
                 "Saved labels cursor for %s to database: %s", service_did, queued_cursor
             )
 
-    client.start(on_message_handler)
+    def on_error_handler(error: BaseException):
+        _log_message_error(msg_data)
+
+    client.start(on_message_handler, on_error_handler)
 
 
 def run(service_did: str, on_message_callback, stream_stop_event=None, labels=False):
