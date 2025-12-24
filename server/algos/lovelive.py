@@ -342,10 +342,11 @@ EXCLUDE_RE = re.compile(
     r".*\b19[67][0-9]\b)|"
     # [Artist] - [song name ending with "love"] live
     r"\w+ [\-\u2013] .+ love live\b[^!]|"
-    # that/just/my ... love liver (body part or food)
-    r"\b((jus|tha)t( [a-z]+[a-z])?|my( ([a-z,'’]+|&))+) love liver\b|"
-    r"\b("
+    # just/my/[plural word] ... love liver (body part or food)
+    r"\b(just( [a-z]+[a-z])?|my( ([a-z,'’]{3,}|&))+|[a-z]{3,}s( [a-z]{3,}){,2})"
+    r" love liver\b|"
     # Words/phrases ending with "love live"
+    r"\b("
     # - "2Kindsa Love" live (song by The Jon Spencer Blues Explosion)
     r"2 ?kindsa|"
     # - about/confess(ed/es/ing) his/her/their love live (usually typo of "about his/
@@ -381,6 +382,7 @@ EXCLUDE_RE = re.compile(
     # - stuff ending with "of love live":
     #   - "Caravan of Love" live (usually song by The Housemartins)
     #   - "Dance Me to the End of Love" live (song by Leonard Cohen)
+    #   - "Definition of Love" live (song by Naomi Sharon)
     #   - "Genius of Love" live (song by Tom Tom Club)
     #   - "Hazards of Love" live (album by The Decemberists)
     #   - "(The) House of Love" live (usually British alt rock band or song by Christine)
@@ -398,9 +400,9 @@ EXCLUDE_RE = re.compile(
     #   - "(Thee) Most Exalted Potentate of Love" live (song by The Cramps)
     #   - this/that/what kind of love live
     #   - "Tunnel of Love" live (usually song by Dire Straits or Bruce Springsteen)
-    r"(caravan|dance me to the end|genius|h(azards|ouse)|l(exicon|ight)|prisoner|"
-    r"most exalted potentate|s(atellite|hot|ongs)|t(he ([bl]ook|meaning)|unnel)|"
-    r"(sunday|[tw]hat|this) kind) of|"
+    r"(caravan|d(ance me to the end|efinition)|genius|h(azards|ouse)|l(exicon|ight)|"
+    r"most exalted potentate|prisoner|s(atellite|hot|ongs)|"
+    r"t(he ([bl]ook|meaning)|unnel)|(sunday|[tw]hat|this) kind) of|"
     # - stuff ending with "in love live":
     #   - "Crazy in Love" live (song by Beyonce)
     #   - "Dangerously in Love" live (album by Beyonce)
@@ -541,21 +543,21 @@ EXCLUDE_RE = re.compile(
     # if you (live in/near/around [place name]) ... and/but love live (...) music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)|if you)\s+.+\s+)?(and|but)\s+love"
     r" live( .+)? (music|comedy)\b|"
-    # love liver and/with onions, love liver disease
-    r"love liver(( (and|&|with)|,)? onions| disease)|"
+    # love liver and/with onions, love liver disease/pate
+    r"love liver(( (and|&|with)|,)? onions| (disease|p[aâ]t[eé]))|"
     # "love liver(s and)" at beginning of sentence/after emoji and not before "is/are"
     r"(^|[^\w ] *)love liver(s and)?(?! (are|is))\b|"
     # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
     # love love [something]" but not "(and) love live all/also/always/are/as/auf/but/
-    # could/did/does(n't)/doing/going/had/has/hates/I/in/is(t)/I'll/I'm/kinda/kind of/
-    # made/make(s)/ making/music is(/was)/needs/never/really/siempre/should/song(s)/
-    # tries/tried/UR ... card(s)/was/will/would"
+    # could/did/does(n't)/doing/going/had/has/hates/I/if/in/is(t)/I'll/I'm/kinda/
+    # kind of/made/make(s)/ making/music is(/was)/needs/never/really/siempre/should/
+    # song(s)/tries/tried/UR ... card(s)/was/will/would"
     r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|re|s|uf)|"
-    r"but|[csw]ould|[dg]oing|i([n'’]|st?)?|d(id|oes(n['’]?t)?)|ha([ds]|tes)|ne(eds|ver)|"
-    r"kind(a| of)|m(a(de|k(es?|ing))|usic (i|wa)s)|really|s(iempre|ongs?)|trie[ds]|"
-    r"ur .*cards?|w(as|ill))\b)|"
+    r"but|[csw]ould|[dg]oing|i([fn'’]|st?)?|d(id|oes(n['’]?t)?)|ha([ds]|tes)|"
+    r"kind(a| of)|m(a(de|k(es?|ing))|usic (i|wa)s)|ne(eds|ver)|really|s(iempre|ongs?)|"
+    r"trie[ds]|ur .*cards?|w(as|ill))\b)|"
     r"([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live(r)" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+liver?\b|"
@@ -595,7 +597,8 @@ EXCLUDE_RE = re.compile(
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
-    r"\b(floyd|grateful dead|hot mulligan|kahan|marley|nick cave|oasis|phish)\b|"
+    r"\b(floyd|grateful dead|hot mulligan|john lewis|kahan|marley|nick cave|oasis|"
+    r"phish)\b|"
     # Venue of Love Live (rock music) Festival
     r"\bblackpool|"
     # lovelive.com/net/org/etc.
