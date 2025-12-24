@@ -90,15 +90,17 @@ def _get_commit_ops_by_type(
     return operation_by_type
 
 
+def _get_commit_details_str(commit: models.ComAtprotoSyncSubscribeRepos.Commit):
+    ops = "\n".join([f"  - {op.action} {op.path} ({op.cid})" for op in commit.ops])
+    return f"\nRepo: {commit.repo}\nOperations:\n{ops}"
+
+
 def _log_message_error(
     message_data: SubscribeReposMessage | SubscribeLabelsMessage | None = None,
 ):
     if message_data is not None:
         if isinstance(message_data, models.ComAtprotoSyncSubscribeRepos.Commit):
-            ops = "\n".join(
-                [f"  - {op.action} {op.path} ({op.cid})" for op in message_data.ops]
-            )
-            commit_info = f"\nRepo: {message_data.repo}\nOperations:\n{ops}"
+            commit_info = _get_commit_details_str(message_data)
         else:
             commit_info = ""
 
@@ -169,7 +171,16 @@ def _run_repos_client(
         if not msg_data.blocks:
             return
 
-        operations_callback(_get_commit_ops_by_type(msg_data))
+        ops = _get_commit_ops_by_type(msg_data)
+        try:
+            operations_callback(ops)
+        except Exception:  # noqa: PIE786
+            logger.exception(
+                "%s\nCursor: %s%s",
+                style("Error in commit operations callback", fg="red", bold=True),
+                msg_data.seq,
+                _get_commit_details_str(msg_data),
+            )
 
     def on_error_handler(error: BaseException):
         _log_message_error(msg_data)
