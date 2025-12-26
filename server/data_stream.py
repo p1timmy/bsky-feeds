@@ -96,19 +96,25 @@ def _get_commit_details_str(commit: models.ComAtprotoSyncSubscribeRepos.Commit):
 
 
 def _log_message_error(
-    message_data: SubscribeReposMessage | SubscribeLabelsMessage | None = None,
+    frame: firehose_models.Frame | None = None,
+    parsed_data: SubscribeReposMessage | SubscribeLabelsMessage | None = None,
 ):
-    if message_data is not None:
-        if isinstance(message_data, models.ComAtprotoSyncSubscribeRepos.Commit):
-            commit_info = _get_commit_details_str(message_data)
+    if frame is not None:
+        header = style("Failed to process firehose message", fg="red", bold=True)
+        if parsed_data is None:
+            logger.exception("%s\nBody: %s", header, frame.body)
+            return
+
+        if isinstance(parsed_data, models.ComAtprotoSyncSubscribeRepos.Commit):
+            commit_info = _get_commit_details_str(parsed_data)
         else:
             commit_info = ""
 
         logger.exception(
             "%s\nType: %s%s%s",
-            style("Failed to process firehose message", fg="red", bold=True),
-            message_data.py_type,
-            f" @ cursor {message_data.seq}" if hasattr(message_data, "seq") else "",
+            header,
+            parsed_data.py_type,
+            f" @ cursor {parsed_data.seq}" if hasattr(parsed_data, "seq") else "",
             commit_info,
         )
     else:
@@ -135,6 +141,7 @@ def _run_repos_client(
             service=service_did, cursor=0, firehose_type=FirehoseType.REPOS
         )
 
+    frame: firehose_models.Frame | None = None
     msg_data: SubscribeReposMessage | None = None
 
     def on_message_handler(message: firehose_models.MessageFrame) -> None:
@@ -143,7 +150,8 @@ def _run_repos_client(
             client.stop()
             return
 
-        nonlocal msg_data
+        nonlocal frame, msg_data
+        frame = message
         msg_data = parse_subscribe_repos_message(message)
 
         global repos_last_message_time
@@ -182,8 +190,10 @@ def _run_repos_client(
                 _get_commit_details_str(msg_data),
             )
 
+        msg_data = frame = None
+
     def on_error_handler(error: BaseException):
-        _log_message_error(msg_data)
+        _log_message_error(frame, msg_data)
 
     client.start(on_message_handler, on_error_handler)
 
@@ -210,6 +220,7 @@ def _run_labels_client(
             service=service_did, cursor=0, firehose_type=FirehoseType.LABELS
         )
 
+    frame: firehose_models.Frame | None = None
     msg_data: SubscribeLabelsMessage | None = None
     queued_cursor: int = state.cursor
 
@@ -219,7 +230,8 @@ def _run_labels_client(
             client.stop()
             return
 
-        nonlocal msg_data
+        nonlocal frame, msg_data
+        frame = message
         msg_data = parse_subscribe_labels_message(message)
         if not isinstance(msg_data, models.ComAtprotoLabelSubscribeLabels.Labels):
             return
@@ -248,8 +260,10 @@ def _run_labels_client(
                 "Saved labels cursor for %s to database: %s", service_did, queued_cursor
             )
 
+        msg_data = frame = None
+
     def on_error_handler(error: BaseException):
-        _log_message_error(msg_data)
+        _log_message_error(frame, msg_data)
 
     client.start(on_message_handler, on_error_handler)
 
