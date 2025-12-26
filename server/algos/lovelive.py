@@ -13,10 +13,10 @@ LOVELIVE_NAME_EN_RE = re.compile(
 LOVELIVE_RE = re.compile(
     # "Love Live" + other related words
     r"love\s?live([!:\s]*("
-    r"a(fter school\b|ll[ -]stars|n(d (idolm[a@]ster|more)|ime)|pp)|"
+    r"a(cc((oun)?ts?|s)|fter school\b|ll[ -]stars|n(d (idolm[a@]ster|more)|ime)|pp)|"
     r"blue ?bird|"
     r"c(anon|ollab|yber|(d|osplay|haracter)s?)|"
-    r"d(ays|rama\b)|"
+    r"d(a(nce(s| groups?)|ys)|rama\b)|"
     r"heardle|"
     r"e(n|pisodes?|ra|tc)\b|"
     r"f(an(art|s)?\b|(an)?fic\b|igures?|ranchise)|"
@@ -32,11 +32,11 @@ LOVELIVE_RE = re.compile(
     r"o(ng\b|undtrack)|taff|u(b ?units?|nshine|per ?star))|"
     r"t(cg|hings)|"
     r"u['’]s|"
-    r"waifus?\b|"
+    r"wa(ifus?|tch party)\b|"
     r"yuri\b"
     r")| ?!? +(vs|X)\b| fest?\b)|"
     r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|"
-    r"(doe|hate|is thi|love|m(eet|is)|variou|wa)s) love ?live\b|"
+    r"\b(doe|hate|is thi|love|m(eet|is)|variou|wa)s|draw(ing|s)) love ?live\b|"
     r"#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
     # ラブライブ but not クラブライブ (club live)/イコラブライブ (Ikolab Live)/
     # マジラブライブ (Maji Love Live)
@@ -52,7 +52,7 @@ LOVELIVE_RE = re.compile(
     r"(^|[^\u30a1-\u30f6\u30fc])スク(スタ(?!ン[ドプ]|イル|ッフ|ート)|ミュ)|"
     # Love Live! School Idol Project
     # NOTE: Printemps, lily white, BiBi not included due to too many false positives
-    r"音ノ木坂?|otonokizaka|([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)[μµ]['’‘`´′]s|"
+    r"音ノ木坂?|otonokizaka|([^a-z]|\b)[μµ](['’‘`´′]s(ic)?|sic\s?forever)([^a-z]|\b)|"
     r"高坂\s?穂乃果|絢瀬\s?絵里|南\s?ことり|園田\s?海未|星空\s?凛|西木野\s?真姫|東條\s?希|"
     r"小泉\s?花陽|矢澤\s?にこ|nico\snico\sni+\b|#niconiconi+\b|\bminalinsky\b|ミナリンスキー|"
     r"エリーチカ|\belichika\b|りんぱな|\b(nico)?rinpana\b|金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
@@ -123,7 +123,7 @@ LOVELIVE_RE = re.compile(
     re.IGNORECASE,
 )
 SUKUFEST_RE = re.compile(
-    r"(^|[^マアレ])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄|金沢|香川|ニセコ)"
+    r"(^|[^マアレ])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄|金沢|香川|名古屋|ニセコ)"
 )
 YOHANE_RE = re.compile(r"\byohane(?!(-label| mbatizati))\b", re.IGNORECASE)
 CATCHU_RE = re.compile(
@@ -450,8 +450,10 @@ EXCLUDE_RE = re.compile(
     #   - in your love live (sometimes typo of "in your love life")
     #   - "Sunshine of Your Love" live (usually song by Cream)
     r"(all|for|how deep is|in|sunshine of) your|"
-    # - compassion/hope/joy/kindness/pain/peace/unity and love live
-    r"(compassion|hope|joy|kindness|p(ain|eace)|unity),? (and|&)|"
+    # - compassion/happiness/hope/joy/kindness/pain/peace/unity and ([God/someone]'s)
+    #   love live
+    r"(compassion|h(appiness|ope)|joy|kindness|p(ain|eace)|unity),?"
+    r" (and|&)( [a-z]+['’]s)?|"
     # - "How To Love" live (usually song by Lil Wayne or any song name ending with
     #   that phrase)
     r"how to|"
