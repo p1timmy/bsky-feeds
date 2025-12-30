@@ -6,7 +6,7 @@ from typing import NamedTuple, Optional, Self
 
 from atproto import models
 from click import style
-from peewee import IntegrityError
+from peewee import IntegrityError, Model
 
 from server import data_stream
 from server.algos import filters
@@ -122,11 +122,16 @@ def operations_callback(ops: defaultdict):
     posts_to_delete: Iterable[dict] = ops[models.ids.AppBskyFeedPost]["deleted"]
     if posts_to_delete:
         uris: list[str] = [post["uri"] for post in posts_to_delete]
-        query = Post.uri.in_(uris)
-        count: int = Post.select().where(query).count()
+        ids = Post.select().where(Post.uri.in_(uris))
+        count = ids.count()
         if count:
             with db.atomic():
-                Post.delete().where(query)
+                # Delete `feed_post_through` rows first before `post` rows
+                feed_post_through: Model = Feed.posts.through_model
+                feed_post_through.delete().where(
+                    feed_post_through.post_id.in_(ids)
+                ).execute()
+                Post.delete().where(Post.id.in_(ids)).execute()
 
             logger.info(style("Posts deleted from feeds: %s", fg="red"), count)
 
