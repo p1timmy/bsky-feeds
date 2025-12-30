@@ -238,7 +238,14 @@ def _run_labels_client(
 
         nonlocal queued_cursor
         prev_cursor = queued_cursor
-        queued_cursor = labels_message_callback(msg_data) // 10 * 10
+        try:
+            queued_cursor = labels_message_callback(msg_data) // 10 * 10
+        except Exception:  # noqa: PIE786
+            logger.exception(
+                "%s\nData: %s",
+                style("Error in labels message callback", fg="red", bold=True),
+                msg_data,
+            )
 
         # Update cursor every ~10 messages in case we get disconnected
         current_cursor = msg_data.seq
