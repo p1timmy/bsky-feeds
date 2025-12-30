@@ -18,9 +18,7 @@ If you wanna run the server without the firehose client, use `flask run`
 
 ### Feeds
 
-- [LoveLive!Sky](https://bsky.app/profile/did:plc:eakx7mj6uhboh5eqtlauuz63/feed/aaagaucwmakh6) - updated and improved version of these feeds:
-  - [LoveLive!](https://bsky.app/profile/did:plc:s5talxoraotekyqbic7lns67/feed/aaaklhogzhke4) by [@aither.bsky.social](https://bsky.app/profile/did:plc:s5talxoraotekyqbic7lns67) (abandoned and unmaintained as of December 1st, 2024)
-  - [ラブライブ！シリーズ](https://bsky.app/profile/did:plc:at746otrujvgvdmykrtgsdq5/feed/aaadj7zfg33zg) by [@lovelive-cal.bsky.social](https://bsky.app/profile/did:plc:at746otrujvgvdmykrtgsdq5/)
+- [LoveLive!Sky](https://bsky.app/profile/did:plc:eakx7mj6uhboh5eqtlauuz63/feed/aaagaucwmakh6) - based on the unmaintained/abandoned [LoveLive! feed](https://bsky.app/profile/did:plc:s5talxoraotekyqbic7lns67/feed/aaaklhogzhke4) by [@aither.bsky.social](https://bsky.app/profile/did:plc:s5talxoraotekyqbic7lns67) but with new and up to date keywords, showing replies, a lot less unrelated/irrelevant posts, faster loading times, and other improvements
 
 ### License
 
