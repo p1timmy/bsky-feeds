@@ -23,7 +23,7 @@ LOVELIVE_RE = re.compile(
     r"g(ame|i(f|rls?)|lobal)\b|"
     r"i(ce cream|dols?|n general)|"
     r"jumpscare|"
-    r"m(aybe|e(ntion(ed)?|rch|troidvania)|ovies?)\b|"
+    r"m(aybe|e(ntion(ed)?|rch|troidvania)|ovies?|vs?)\b|"
     r"n(esoberis?|iji(gasaki)?)|"
     r"o(c(g|s?\b)|mf?g|r(?! die)\b|s(hi|t))|"
     r"pl(aylist|ush(ies?))|"
@@ -35,8 +35,8 @@ LOVELIVE_RE = re.compile(
     r"wa(ifus?|tch party)\b|"
     r"yuri\b"
     r")| ?!? +(vs|X)\b| fest?\b)|"
-    r"lovelive(-anime|_staff)|\b(thank you|like[ds]?|"
-    r"\b(doe|hate|is thi|love|m(eet|is)|variou|wa)s|draw(ing|s)) love ?live\b|"
+    r"lovelive(-anime|_staff|15th)|\b(thank you|like[ds]?|"
+    r"\b(d(an|oe)|hate|is thi|love|m(eet|is)|variou|wa)s|draw(ing|s)) love ?live\b|"
     r"#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
     # ラブライブ but not クラブライブ (club live)/イコラブライブ (Ikolab Live)/
     # マジラブライブ (Maji Love Live)
@@ -70,8 +70,9 @@ LOVELIVE_RE = re.compile(
     r"([^a-z]|\b)((ai[♡-]?|(?-i:[Aa]i ))scream(?! queens)\b|"
     r"(?-i:AI (SCREAM\b|(?i:scream!))))|愛♡スクリ〜ム|"
     # Yohane the Parhelion
-    r"幻(日のヨハネ|ヨハ)|genjitsu ?no ?yohane|#yohanetheparhelion|"
-    r"sunshine in the mirror|#ヨハネ(生誕|誕生)祭|"
+    r"幻(日のヨハネ|ヨハ)|genjitsu ?no ?yohane|yohane ?the ?parhelion|"
+    r"sunshine in the mirror|blaze in( the)? deepblue|"
+    r"numazu( in( the)?)? mirage|#ヨハネ(生誕|誕生)祭|"
     r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?[曜月]|津島\s?善子|"
     r"国木田\s?花丸|小原\s?鞠莉|"
     r"がんば(ルビ|るび)|(^|[^@])ganbaruby|today['’]s maru\b|maru's month|"
@@ -88,8 +89,7 @@ LOVELIVE_RE = re.compile(
     r"高咲\s?侑|上原\s?歩夢|中須\s?かすみ|桜坂\s?しずく|朝香\s?果林|宮下\s?愛|近江\s?(彼方|遥)|"
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
     # Love Live! Superstar!!
-    r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(or|tuto|w+)?liella"
-    r"(?!(nd|tte| kelly))[!！]?|"
+    r"([^a-z]|\b)(or|tuto|w+)?(?-i:[Ll]iella|LIELLA)(?!(nd|tte))|"
     r"結ヶ丘|yuigaoka|5yncri5e!?|kaleidoscore|トマカノーテ|tomakanote|スパスタ[3３]期|"
     r"澁谷\s?かのん|唐\s?可可|嵐千\s?砂都|平安名\s?すみれ|葉月\s?恋|桜小路\s?きな子|米女\s?メイ|"
     r"若菜\s?四季|鬼塚\s?(夏美|冬毬)|ウィーン・?マルガレーテ|"
@@ -119,13 +119,13 @@ LOVELIVE_RE = re.compile(
     r"異次元フェス|ijigen\sfest?|#llsat_|"
     # Community stuff
     r"\bteam onibe\b|\bonib(e|ased)([^a-z’]|$)|schoolido\.lu|idol\.st(?!/user/\d+)|"
-    r"#HasuTH_Tran|([^a-z]|\b)OurSIF([^a-z]|$)|\bidoltober",
+    r"#HasuTH_Tran|([^a-z]|\b)OurSIF([^a-z]|$)|\bidoltober|#LL_Calendar_Collab_2026",
     re.IGNORECASE,
 )
 SUKUFEST_RE = re.compile(
     r"(^|[^マアレ])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄|金沢|香川|名古屋|ニセコ)"
 )
-YOHANE_RE = re.compile(r"\byohane(?!(-label| mbatizati))\b", re.IGNORECASE)
+YOHANE_RE = re.compile(r"\byohane(?!(-label|.*mbatiza[jt]i))\b", re.IGNORECASE)
 CATCHU_RE = re.compile(
     r"([^A-Za-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(C[Aa]t[Cc][Hh]u|catchu|CATCHU)!?"
     r"([^A-Za-z\u00C0-\u024F\u1E00-\u1EFF]|\b)"
@@ -376,11 +376,13 @@ EXCLUDE_RE = re.compile(
     # - "Can't Hide Love" live (usually song by D'Angelo)
     # - complicated love live (typo of "complicated love life")
     # - "Computer Love" live (song by Kraftwerk)
+    # - "Connected by Love" live (song by Jack White)
     # - "Cosmic Love" live (usually song by Florence + The Machine)
     r"c(an['’]?t (buy me|get enough of your|hide)|(an|ould) you not|"
-    r"o(mp(licated|uter)|smic))|"
+    r"o(mp(licated|uter)|nnected by|smic))|"
     # - stuff ending with "of love live":
     #   - "Caravan of Love" live (usually song by The Housemartins)
+    #   - "(The) Crush of Love" live (song by Joe Satriani)
     #   - "Dance Me to the End of Love" live (song by Leonard Cohen)
     #   - "Definition of Love" live (song by Naomi Sharon)
     #   - "Genius of Love" live (song by Tom Tom Club)
@@ -400,9 +402,10 @@ EXCLUDE_RE = re.compile(
     #   - "(Thee) Most Exalted Potentate of Love" live (song by The Cramps)
     #   - this/that/what kind of love live
     #   - "Tunnel of Love" live (usually song by Dire Straits or Bruce Springsteen)
-    r"(caravan|d(ance me to the end|efinition)|genius|h(azards|ouse)|l(exicon|ight)|"
-    r"most exalted potentate|prisoner|s(atellite|hot|ongs)|"
-    r"t(he ([bl]ook|meaning)|unnel)|(sunday|[tw]hat|this) kind) of|"
+    #   - "Victim of Love" live (song by Eagles)
+    r"(c(aravan|rush)|d(ance me to the end|efinition)|genius|h(azards|ouse)|"
+    r"l(exicon|ight)|most exalted potentate|prisoner|s(atellite|hot|ongs)|"
+    r"t(he ([bl]ook|meaning)|unnel)|victim|(sunday|[tw]hat|this) kind) of|"
     # - stuff ending with "in love live":
     #   - "Crazy in Love" live (song by Beyonce)
     #   - "Dangerously in Love" live (album by Beyonce)
@@ -413,7 +416,9 @@ EXCLUDE_RE = re.compile(
     #   - "Friday I'm In Love" live (usually song by The Cure)
     #   - "I'm Not in Love" live (usually song by 10cc)
     #   - "(I) Think I'm In Love" live (usually song by Eddie Money)
-    r"(crazy|d(angerously|runk)|fall(ing|s)?|(friday|think) i['’]?m|i['’]?m not) in|"
+    #   - "Paris in Love" live (album by Ibrahim Maalouf)
+    r"(crazy|d(angerously|runk)|fall(ing|s)?|(friday|think) i['’]?m|i['’]?m not|"
+    r"paris) in|"
     # - "Destination: Love Live" (album by The Make-Up)
     # - does not/doesn't love live [something]
     r"d(estination:?|o(es)?( not|n['’]t))|"
@@ -594,8 +599,8 @@ EXCLUDE_RE = re.compile(
     r"\bfind love live \w{3,}\b|"
     # hashtags frequently used in #lovelive/"(#)love live" false positives
     r"#(AEW(Dynamite)?|b(b27|eyondthegates)|eaglerock|faith|g(od|ratitude)|hope|"
-    r"L(ove( live|IsBlind|r|Wins)|ivemusic)|motivation|OwnOurVenues|positivity|totp|"
-    r"[a-z]+vibes[a-z]*)\b|"
+    r"L(ove( live|IsBlind|r|Wins)|ivemusic)|M(otivation|usicChallenge)|OwnOurVenues|"
+    r"NewYear20[0-9]{2}|positivity|totp|[a-z]+vibes[a-z]*)\b|"
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
