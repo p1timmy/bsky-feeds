@@ -45,9 +45,10 @@ LOVELIVE_RE = re.compile(
     r"スクールアイドル|(?<!middle )(?<!high )(?<!old )(?<!old-)(?<!your )\b"
     r"(?<!@)(#\w+)?school ?idol(?! (story|book)\b)(s\b| ?((festiv|music)al|project))?|"
     # Games
-    r"\bl(l|ove ?live ?)sif2?\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|puchiguru|"
+    r"\bl(l|ove ?live ?)sif2?\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|"
+    r"\b(LL_cardgame|llofficial-cardgame)|#ラブカ|"
     # ぷちぐる but not ぷちぐるみ
-    r"ぷちぐる([^み]|$)|"
+    r"ぷちぐる([^み]|$)|puchiguru|"
     # スクスタ/スクミュ but not words with マスク/デ(ィ)スク/スタンド/スタンプ/スタイル/スタッフ
     r"(^|[^\u30a1-\u30f6\u30fc])スク(スタ(?!ン[ドプ]|イル|ッフ|ート)|ミュ)|"
     # Love Live! School Idol Project
@@ -56,12 +57,12 @@ LOVELIVE_RE = re.compile(
     r"高坂\s?穂乃果|絢瀬\s?絵里|南\s?ことり|園田\s?海未|星空\s?凛|西木野\s?真姫|東條\s?希|"
     r"小泉\s?花陽|矢澤\s?にこ|nico\snico\sni+\b|#niconiconi+\b|\bminalinsky\b|ミナリンスキー|"
     r"エリーチカ|\belichika\b|りんぱな|\b(nico)?rinpana\b|金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
-    r"#にこまき|ほのまき|snow\s?halation([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
+    r"#にこまき|ほのまき|のぞえり|\bnozoeli\b|"
+    r"snow\s?halation([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
     r"(^|[^a-z\u00C0-\u024F\u1E00-\u1EFF\-])a[-\u2010]rise([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|$)|"
     r"綺羅\s?ツバサ|優木\s?あんじゅ|統堂\s?英玲奈|"
     # Love Live! Sunshine!!
     # NOTE: AZALEA not included due to too many false positives
-    #
     r"(^|[^三土])浦の星女?|uranohoshi|([^a-z0-9]|\b)aq(ou|uo)rs([^a-z0-9]|\b)|"
     r"(\W|\b)cyaron!?(\W|\b)|guilty\s?kiss([^a-z]|$)|"
     # YYY (You, Yoshiko/Yohane, RubY)
@@ -76,7 +77,8 @@ LOVELIVE_RE = re.compile(
     r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?[曜月]|津島\s?善子|"
     r"国木田\s?花丸|小原\s?鞠莉|"
     r"がんば(ルビ|るび)|(^|[^@])ganbaruby|today['’]s maru\b|maru's month|"
-    r"#よし(まる|りこ)|るびまる|\b((ruby|yoha)maru|yo((shi|ha)riko|u(chika|riko))|diamari)\b|"
+    r"よし(ルビ|りこ)|#よしまる|るびまる|"
+    r"\b((ruby|yoha)maru|yo((shi|ha)riko|u(chika|riko))|diamari)\b|"
     r"(永久|\beikyuu\s?)(hours|stage)|"
     r"(?<!\bRT @)(?<!x.com/)saint\s?snow([^a-z]|$)|"
     r"鹿角\s?(理亞|聖良)|"
@@ -85,7 +87,7 @@ LOVELIVE_RE = re.compile(
     r"([^a-z]|\b)((nij|an|e)igasaki|niji(chizu|gaku|yon))([^a-z]|\b)|a・zu・na|qu4rtz|"
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(diver"
     r" ?diva|r3birth)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
-    r"tokimeki r(unners|oadmap to the future)|^me, a taylor\b|"
+    r"tokimeki r(unners|oadmap to the future)|^me, a taylor\b|ゆうぽむ|\byuu?pomu\b|"
     r"高咲\s?侑|上原\s?歩夢|中須\s?かすみ|桜坂\s?しずく|朝香\s?果林|宮下\s?愛|近江\s?(彼方|遥)|"
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
     # Love Live! Superstar!!
@@ -482,7 +484,8 @@ EXCLUDE_RE = re.compile(
     # - "Mad Love" live (usually album by Linda Ronstadt)
     # - Maji Love Live (live concerts by ST☆RISH from Uta no Prince-sama)
     # - Mike Love live (American reggae artist)
-    r"m(a(d|ji)|ike)|"
+    # - "My True Love" live (song by The Promise)
+    r"m(a(d|ji)|ike|y true)|"
     # - "Network Love" live (K-pop song by Seventeen)
     # - "No Loss, No Love" live (song by Spiritbox)
     # - "No Ordinary Love" live (song by Sade)
@@ -600,7 +603,7 @@ EXCLUDE_RE = re.compile(
     # hashtags frequently used in #lovelive/"(#)love live" false positives
     r"#(AEW(Dynamite)?|b(b27|eyondthegates)|eaglerock|faith|g(od|ratitude)|hope|"
     r"L(ove( live|IsBlind|r|Wins)|ivemusic)|M(otivation|usicChallenge)|OwnOurVenues|"
-    r"NewYear20[0-9]{2}|positivity|totp|[a-z]+vibes[a-z]*)\b|"
+    r"NewYear20[0-9]{2}|positivity|totp|vss365|[a-z]+vibes[a-z]*)\b|"
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
