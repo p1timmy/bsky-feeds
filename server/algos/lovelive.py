@@ -306,9 +306,10 @@ EXCLUDE_RE = re.compile(
     r"jazz|"
     # - love live (and) laugh
     r"(and )?laugh|"
-    # - love live life/local/long/loud (music)
+    # - love live life/long/loud (music)
+    # - Love Live Local (small business related nonprofit in Cape Cod, MA)
     # - "love live love" but not "love live love wing bell"
-    r"l(ife|o(cal|ng|ud( music)?|ve(?! wing bell)))|"
+    r"l(ife|o(cal\b|ng|ud( music)?|ve(?! wing bell)))|"
     # - love live music at
     r"music at\b|"
     # - love live oak(s)/on stage
@@ -354,9 +355,10 @@ EXCLUDE_RE = re.compile(
     # - about/confess(ed/es/ing) his/her/their love live (usually typo of "about his/
     #   her/their love life/lives")
     r"(about|confess[a-z]*) (h(er|is)|their)|"
+    # - "Abandoned Love" live (song by Bob Dylan)
     # - absolutely love live [something]
     # - "Ain't Talkin' 'bout Love" live (song by Velvet Revolver or Van Halen)
-    r"a(bsolutely|in['’]?t talkin['’]? ['‘’]?bout)|"
+    r"a(b(andoned|solutely)|in['’]?t talkin['’]? ['‘’]?bout)|"
     # - stuff ending with "my love live":
     #   - "All My Love" live (usually song by Coldplay or any song name ending with
     #   that phrase)
@@ -365,6 +367,14 @@ EXCLUDE_RE = re.compile(
     #   - "Make You Feel My Love" live (song by Adele)
     #   - "To Bring You My Love" live (song by PJ Harvey)
     r"(all|dark(er|ness at the heart of)|make you feel|to bring you) my|"
+    # - stuff ending with "is love live":
+    #   - "All You Need Is Love" live (usually song by The Beatles)
+    #   - "What The World Needs Now Is Love" live (usually covers of 1960s song by
+    #     Jackie DeShannon)
+    #   - "What Time Is Love" live (usually song by The KLF)
+    #   - his love live (usually typo of "his love life")
+    #   - "Prophecy x This Love" live (song by Taylor Swift)
+    r"((all you need|what t(he world needs now|ime)) |(prophecy x t)?h)is|"
     # Art(ist(s))/band(s)/music/people/[some plural word] I/you/etc. (... and) love live
     r"(art(ist)?|band|music|people|[a-z]+s) (i|you|they)( ([a-z]+[a-z],? )+(and|&))?|"
     # - "Bad Love" live (usually song by Key or Eric Clapton) but not "how bad Love Live"
@@ -447,8 +457,7 @@ EXCLUDE_RE = re.compile(
     # - give/show (them/me/etc.) some love live
     r"(give|show) (\w+ )?some|"
     # - Helen Love live (Welsh rock band)
-    # - his love live (usually typo of "his love life")
-    r"h(elen|is)|"
+    r"helen|"
     # - stuff ending with "your love live":
     #   - "All Your Love" live (usually song by Otis Rush or any song name ending with
     #     that phrase)
@@ -493,9 +502,8 @@ EXCLUDE_RE = re.compile(
     r"n(etwork|o( (loss,? no|ordinary)|thing without your))|"
     # - "Pirate Love" live (song by The Heartbreakers)
     # - Pop the Balloon or/and/to/etc. Find Love live (dating show on YT/Netflix)
-    # - "Prophecy x This Love" live (song by Taylor Swift)
     # - "Punch-Drunk Love" live (romantic movie title)
-    r"p(irate|op [a-z]+ balloon [a-z]+ find|rophecy x this|unch[ -]drunk)|"
+    r"p(irate|op [a-z]+ balloon [a-z]+ find|unch[ -]drunk)|"
     # - Quest Love live (famous drummer/DJ)
     r"quest|"
     # - "Radar Love" live (song by Golden Earring)
@@ -529,8 +537,7 @@ EXCLUDE_RE = re.compile(
     # - "We Are Love" live (album by The Charlatans)
     # - "We Found Love" live (song by Rihanna feat. Calvin Harris or any song name
     #   ending with that phrase)
-    # - "What Time Is Love" live (usually song by The KLF)
-    r"w(asted|e( (are|found))?|hat time is|ould)|"
+    r"w(asted|e( (are|found))?|ould)|"
     # - you are/you're in love live
     r"you( a|['’])re in) love live\b|"
     # "Big Love" live (in) (song by Fleetwood Mac or Lindsey Buckingham)
