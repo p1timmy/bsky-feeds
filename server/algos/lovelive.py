@@ -25,7 +25,7 @@ LOVELIVE_RE = re.compile(
     r"jumpscare|"
     r"m(aybe|e(ntion(ed)?|rch|troidvania)|ovies?|vs?)\b|"
     r"n(esoberis?|iji(gasaki)?)|"
-    r"o(c(g|s?\b)|mf?g|r(?! die)\b|s(hi|t))|"
+    r"o(c(g|s?\b)|mf?g|p\b|r(?! die)\b|s(hi|t))|"
     r"pl(aylist|ush(ies?))|"
     r"referenc(es?|ia)|"
     r"s(chool ?idol|e(ction|ries|iyuus?)|hips?\b|ip([^a-z]|\b)|(ifs)?orter|ky|potted|"
@@ -35,7 +35,7 @@ LOVELIVE_RE = re.compile(
     r"wa(ifus?|tch party)\b|"
     r"yuri\b"
     r")| ?!? +(vs|X)\b| fest?\b)|"
-    r"lovelive(-anime|_staff|15th)|\b(thank you|like[ds]?|"
+    r"lovelive(-(anime|fanfunfestival)|_staff|15th)|\b(thank you|like[ds]?|"
     r"\b(d(an|oe)|hate|is thi|love|m(eet|is)|variou|wa)s|draw(ing|s)) love ?live\b|"
     r"#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
     # ラブライブ but not クラブライブ (club live)/イコラブライブ (Ikolab Live)/
@@ -102,7 +102,7 @@ LOVELIVE_RE = re.compile(
     # Link! Like! Love Live! / Hasunosora
     # リンクラ but not リンクライン or katakana phrases with リンクラ character sequence
     r"(^|[^\u30a1-\u30f6\u30fc])リンクラ(?!イン|ボ|ベル|ス|ッ|ブ)|"
-    r"hasu\s?no\s?sora|蓮ノ(空|休日)|"
+    r"hasu\s?no\s?sora|\blinkura\b|蓮ノ(空|休日)|"
     r"^(?!(.|\n)*\broses?\b(.|\n)*$)((.|\n)*\bcerise\s?bouquet\b(.|\n)*)|"
     r"スリーズブーケ|dollches(tra(?!-art)|\b)|ドルケストラ|mira-cra\spark!?|"
     r"みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|\bedel\s?note\b|"
