@@ -470,9 +470,13 @@ EXCLUDE_RE = re.compile(
     #   love live
     r"(compassion|h(appiness|ope)|joy|kindness|p(ain|eace)|unity),?"
     r" (and|&)( [a-z]+['’]s)?|"
-    # - "How To Love" live (usually song by Lil Wayne or any song name ending with
-    #   that phrase)
-    r"how to|"
+    # - stuff ending with "to love live":
+    #   - "How To Love" live (usually song by Lil Wayne or any song name ending with
+    #     that phrase)
+    #   - "Slave to Love" live (song by Bryan Ferry)
+    #   - "Somebody to Love" live (usually song by Queen or Jefferson Airplane or any
+    #     song name ending with that phrase)
+    r"(how|s(lave|omebody)) to|"
     # - (that) I('d) love live [something] (all other cases not caught by the Great "I
     #   love live [something]" Hoarde pattern)
     r"(that)?\bI(['’]d)?|"
@@ -515,13 +519,11 @@ EXCLUDE_RE = re.compile(
     # - Savage Love Live (sex advice podcast by Dan Savage)
     # - "Show Me Love" live (usually song by Robin S.)
     # - Simon Love live (some random British artist with an official Bluesky account)
-    # - "Somebody to Love" live (usually song by Queen or Jefferson Airplane or any song
-    #   name ending with that phrase)
     # - "Some Kinda Love" live (song by The Velvet Underground)
     # - Stone Love live (usually Jamaican DJ group)
     # - "Strange Love" live (usually album by T.S.O.L.)
     # - "Super Duper Love" live (song by Sugar Billy or Joss Stone)
-    r"s(a(me old|vage)|imon|how me|o(me(body to| kinda))|t(one|range)|uper duper)|"
+    r"s(a(me old|vage)|imon|how me|ome kinda|t(one|range)|uper duper)|"
     # - hear/saw/see(n) [artist name] perform [song name ending with "Love"] live
     r"(hear|s(aw|een?)) .+ perform .+|"
     # - Team Love Live (typo of "Team Love Life")
