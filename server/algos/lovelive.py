@@ -36,8 +36,8 @@ LOVELIVE_RE = re.compile(
     r"yuri\b"
     r")| ?!? +(vs|X)\b| fest?\b)|"
     r"lovelive(-(anime|fanfunfestival)|_staff|15th)|\b(thank you|like[ds]?|"
-    r"\b(d(an|oe)|hate|is thi|love|m(eet|is)|variou|wa)s|draw(ing|s)) love ?live\b|"
-    r"#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
+    r"\b(d(an|oe)|hate|is thi|love|m(eet|is)|variou|(?<!it )wa)s|draw(ing|s))"
+    r" love ?live\b|#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
     # ラブライブ but not クラブライブ (club live)/イコラブライブ (Ikolab Live)/
     # マジラブライブ (Maji Love Live)
     r"([^クコジ]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
@@ -46,9 +46,9 @@ LOVELIVE_RE = re.compile(
     r"(?<!@)(#\w+)?school ?idol(?! (story|book)\b)(s\b| ?((festiv|music)al|project))?|"
     # Games
     r"\bl(l|ove ?live ?)sif2?\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|"
-    r"\b(LL_cardgame|llofficial-cardgame)|#ラブカ|"
+    r"\bLL(_|official-)cardgame|#ラブカ|"
     # ぷちぐる but not ぷちぐるみ
-    r"ぷちぐる([^み]|$)|puchiguru|"
+    r"ぷちぐる([^み]|$)|puchiguru\b|"
     # スクスタ/スクミュ but not words with マスク/デ(ィ)スク/スタンド/スタンプ/スタイル/スタッフ
     r"(^|[^\u30a1-\u30f6\u30fc])スク(スタ(?!ン[ドプ]|イル|ッフ|ート)|ミュ)|"
     # Love Live! School Idol Project
@@ -102,7 +102,7 @@ LOVELIVE_RE = re.compile(
     # Link! Like! Love Live! / Hasunosora
     # リンクラ but not リンクライン or katakana phrases with リンクラ character sequence
     r"(^|[^\u30a1-\u30f6\u30fc])リンクラ(?!イン|ボ|ベル|ス|ッ|ブ)|"
-    r"hasu\s?no\s?sora|\blinkura\b|蓮ノ(空|休日)|"
+    r"hasu\s?no\s?sora|\blink(ura|-like-lovelive)\b|蓮ノ(空|休日)|"
     r"^(?!(.|\n)*\broses?\b(.|\n)*$)((.|\n)*\bcerise\s?bouquet\b(.|\n)*)|"
     r"スリーズブーケ|dollches(tra(?!-art)|\b)|ドルケストラ|mira-cra\spark!?|"
     r"みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|\bedel\s?note\b|"
@@ -397,11 +397,13 @@ EXCLUDE_RE = re.compile(
     #   - "(The) Crush of Love" live (song by Joe Satriani)
     #   - "Dance Me to the End of Love" live (song by Leonard Cohen)
     #   - "Definition of Love" live (song by Naomi Sharon)
+    #   - "Fire of Love" live (usually album by The Gun Club)
     #   - "Genius of Love" live (song by Tom Tom Club)
     #   - "Hazards of Love" live (album by The Decemberists)
     #   - "(The) House of Love" live (usually British alt rock band or song by Christine)
     #   - "Lexicon of Love" live (album by ABC)
     #   - "Light of Love" live (usually song by Florence and the Machine)
+    #   - "Path of Love" live (usually song name)
     #   - "Prisoner of Love" live (song by James Brown)
     #   - "Satellite of Love" live (usually song by Lou Reed)
     #   - "Shot of Love" live (song by Bob Dylan)
@@ -415,8 +417,8 @@ EXCLUDE_RE = re.compile(
     #   - this/that/what kind of love live
     #   - "Tunnel of Love" live (usually song by Dire Straits or Bruce Springsteen)
     #   - "Victim of Love" live (song by Eagles)
-    r"(c(aravan|rush)|d(ance me to the end|efinition)|genius|h(azards|ouse)|"
-    r"l(exicon|ight)|most exalted potentate|prisoner|s(atellite|hot|ongs)|"
+    r"(c(aravan|rush)|d(ance me to the end|efinition)|fire|genius|h(azards|ouse)|"
+    r"l(exicon|ight)|most exalted potentate|p(ath|risoner)|s(atellite|hot|ongs)|"
     r"t(he ([bl]ook|meaning)|unnel)|victim|(sunday|[tw]hat|this) kind) of|"
     # - stuff ending with "in love live":
     #   - "Crazy in Love" live (song by Beyonce)
@@ -539,7 +541,8 @@ EXCLUDE_RE = re.compile(
     # - "We Are Love" live (album by The Charlatans)
     # - "We Found Love" live (song by Rihanna feat. Calvin Harris or any song name
     #   ending with that phrase)
-    r"w(asted|e( (are|found))?|ould)|"
+    # - "We Got Love" live (different songs by different artists)
+    r"w(asted|e( (are|found|got))?|ould)|"
     # - you are/you're in love live
     r"you( a|['’])re in) love live\b|"
     # "Big Love" live (in) (song by Fleetwood Mac or Lindsey Buckingham)
@@ -548,6 +551,8 @@ EXCLUDE_RE = re.compile(
     # "I Need Love" live (different songs by different artists) but not "I need Love
     # Live ([some plural word]) to ..."
     r"\bI need love live\b(?! ([a-z]+s )?(to|2)\b)|"
+    # "It Was Love" live (K-pop song by Latency)
+    r"latency(.|\n)+\bit was love live|\bit was love live(.|\n)+latency|"
     # "Modern Love" live (song by David Bowie)
     r"bowie(.|\n)+\bmodern love live|\bmodern love live(.|\n)+bowie|"
     # "(The) Power of Love" live (different songs by different artists, except at end
