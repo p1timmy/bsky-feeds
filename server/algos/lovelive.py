@@ -91,7 +91,7 @@ LOVELIVE_RE = re.compile(
     r"高咲\s?侑|上原\s?歩夢|中須\s?かすみ|桜坂\s?しずく|朝香\s?果林|宮下\s?愛|近江\s?(彼方|遥)|"
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
     # Love Live! Superstar!!
-    r"([^a-z]|\b)(or|tuto|w+)?(?-i:[Ll]iella|LIELLA)(?!(nd|tte))|"
+    r"([^a-z]|\b)(or|tuto|w+)?(?-i:[Ll]iella|LIELLA)(?!(nd|tte))|リエラジ|"
     r"結ヶ丘|yuigaoka|5yncri5e!?|kaleidoscore|トマカノーテ|tomakanote|スパスタ[3３]期|"
     r"澁谷\s?かのん|唐\s?可可|嵐千\s?砂都|平安名\s?すみれ|葉月\s?恋|桜小路\s?きな子|米女\s?メイ|"
     r"若菜\s?四季|鬼塚\s?(夏美|冬毬)|ウィーン・?マルガレーテ|"
