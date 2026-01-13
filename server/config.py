@@ -29,6 +29,7 @@ if not LOVELIVE_URI:
 # ---- User list URIs ----
 
 LOVELIVE_INCLUDE_LIST_URI = os.environ.get("LOVELIVE_INCLUDE_LIST_URI")
+LOVELIVE_MEDIA_INCLUDE_LIST_URI = os.environ.get("LOVELIVE_MEDIA_INCLUDE_LIST_URI")
 LOVELIVE_IGNORE_LIST_URI = os.environ.get("LOVELIVE_IGNORE_LIST_URI")
 
 # ---- Database tuning pragmas ----

@@ -22,6 +22,12 @@ userlists = [
         uri=lovelive.dedicated_userlist_uri,
     ),
     UserList(
+        "lovelive_users_media_only.csv",
+        lovelive.DEDICATED_USERS_MEDIA_ONLY,
+        "dedicated LoveLive accounts list (media posts only)",
+        uri=lovelive.dedicated_userlist_media_only_uri,
+    ),
+    UserList(
         "lovelive_ignore_users.csv",
         lovelive.IGNORE_USERS,
         "LoveLive!Sky feed user ignore list",

@@ -3,7 +3,7 @@ import re
 
 # from time import perf_counter
 from server import config
-from server.algos._base import get_post_texts
+from server.algos._base import get_post_texts, post_has_media_embeds
 
 logger = logging.getLogger(__name__)
 
@@ -682,11 +682,13 @@ BAD_KEYWORDS_RE = re.compile(
 # file didn't work
 LOVELIVENEWS_BSKY_SOCIAL = "did:plc:yfmm2mamtdjxyp4pbvdigpin"
 DEDICATED_USERS = set({LOVELIVENEWS_BSKY_SOCIAL})
+DEDICATED_USERS_MEDIA_ONLY: set[str] = set()
 IGNORE_USERS: set[str] = set()
 SOLOVON_DILL_BURGGIT_MOE_AP_BRID_GY = "did:plc:dvxbc7qhvo7c2vf3pmzmswd6"
 
 uri = config.LOVELIVE_URI
 dedicated_userlist_uri = config.LOVELIVE_INCLUDE_LIST_URI
+dedicated_userlist_media_only_uri = config.LOVELIVE_MEDIA_INCLUDE_LIST_URI
 ignore_list_uri = config.LOVELIVE_IGNORE_LIST_URI
 
 
@@ -716,7 +718,9 @@ CHARACTERS_EN_RE = make_characters_pattern()
 
 def filter(post: dict) -> bool:
     author = post["author"]
-    if author in DEDICATED_USERS:
+    if author in DEDICATED_USERS or (
+        author in DEDICATED_USERS_MEDIA_ONLY and post_has_media_embeds(post)
+    ):
         return True
 
     if author in IGNORE_USERS or author == SOLOVON_DILL_BURGGIT_MOE_AP_BRID_GY:
