@@ -11,6 +11,25 @@ FORTNIGHT = timedelta(days=14)
 CURSOR_EOF = "eof"
 
 
+def post_has_media_embeds(post: dict) -> bool:
+    """
+    Check if a post contains media (image/video/GIF) embeds
+    """
+    record: models.AppBskyFeedPost.Record = post["record"]
+    embed = record.embed
+    if isinstance(embed, models.AppBskyEmbedRecordWithMedia.Main):
+        embed = embed.media
+
+    return isinstance(
+        embed,
+        (models.AppBskyEmbedImages.Main, models.AppBskyEmbedVideo.Main),
+    ) or (
+        isinstance(embed, models.AppBskyEmbedExternal.Main)
+        and embed.external
+        and embed.external.uri.startswith("https://media.tenor.com/")
+    )
+
+
 def get_post_texts(post: dict, include_media=True) -> list[str]:
     """
     Extract text content from a single post.
