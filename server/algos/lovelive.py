@@ -237,9 +237,9 @@ EXCLUDE_RE = re.compile(
     # - *ing/*ly/bloody/also/always/can't/cannot/(sure) do/does/don't (but not "don't
     #   do")/just/lowkey/still/(came/come/grew/have/happened/use(d)/tend) to/too/will/
     #   would('ve)/... and
-    r"(,? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|(sure )?do|does|bloody|"
+    r"(( ?,)? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|(sure )?do|does|bloody|"
     r"don['’]?t(?! do\b)|((c[ao]me|ha(ve|ppen(ed)?)|used?|grew) t|s|t(o|end t))o|even|"
-    r"lowkey|would(['’]ve)?|can(['’]|((['’]?t)? )?no)t|[a-z]+[a-z] (and|&))\,?)*"
+    r"lowkey|would(['’]ve)?|can(['’]|((['’]?t)? )?no)t|[a-z]+[a-z] (and|&)))*"
     # - love live [something]/love liver(s)/love Live (as in a band named LĪVE, Ableton
     #   Live music software, or typo of "love life")
     r" ((love )+live((?! (so |a(nd|s well)|but)\b),? &? ?#?\w+\b|rs?)|"
