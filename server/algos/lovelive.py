@@ -14,6 +14,7 @@ LOVELIVE_RE = re.compile(
     # "Love Live" + other related words
     r"love\s?live([!:\s]*("
     r"a(cc((oun)?ts?|s)|fter school\b|ll[ -]stars|n(d (idolm[a@]ster|more)|ime)|pp)|"
+    r"(tribute )?album\b|"
     r"blue ?bird|"
     r"c(anon|ollab|yber|(d|osplay|haracter)s?)|"
     r"d(a(nce(s| groups?)|ys)|rama\b)|"
@@ -35,9 +36,9 @@ LOVELIVE_RE = re.compile(
     r"wa(ifus?|tch party)\b|"
     r"yuri\b"
     r")| ?!? +(vs|X)\b| fest?\b)|"
-    r"lovelive(-(anime|fanfunfestival)|_staff|15th)|\b(thank you|like[ds]?|"
-    r"\b(d(an|oe)|hate|is thi|love|m(eet|is)|variou|(?<!it )wa)s|draw(ing|s))"
-    r" love ?live\b|#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
+    r"lovelive(-(anime|fanfunfestival|news\.bsky\.social)|_staff|15th)|"
+    r"\b((d(an|oe)|hate|is thi|love|m(eet|is)|variou|(?<!it )wa)s|draw(ing|s)|"
+    r"thank you|like[ds]?) love ?live\b|#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
     # ラブライブ but not クラブライブ (club live)/イコラブライブ (Ikolab Live)/
     # マジラブライブ (Maji Love Live)
     r"([^クコジ]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
@@ -621,10 +622,12 @@ EXCLUDE_RE = re.compile(
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live music" false positive posts
-    r"\b(floyd|grateful dead|hot mulligan|john lewis|kahan|marley|nick cave|oasis|"
-    r"phish)\b|"
+    r"\b(duran ?duran|floyd|grateful dead|hot mulligan|john lewis|kahan|marley|"
+    r"nick cave|oasis|phish)\b|"
     # Venue of Love Live (rock music) Festival
     r"\bblackpool|"
+    # Macclesfield, UK has a design company called LOVELIVE
+    r"\bmacclesfield|"
     # lovelive.com/net/org/etc.
     r"\blovelive\.[a-z]+[a-z](?:[^.a-z0-9\-]|$)|"
     # "Lush" and "Lovelive" (typo of "Lovelife" album) in the same post
