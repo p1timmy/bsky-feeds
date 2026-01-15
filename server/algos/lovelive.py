@@ -24,6 +24,7 @@ LOVELIVE_RE = re.compile(
     r"g(ame|i(f|rls?)|lobal)\b|"
     r"i(ce cream|dols?|n general)|"
     r"jumpscare|"
+    r"lieder|"
     r"m(aybe|e(ntion(ed)?|rch|troidvania)|ovies?|vs?)\b|"
     r"n(esoberis?|iji(gasaki)?)|"
     r"o(c(g|s?\b)|mf?g|p\b|r(?! die)\b|s(hi|t))|"
@@ -59,7 +60,7 @@ LOVELIVE_RE = re.compile(
     r"小泉\s?花陽|矢澤\s?にこ|nico\snico\sni+\b|#niconiconi+\b|\bminalinsky\b|ミナリンスキー|"
     r"エリーチカ|\belichika\b|りんぱな|\b(nico)?rinpana\b|金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
     r"#にこまき|ほのまき|のぞえり|\bnozoeli\b|"
-    r"snow\s?halation([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
+    r"s(now\s?halation|oldier\s?game)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
     r"(^|[^a-z\u00C0-\u024F\u1E00-\u1EFF\-])a[-\u2010]rise([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|$)|"
     r"綺羅\s?ツバサ|優木\s?あんじゅ|統堂\s?英玲奈|"
     # Love Live! Sunshine!!
