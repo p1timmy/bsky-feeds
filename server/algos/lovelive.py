@@ -94,6 +94,7 @@ LOVELIVE_RE = re.compile(
     r"tokimeki r(unners|oadmap to the future)|^me, a taylor\b|ゆうぽむ|\byuu?pomu\b|"
     r"高咲\s?侑|上原\s?歩夢|中須\s?かすみ|桜坂\s?しずく|朝香\s?果林|宮下\s?愛|近江\s?(彼方|遥)|"
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
+    r"かすみん|"
     # Love Live! Superstar!!
     r"([^a-z]|\b)(or|tuto|w+)?(?-i:[Ll]iella|LIELLA)(?!(nd|tte))|リエラジ|"
     r"結ヶ丘|yuigaoka|5yncri5e!?|kaleidoscore|トマカノーテ|tomakanote|スパスタ[3３]期|"
@@ -583,7 +584,7 @@ EXCLUDE_RE = re.compile(
     # kind of/made/make(s)/ making/music is(/was)/needs/never/really/siempre/should/
     # song(s)/tries/tried/UR ... card(s)/was/will/would"
     r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|re|s|uf)|"
-    r"but|[csw]ould|[dg]oing|i([fn'’]|st?)?|d(id|oes(n['’]?t)?)|ha([ds]|tes)|"
+    r"but|[csw]ould|[dg]oing|i([fn'’]|st?)?|d(id|oes(n['’]?t)?)|got|ha([ds]|tes)|"
     r"kind(a| of)|m(a(de|k(es?|ing))|usic (i|wa)s)|ne(eds|ver)|really|s(iempre|ongs?)|"
     r"trie[ds]|ur .*cards?|w(as|ill))\b)|"
     r"([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
