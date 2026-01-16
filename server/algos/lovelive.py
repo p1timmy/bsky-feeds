@@ -478,12 +478,13 @@ EXCLUDE_RE = re.compile(
     r"(compassion|h(appiness|ope)|joy|kindness|p(ain|eace)|unity),?"
     r" (and|&)( [a-z]+['’]s)?|"
     # - stuff ending with "to love live":
+    #   - learn(ing) to love live [something]
     #   - "How To Love" live (usually song by Lil Wayne or any song name ending with
     #     that phrase)
     #   - "Slave to Love" live (song by Bryan Ferry)
     #   - "Somebody to Love" live (usually song by Queen or Jefferson Airplane or any
     #     song name ending with that phrase)
-    r"(how|s(lave|omebody)) to|"
+    r"(how|learn(ing)?|s(lave|omebody)) to|"
     # - (that) I('d) love live [something] (all other cases not caught by the Great "I
     #   love live [something]" Hoarde pattern)
     r"(that)?\bI(['’]d)?|"
