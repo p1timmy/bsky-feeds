@@ -1,6 +1,8 @@
 import logging
 import re
 
+from atproto_client import models
+
 # from time import perf_counter
 from server import config
 from server.algos._base import get_post_texts, post_has_media_embeds
@@ -730,6 +732,23 @@ def filter(post: dict) -> bool:
     if author in IGNORE_USERS or author == SOLOVON_DILL_BURGGIT_MOE_AP_BRID_GY:
         return False
 
+    record: models.AppBskyFeedPost.Record = post["record"]
+
+    # Don't add posts that quote an ignored user's post and/or is a reply to ignored user
+    quoted_post_or_reply_parent_uri = ""
+    if isinstance(record.embed, models.AppBskyEmbedRecord.Main):
+        quoted_post_or_reply_parent_uri = record.embed.record.uri
+    elif isinstance(record.embed, models.AppBskyEmbedRecordWithMedia.Main):
+        quoted_post_or_reply_parent_uri = record.embed.record.record.uri
+    elif record.reply is not None:
+        quoted_post_or_reply_parent_uri = record.reply.parent.uri
+
+    if (
+        quoted_post_or_reply_parent_uri
+        and quoted_post_or_reply_parent_uri.split("/")[2] in IGNORE_USERS
+    ):
+        return False
+
     all_texts = "\n".join(get_post_texts(post))
     if not all_texts:
         return False
@@ -743,7 +762,8 @@ def filter(post: dict) -> bool:
             and not FAKE_YOHANE_RE.search(all_texts)
             and not (
                 # Exclude replies (usually by @kanto141.bsky.social) that say "Hi Yohane"
-                post["record"].reply is not None and HI_YOHANE_RE.search(all_texts)
+                record.reply is not None
+                and HI_YOHANE_RE.search(all_texts)
             ),
             CATCHU_RE.search(all_texts) and not FAKE_CATCHU_RE.search(all_texts),
             CHARACTERS_EN_RE.search(all_texts),
