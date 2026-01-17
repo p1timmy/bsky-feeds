@@ -15,7 +15,8 @@ LOVELIVE_NAME_EN_RE = re.compile(
 LOVELIVE_RE = re.compile(
     # "Love Live" + other related words
     r"love\s?live([!:\s]*("
-    r"a(cc((oun)?ts?|s)|fter school\b|ll[ -]stars|n(d (idolm[a@]ster|more)|ime)|pp)|"
+    r"a(cc((oun)?ts?|s)|fter school\b|ll[ -]stars|n(d (idolm[a@]ster|more)|ime)|pp|"
+    r"rcade\b)|"
     r"(tribute )?album\b|"
     r"blue ?bird|"
     r"c(anon|ollab|yber|(d|osplay|haracter)s?)|"
@@ -36,6 +37,7 @@ LOVELIVE_RE = re.compile(
     r"o(ng\b|undtrack)|taff|u(b ?units?|nshine|per ?star))|"
     r"t(cg|hings)|"
     r"u['’]s|"
+    r"vn\b|"
     r"wa(ifus?|tch party)\b|"
     r"yuri\b"
     r")| ?!? +(vs|X)\b| fest?\b)|"
@@ -123,7 +125,7 @@ LOVELIVE_RE = re.compile(
     r"\b(polka_lion|My_Mai_Eld|G_Akky304250|hanabistarmine|MiracleGoldSP|Noricco_U|"
     r"Yukuri_talk|Rollie_twinkle|LittlegreenCom|ShaunTheBunny)([^a-z]|$)|"
     # Concerts
-    r"異次元フェス|ijigen\sfest?|#llsat_|"
+    r"異次元フェス|ijigen\sfest?|#(llsat_|虹ブンブンビー_day[12])|"
     # Community stuff
     r"\bteam onibe\b|\bonib(e|ased)([^a-z’]|$)|schoolido\.lu|idol\.st(?!/user/\d+)|"
     r"#HasuTH_Tran|([^a-z]|\b)OurSIF([^a-z]|$)|\bidoltober|#LL_Calendar_Collab_2026",
