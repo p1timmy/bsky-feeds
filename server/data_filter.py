@@ -10,10 +10,18 @@ from peewee import IntegrityError, Model
 
 from server import data_stream
 from server.algos import filters
+from server.algos._base import get_post_texts
 from server.database import Feed, Post, db
 
 _ADULT_LABELS = ("porn", "nudity", "sexual", "sexual-figurative")
 _BSKY_MOD_SERVICE = "did:plc:ar7c4by46qjdydhdevvrndac"
+_EMBED_TYPES = {
+    models.AppBskyEmbedImages.Main: "image",
+    models.AppBskyEmbedVideo.Main: "video",
+    models.AppBskyEmbedExternal.Main: "link",
+    models.AppBskyEmbedRecord.Main: "quote",
+    models.AppBskyEmbedRecordWithMedia.Main: "media+quote",
+}
 
 _MAX_COMMIT_LAG = timedelta(seconds=0.25)
 _ARCHIVED_THRESHOLD = timedelta(days=1)
@@ -80,24 +88,34 @@ def operations_callback(ops: defaultdict):
 
         if feeds:
             # print post to show that it will be added to feeds
-            inlined_text = record.text.replace("\n", " ").strip() or "<no text>"
+            all_texts = [
+                f"  {text.replace("\n", style("↵", fg="blue")).replace("\r", "").strip()}"
+                for text in get_post_texts(created_post)
+            ]
+            if all_texts:
+                all_texts_str = "\n".join(all_texts)
+            else:
+                all_texts_str = style("  <no text>", fg="blue")
+
             post_is_reply = bool(record.reply)
             logger.info(
                 "NEW POST "
                 "[created_at=%s]"
-                "[author=%s]"
-                "[with_embed=%s]"
+                "[uri=%s]"
+                "[embed=%s]"
                 "[is_reply=%s]"
                 "[labels=%s]"
+                "[lang=%s]"
                 "[feeds=%s]"
-                ": %s",
+                "\n%s",
                 record.created_at,
-                author,
-                record.embed is not None,
+                created_post["uri"],
+                _EMBED_TYPES.get(type(record.embed)),
                 post_is_reply,
                 ",".join(labels) or None,
+                ",".join(record.langs) if record.langs else None,
                 ",".join(feed.algo_name for feed in feeds),
-                inlined_text,
+                all_texts_str,
             )
             logger.debug(created_post)
 
