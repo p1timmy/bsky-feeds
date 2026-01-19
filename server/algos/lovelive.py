@@ -15,8 +15,8 @@ LOVELIVE_NAME_EN_RE = re.compile(
 LOVELIVE_RE = re.compile(
     # "Love Live" + other related words
     r"love\s?live([!:\s]*("
-    r"a(cc((oun)?ts?|s)|fter school\b|ll[ -]stars|n(d (idolm[a@]ster|more)|ime)|pp|"
-    r"rcade\b)|"
+    r"a(cc((oun)?ts?|s)|fter school\b|ll[ -]stars|pp|rcade\b|"
+    r"n(d (i(dolm[a@]ster|m[a@]s)|more)|ime))|"
     r"(tribute )?album\b|"
     r"blue ?bird|"
     r"c(anon|ollab|yber|(d|osplay|haracter)s?)|"
@@ -134,7 +134,7 @@ LOVELIVE_RE = re.compile(
 SUKUFEST_RE = re.compile(
     r"(^|[^マアレ])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄|金沢|香川|名古屋|ニセコ)"
 )
-YOHANE_RE = re.compile(r"\byohane(?!(-label|.*mbatiza[jt]i))\b", re.IGNORECASE)
+YOHANE_RE = re.compile(r"\b(?<!@)yohane(?!(-label|.*mbatiza[jt]i))\b", re.IGNORECASE)
 CATCHU_RE = re.compile(
     r"([^A-Za-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(C[Aa]t[Cc][Hh]u|catchu|CATCHU)!?"
     r"([^A-Za-z\u00C0-\u024F\u1E00-\u1EFF]|\b)"
@@ -304,8 +304,9 @@ EXCLUDE_RE = re.compile(
     # - love live him
     # - love live hockey
     r"h(appily|im|ockey)|"
+    # - love "Live in Colo(u)r" (sometimes typo of "love Life In Color")
     # - love live interaction
-    r"interaction|"
+    r"in( colou?r|teraction)|"
     # - Love Live Italian
     # - love live within
     r"(italia|withi)n|"
@@ -434,20 +435,23 @@ EXCLUDE_RE = re.compile(
     #   - "Fall(s) in Love" live (usually different songs by different artists or any
     #     song name ending with that phrase)
     #   - "(Can't Help) Falling in Love" live (song by different artists)
-    #   - "Friday I'm In Love" live (usually song by The Cure)
+    #   - "Friday I'm In Love" live (usually song by The Cure or cover by Robert Smith and
+    #     Olivia Rodrigo)
     #   - "I'm Not in Love" live (usually song by 10cc)
     #   - "(I) Think I'm In Love" live (usually song by Eddie Money)
     #   - "Paris in Love" live (album by Ibrahim Maalouf)
+    #   - "Stone in Love" live (song by Journey)
     r"(crazy|d(angerously|runk)|fall(ing|s)?|(friday|think) i['’]?m|i['’]?m not|"
-    r"paris) in|"
+    r"paris|stone) in|"
     # - "Destination: Love Live" (album by The Make-Up)
     # - does not/doesn't love live [something]
     r"d(estination:?|o(es)?( not|n['’]t))|"
+    # - "Faithless Love" live (song by Linda Ronstadt)
     # - "Fake Love" live (song by BTS)
     # - "Feel Like Makin' Love" live (song by Roberta Flack or Bad Company)
     # - fight love live (usually Filoli, California historical marker)
     # - "Frozen Love" live (song by Buckingham Nicks)
-    r"f(ake|eel like makin['’g]?|ight|rozen)|"
+    r"f(a(ithless|ke)|eel like makin['’g]?|ight|rozen)|"
     # - stuff ending with "for love live":
     #   - "Exist for Love" live (song by Aurora)
     #   - "Fool for Love" live (different songs by different artists)
@@ -480,13 +484,13 @@ EXCLUDE_RE = re.compile(
     r"(compassion|h(appiness|ope)|joy|kindness|p(ain|eace)|unity),?"
     r" (and|&)( [a-z]+['’]s)?|"
     # - stuff ending with "to love live":
-    #   - learn(ing) to love live [something]
+    #   - learn(ed/ing) to love live [something]
     #   - "How To Love" live (usually song by Lil Wayne or any song name ending with
     #     that phrase)
     #   - "Slave to Love" live (song by Bryan Ferry)
     #   - "Somebody to Love" live (usually song by Queen or Jefferson Airplane or any
     #     song name ending with that phrase)
-    r"(how|learn(ing)?|s(lave|omebody)) to|"
+    r"(how|learn(ed|ing)?|s(lave|omebody)) to|"
     # - (that) I('d) love live [something] (all other cases not caught by the Great "I
     #   love live [something]" Hoarde pattern)
     r"(that)?\bI(['’]d)?|"
@@ -681,8 +685,8 @@ BAD_KEYWORDS_RE = re.compile(
     # "Buy Anything From Amazon" spam
     r"zort\.my/|"
     # NSFW keywords
-    r"bds&?m|c(am ?girl|ock(s|\b)|um(ming)?([^a-z]|\b))|di(aper|ck|ldo)|(futanar|henta)i|"
-    r"jock[sa]traps?|nude|p(enis|regnant)|s(ex([^a-z]|\b)|lut)"
+    r"bds&?m|c(am ?girl|ock(s|\b)|um(ming|shot)?([^a-z]|\b))|di(aper|ck|ldo)|"
+    r"(futanar|henta)i|jock[sa]traps?|nude|p(enis|regnant)|s(ex([^a-z]|\b)|lut)"
     # NSFW hashtags
     r")|#(ecchi|nsfw|porn|r18)",
     re.IGNORECASE,
