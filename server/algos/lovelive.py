@@ -64,7 +64,7 @@ LOVELIVE_RE = re.compile(
     r"小泉\s?花陽|矢澤\s?にこ|nico\snico\sni+\b|#niconiconi+\b|\bminalinsky\b|ミナリンスキー|"
     r"エリーチカ|\belichika\b|りんぱな|\b(nico)?rinpana\b|金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
     r"#にこまき|ほのまき|のぞえり|\bnozoeli\b|"
-    r"s(now\s?halation|oldier\s?game)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
+    r"snow\s?halation([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
     r"(^|[^a-z\u00C0-\u024F\u1E00-\u1EFF\-])a[-\u2010]rise([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|$)|"
     r"綺羅\s?ツバサ|優木\s?あんじゅ|統堂\s?英玲奈|"
     # Love Live! Sunshine!!
@@ -134,6 +134,7 @@ LOVELIVE_RE = re.compile(
 SUKUFEST_RE = re.compile(
     r"(^|[^マアレ])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄|金沢|香川|名古屋|ニセコ)"
 )
+SOLDIER_GAME_RE = re.compile(r"([^a-z]|\b)soldier game([^a-z]|\b)", re.IGNORECASE)
 YOHANE_RE = re.compile(r"\b(?<!@)yohane(?!(-label|.*mbatiza[jt]i))\b", re.IGNORECASE)
 CATCHU_RE = re.compile(
     r"([^A-Za-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(C[Aa]t[Cc][Hh]u|catchu|CATCHU)!?"
@@ -672,6 +673,11 @@ FAKE_CATCHU_RE = re.compile(
     r"u?p\b(?! (close|next)))|\b(to )?catchu with|\bpinky[ -]catchu\b",
     re.IGNORECASE,
 )
+FAKE_SOLDIER_GAME_RE = re.compile(
+    r"\b(alien|(an?|the)( \w+\w){,5}|child|h(is|er)|m(ilitar)?y|p(lastic|sycho)|"
+    r"s(tar|uper)|t(heir|oy)|winter) soldier game(?! cover)",
+    re.IGNORECASE,
+)
 BAD_KEYWORDS_RE = re.compile(
     r"\b(arxiv\b|(europesays|newsbeep)\.com\b|zmedia\.(twitren\.com|jp)\b|"
     # Moths with species names containing "liella" substring
@@ -765,6 +771,8 @@ def filter(post: dict) -> bool:
         (
             LOVELIVE_NAME_EN_RE.search(all_texts) and not EXCLUDE_RE.search(all_texts),
             SUKUFEST_RE.search(all_texts) and "scrum" not in all_texts.lower(),
+            SOLDIER_GAME_RE.search(all_texts)
+            and not FAKE_SOLDIER_GAME_RE.search(all_texts),
             LOVELIVE_RE.search(all_texts),
             YOHANE_RE.search(all_texts)
             and not FAKE_YOHANE_RE.search(all_texts)
