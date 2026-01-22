@@ -13,8 +13,13 @@ logging.basicConfig(level=logging.CRITICAL)
 
 from server.database import Feed, Post, db  # noqa: E402
 
+_DID_PATTERN = r"did:plc:[a-z2-7]{24}"
+_TID_PATTERN = r"([a-z2-7]{13})"
 BSKY_POST_URL_REGEX = re.compile(
-    r"https://bsky.app/profile/([A-Za-z0-9\-\.]+\.[a-z]+|did:plc:[a-z2-7]{24})/post/([a-z2-7]{13})"
+    rf"https://bsky.app/profile/([A-Za-z0-9\-\.]+\.[a-z]+|{_DID_PATTERN})/post/{_TID_PATTERN}"
+)
+BSKY_POST_AT_URI_REGEX = re.compile(
+    rf"at://({_DID_PATTERN})/app.bsky.feed.post/{_TID_PATTERN}"
 )
 CONTEXT_SETTINGS = {
     "help_option_names": ["-h", "--help"],
@@ -42,10 +47,11 @@ def _echo_and_abort(message: str):
 
 
 def _get_post_tid_or_abort(uri: str) -> str:
-    try:
-        return BSKY_POST_URL_REGEX.findall(uri)[0][-1]
-    except IndexError:
+    matches = BSKY_POST_URL_REGEX.findall(uri) or BSKY_POST_AT_URI_REGEX.findall(uri)
+    if not matches:
         _echo_and_abort(f"Not a valid URI: {uri}")
+
+    return matches[0][-1]
 
 
 def _get_feed_row_by_name_or_abort(feed_name: str) -> Feed:
@@ -74,12 +80,13 @@ def add(feed: str, post_uri: tuple[str, ...], noconfirm: bool):
     FEED is a feed name as listed in the server/algos directory (any of those that don't
     start with an underscore)
 
-    POST_URI is 1 or more bsky.app URLs of the post(s) to add
+    POST_URI is 1 or more bsky.app or at:// URIs of the post(s) to add
     \f
 
     :param feed: Name of the feed to add posts into. Must be one of the module
         names listed in `server/algos` directory.
-    :param post_uri: `tuple` of bsky.app URLs of posts to add to feed
+    :param post_uri: `tuple` of any combination of `at://` URIs or bsky.app URLs of the
+        posts to be added
     :param noconfirm: Whether to skip confirmation prompts or not
     """
 
@@ -90,6 +97,8 @@ def add(feed: str, post_uri: tuple[str, ...], noconfirm: bool):
     uris_to_get: list[str] = []
 
     # Check if post exists in DB
+    # FIXME: edge case where some posts don't get added if another post with the same
+    # TID already exists in DB
     for uri in set(post_uri):
         tid = _get_post_tid_or_abort(uri)
         post: Post | None = Post.get_or_none(Post.uri.endswith(f"/{tid}"))
@@ -119,6 +128,12 @@ def add(feed: str, post_uri: tuple[str, ...], noconfirm: bool):
         at_uris_to_get: list[str] = []
         client = _get_api_client()
         for uri in uris_to_get:
+            # Add at:// URIs directly to list
+            if BSKY_POST_AT_URI_REGEX.search(uri):
+                at_uris_to_get.append(uri)
+                continue
+
+            # Get at:// URI from author handle/DID and post TID
             author, tid = BSKY_POST_URL_REGEX.findall(uri)[0]
             try:
                 response: GetRecordResponse = client.get_post(tid, author)
@@ -157,6 +172,7 @@ def add(feed: str, post_uri: tuple[str, ...], noconfirm: bool):
                         reply_root = record.reply.root.uri
                         reply_parent = record.reply.parent.uri
 
+                    # TODO: add adult labels
                     posts_to_create.append(
                         {
                             "uri": post.uri,
@@ -221,10 +237,11 @@ def remove(post_uri: tuple[str, ...], feed: tuple[str, ...], noconfirm: bool):
     """
     Remove posts from all feeds
 
-    POST_URI is 1 or more bsky.app URLs of the post(s) to remove
+    POST_URI is 1 or more bsky.app or at:// URIs of the post(s) to remove
     \f
 
-    :param post_uri: `tuple` of bsky.app URLs of posts to remove
+    :param post_uri: `tuple` of any combination of `at://` URIs or bsky.app URLs of the
+        posts to remove
     :param feed: `tuple` of feed names to remove posts from, can be empty if `-f/--feed`
         option is not used
     :param noconfirm: Whether to skip confirmation prompts or not
@@ -238,6 +255,7 @@ def remove(post_uri: tuple[str, ...], feed: tuple[str, ...], noconfirm: bool):
 
     query: ModelSelect = Post.select()
     for tid in tids:
+        # FIXME: edge case deleting all posts sharing the same TID
         query = query.orwhere(Post.uri.endswith(f"/{tid}"))
 
     post_ids = set(post.id for post in query)
