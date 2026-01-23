@@ -630,8 +630,8 @@ EXCLUDE_RE = re.compile(
     r"\bfind love live \w{3,}\b|"
     # hashtags frequently used in #lovelive/"(#)love live" false positives
     r"#(AEW(Dynamite)?|b(b27|eyondthegates)|eaglerock|faith|g(od|ratitude)|hope|"
-    r"L(ove( live|IsBlind|r|Wins)|ivemusic)|M(otivation|usicChallenge)|OwnOurVenues|"
-    r"NewYear20[0-9]{2}|positivity|totp|vss365|[a-z]+vibes[a-z]*)\b|"
+    r"L(ove(IsBlind|r|Wins)?|ivemusic)|M(otivation|usicChallenge)|OwnOurVenues|"
+    r"NewYear20[0-9]{2}|positivity|totp|v(iral|ss365)|[a-z]+vibes[a-z]*)\b|"
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
     # Random artists frequently mentioned in "love live (music)" false positive posts
