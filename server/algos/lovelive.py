@@ -15,8 +15,7 @@ LOVELIVE_NAME_EN_RE = re.compile(
 LOVELIVE_RE = re.compile(
     # "Love Live" + other related words
     r"love\s?live([!:\s]*("
-    r"a(cc((oun)?ts?|s)|fter school\b|ll[ -]stars|pp|rcade\b|"
-    r"n(d (i(dolm[a@]ster|m[a@]s)|more)|ime))|"
+    r"a(cc((oun)?ts?|s)|fter school\b|ll[ -]stars|pp|rcade\b|nime)|"
     r"(tribute )?album\b|"
     r"blue ?bird|"
     r"c(anon|ollab|yber|(d|osplay|haracter)s?)|"
@@ -34,7 +33,7 @@ LOVELIVE_RE = re.compile(
     r"pl(aylist|ush(ies?))|"
     r"referenc(es?|ia)|"
     r"s(chool ?idol|e(ction|ries|iyuus?)|hips?\b|ip([^a-z]|\b)|(ifs)?orter|ky|potted|"
-    r"o(ng\b|undtrack)|taff|u(b ?units?|nshine|per ?star))|"
+    r"o(los?\b|ng\b|undtrack)|taff|u(b ?units?|nshine|per ?star))|"
     r"t(cg|hings)|"
     r"u['’]s|"
     r"vn\b|"
@@ -277,9 +276,12 @@ EXCLUDE_RE = re.compile(
     # - love live and be happy/nice/etc.
     # - love "Live and Dangerous" (album by Thin Lizzy)
     # - love "LIVE and FALL" (album by Xdinary Heroes)
+    # - love live and let
     # - love live at (usually songs ending with "Love" + "live at [some place]" but not
     #   "love live at it(')s")
-    r"a(ction|mmo|nd (be\b|dangerous|fall)|t\b(?!it['’]?s\b)| ?live)|"
+    r"a(ction|mmo|nd (be|dangerous|fall|let)\b|t\b(?!it['’]?s\b)| ?live)|"
+    # - love "Live and Learn" (usually Sonic Adventure 2 theme song)
+    r"(and|&) learn\b|"
     # - Love Live Bleeding (typo of "Love Lies Bleeding")
     # - love live broadcasting
     r"b(leeding|roadcasting)|"
@@ -496,7 +498,8 @@ EXCLUDE_RE = re.compile(
     #   love live [something]" Hoarde pattern)
     r"(that)?\bI(['’]d)?|"
     # - "I Feel Love" live (usually song by Donna Summer)
-    r"I feel|"
+    # - "I'm Outta Love" live (song by Anastacia)
+    r"I( feel|['’]m outta)|"
     # - laugh/let (that)/live love live
     # - "La La Love" live (K-pop song by NCT DREAM)
     # - "Love, Hate, Love" live (song by Alice In Chains)
@@ -587,12 +590,12 @@ EXCLUDE_RE = re.compile(
     # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
-    # love love [something]" but not "(and) love live all/also/always/are/as/auf/but/
-    # could/did/does(n't)/doing/going/had/has/hates/I/if/in/is(t)/I'll/I'm/kinda/
-    # kind of/made/make(s)/ making/music is(/was)/needs/never/really/siempre/should/
-    # song(s)/tries/tried/UR ... card(s)/was/will/would"
-    r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|re|s|uf)|"
-    r"but|[csw]ould|[dg]oing|i([fn'’]|st?)?|d(id|oes(n['’]?t)?)|got|ha([ds]|tes)|"
+    # love love [something]" but not "(and) love live all/also/always/and/are/as/auf/
+    # but/could/did/does(n't)/doing/going/got/had/has/hates/I/if/in/is(t)/I'll/I'm/
+    # kinda/kind of/made/make(s)/ making/music is(/was)/needs/never/not/really/siempre/
+    # should/song(s)/tries/tried/UR ... card(s)/was/will/would"
+    r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|nd|re|s|"
+    r"uf)|but|[csw]ould|[dg]oing|i([fn'’]|st?)?|d(id|oes(n['’]?t)?)|[gn]ot|ha([ds]|tes)|"
     r"kind(a| of)|m(a(de|k(es?|ing))|usic (i|wa)s)|ne(eds|ver)|really|s(iempre|ongs?)|"
     r"trie[ds]|ur .*cards?|w(as|ill))\b)|"
     r"([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
@@ -623,8 +626,6 @@ EXCLUDE_RE = re.compile(
     # [song/artist name ending with "Love"] live
     r"\b(I(['’][dm]|ve)?|my( [a-z'’,&]+)+) ((([a-z]+ ){,2}to|go(tt|nn)a) "
     r"(h((ave h)?eard|ear)|s(aw|ee))) ([\w'’]+ )+love live|"
-    # I love Live and Learn (as in Sonic Adventure 2 theme song)
-    r"\bi ([a-z]+[a-z] )?love live (&|and) learn|"
     # find love live and/your/etc.
     r"\bfind love live \w{3,}\b|"
     # hashtags frequently used in #lovelive/"(#)love live" false positives
@@ -633,9 +634,9 @@ EXCLUDE_RE = re.compile(
     r"NewYear20[0-9]{2}|positivity|totp|vss365|[a-z]+vibes[a-z]*)\b|"
     # hashtags starting with #Sunday and #lovelive in the same post
     r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
-    # Random artists frequently mentioned in "love live music" false positive posts
-    r"\b(duran ?duran|floyd|grateful dead|hot mulligan|john lewis|kahan|marley|"
-    r"nick cave|oasis|phish)\b|"
+    # Random artists frequently mentioned in "love live (music)" false positive posts
+    r"\b(d(['’]angelo|uran ?duran)|floyd|grateful dead|hot mulligan|john lewis|kahan|"
+    r"marley|nick cave|oasis|phish)\b|"
     # Venue of Love Live (rock music) Festival
     r"\bblackpool|"
     # Macclesfield, UK has a design company called LOVELIVE
