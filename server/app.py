@@ -76,14 +76,18 @@ def firehose_setup(do_userlist_updates: bool = False):
     repo_stream_thread = threading.Thread(
         target=data_stream.run,
         name="ReposFirehoseClientThread",
-        kwargs={**stream_run_args, "on_message_callback": operations_callback},
+        kwargs={
+            **stream_run_args,
+            "callback": operations_callback,
+            "relay_server": config.REPOS_FIREHOSE_HOSTNAME,
+        },
     )
     labels_stream_thread = threading.Thread(
         target=data_stream.run,
         name="LabelsFirehoseClientThread",
         kwargs={
             **stream_run_args,
-            "on_message_callback": labels_message_callback,
+            "callback": labels_message_callback,
             "labels": True,
         },
     )

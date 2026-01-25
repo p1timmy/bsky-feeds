@@ -3,7 +3,7 @@ from collections.abc import Callable
 from datetime import UTC, datetime
 from threading import Event
 from time import sleep
-from typing import Optional
+from typing import Any, Optional
 
 from atproto import (
     CAR,
@@ -26,6 +26,10 @@ from server.logger import logger
 _INTERESTED_RECORDS = {
     models.AppBskyFeedPost: models.ids.AppBskyFeedPost,
 }
+_ReposOperationsCallbackType = Callable[[dict[str, Any]], None]
+_LabelsMessageCallbackType = Callable[
+    [models.ComAtprotoLabelSubscribeLabels.Labels], int
+]
 repos_last_message_time: datetime = datetime.min.replace(tzinfo=UTC)
 
 
@@ -124,17 +128,21 @@ def _log_message_error(
 
 
 def _run_repos_client(
-    service_did: str, operations_callback, stream_stop_event: Optional[Event] = None
+    service_did: str,
+    callback: _ReposOperationsCallbackType,
+    stream_stop_event: Optional[Event] = None,
+    relay_server: str = "bsky.network",
 ):
     state = SubscriptionState.get_or_none(
         (SubscriptionState.service == service_did)
         & (SubscriptionState.firehose_type == FirehoseType.REPOS)
     )
     params = None
+    last_cursor = 0
     if state:
         params = models.ComAtprotoSyncSubscribeRepos.Params(cursor=state.cursor)
 
-    client = FirehoseSubscribeReposClient(params)
+    client = FirehoseSubscribeReposClient(params, base_uri=f"wss://{relay_server}/xrpc")
 
     if not state:
         SubscriptionState.create(
@@ -181,7 +189,7 @@ def _run_repos_client(
 
         ops = _get_commit_ops_by_type(msg_data)
         try:
-            operations_callback(ops)
+            callback(ops)
         except Exception:  # noqa: PIE786
             logger.exception(
                 "%s\nCursor: %s%s",
@@ -200,10 +208,9 @@ def _run_repos_client(
 
 def _run_labels_client(
     service_did: str,
-    labels_message_callback: Callable[
-        [models.ComAtprotoLabelSubscribeLabels.Labels], int
-    ],
+    callback: _LabelsMessageCallbackType,
     stream_stop_event: Optional[Event] = None,
+    relay_server: str = "mod.bsky.app",  # unused
 ):
     state = SubscriptionState.get_or_none(
         (SubscriptionState.service == service_did)
@@ -239,7 +246,7 @@ def _run_labels_client(
         nonlocal queued_cursor
         prev_cursor = queued_cursor
         try:
-            queued_cursor = labels_message_callback(msg_data) // 10 * 10
+            queued_cursor = callback(msg_data) // 10 * 10
         except Exception:  # noqa: PIE786
             logger.exception(
                 "%s\nData: %s",
@@ -275,11 +282,20 @@ def _run_labels_client(
     client.start(on_message_handler, on_error_handler)
 
 
-def run(service_did: str, on_message_callback, stream_stop_event=None, labels=False):
+def run(
+    service_did: str,
+    callback: _ReposOperationsCallbackType | _LabelsMessageCallbackType,
+    stream_stop_event=None,
+    labels=False,
+    relay_server: str | None = None,
+):
     """
     Start a firehose data stream client.
 
     :param labels: If True, subscribe to the labels firehose instead. Defaults to False
+    :param relay_server: (Optional) hostname of the firehose relay server to connect.
+        By default, the client will connect to `bsky.network` (repos) or `mod.bsky.app`
+        (labels).
     """
     client_func = _run_repos_client
     if labels:
@@ -291,7 +307,15 @@ def run(service_did: str, on_message_callback, stream_stop_event=None, labels=Fa
     )
     while stream_stop_event is None or not stream_stop_event.is_set():
         try:
-            client_func(service_did, on_message_callback, stream_stop_event)
+            params = {
+                "service_did": service_did,
+                "callback": callback,
+                "stream_stop_event": stream_stop_event,
+            }
+            if relay_server:
+                params["relay_server"] = relay_server
+
+            client_func(**params)
         except FirehoseError:
             # Log error details and reconnect to firehose
             reconnect = stream_stop_event and not stream_stop_event.is_set()

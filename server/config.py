@@ -38,3 +38,7 @@ DB_MMAP_SIZE = int(os.environ.get("DB_MMAP_SIZE") or "134217728")  # default 128
 DB_CACHE_SIZE = int(os.environ.get("DB_CACHE_SIZE") or "2000")
 DB_JOURNAL_SIZE_LIMIT = int(os.environ.get("DB_JOURNAL_SIZE_LIMIT") or "134217728")
 DB_WAL_AUTOCHECKPOINT = int(os.environ.get("DB_WAL_AUTOCHECKPOINT") or "100")
+
+# ---- Firehose relay hostnames ----
+
+REPOS_FIREHOSE_HOSTNAME = os.environ.get("REPOS_FIREHOSE_HOSTNAME")
