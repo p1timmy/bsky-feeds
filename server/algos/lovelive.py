@@ -51,7 +51,7 @@ LOVELIVE_RE = re.compile(
     r"(?<!@)(#\w+)?school ?idol(?! (story|book)\b)(s\b| ?((festiv|music)al|project))?|"
     # Games
     r"\bl(l|ove ?live ?)sif2?\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|"
-    r"\bLL(_|official-)cardgame|#ラブカ|"
+    r"\bLL(_|official-)cardgame|#ラブカ\b|"
     # ぷちぐる but not ぷちぐるみ
     r"ぷちぐる([^み]|$)|puchiguru\b|"
     # スクスタ/スクミュ but not words with マスク/デ(ィ)スク/スタンド/スタンプ/スタイル/スタッフ
@@ -404,6 +404,7 @@ EXCLUDE_RE = re.compile(
     r"c(an['’]?t (buy me|get enough of your|hide)|(an|ould) you not|"
     r"o(mp(licated|uter)|nnected by|smic))|"
     # - stuff ending with "of love live":
+    #   - "(The) Book of Love" live (usually song by The Magnetic Fields or its covers)
     #   - "Caravan of Love" live (usually song by The Housemartins)
     #   - "(The) Crush of Love" live (song by Joe Satriani)
     #   - "Dance Me to the End of Love" live (song by Leonard Cohen)
@@ -414,6 +415,7 @@ EXCLUDE_RE = re.compile(
     #   - "(The) House of Love" live (usually British alt rock band or song by Christine)
     #   - "Lexicon of Love" live (album by ABC)
     #   - "Light of Love" live (usually song by Florence and the Machine)
+    #   - "Miracle of Love" live (song by Eurythmics)
     #   - "Path of Love" live (usually song name)
     #   - "Prisoner of Love" live (song by James Brown)
     #   - "Satellite of Love" live (usually song by Lou Reed)
@@ -421,16 +423,15 @@ EXCLUDE_RE = re.compile(
     #   - "Songs of Love Live" (album by Mark Eitzel)
     #   - "Sunday Kind of Love" live (song by different artists, usually Etta James)
     #   - that/what kind of love live (sometimes typo of "that/what kind of love life")
-    #   - "The Book of Love" live (usually song by Peter Gabriel or The Magnetic Fields)
     #   - "The Meaning of Love" live (song by Depreche Mode)
     #   - "The Look of Love" live (song by different artists)
     #   - "(Thee) Most Exalted Potentate of Love" live (song by The Cramps)
     #   - this/that/what kind of love live
     #   - "Tunnel of Love" live (usually song by Dire Straits or Bruce Springsteen)
     #   - "Victim of Love" live (song by Eagles)
-    r"(c(aravan|rush)|d(ance me to the end|efinition)|fire|genius|h(azards|ouse)|"
-    r"l(exicon|ight)|most exalted potentate|p(ath|risoner)|s(atellite|hot|ongs)|"
-    r"t(he ([bl]ook|meaning)|unnel)|victim|(sunday|[tw]hat|this) kind) of|"
+    r"(book|c(aravan|rush)|d(ance me to the end|efinition)|fire|genius|h(azards|ouse)|"
+    r"l(exicon|ight)|m(iracle|ost exalted potentate)|s(atellite|hot|ongs)|victim|"
+    r"p(ath|risoner)|t(he (look|meaning)|unnel)|(sunday|[tw]hat|this) kind) of|"
     # - stuff ending with "in love live":
     #   - "Crazy in Love" live (song by Beyonce)
     #   - "Dangerously in Love" live (album by Beyonce)
@@ -499,7 +500,8 @@ EXCLUDE_RE = re.compile(
     r"(that)?\bI(['’]d)?|"
     # - "I Feel Love" live (usually song by Donna Summer)
     # - "I'm Outta Love" live (song by Anastacia)
-    r"I( feel|['’]m outta)|"
+    # - "It Must Be Love" live (song by Madness)
+    r"I( feel|['’]m outta|t must be)|"
     # - laugh/let (that)/live love live
     # - "La La Love" live (K-pop song by NCT DREAM)
     # - "Love, Hate, Love" live (song by Alice In Chains)
