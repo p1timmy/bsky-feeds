@@ -408,6 +408,7 @@ EXCLUDE_RE = re.compile(
     #   - "Caravan of Love" live (usually song by The Housemartins)
     #   - "(The) Crush of Love" live (song by Joe Satriani)
     #   - "Dance Me to the End of Love" live (song by Leonard Cohen)
+    #   - "Death of Love" live (usually song by James Blake)
     #   - "Definition of Love" live (song by Naomi Sharon)
     #   - "Fire of Love" live (usually album by The Gun Club)
     #   - "Genius of Love" live (song by Tom Tom Club)
@@ -429,23 +430,23 @@ EXCLUDE_RE = re.compile(
     #   - this/that/what kind of love live
     #   - "Tunnel of Love" live (usually song by Dire Straits or Bruce Springsteen)
     #   - "Victim of Love" live (song by Eagles)
-    r"(book|c(aravan|rush)|d(ance me to the end|efinition)|fire|genius|h(azards|ouse)|"
-    r"l(exicon|ight)|m(iracle|ost exalted potentate)|s(atellite|hot|ongs)|victim|"
-    r"p(ath|risoner)|t(he (look|meaning)|unnel)|(sunday|[tw]hat|this) kind) of|"
+    r"(book|c(aravan|rush)|d(ance me to the end|e(ath|finition))|fire|genius|victim|"
+    r"h(azards|ouse)|l(exicon|ight)|m(iracle|ost exalted potentate)|p(ath|risoner)|"
+    r"s(atellite|hot|ongs)|t(he (look|meaning)|unnel)|(sunday|[tw]hat|this) kind) of|"
     # - stuff ending with "in love live":
     #   - "Crazy in Love" live (song by Beyonce)
     #   - "Dangerously in Love" live (album by Beyonce)
     #   - "Drunk in Love" live (song by Beyonce)
     #   - "Fall(s) in Love" live (usually different songs by different artists or any
     #     song name ending with that phrase)
-    #   - "(Can't Help) Falling in Love" live (song by different artists)
+    #   - "Fallin(g) in Love" live (usually different song names ending with that phrase)
     #   - "Friday I'm In Love" live (usually song by The Cure or cover by Robert Smith and
     #     Olivia Rodrigo)
     #   - "I'm Not in Love" live (usually song by 10cc)
     #   - "(I) Think I'm In Love" live (usually song by Eddie Money)
     #   - "Paris in Love" live (album by Ibrahim Maalouf)
     #   - "Stone in Love" live (song by Journey)
-    r"(crazy|d(angerously|runk)|fall(ing|s)?|(friday|think) i['’]?m|i['’]?m not|"
+    r"(crazy|d(angerously|runk)|fall(in[g'’]?|s)?|(friday|think) i['’]?m|i['’]?m not|"
     r"paris|stone) in|"
     # - "Destination: Love Live" (album by The Make-Up)
     # - does not/doesn't love live [something]
@@ -501,7 +502,8 @@ EXCLUDE_RE = re.compile(
     # - "I Feel Love" live (usually song by Donna Summer)
     # - "I'm Outta Love" live (song by Anastacia)
     # - "It Must Be Love" live (song by Madness)
-    r"I( feel|['’]m outta|t must be)|"
+    # - "It's Only Love" live (usually covers of song by The Beatles)
+    r"I( feel|['’]m outta|t( must be|['’]s only love))|"
     # - laugh/let (that)/live love live
     # - "La La Love" live (K-pop song by NCT DREAM)
     # - "Love, Hate, Love" live (song by Alice In Chains)
@@ -543,7 +545,8 @@ EXCLUDE_RE = re.compile(
     # - Stone Love live (usually Jamaican DJ group)
     # - "Strange Love" live (usually album by T.S.O.L.)
     # - "Super Duper Love" live (song by Sugar Billy or Joss Stone)
-    r"s(a(me old|vage)|imon|how me|ome kinda|t(one|range)|uper duper)|"
+    # - "Sweet Love" live (usually song by Anita Baker)
+    r"s(a(me old|vage)|imon|how me|ome kinda|t(one|range)|uper duper|weet)|"
     # - hear/saw/see(n) [artist name] perform [song name ending with "Love"] live
     r"(hear|s(aw|een?)) .+ perform .+|"
     # - Team Love Live (typo of "Team Love Life")
@@ -633,9 +636,8 @@ EXCLUDE_RE = re.compile(
     # hashtags frequently used in #lovelive/"(#)love live" false positives
     r"#(AEW(Dynamite)?|b(b27|eyondthegates)|eaglerock|faith|g(od|ratitude)|hope|"
     r"L(ove(IsBlind|r|Wins)?|ivemusic)|M(otivation|usicChallenge)|OwnOurVenues|"
-    r"NewYear20[0-9]{2}|positivity|totp|v(iral|ss365)|[a-z]+vibes[a-z]*)\b|"
-    # hashtags starting with #Sunday and #lovelive in the same post
-    r"#sunday.+#lovelive\b|#lovelive\b.+#sunday.+|"
+    r"NewYear20[0-9]{2}|positivity|totp|v(iral|ss365)|"
+    r"[a-z]+(daymo(rning|tivation)|vibes[a-z]*))\b|"
     # Random artists frequently mentioned in "love live (music)" false positive posts
     r"\b(d(['’]angelo|uran ?duran)|floyd|grateful dead|hot mulligan|john lewis|kahan|"
     r"marley|nick cave|oasis|phish)\b|"
