@@ -14,8 +14,8 @@ LOVELIVE_NAME_EN_RE = re.compile(
 )
 LOVELIVE_RE = re.compile(
     # "Love Live" + other related words
-    r"love\s?live([!:\s]*("
-    r"a(cc((oun)?ts?|s)|fter school\b|ll[ -]stars|pp|rcade\b|nime)|"
+    r"love[^\S\r\n]?live(([^\S\r\n]|[!:])*("
+    r"a(cc((oun)?ts?|s)|(d|fter school|rcade|u)\b|ll[ -]stars|pp|nime)|"
     r"(tribute )?album\b|"
     r"blue ?bird|"
     r"c(anon|ollab|yber|(d|osplay|haracter)s?)|"
