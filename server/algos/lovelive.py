@@ -10,7 +10,7 @@ from server.algos._base import get_post_texts, post_has_media_embeds
 logger = logging.getLogger(__name__)
 
 LOVELIVE_NAME_EN_RE = re.compile(
-    r"([^a-z0-9\-_]|\b)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
+    r"([^a-z0-9\-_=＝]|^)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
     # "Love Live" + other related words
@@ -22,15 +22,15 @@ LOVELIVE_RE = re.compile(
     r"d(a(nce(s| groups?)|ys)|rama\b)|"
     r"heardle|"
     r"e(n|pisodes?|ra|tc)\b|"
-    r"f(an(art|s)?\b|(an)?fic\b|igures?|ranchise)|"
+    r"f(an(art|dom|s)?\b|(anf)?ics?\b|i(gur(in)?es?|nals)|ranchise)|"
     r"g(ame|i(f|rls?)|lobal)\b|"
     r"i(ce cream|dols?|n general)|"
     r"jumpscare|"
     r"lieder|"
     r"m(aybe|e(ntion(ed)?|rch|troidvania)|ovies?|vs?)\b|"
     r"n(esoberis?|iji(gasaki)?)|"
-    r"o(c(g|s?\b)|mf?g|p\b|r(?! die)\b|s(hi|t))|"
-    r"pl(aylist|ush(ies?))|"
+    r"o(c(g|s?\b)|mf?g|p\b|r(?! die)\b|s(his?|t))|"
+    r"p(ins?\b|l(aylist|ush(ies?)?))|"
     r"referenc(es?|ia)|"
     r"s(chool ?idol|e(ction|ries|iyuus?)|hips?\b|ip([^a-z]|\b)|(ifs)?orter|ky|potted|"
     r"o(los?\b|ng\b|undtrack)|taff|u(b ?units?|nshine|per ?star))|"
@@ -92,7 +92,8 @@ LOVELIVE_RE = re.compile(
     r"([^a-z]|\b)((nij|an|e)igasaki|niji(chizu|gaku|yon))([^a-z]|\b)|a・zu・na|qu4rtz|"
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(diver"
     r" ?diva|r3birth)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
-    r"tokimeki r(unners|oadmap to the future)|^me, a taylor\b|ゆうぽむ|\byuu?pomu\b|"
+    r"tokimeki r(unners|oadmap to the future)|^me, a taylor\b|"
+    r"(ゆう|せつ)ぽむ|ぽむせつ|\b(sets|yu?)upomu\b|\bsetsuayu\b|"
     r"高咲\s?侑|上原\s?歩夢|中須\s?かすみ|桜坂\s?しずく|朝香\s?果林|宮下\s?愛|近江\s?(彼方|遥)|"
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
     r"かすみん|"
@@ -107,7 +108,7 @@ LOVELIVE_RE = re.compile(
     r"聖澤悠奈|柊\s?摩央|"
     # Link! Like! Love Live! / Hasunosora
     # リンクラ but not リンクライン or katakana phrases with リンクラ character sequence
-    r"(^|[^\u30a1-\u30f6\u30fc])リンクラ(?!イン|ボ|ベル|ス|ッ|ブ)|"
+    r"(^|[^\u30a1-\u30f6\u30fc])リンクラ(?!イ(ン|ブラリ)|ボ|ベル|ス|ッ|ブ)|"
     r"hasu\s?no\s?sora|\blink(ura|-like-lovelive)\b|蓮ノ(空|休日)|"
     r"^(?!(.|\n)*\broses?\b(.|\n)*$)((.|\n)*\bcerise\s?bouquet\b(.|\n)*)|"
     r"スリーズブーケ|dollches(tra(?!-art)|\b)|ドルケストラ|mira-cra\spark!?|"
@@ -340,8 +341,8 @@ EXCLUDE_RE = re.compile(
     # - love "Live Through This" (usually an album by Hole)
     r"t(a(bl|p)es|elevision|(ex|wee)ting|h(eat(er|re)|rough this)|o (live|tell)|v)|"
     # - "love live the" (usually typo of "long live the") but not "Love Live the
-    #   competition/Musical/School Idol"
-    r"the\b(?! (competition|musical|school idol)\b)|"
+    #   competition/most/Musical/School Idol"
+    r"the\b(?! (competition|m(ost|usical)|school idol)\b)|"
     # - love live tour/your
     r"[ty]our|"
     # - "love live ur" (usually typo of "long live ur") but not "Love Live UR ... card"
@@ -542,11 +543,12 @@ EXCLUDE_RE = re.compile(
     # - "Show Me Love" live (usually song by Robin S.)
     # - Simon Love live (some random British artist with an official Bluesky account)
     # - "Some Kinda Love" live (song by The Velvet Underground)
+    # - "Soul Love" live (song by David Bowie)
     # - Stone Love live (usually Jamaican DJ group)
     # - "Strange Love" live (usually album by T.S.O.L.)
     # - "Super Duper Love" live (song by Sugar Billy or Joss Stone)
     # - "Sweet Love" live (usually song by Anita Baker)
-    r"s(a(me old|vage)|imon|how me|ome kinda|t(one|range)|uper duper|weet)|"
+    r"s(a(me old|vage)|imon|how me|o(me kinda|ul)|t(one|range)|uper duper|weet)|"
     # - hear/saw/see(n) [artist name] perform [song name ending with "Love"] live
     r"(hear|s(aw|een?)) .+ perform .+|"
     # - Team Love Live (typo of "Team Love Life")
@@ -588,8 +590,8 @@ EXCLUDE_RE = re.compile(
     # if you (live in/near/around [place name]) ... and/but love live (...) music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)|if you)\s+.+\s+)?(and|but)\s+love"
     r" live( .+)? (music|comedy)\b|"
-    # love liver and/with onions, love liver disease/pate
-    r"love liver(( (and|&|with)|,)? onions| (disease|p[aâ]t[eé]))|"
+    # love liver (and/with) onions/spinach, love liver disease/pate
+    r"love liver(( (and|&|with)|,)? (onions|spinach)| (disease|p[aâ]t[eé]))|"
     # "love liver(s and)" at beginning of sentence/after emoji and not before "is/are"
     r"(^|[^\w ] *)love liver(s and)?(?! (are|is))\b|"
     # whether you('re) ... or (just) love live [something]
@@ -597,12 +599,12 @@ EXCLUDE_RE = re.compile(
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
     # love love [something]" but not "(and) love live all/also/always/and/are/as/auf/
     # but/could/did/does(n't)/doing/going/got/had/has/hates/I/if/in/is(t)/I'll/I'm/
-    # kinda/kind of/made/make(s)/ making/music is(/was)/needs/never/not/really/siempre/
-    # should/song(s)/tries/tried/UR ... card(s)/was/will/would"
+    # just/kinda/kind of/made/make(s)/ making/music is(/was)/needs/never/not/really/
+    # siempre/should/song(s)/tries/tried/UR ... card(s)/was/will/would"
     r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|nd|re|s|"
     r"uf)|but|[csw]ould|[dg]oing|i([fn'’]|st?)?|d(id|oes(n['’]?t)?)|[gn]ot|ha([ds]|tes)|"
-    r"kind(a| of)|m(a(de|k(es?|ing))|usic (i|wa)s)|ne(eds|ver)|really|s(iempre|ongs?)|"
-    r"trie[ds]|ur .*cards?|w(as|ill))\b)|"
+    r"kind(a| of)|just|m(a(de|k(es?|ing))|usic (i|wa)s)|ne(eds|ver)|really|trie[ds]|"
+    r"s(iempre|ongs?)|ur .*cards?|w(as|ill))\b)|"
     r"([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live(r)" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+liver?\b|"
