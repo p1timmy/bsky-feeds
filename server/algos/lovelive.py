@@ -350,8 +350,7 @@ EXCLUDE_RE = re.compile(
     # - love live versions
     r"versions|"
     # - love live bands/gigs/mealworms/performances/shows
-    # - "Love Live in Paris" (misspelling of "Lover (Live from Paris)" album by
-    #   Taylor Swift)
+    # - "Love Live in Paris" (typo of "Lover (Live from Paris)" album by Taylor Swift)
     r"(band|gig|mealworm|performance|show|in pari)s|"
     # - 196x/197x after "love live" (usually live concert recordings)
     r".*\b19[67][0-9]\b)|"
@@ -417,6 +416,7 @@ EXCLUDE_RE = re.compile(
     #   - "(The) House of Love" live (usually British alt rock band or song by Christine)
     #   - "Lexicon of Love" live (album by ABC)
     #   - "Light of Love" live (usually song by Florence and the Machine)
+    #   - "Message of Love" live (song by The Pretenders)
     #   - "Miracle of Love" live (song by Eurythmics)
     #   - "Path of Love" live (usually song name)
     #   - "Prisoner of Love" live (song by James Brown)
@@ -432,8 +432,9 @@ EXCLUDE_RE = re.compile(
     #   - "Tunnel of Love" live (usually song by Dire Straits or Bruce Springsteen)
     #   - "Victim of Love" live (song by Eagles)
     r"(book|c(aravan|rush)|d(ance me to the end|e(ath|finition))|fire|genius|victim|"
-    r"h(azards|ouse)|l(exicon|ight)|m(iracle|ost exalted potentate)|p(ath|risoner)|"
-    r"s(atellite|hot|ongs)|t(he (look|meaning)|unnel)|(sunday|[tw]hat|this) kind) of|"
+    r"h(azards|ouse)|l(exicon|ight)|m(essage|iracle|ost exalted potentate)|"
+    r"p(ath|risoner)|s(atellite|hot|ongs)|(sunday|[tw]hat|this) kind|"
+    r"t(he (look|meaning)|unnel)) of|"
     # - stuff ending with "in love live":
     #   - "Crazy in Love" live (song by Beyonce)
     #   - "Dangerously in Love" live (album by Beyonce)
@@ -636,9 +637,9 @@ EXCLUDE_RE = re.compile(
     # find love live and/your/etc.
     r"\bfind love live \w{3,}\b|"
     # hashtags frequently used in #lovelive/"(#)love live" false positives
-    r"#(AEW(Dynamite)?|b(b27|eyondthegates)|eaglerock|faith|g(od|ratitude)|hope|"
-    r"L(ove(IsBlind|r|Wins)?|ivemusic)|M(otivation|usicChallenge)|OwnOurVenues|"
-    r"NewYear20[0-9]{2}|positivity|totp|v(iral|ss365)|"
+    r"#(AEW\w*|b(b27|eyondthegates)|eaglerock|F(aith|otoVorschlag)|hope|"
+    r"g(od|ratitude)|L(ove(IsBlind|r|Wins)?|ivemusic)|M(otivation|usicChallenge)|"
+    r"NewYear20[0-9]{2}|OwnOurVenues|positivity|totp|v(iral|ss365)|"
     r"[a-z]+(daymo(rning|tivation)|vibes[a-z]*))\b|"
     # Random artists frequently mentioned in "love live (music)" false positive posts
     r"\b(d(['’]angelo|uran ?duran)|floyd|grateful dead|hot mulligan|john lewis|kahan|"
@@ -647,6 +648,9 @@ EXCLUDE_RE = re.compile(
     r"\bblackpool|"
     # Macclesfield, UK has a design company called LOVELIVE
     r"\bmacclesfield|"
+    # "Speak Now" (Taylor Swift song frequently paired with "Love live" (typo of "Lover
+    # live" as in another 1 of her songs/albums))
+    r"\bspeak ?now\b|"
     # lovelive.com/net/org/etc.
     r"\blovelive\.[a-z]+[a-z](?:[^.a-z0-9\-]|$)|"
     # "Lush" and "Lovelive" (typo of "Lovelife" album) in the same post
