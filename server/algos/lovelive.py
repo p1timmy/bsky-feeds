@@ -599,13 +599,13 @@ EXCLUDE_RE = re.compile(
     r"whether you.+ or (just )?love live |"
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
     # love love [something]" but not "(and) love live all/also/always/and/are/as/auf/
-    # but/could/did/does(n't)/doing/going/got/had/has/hates/I/if/in/is(t)/I'll/I'm/
-    # just/kinda/kind of/made/make(s)/ making/music is(/was)/needs/never/not/really/
-    # siempre/should/song(s)/tries/tried/UR ... card(s)/was/will/would"
+    # but/could/did/does(n't)/doing/going/gone/got/had/has/hates/I/if/in/is(t)/I'll/
+    # I'm/just/kinda/kind of/made/make(s)/ making/music is(/was)/needs/never/not/
+    # really/siempre/should/song(s)/tries/tried/UR ... card(s)/was/will/would"
     r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|nd|re|s|"
-    r"uf)|but|[csw]ould|[dg]oing|i([fn'’]|st?)?|d(id|oes(n['’]?t)?)|[gn]ot|ha([ds]|tes)|"
-    r"kind(a| of)|just|m(a(de|k(es?|ing))|usic (i|wa)s)|ne(eds|ver)|really|trie[ds]|"
-    r"s(iempre|ongs?)|ur .*cards?|w(as|ill))\b)|"
+    r"uf)|but|[csw]ould|[dg]oing|d(id|oes(n['’]?t)?)|gone|[gn]ot|ha([ds]|tes)|"
+    r"i([fn'’]|st?)?|kind(a| of)|just|m(a(de|k(es?|ing))|usic (i|wa)s)|ne(eds|ver)|"
+    r"really|s(iempre|ongs?)|trie[ds]|ur .*cards?|w(as|ill))\b)|"
     r"([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live(r)" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+liver?\b|"
