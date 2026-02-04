@@ -30,6 +30,8 @@ _ReposOperationsCallbackType = Callable[[dict[str, Any]], None]
 _LabelsMessageCallbackType = Callable[
     [models.ComAtprotoLabelSubscribeLabels.Labels], int
 ]
+# Bot account notorious for making posts with invalid UTF-8 chars
+PUCELO_BOT = "did:plc:4fzofkhhlbiodiuosseu3bja"
 repos_last_message_time: datetime = datetime.min.replace(tzinfo=UTC)
 
 
@@ -37,7 +39,7 @@ def _get_commit_ops_by_type(
     commit: models.ComAtprotoSyncSubscribeRepos.Commit,
 ) -> defaultdict:
     operation_by_type = defaultdict(lambda: {"created": [], "deleted": []})
-    if len(commit.blocks) >= 50_000:
+    if len(commit.blocks) >= 50_000 or commit.repo == PUCELO_BOT:
         return operation_by_type
 
     car = CAR.from_bytes(commit.blocks)
