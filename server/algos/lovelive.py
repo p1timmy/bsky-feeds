@@ -112,7 +112,7 @@ LOVELIVE_RE = re.compile(
     r"hasu\s?no\s?sora|\blink(ura|-like-lovelive)\b|蓮ノ(空|休日)|"
     r"^(?!(.|\n)*\broses?\b(.|\n)*$)((.|\n)*\bcerise\s?bouquet\b(.|\n)*)|"
     r"スリーズブーケ|dollches(tra(?!-art)|\b)|ドルケストラ|mira-cra\spark!?|"
-    r"みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|\bedel\s?note\b|"
+    r"みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|([^a-z]|\b)edel\s?note|"
     r"るりのとゆかいなつづりたち|ruri[&＆]to|PRINCEε[＞>]ε[＞>]|Nεw\sBlack|ichigo\smilk\slove|"
     r"#新メンバーお披露目105期|ハロめぐ|"
     r"乙宗\s?梢|夕霧\s?綴理|藤島\s?慈|日野下\s?花帆|村野\s?さやか|大沢\s?瑠璃乃|百生\s?吟子|"
