@@ -70,8 +70,6 @@ LOVELIVE_RE = re.compile(
     # NOTE: AZALEA not included due to too many false positives
     r"(^|[^三土])浦の星女?|uranohoshi|([^a-z0-9]|\b)aq(ou|uo)rs([^a-z0-9]|\b)|"
     r"(\W|\b)cyaron!?(\W|\b)|guilty\s?kiss([^a-z]|$)|"
-    # YYY (You, Yoshiko/Yohane, RubY)
-    r"(?<!わい)(?<!わーい)わいわいわい(?!わー?い)|"
     # AiScReam (Ayumu, Shiki, Ruby)
     r"([^a-z]|\b)((ai[♡-]?|(?-i:[Aa]i ))scream(?! queens)\b|"
     r"(?-i:AI (SCREAM\b|(?i:scream!))))|愛♡スクリ〜ム|"
