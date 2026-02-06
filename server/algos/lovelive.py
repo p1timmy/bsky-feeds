@@ -337,7 +337,7 @@ EXCLUDE_RE = re.compile(
     # - love "Live to Live" (song from Hazbin Hotel S2)
     # - love "Live to Tell" (song by Madonna)
     # - love "Live Through This" (usually album by Hole)
-    r"t((a(bl|p)|re)es|elevision|(ex|wee)ting|h(eat(er|re)|rough this)|o (live|tell)|v)"
+    r"t((a(bl|p)|re)es|elevision|(ex|wee)ting|h(eat(er|re)|rough this)|o (live|tell)|v)|"
     # - "love live the" (usually typo of "long live the") but not "Love Live the
     #   competition/most/Musical/School Idol"
     r"the\b(?! (competition|m(ost|usical)|school idol)\b)|"
