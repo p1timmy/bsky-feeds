@@ -240,22 +240,24 @@ EXCLUDE_RE = re.compile(
     r"\b((i|s?he|they)(['’]?(d|ve))?|y(ou(['’]ll)?|(ou |['’])all)|we( (all|both))?|"
     r"gotta|(got|have|l(earn(ed)?|ike)) to|who|p(eople|pl)( in (the )?[a-z]+[a-z])?|"
     r"[a-z]{3,}(?<!a)(?<!e)s( that)?|my .+and [a-z]+[a-z])"
-    # - *ing/*ly/bloody/also/always/can't/cannot/(sure) do/does/don't (but not "don't
-    #   do")/just/lowkey/still/(came/come/grew/have/happened/use(d)/tend) to/too/will/
-    #   would('ve)/... and
-    r"(( ?,)? ([a-z]{3,}(ing?|ly)|just|al(so|ways)|(st|w)ill|(sure )?do|does|bloody|"
-    r"don['’]?t(?! do\b)|((c[ao]me|ha(ve|ppen(ed)?)|used?|grew) t|s|t(o|end t))o|even|"
-    r"lowkey|would(['’]ve)?|can(['’]|((['’]?t)? )?no)t|[a-z]+[a-z] (and|&)))*"
+    # - *ly/also/always/bloody/can't/cannot/(sure) do/does/don't (but not "don't do")/
+    #   even/f*king/hecking/just/lowkey/still/(came/come/grew/have/happened/use(d)/tend)
+    #   to/too/will/would('ve)/... and
+    r"(( ?,)? ([a-z]+ly|al(so|ways)|bloody|can(['’]|((['’]?t)? )?no)t|(sure )?do|does|"
+    r"don['’]?t(?! do\b)|even|(f[a-z]+|hec)ki?n[g'’]?|just|lowkey|(st|w)ill|"
+    r"((c[ao]me|ha(ve|ppen(ed)?)|used?|grew) t|s|t(o|end t))o|would(['’]ve)?|"
+    r"[a-z]+[a-z] (and|&)))*"
     # - love live [something]/love liver(s)/love Live (as in a band named LĪVE, Ableton
     #   Live music software, or typo of "love life")
     r" ((love )+live((?! (so |a(nd|s well)|but)\b),? &? ?#?\w+\b|rs?)|"
     r"love live($|[^\s\w]| \w+))|"
     # Anyone ... love live music?
     r"anyone( .+)? love live music\?|"
-    # "love live music/comedy" at start of sentence or after "[any emoji]/freaking/
-    # really/bloody/etc." but not "love live music/comedy is/was"
-    r"(^|[^\w ] *|(([a-z]+(ng?|ly)|bloody) +))love live (music|comedy)"
-    r"(?! ((i|wa)s\b))|"
+    # "love live music/comedy/theater" at start of sentence or after any emoji but not
+    # "love live music/comedy/theater is/was"
+    r"(^|[^\w ] *)love live (music|comedy|theat(er|re))\b(?! ((i|wa)s\b))|"
+    # "love live [something]" after *ly/f*king/hecking/bloody
+    r"(([a-z]+ly|(f[a-z]+|hec)ki?n[g'’]?|bloody) +)love live \w+\b|"
     # "also/and/but (still) love live [something] (for)" at end of sentence but not
     # "also/and/but love live is"
     r"(a(lso|nd)|but) (still )?love live(?! is)( [a-z]+[a-z]){1,2}( for\b| ?[^\w ]|$)|"
