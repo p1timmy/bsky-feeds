@@ -41,7 +41,7 @@ LOVELIVE_RE = re.compile(
     r"yuri\b"
     r")| ?!? +(vs|X)\b| fest?\b)|"
     r"lovelive(-(anime|fanfunfestival|news\.bsky\.social)|_staff|15th)|"
-    r"\b((d(an|oe)|hate|is thi|love|m(eet|is)|variou|(?<!it )wa)s|draw(ing|s)|"
+    r"\b((d(an|oe)|enjoy|hate|is thi|love|m(eet|is)|variou|(?<!it )wa)s|draw(ing|s)|"
     r"thank you|like[ds]?) love ?live\b|#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
     # ラブライブ but not クラブライブ (club live)/イコラブライブ (Ikolab Live)/
     # マジラブライブ (Maji Love Live)
@@ -235,11 +235,12 @@ CHARACTER_NAMES = set(
 EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
     # - I('d/'ve)/he/she/they/you (all)/y'all/you'll/we (all/both)/gotta/got to/have to/
-    #   learn(ed) to/like to/who, people/ppl (in [some place]), [plural word] that,
-    #   my ... and sister/brother/wife/etc.
+    #   learn(ed) to/like to/who/anyone (else), people/ppl (in [some place]), [plural word]
+    #   that, my ... and sister/brother/wife/etc.
     r"\b((i|s?he|they)(['’]?(d|ve))?|y(ou(['’]ll)?|(ou |['’])all)|we( (all|both))?|"
     r"gotta|(got|have|l(earn(ed)?|ike)) to|who|p(eople|pl)( in (the )?[a-z]+[a-z])?|"
-    r"[a-z]{3,}(?<!a)(?<!e)s( that)?|my .+and [a-z]+[a-z])"
+    r"[a-z]{3,}(?<!a)(?<!e)s( that)?|my .+and [a-z]+[a-z]|"
+    r"anyone( else['’]s|( else)?( (o(ver|ut) )?t?here)?)?)"
     # - *ly/also/always/bloody/can't/cannot/(sure) do/does/don't (but not "don't do")/
     #   even/f*king/hecking/just/lowkey/still/(came/come/grew/have/happened/use(d)/tend)
     #   to/too/will/would('ve)/... and
@@ -251,8 +252,6 @@ EXCLUDE_RE = re.compile(
     #   Live music software, or typo of "love life")
     r" ((love )+live((?! (so |a(nd|s well)|but)\b),? &? ?#?\w+\b|rs?)|"
     r"love live($|[^\s\w]| \w+))|"
-    # Anyone ... love live music?
-    r"anyone( .+)? love live music\?|"
     # "love live music/comedy/theater" at start of sentence or after any emoji but not
     # "love live music/comedy/theater is/was"
     r"(^|[^\w ] *)love live (music|comedy|theat(er|re))\b(?! ((i|wa)s\b))|"
@@ -322,8 +321,8 @@ EXCLUDE_RE = re.compile(
     # - Love Live Local (small business related nonprofit in Cape Cod, MA)
     # - "love live love" but not "love live love wing bell"
     r"l(ife|o(cal\b|ng|ud( music)?|ve(?! wing bell)))|"
-    # - love live music at
-    r"music at\b|"
+    # - love live moments/music at
+    r"m(oments|usic at\b)|"
     # - love live oak(s)/on stage
     r"o(aks?|n stage)|"
     # - love live reaction(s)
