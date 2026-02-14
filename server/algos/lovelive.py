@@ -323,6 +323,8 @@ EXCLUDE_RE = re.compile(
     r"l(ife|o(cal\b|ng|ud( music)?|ve(?! wing bell)))|"
     # - love live moments/music at
     r"m(oments|usic at\b)|"
+    # - love live now at/on
+    r"now (at|on)\b|"
     # - love live oak(s)/on stage
     r"o(aks?|n stage)|"
     # - love live reaction(s)
@@ -330,10 +332,10 @@ EXCLUDE_RE = re.compile(
     # - love live rock (typo of "long live rock")
     # - love "Live Rust" (album by Neil Young & Crazy Horse)
     r"r(e(actions?|nditions)|ock|ust)|"
-    # - love live service/sport(s)/streaming/streams/strings
+    # - love live service/sport(s)/streaming/stream(s)/strings
     # - love Live Score (some sports app)
     # - Love Live Sweets (unrelated local bakery in New Jersey)
-    r"s(core|ervice|ports?|tr(eam(ing|s)|ings)|weets)|"
+    r"s(core|ervice|ports?|tr(eam(ing|s)?|ings)|weets)|"
     # - love live tables/tapes/TV/television/texting/theater/trees/tweeting
     # - love "Live to Live" (song from Hazbin Hotel S2)
     # - love "Live to Tell" (song by Madonna)
@@ -464,9 +466,10 @@ EXCLUDE_RE = re.compile(
     # - "Faithless Love" live (song by Linda Ronstadt)
     # - "Fake Love" live (song by BTS)
     # - "Feel Like Makin' Love" live (song by Roberta Flack or Bad Company)
+    # - feel the love live
     # - fight love live (usually Filoli, California historical marker)
     # - "Frozen Love" live (song by Buckingham Nicks)
-    r"f(a(ithless|ke)|eel like makin['’g]?|ight|rozen)|"
+    r"f(a(ithless|ke)|eel (like makin['’g]?|the)|ight|rozen)|"
     # - stuff ending with "for love live":
     #   - "Exist for Love" live (song by Aurora)
     #   - "Fool for Love" live (different songs by different artists)
@@ -556,11 +559,12 @@ EXCLUDE_RE = re.compile(
     # - Simon Love live (some random British artist with an official Bluesky account)
     # - "Some Kinda Love" live (song by The Velvet Underground)
     # - "Soul Love" live (song by David Bowie)
+    # - spread love live
     # - Stone Love live (usually Jamaican DJ group)
     # - "Strange Love" live (usually album by T.S.O.L.)
     # - "Super Duper Love" live (song by Sugar Billy or Joss Stone)
     # - "Sweet Love" live (usually song by Anita Baker)
-    r"s(a(me old|vage)|imon|how me|o(me kinda|ul)|t(one|range)|uper duper|weet)|"
+    r"s(a(me old|vage)|imon|how me|o(me kinda|ul)|pread|t(one|range)|uper duper|weet)|"
     # - hear/saw/see(n) [artist name] perform [song name ending with "Love"] live
     r"(hear|s(aw|een?)) .+ perform .+|"
     # - "Tainted Love" live (song by Soft Cell)
@@ -620,11 +624,12 @@ EXCLUDE_RE = re.compile(
     # love love [something]" but not "(and) love live all/also/always/and/are/as/auf/
     # but/can/could/did/does(n't)/doing/going/gone/got/had/has/hates/I/if/in/is(t)/I'll/
     # I'm/just/kinda/kind of/made/make(s)/making/may [be/have/not]/music [is/was]/needs/
-    # never/not/on/really/siempre/should/song(s)/tries/tried/UR ... card(s)/was/will/would"
+    # never/not/on/really/siempre/should/song(s)/tries/tried/UR ... card(s)/was/what/
+    # will/would"
     r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|nd|re|s|"
     r"uf)|but|can|[csw]ould|[dg]oing|d(id|oes(n['’]?t)?)|gone|[gn]ot|ha([ds]|tes)|just|"
     r"i([fn'’]|st?)?|kind(a| of)|m(a(de|k(es?|ing)|y( ?be| (have|not)))|usic (i|wa)s)|"
-    r"ne(eds|ver)|on|really|s(iempre|ongs?)|trie[ds]|ur .*cards?|w(as|ill))\b)|"
+    r"ne(eds|ver)|on|really|s(iempre|ongs?)|trie[ds]|ur .*cards?|w(as|hat|ill))\b)|"
     r"([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live(r)" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+liver?\b|"
