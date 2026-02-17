@@ -342,8 +342,8 @@ EXCLUDE_RE = re.compile(
     # - love "Live Through This" (usually album by Hole)
     r"t((a(bl|p)|re)es|elevision|(ex|wee)ting|h(eat(er|re)|rough this)|o (live|tell)|v)|"
     # - "love live the" (usually typo of "long live the") but not "Love Live the
-    #   competition/most/Musical/School Idol"
-    r"the\b(?! (competition|m(ost|usical)|school idol)\b)|"
+    #   competition/most/Musical/other/same/School Idol"
+    r"the\b(?! (competition|m(ost|usical)|other|s(ame|chool idol))\b)|"
     # - love live tour/your
     r"[ty]our|"
     # - "love live ur" (usually typo of "long live ur") but not "Love Live UR ... card"
@@ -555,6 +555,7 @@ EXCLUDE_RE = re.compile(
     r"r(ad(ar|ical)|eally|inku)|"
     # - "Same Old Love" live (song by Selena Gomez)
     # - Savage Love Live (sex advice podcast by Dan Savage)
+    # - "Sexy Love" live
     # - "Show Me Love" live (usually song by Robin S.)
     # - Simon Love live (some random British artist with an official Bluesky account)
     # - "Some Kinda Love" live (song by The Velvet Underground)
@@ -564,7 +565,8 @@ EXCLUDE_RE = re.compile(
     # - "Strange Love" live (usually album by T.S.O.L.)
     # - "Super Duper Love" live (song by Sugar Billy or Joss Stone)
     # - "Sweet Love" live (usually song by Anita Baker)
-    r"s(a(me old|vage)|imon|how me|o(me kinda|ul)|pread|t(one|range)|uper duper|weet)|"
+    r"s(a(me old|vage)|exy|imon|how me|o(me kinda|ul)|pread|t(one|range)|uper duper|"
+    r"weet)|"
     # - hear/saw/see(n) [artist name] perform [song name ending with "Love"] live
     r"(hear|s(aw|een?)) .+ perform .+|"
     # - "Tainted Love" live (song by Soft Cell)
@@ -654,9 +656,9 @@ EXCLUDE_RE = re.compile(
     r"\bplay(ing)? .+ love live on|"
     # "love live on" at end of sentence/post
     r"\blove live on *[^\w ]|"
-    # I('d/'m/'ve)/My ... [got/need/went/etc.] to/gotta/gonna [hear/saw/see/have] heard
-    # [song/artist name ending with "Love"] live
-    r"\b(I(['’][dm]|ve)?|my( [a-z'’,&]+)+) ((([a-z]+ ){,2}to|go(tt|nn)a) "
+    # I('d/'m/'ve)/who/my ... saw/have heard/[[[got/need/went/etc.] to/gotta/gonna]
+    # hear/see] [song/artist name ending with "Love"] live
+    r"\b(I(['’][dm]|ve)?|my( [a-z'’,&]+)+|who) ((([a-z]+ ){,2}to|go(tt|nn)a) "
     r"(h((ave h)?eard|ear)|s(aw|ee))) ([\w'’]+ )+love live|"
     # find love live and/your/etc.
     r"\bfind love live \w{3,}\b|"
