@@ -69,10 +69,12 @@ def get_post_texts(post: dict, include_media=True) -> list[str]:
                 # Bluesky app lets you add custom alt text which is put into description
                 # field in embed
                 texts.append(link.description)
-            elif YOUTUBE_URL_RE.search(link.uri) or TWEET_URL_RE.search(link.uri):
+            elif YOUTUBE_URL_RE.search(link.uri):
                 texts.append(link.title)
                 if link.description:
                     texts.append(link.description)
+            elif TWEET_URL_RE.search(link.uri) and link.description:
+                texts.append(link.description)
 
     return texts
 
