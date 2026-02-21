@@ -741,7 +741,10 @@ BAD_KEYWORDS_RE = re.compile(
 LOVELIVENEWS_BSKY_SOCIAL = "did:plc:yfmm2mamtdjxyp4pbvdigpin"
 DEDICATED_USERS = set({LOVELIVENEWS_BSKY_SOCIAL})
 DEDICATED_USERS_MEDIA_ONLY: set[str] = set()
+
+MMMINAMI_BSKY_SOCIAL = "did:plc:vgygtg6ozeaudtzilxihgpca"
 NIGAI58_BSKY_SOCIAL = "did:plc:danvhqwcktfn47vhuh77kn2z"
+
 IGNORE_USERS: set[str] = set()
 SOLOVON_DILL_BURGGIT_MOE_AP_BRID_GY = "did:plc:dvxbc7qhvo7c2vf3pmzmswd6"
 
@@ -822,8 +825,10 @@ def filter(post: dict) -> bool:
             ),
             CATCHU_RE.search(all_texts) and not FAKE_CATCHU_RE.search(all_texts),
             CHARACTERS_EN_RE.search(all_texts),
-            author == NIGAI58_BSKY_SOCIAL
-            and post_has_media_embeds(post)
-            and "ちゃん" in all_texts,
+            post_has_media_embeds(post)
+            and (
+                (author == NIGAI58_BSKY_SOCIAL and "ちゃん" in all_texts)
+                or (author == MMMINAMI_BSKY_SOCIAL and "うみこと" in all_texts)
+            ),
         )
     )
