@@ -51,7 +51,7 @@ LOVELIVE_RE = re.compile(
     r"(?<!@)(#\w+)?school ?idol(?! (story|book)\b)(s\b| ?((festiv|music)al|project))?|"
     # Games
     r"\bl(l|ove ?live ?)sif2?\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|"
-    r"\bLL(_|official-)cardgame|#ラブカ\b|"
+    r"\bLL(_|official-)cardgame|#ラブカ(感謝祭)\b|"
     # ぷちぐる but not ぷちぐるみ
     r"ぷちぐる([^み]|$)|puchiguru\b|"
     # スクスタ/スクミュ but not words with マスク/デ(ィ)スク/スタンド/スタンプ/スタイル/スタッフ
