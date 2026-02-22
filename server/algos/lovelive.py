@@ -24,10 +24,11 @@ LOVELIVE_RE = re.compile(
     r"e(n|pisodes?|ra|tc)\b|"
     r"f(an(art|dom|s)?\b|(anf)?ics?\b|i(gur(in)?es?|nals)|ranchise)|"
     r"g(i(f|rls?)|lobal)\b|(rhythm )?game\b|"
+    r"hasu|"
     r"i(ce cream|dols?|n general)|"
     r"jumpscare|"
     r"lieder|"
-    r"m(aybe|e(ntion(ed)?|rch(andise)?|troidvania)|ovies?|vs?)\b|"
+    r"m(aybe|e(ntion(ed)?|rch(andise)?|troidvania)|o(ots|vies?)|vs?)\b|"
     r"n(esoberis?|iji(gasaki)?)|"
     r"o(c(g|s?\b)|mf?g|p\b|r(?! die)\b|s(his?|t))|"
     r"p(ins?\b|l(aylist|ush(ies?)?))|"
@@ -41,7 +42,7 @@ LOVELIVE_RE = re.compile(
     r"yuri\b"
     r")| ?!? +(vs|X)\b| fest?\b)|"
     r"lovelive(-(anime|fanfunfestival|news\.bsky\.social)|_staff|15th)|"
-    r"\b((d(an|oe)|enjoy|hate|is thi|love|m(eet|is)|variou|(?<!it )wa)s|draw(ing|s)|"
+    r"\b((dan|enjoy|hate|is thi|love|m(eet|is)|variou|(?<!it )wa)s|draw(ing|s)|"
     r"thank you|like[ds]?) love ?live\b|#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
     # ラブライブ but not クラブライブ (club live)/イコラブライブ (Ikolab Live)/
     # マジラブライブ (Maji Love Live)
@@ -258,8 +259,9 @@ EXCLUDE_RE = re.compile(
     # "love live [something]" after *ly/f*king/hecking/bloody
     r"(([a-z]+ly|(f[a-z]+|hec)ki?n[g'’]?|bloody) +)love live \w+\b|"
     # "also/and/but (still) love live [something] (for)" at end of sentence but not
-    # "also/and/but love live is"
-    r"(a(lso|nd)|but) (still )?love live(?! is)( [a-z]+[a-z]){1,2}( for\b| ?[^\w ]|$)|"
+    # "also/and/but love live does(n't)/got/had/has/is/was/will"
+    r"(a(lso|nd)|but) (still )?love live(?! (does(n['’]?t)?|got|ha[ds]|(i|wa)s|will)\b)"
+    r"( [a-z]+[a-z]){1,2}( for\b| ?[^\w ]|$)|"
     # It's/What a ... to love live [something]
     r"(it['’]?s|what) a ([\w'’\-]+ +)+to love live [a-z]+[a-z]|"
     # "love live music" at end of sentence but not "about/i(t)s/of/to love live music"
@@ -282,9 +284,9 @@ EXCLUDE_RE = re.compile(
     r"a(ction|mmo|nd (be|dangerous|fall|let)\b|t\b(?!it['’]?s\b)| ?live)|"
     # - love "Live and Learn" (usually Sonic Adventure 2 theme song)
     r"(and|&) learn\b|"
+    # - love live beyond/broadcasting
     # - Love Live Bleeding (typo of "Love Lies Bleeding")
-    # - love live broadcasting
-    r"b(leeding|roadcasting)|"
+    r"b(eyond|(leed|roadcast)ing)|"
     # - Love live Canada (typo of "Long live Canada")
     # - love live captioning/cricket
     r"c(a(nada|ptioning)|ricket)|"
@@ -340,7 +342,8 @@ EXCLUDE_RE = re.compile(
     # - love "Live to Live" (song from Hazbin Hotel S2)
     # - love "Live to Tell" (song by Madonna)
     # - love "Live Through This" (usually album by Hole)
-    r"t((a(bl|p)|re)es|elevision|(ex|wee)ting|h(eat(er|re)|rough this)|o (live|tell)|v)|"
+    r"t((a(bl|p)|re)es|elevision|(ex|wee)ting|h(eat(er|re)|rough this)|v|"
+    r"o (live|tell))|"
     # - "love live the" (usually typo of "long live the") but not "Love Live the
     #   competition/most/Musical/other/same/School Idol"
     r"the\b(?! (competition|m(ost|usical)|other|s(ame|chool idol))\b)|"
@@ -348,11 +351,11 @@ EXCLUDE_RE = re.compile(
     r"[ty]our|"
     # - "love live ur" (usually typo of "long live ur") but not "Love Live UR ... card"
     r"ur (?!.*\bcards?\b)|"
-    # - love live versions
-    r"versions|"
-    # - love live bands/gigs/mealworms/performances/shows
+    # - love Live Wire
+    r"wire|"
+    # - love live bands/gigs/mealworms/performances/shows/versions
     # - "Love Live in Paris" (typo of "Lover (Live from Paris)" album by Taylor Swift)
-    r"(band|gig|mealworm|performance|show|in pari)s|"
+    r"(band|gig|mealworm|performance|show|version|in pari)s|"
     # - 196x/197x after "love live" (usually live concert recordings)
     r".*\b19[67][0-9]\b)|"
     # [Artist] - [song name ending with "love"] live
@@ -424,7 +427,6 @@ EXCLUDE_RE = re.compile(
     #   - "(The) House of Love" live (usually British alt rock band or song by Christine)
     #   - "Lexicon of Love" live (album by ABC)
     #   - "Light of Love" live (usually song by Florence and the Machine)
-    #   - "Message of Love" live (song by The Pretenders)
     #   - "Miracle of Love" live (song by Eurythmics)
     #   - "Mystery of Love" live (usually song by Sufjan Stevens)
     #   - "Path of Love" live (usually song name)
@@ -442,7 +444,7 @@ EXCLUDE_RE = re.compile(
     #   - "Victim of Love" live (song by Eagles)
     r"(all is full|book|c(aravan|rush)|d(ance me to the end|e(ath|finition))|fire|"
     r"genius|h(azards|ouse)|l(exicon|ight)|p(ath|risoner)|s(atellite|hot|ongs)|"
-    r"m(essage|iracle|ost exalted potentate|ystery)|(any|sunday|[tw]hat|this) kind|"
+    r"m(iracle|ost exalted potentate|ystery)|(any|sunday|[tw]hat|this) kind|"
     r"t(he (look|meaning)|unnel)|victim) of|"
     # - stuff ending with "in love live":
     #   - "Crazy in Love" live (song by Beyonce)
@@ -471,6 +473,7 @@ EXCLUDE_RE = re.compile(
     # - "Frozen Love" live (song by Buckingham Nicks)
     r"f(a(ithless|ke)|eel (like makin['’g]?|the)|ight|rozen)|"
     # - stuff ending with "for love live":
+    #   - "Ain't No Cure for Love" live (song by Leonard Cohen)
     #   - "Exist for Love" live (song by Aurora)
     #   - "Fool for Love" live (different songs by different artists)
     #   - "Kill for Love" live (usually song by Lady Gaga)
@@ -480,8 +483,8 @@ EXCLUDE_RE = re.compile(
     #   - "(Bardic) Quest for Love" live (indie visual novel game)
     #   - "Ready for Love" live (usually song by Bad Company, but not "get(ting) ready
     #     for love live")
-    r"(exist|(foo|kil)l|living|(?<!\bcame )out|quest|(?<!\bget )(?<!\bgetting )ready)"
-    r" for|"
+    r"(ain['’]?t no cure|exist|(foo|kil)l|living|(?<!\bcame )out|quest|"
+    r"(?<!\bget )(?<!\bgetting )ready) for|"
     # - G. Love live (American singer/rapper)
     # - Gerry Love live (British rock singer/bass guitar player)
     r"g(er(ard|ry)|\.?)|"
@@ -534,9 +537,11 @@ EXCLUDE_RE = re.compile(
     r"(whole )?lotta|"
     # - "Mad Love" live (usually album by Linda Ronstadt)
     # - Maji Love Live (live concerts by ST☆RISH from Uta no Prince-sama)
+    # - "Message of Love" live (song by The Pretenders)
+    # - "Message to Love" live (song by Jimi Hendrix)
     # - Mike Love live (American reggae artist)
     # - "My True Love" live (song by The Promise)
-    r"m(a(d|ji)|ike|y true)|"
+    r"m(a(d|ji)|essage (of|to)|ike|y true)|"
     # - "Network Love" live (K-pop song by Seventeen)
     # - "No Loss, No Love" live (song by Spiritbox)
     # - "No Ordinary Love" live (song by Sade)
@@ -624,15 +629,15 @@ EXCLUDE_RE = re.compile(
     r"whether you.+ or (just )?love live |"
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
     # love love [something]" but not "(and) love live all/also/always/and/are/as/auf/
-    # but/can/could/did/does(n't)/doing/going/gone/got/had/has/hates/I/if/in/is(t)/I'll/
-    # I'm/just/kinda/kind of/made/make(s)/making/may [be/have/not]/music [is/was]/needs/
-    # never/not/on/really/siempre/should/song(s)/tries/tried/UR ... card(s)/was/what/
-    # will/would"
+    # but/can/could/did/does(n't)/doing/going/gone/got/had/has/hates/here/I/if/in/is(t)/
+    # I'll/I'm/just/kinda/kind of/made/make(s)/making/may [be/have/not]/music [is/was]/
+    # needs/never/not/on/really/siempre/should/song(s)/there/tries/tried/UR ... card(s)/
+    # was/what/will/would"
     r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|nd|re|s|"
     r"uf)|but|can|[csw]ould|[dg]oing|d(id|oes(n['’]?t)?)|gone|[gn]ot|ha([ds]|tes)|just|"
-    r"i([fn'’]|st?)?|kind(a| of)|m(a(de|k(es?|ing)|y( ?be| (have|not)))|usic (i|wa)s)|"
-    r"ne(eds|ver)|on|really|s(iempre|ongs?)|trie[ds]|ur .*cards?|w(as|hat|ill))\b)|"
-    r"([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
+    r"t?here|i([fn'’]|st?)?|kind(a| of)|ne(eds|ver)|on|really|s(iempre|ongs?)|trie[ds]|"
+    r"m(a(de|k(es?|ing)|y( ?be| (have|not)))|usic (i|wa)s)|w(as|hat|ill)|"
+    r"ur .*cards?)\b)|([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live(r)" at beginning of sentence
     r"([^\w\s]+?  ?|^)love (love )+liver?\b|"
     # ... and love live(s) here/there
@@ -654,8 +659,8 @@ EXCLUDE_RE = re.compile(
     r'\b((h(er|is)|their|your?)( [a-z]+ing)?|learn) love live([.,"”]|$| (i|wa)s\b)|'
     # playing [video game title ending with "Love"] live on
     r"\bplay(ing)? .+ love live on|"
-    # "love live on" at end of sentence/post
-    r"\blove live on *[^\w ]|"
+    # "love live here/on/there" at end of sentence/post
+    r"\blove live (on|t?here) *[^\w ]|"
     # I('d/'m/'ve)/who/my ... saw/have heard/[[[got/need/went/etc.] to/gotta/gonna]
     # hear/see] [song/artist name ending with "Love"] live
     r"\b(I(['’][dm]|ve)?|my( [a-z'’,&]+)+|who) ((([a-z]+ ){,2}to|go(tt|nn)a) "
