@@ -179,7 +179,7 @@ def _run_repos_client(
 
         global repos_last_message_time
         message_ts = datetime.fromisoformat(msg_data.time)
-        if message_ts > repos_last_message_time:
+        if message_ts.tzinfo is not None and message_ts > repos_last_message_time:
             repos_last_message_time = message_ts
 
         # We no longer need the message unless if it's a commit
