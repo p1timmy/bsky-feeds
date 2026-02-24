@@ -10,7 +10,7 @@ from server.algos._base import get_post_texts, post_has_media_embeds
 logger = logging.getLogger(__name__)
 
 LOVELIVE_NAME_EN_RE = re.compile(
-    r"([^a-z0-9\-_=＝]|^)love ?live($|[^a-z0-9\-]|rs?\b)", re.IGNORECASE
+    r"([^a-z0-9_=＝]|^-? *)love ?live($|[^a-z0-9\-]|rs?([^a-z0-9_]|\b))", re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
     # "Love Live" + other related words
@@ -22,7 +22,7 @@ LOVELIVE_RE = re.compile(
     r"d(a(nce(s| groups?)|ys)|rama\b)|"
     r"heardle|"
     r"e(n|pisodes?|ra|tc)\b|"
-    r"f(an(art|dom|s)?\b|(anf)?ics?\b|i(gur(in)?es?|nals)|ranchise)|"
+    r"f(an(art|dom|s)?\b|(anf)?ics?\b|es ?2?\b|i(gur(in)?es?|nals)|ranchise)|"
     r"g(i(f|rls?)|lobal)\b|(rhythm )?game\b|"
     r"hasu|"
     r"i(ce cream|dols?|n general)|"
@@ -42,7 +42,7 @@ LOVELIVE_RE = re.compile(
     r"yuri\b"
     r")| ?!? +(vs|X)\b| fest?\b)|"
     r"lovelive(-(anime|fanfunfestival|news\.bsky\.social)|_staff|15th)|"
-    r"\b((dan|enjoy|hate|is thi|love|m(eet|is)|variou|(?<!it )wa)s|draw(ing|s)|"
+    r"\b((dan|enjoy|hate|is thi|love|m(eet|is)|think|variou|(?<!it )wa)s|draw(ing|s)|"
     r"thank you|like[ds]?) love ?live\b|#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
     # ラブライブ but not クラブライブ (club live)/イコラブライブ (Ikolab Live)/
     # マジラブライブ (Maji Love Live)
@@ -92,7 +92,7 @@ LOVELIVE_RE = re.compile(
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(diver"
     r" ?diva|r3birth)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
     r"tokimeki r(unners|oadmap to the future)|^me, a taylor\b|"
-    r"(ゆう|せつ)ぽむ|ぽむせつ|\b(sets|yu?)upomu\b|\bsetsuayu\b|"
+    r"(ゆう|せつ|#残業)ぽむ|ぽむせつ|\b(sets|yu?)upomu\b|\bsetsuayu\b|"
     r"高咲\s?侑|上原\s?歩夢|中須\s?かすみ|桜坂\s?しずく|朝香\s?果林|宮下\s?愛|近江\s?(彼方|遥)|"
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
     r"かすみん|"
@@ -117,8 +117,8 @@ LOVELIVE_RE = re.compile(
     r"乙宗\s?梢|夕霧\s?綴理|藤島\s?慈|日野下\s?花帆|村野\s?さやか|大沢\s?瑠璃乃|百生\s?吟子|"
     r"徒町\s?小鈴|安養寺\s?姫芽|大賀美沙知|桂城\s?泉|セラス[・\s]?柳田[・\s]?リリエンフェルト|"
     # Love Live! Bluebird
-    # NOTE: "Love High School" not included due to too many false positives
-    r"いきづら[い絵]部|イキヅ(ライブ|LIVE配信)|ikizu ?(live|raibu)|love学院|"
+    # NOTE: "L(ove) High School" not included due to too many false positives
+    r"いきづら[い絵]部|イキヅ(ライブ|LIVE配信)|\bikizu( ?(live|raibu))?|love学院|"
     r"高橋\s?ポルカ|麻布\s?麻衣|五桐\s?玲|駒形\s?花火|金澤\s?奇跡|調布\s?のりこ|春宮\s?ゆくり|"
     r"此花\s?輝夜|山田\s?真緑|佐々木\s?翔音|"
     r"\b(polka_lion|My_Mai_Eld|G_Akky304250|hanabistarmine|MiracleGoldSP|Noricco_U|"
@@ -166,7 +166,7 @@ CHARACTER_NAMES = set(
         ("Tsuki", "Watanabe", False),
         ("Yoshiko", "Tsushima", False),
         ("Hanamaru", "Kunikida", False),
-        ("Mari", "Ohara", False),
+        ("Mari", "(?<!Money )Ohara", False),
         # Saint Snow
         ("Kazuno", "Leah", True),
         # NOTE: Leah Kazuno included in pattern builder to try to skip posts containing
@@ -467,11 +467,12 @@ EXCLUDE_RE = re.compile(
     r"d(estination:?|o(es)?( not|n['’]t))|"
     # - "Faithless Love" live (song by Linda Ronstadt)
     # - "Fake Love" live (song by BTS)
+    # - "Feelin' Love" live (song by Paula Cole)
     # - "Feel Like Makin' Love" live (song by Roberta Flack or Bad Company)
     # - feel the love live
     # - fight love live (usually Filoli, California historical marker)
     # - "Frozen Love" live (song by Buckingham Nicks)
-    r"f(a(ithless|ke)|eel (like makin['’g]?|the)|ight|rozen)|"
+    r"f(a(ithless|ke)|eel(in['’]?| (like makin['’g]?|the))|ight|rozen)|"
     # - stuff ending with "for love live":
     #   - "Ain't No Cure for Love" live (song by Leonard Cohen)
     #   - "Exist for Love" live (song by Aurora)
@@ -506,15 +507,15 @@ EXCLUDE_RE = re.compile(
     r"(compassion|h(appiness|ope)|joy|kindness|p(ain|eace)|unity),?"
     r" (and|&)( [a-z]+['’]s)?|"
     # - stuff ending with "to love live":
-    #   - learn(ed/ing) to love live [something]
+    #   - learn/want(ed/ing) to love live [something]
     #   - "How To Love" live (usually song by Lil Wayne or any song name ending with
     #     that phrase)
     #   - "Love to Love" live (usually song by UFO)
     #   - "Slave to Love" live (song by Bryan Ferry)
     #   - "Somebody to Love" live (usually song by Queen or Jefferson Airplane or any
     #     song name ending with that phrase)
-    #   - what's not to love live
-    r"(how|l(earn(ed|ing)?|ove)|s(lave|omebody)|what(['’]| i)?s not) to|"
+    #   - what's/what is not to love live
+    r"(how|(learn|want)(ed|ing)?|love|s(lave|omebody)|what(['’]| i)?s not) to|"
     # - (that) I('d) love live [something] (all other cases not caught by the Great "I
     #   love live [something]" Hoarde pattern)
     r"(that)?\bI(['’]d)?|"
