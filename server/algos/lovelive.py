@@ -750,6 +750,7 @@ DEDICATED_USERS_MEDIA_ONLY: set[str] = set()
 
 MMMINAMI_BSKY_SOCIAL = "did:plc:vgygtg6ozeaudtzilxihgpca"
 NIGAI58_BSKY_SOCIAL = "did:plc:danvhqwcktfn47vhuh77kn2z"
+SPLATER765_BSKY_SOCIAL = "did:plc:7zsqikdjppjczb6cfc3bmse6"
 
 IGNORE_USERS: set[str] = set()
 SOLOVON_DILL_BURGGIT_MOE_AP_BRID_GY = "did:plc:dvxbc7qhvo7c2vf3pmzmswd6"
@@ -835,6 +836,10 @@ def filter(post: dict) -> bool:
             and (
                 (author == NIGAI58_BSKY_SOCIAL and "ちゃん" in all_texts)
                 or (author == MMMINAMI_BSKY_SOCIAL and "うみこと" in all_texts)
+            ),
+            (
+                author == SPLATER765_BSKY_SOCIAL
+                and "goodnight everyone" in all_texts.lower()
             ),
         )
     )
