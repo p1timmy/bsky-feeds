@@ -1,6 +1,6 @@
 from collections import defaultdict
 from collections.abc import Callable
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from threading import Event
 from time import sleep
 from typing import Any, Optional
@@ -20,13 +20,13 @@ from atproto_client.models.dot_dict import DotDict
 from atproto_firehose.firehose import SubscribeLabelsMessage, SubscribeReposMessage
 from click import style
 
-from server.database import FirehoseType, SubscriptionState
+from server.database import FirehoseType, Post, SubscriptionState
 from server.logger import logger
 
 _INTERESTED_RECORDS = {
     models.AppBskyFeedPost: models.ids.AppBskyFeedPost,
 }
-_ReposOperationsCallbackType = Callable[[dict[str, Any]], None]
+_ReposOperationsCallbackType = Callable[[dict[str, Any]], bool]
 _LabelsMessageCallbackType = Callable[
     [models.ComAtprotoLabelSubscribeLabels.Labels], int
 ]
@@ -155,6 +155,12 @@ def _run_repos_client(
     frame: firehose_models.Frame | None = None
     msg_data: SubscribeReposMessage | None = None
 
+    last_activity_time = datetime.min
+    time_since_last_activity = timedelta(0)
+    last_post = Post.select().order_by(Post.indexed_at.desc()).get_or_none()
+    if last_post is not None:
+        last_activity_time = last_post.indexed_at.replace(tzinfo=UTC)
+
     def on_message_handler(message: firehose_models.MessageFrame) -> None:
         # stop on next message if requested
         if stream_stop_event and stream_stop_event.is_set():
@@ -213,9 +219,12 @@ def _run_repos_client(
         if not msg_data.blocks:
             return
 
+        nonlocal last_activity_time, time_since_last_activity
         ops = _get_commit_ops_by_type(msg_data)
         try:
-            callback(ops)
+            if callback(ops):
+                last_activity_time = repos_last_message_time
+                time_since_last_activity = timedelta(0)
         except Exception:  # noqa: PIE786
             logger.exception(
                 "%s\nCursor: %s%s",
@@ -223,6 +232,21 @@ def _run_repos_client(
                 msg_data.seq,
                 _get_commit_details_str(msg_data),
             )
+
+        if last_activity_time.year > datetime.min.year:
+            new_td = repos_last_message_time - last_activity_time
+            if new_td > time_since_last_activity:
+                new_td_mins = new_td.seconds // 60
+                if (
+                    new_td_mins != time_since_last_activity.seconds // 60
+                    and new_td_mins >= 5
+                ):
+                    if new_td_mins == 5:
+                        print("\n\n\n\n", end="")
+
+                    print()
+
+                time_since_last_activity = new_td
 
         msg_data = frame = None
 

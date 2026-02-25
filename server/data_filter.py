@@ -47,7 +47,7 @@ def is_archived_post(post: dict) -> bool:
     return published_at - created_at > _ARCHIVED_THRESHOLD
 
 
-def operations_callback(ops: defaultdict):
+def operations_callback(ops: defaultdict) -> bool:
     # Here we can filter, process, run ML classification, etc.
     # After our feed alg we can save posts into our DB
     # Also, we should process deleted posts to remove them from our DB and keep it in sync
@@ -194,6 +194,8 @@ def operations_callback(ops: defaultdict):
                     else ""
                 ),
             )
+
+    return bool(posts_to_create)
 
 
 class _LabelQueueItem(NamedTuple):
