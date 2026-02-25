@@ -164,18 +164,29 @@ def _run_repos_client(
         nonlocal frame, msg_data, last_cursor
         frame = message
         msg_data = parse_subscribe_repos_message(message)
-        if hasattr(msg_data, "seq"):
-            if abs(msg_data.seq - last_cursor) >= 10_000:
-                logger.info(
-                    "%s",
-                    style(
-                        "Significant cursor jump detected in repos firehose:"
-                        f" {last_cursor} -> {msg_data.seq}",
-                        bold=True,
-                    ),
-                )
 
-            last_cursor = msg_data.seq
+        # Log info messages only, they're the only message type without a seq or time
+        # and usually appears when connecting with outdated cursor number
+        if isinstance(msg_data, models.ComAtprotoSyncSubscribeRepos.Info):
+            logger.info(
+                "%s:\n  Name:%s\n  Message:%s",
+                style("Received Info message from repos firehose", bold=True),
+                msg_data.name,
+                msg_data.message,
+            )
+            return
+
+        if abs(msg_data.seq - last_cursor) >= 10_000:
+            logger.info(
+                "%s",
+                style(
+                    "Significant cursor jump detected in repos firehose:"
+                    f" {last_cursor} -> {msg_data.seq}",
+                    bold=True,
+                ),
+            )
+
+        last_cursor = msg_data.seq
 
         global repos_last_message_time
         message_ts = datetime.fromisoformat(msg_data.time)
