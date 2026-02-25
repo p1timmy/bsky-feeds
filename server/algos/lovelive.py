@@ -640,7 +640,7 @@ EXCLUDE_RE = re.compile(
     r"m(a(de|k(es?|ing)|y( ?be| (have|not)))|usic (i|wa)s)|w(as|hat|ill)|"
     r"ur .*cards?)\b)|([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live(r)" at beginning of sentence
-    r"([^\w\s]+?  ?|^)love (love )+liver?\b|"
+    r"([^\w\s]+? *|^)love (love )+liver?\b|"
     # ... and love live(s) here/there
     r" (and|&) love lives? t?here\b|"
     # may/on your/our/his/her/their ... love live
