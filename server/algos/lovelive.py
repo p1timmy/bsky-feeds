@@ -269,8 +269,9 @@ EXCLUDE_RE = re.compile(
     r" music *[^\w ]|"
     # Words/phrases starting with "love live"
     r"\blove live ("
+    # - love live @ (usually songs ending with "Love" + "live @ [some place/event]")
     # - love Live 2D (as in Live2D animation technique/software)
-    r"2d|"
+    r"@ |2d|"
     # - love live action
     # - love Live A Live (video game title)
     # - Love Live Alive (Genesis Climber MOSPEADA OVA)
@@ -566,13 +567,14 @@ EXCLUDE_RE = re.compile(
     # - Simon Love live (some random British artist with an official Bluesky account)
     # - "Some Kinda Love" live (song by The Velvet Underground)
     # - "Soul Love" live (song by David Bowie)
+    # - "Spiritual Love" live (usually song by Urban Species)
     # - spread love live
     # - Stone Love live (usually Jamaican DJ group)
-    # - "Strange Love" live (usually album by T.S.O.L.)
+    # - "Strange Love" live (usually song by Depreche Mode or album by T.S.O.L.)
     # - "Super Duper Love" live (song by Sugar Billy or Joss Stone)
     # - "Sweet Love" live (usually song by Anita Baker)
-    r"s(a(me old|vage)|exy|imon|how me|o(me kinda|ul)|pread|t(one|range)|uper duper|"
-    r"weet)|"
+    r"s(a(me old|vage)|exy|imon|how me|o(me kinda|ul)|p(iritual|read)|t(one|range)|"
+    r"uper duper|weet)|"
     # - hear/saw/see(n) [artist name] perform [song name ending with "Love"] live
     r"(hear|s(aw|een?)) .+ perform .+|"
     # - "Tainted Love" live (song by Soft Cell)
@@ -727,7 +729,8 @@ BAD_KEYWORDS_RE = re.compile(
     # Moths with species names containing "liella" substring
     r"#teammoth|"
     # Political keywords often used in "love live"/"Mia Taylor" false positives
-    r"charlie ?kirk|democrats?\b|GOP\b|MAGAs?\b|netanyahu|republicans?|trump\b|"
+    r"amerikkka|charlie ?kirk|democrats?\b|GOP\b|MAGAs?\b|netanyahu|republicans?|"
+    r"trump\b|"
     # Gaza war victim fundraiser spam
     r"abed|ABD-GFM|GFM-ABD|kutt\.it/|"
     # Jel Kawasaki bot posts
@@ -735,7 +738,7 @@ BAD_KEYWORDS_RE = re.compile(
     # "Buy Anything From Amazon" spam
     r"zort\.my/|"
     # NSFW keywords
-    r"bds&?m|c(am ?girl|ock(s|\b)|um(ming|shot)?([^a-z]|\b))|di(aper|ck|ldo)|"
+    r"bds&?m|c(am ?girl|haturbate|ock(s|\b)|um(ming|shot)?([^a-z]|\b))|di(aper|ck|ldo)|"
     r"(futanar|henta)i|jock[sa]traps?|nude|p(enis|regnant)|s(ex([^a-z]|\b)|lut)"
     # NSFW hashtags
     r")|#(ecchi|nsfw|porn|r18)",
