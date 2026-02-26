@@ -101,7 +101,7 @@ LOVELIVE_RE = re.compile(
     r"結ヶ丘|yuigaoka|5yncri5e!?|kaleidoscore|トマカノーテ|tomakanote|スパスタ[3３]期|"
     r"澁谷\s?かのん|唐\s?可可|嵐千\s?砂都|平安名\s?すみれ|葉月\s?恋|桜小路\s?きな子|米女\s?メイ|"
     r"若菜\s?四季|鬼塚\s?(夏美|冬毬)|ウィーン・?マルガレーテ|"
-    r"ク[ウゥ]ク[ウゥ]ちゃん?|oninatsu|オニナッツ|"
+    r"ク([ウゥ]ク[ウゥ]ちゃ|ーカー)|oninatsu|オニナッツ|"
     r"sunny\s?pas(sion)?(\b|[^a-z\u00C0-\u024F\u1E00-\u1EFF])|"
     r"sunnypa(\b|[^a-z\u00C0-\u024F\u1E00-\u1EFF])|"
     r"聖澤悠奈|柊\s?摩央|"
