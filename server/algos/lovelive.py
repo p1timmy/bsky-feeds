@@ -245,10 +245,10 @@ EXCLUDE_RE = re.compile(
     # - *ly/also/always/bloody/can't/cannot/(sure) do/does/don't (but not "don't do")/
     #   even/f*king/hecking/just/lowkey/still/(came/come/grew/have/happen(ed/s)/use(d)/
     #   tend) to/too/will/would('ve)/... and
-    r"(( ?,)? ([a-z]+ly|al(so|ways)|bloody|can(['’]|((['’]?t)? )?no)t|(sure )?do|does|"
-    r"don['’]?t(?! do\b)|even|(f[a-z]+|hec)ki?n[g'’]?|just|lowkey|(st|w)ill|"
-    r"((c[ao]me|ha(ve|ppen(ed|s)?)|used?|grew) t|s|t(o|end t))o|would(['’]ve)?|"
-    r"[a-z]+[a-z] (and|&)))*"
+    r"(( ?,)? ([a-z]+ly|al(so|ways)|bloody|can(['’]|((['’]?t)? )?no)t|(sure )?do|"
+    r"do(es(n['’]?t)|n['’]?t(?! do\b))|even|(f[a-z]+|hec)ki?n[g'’]?|just|lowkey|"
+    r"(st|w)ill|((c[ao]me|ha(ve|ppen(ed|s)?)|used?|grew) t|s|t(o|end t))o|"
+    r"would(['’]ve)?|[a-z]+[a-z] (and|&)))*"
     # - love live [something]/love liver(s)/love Live (as in a band named LĪVE, Ableton
     #   Live music software, or typo of "love life")
     r" ((love )+live((?! (so |a(nd|s well)|but)\b),? &? ?#?\w+\b|rs?)|"
