@@ -503,9 +503,9 @@ EXCLUDE_RE = re.compile(
     #   - in your love live (sometimes typo of "in your love life")
     #   - "Sunshine of Your Love" live (usually song by Cream)
     r"(all|come (and|&) get|for|how deep is|in|sunshine of) your|"
-    # - compassion/happiness/hope/joy/kindness/pain/peace/unity and ([God/someone]'s)
-    #   love live
-    r"(compassion|h(appiness|ope)|joy|kindness|p(ain|eace)|unity),?"
+    # - compassion/happiness/hope/joy/kindness/memory/pain/peace/unity and
+    #   ([God/someone]'s) love live
+    r"(compassion|h(appiness|ope)|joy|kindness|memory|p(ain|eace)|unity),?"
     r" (and|&)( [a-z]+['’]s)?|"
     # - stuff ending with "to love live":
     #   - learn/want(ed/ing) to love live [something]
@@ -573,8 +573,8 @@ EXCLUDE_RE = re.compile(
     # - "Strange Love" live (usually song by Depreche Mode or album by T.S.O.L.)
     # - "Super Duper Love" live (song by Sugar Billy or Joss Stone)
     # - "Sweet Love" live (usually song by Anita Baker)
-    r"s(a(me old|vage)|exy|imon|how me|o(me kinda|ul)|p(iritual|read)|t(one|range)|"
-    r"uper duper|weet)|"
+    r"s(a(me old|vage)|exy|imon|how me|kinny|o(me kinda|ul)|p(iritual|read)|"
+    r"t(one|range)|uper duper|weet)|"
     # - hear/saw/see(n) [artist name] perform [song name ending with "Love"] live
     r"(hear|s(aw|een?)) .+ perform .+|"
     # - "Tainted Love" live (song by Soft Cell)
