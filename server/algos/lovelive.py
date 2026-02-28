@@ -30,12 +30,12 @@ LOVELIVE_RE = re.compile(
     r"lieder|"
     r"m(aybe|e(ntion(ed)?|rch(andise)?|troidvania)|o(ots|vies?)|vs?)\b|"
     r"n(esoberis?|iji(gasaki)?)|"
-    r"o(c(g|s?\b)|mf?g|p\b|r(?! die)\b|s(his?|t))|"
+    r"o(c(g|s?\b)|mf?g|p\b|r(?! die)\b|s(his?|t)|utfits?)|"
     r"p(ins?\b|l(aylist|ush(ies?)?))|"
     r"referenc(es?|ia)|"
     r"s(chool ?idol|e(ction|ries|iyuus?)|hips?\b|ip([^a-z]|\b)|(ifs)?orter|ky|potted|"
     r"o(los?\b|ng\b|undtrack)|taff|u(b ?units?|nshine|per ?star))|"
-    r"t(cg|h(emed?\b|ings))|"
+    r"t(cg|h(emed?\b|ings)|wt\b)|"
     r"u['’]s|"
     r"vn\b|"
     r"wa(ifus?|tch party)\b|"
@@ -136,8 +136,7 @@ SUKUFEST_RE = re.compile(
 SOLDIER_GAME_RE = re.compile(r"([^a-z]|\b)soldier game([^a-z]|\b)", re.IGNORECASE)
 YOHANE_RE = re.compile(r"\b(?<!@)yohane(?!(-label|.*mbatiza[jt]i))\b", re.IGNORECASE)
 CATCHU_RE = re.compile(
-    r"([^A-Za-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(C[Aa]t[Cc][Hh]u|catchu|CATCHU)!?"
-    r"([^A-Za-z\u00C0-\u024F\u1E00-\u1EFF]|\b)"
+    r"([^A-Za-z$]|^)(C[Aa]t[Cc][Hh]u|catchu|CATCHU)!?([^A-Za-z]|\b)"
 )
 CHARACTER_NAMES = set(
     {
@@ -246,7 +245,7 @@ EXCLUDE_RE = re.compile(
     #   even/f*king/hecking/just/lowkey/still/(came/come/grew/have/happen(ed/s)/use(d)/
     #   tend) to/too/will/would('ve)/... and
     r"(( ?,)? ([a-z]+ly|al(so|ways)|bloody|can(['’]|((['’]?t)? )?no)t|(sure )?do|"
-    r"do(es(n['’]?t)|n['’]?t(?! do\b))|even|(f[a-z]+|hec)ki?n[g'’]?|just|lowkey|"
+    r"d(id|o(es(n['’]?t)|n['’]?t(?! do\b)))|even|(f[a-z]+|hec)ki?n[g'’]?|just|lowkey|"
     r"(st|w)ill|((c[ao]me|ha(ve|ppen(ed|s)?)|used?|grew) t|s|t(o|end t))o|"
     r"would(['’]ve)?|[a-z]+[a-z] (and|&)))*"
     # - love live [something]/love liver(s)/love Live (as in a band named LĪVE, Ableton
@@ -346,8 +345,8 @@ EXCLUDE_RE = re.compile(
     r"t((a(bl|p)|re)es|elevision|(ex|wee)ting|h(eat(er|re)|rough this)|v|"
     r"o (live|tell))|"
     # - "love live the" (usually typo of "long live the") but not "Love Live the
-    #   competition/most/Musical/other/same/School Idol"
-    r"the\b(?! (competition|m(ost|usical)|other|s(ame|chool idol))\b)|"
+    #   competition/most/movie/Musical/other/same/School Idol"
+    r"the\b(?! (competition|m(o(st|vie)|usical)|other|s(ame|chool idol))\b)|"
     # - love live tour/your
     r"[ty]our|"
     # - "love live ur" (usually typo of "long live ur") but not "Love Live UR ... card"
@@ -730,8 +729,8 @@ BAD_KEYWORDS_RE = re.compile(
     # Moths with species names containing "liella" substring
     r"#teammoth|"
     # Political keywords often used in "love live"/"Mia Taylor" false positives
-    r"amerikkka|charlie ?kirk|democrats?\b|GOP\b|MAGAs?\b|netanyahu|republicans?|"
-    r"trump\b|"
+    r"amerikkka|charlie ?kirk|democrats?\b|\bepstein\b|GOP\b|hegseth\b|MAGAs?\b|"
+    r"netanyahu|\bR(epublicans?|FK)|trump\b|"
     # Gaza war victim fundraiser spam
     r"abed|ABD-GFM|GFM-ABD|kutt\.it/|"
     # Jel Kawasaki bot posts
