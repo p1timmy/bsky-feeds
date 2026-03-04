@@ -243,10 +243,10 @@ EXCLUDE_RE = re.compile(
     r"anyone( else['’]s|( else)?( (o(ver|ut) )?t?here)?)?)"
     # - *ly/also/always/bloody/can't/cannot/(sure) do/does/don't (but not "don't do")/
     #   even/f*king/hecking/just/lowkey/still/(came/come/grew/have/happen(ed/s)/use(d)/
-    #   tend) to/too/will/would('ve)/... and
+    #   tend (not)) to/too/will/would('ve)/... and
     r"(( ?,)? ([a-z]+ly|al(so|ways)|bloody|can(['’]|((['’]?t)? )?no)t|(sure )?do|"
     r"d(id|o(es(n['’]?t)|n['’]?t(?! do\b)))|even|(f[a-z]+|hec)ki?n[g'’]?|just|lowkey|"
-    r"(st|w)ill|((c[ao]me|ha(ve|ppen(ed|s)?)|used?|grew) t|s|t(o|end t))o|"
+    r"(st|w)ill|((c[ao]me|ha(ve|ppen(ed|s)?)|used?|grew) t|s|t(o|end( not)? t))o|"
     r"would(['’]ve)?|[a-z]+[a-z] (and|&)))*"
     # - love live [something]/love liver(s)/love Live (as in a band named LĪVE, Ableton
     #   Live music software, or typo of "love life")
@@ -279,14 +279,14 @@ EXCLUDE_RE = re.compile(
     # - love "Live and Dangerous" (album by Thin Lizzy)
     # - love "LIVE and FALL" (album by Xdinary Heroes)
     # - love live and let
-    # - love live at (usually songs ending with "Love" + "live at [some place]" but not
-    #   "love live at it(')s")
+    # - love live at (usually songs ending with "Love" + "live at [some place/event]"
+    #   but not "love live at it(')s")
     r"a(ction|mmo|nd (be|dangerous|fall|let)\b|t\b(?!it['’]?s\b)| ?live)|"
     # - love "Live and Learn" (usually Sonic Adventure 2 theme song)
     r"(and|&) learn\b|"
-    # - love live beyond/broadcasting
+    # - love live betting/beyond/bootlegs/broadcasting
     # - Love Live Bleeding (typo of "Love Lies Bleeding")
-    r"b(eyond|(leed|roadcast)ing)|"
+    r"b(eyond|(ett|leed|roadcast)ing|ootlegs)|"
     # - Love live Canada (typo of "Long live Canada")
     # - love live captioning/cricket
     r"c(a(nada|ptioning)|ricket)|"
@@ -329,11 +329,10 @@ EXCLUDE_RE = re.compile(
     r"now (at|on)\b|"
     # - love live oak(s)/on stage
     r"o(aks?|n stage)|"
-    # - love live reaction(s)
-    # - love live renditions
+    # - love live reacting/reaction(s)/recording(s)/renditions
     # - love live rock (typo of "long live rock")
     # - love "Live Rust" (album by Neil Young & Crazy Horse)
-    r"r(e(actions?|nditions)|ock|ust)|"
+    r"r(e(acti(ng|ons?)|cordings?|nditions)|ock|ust)|"
     # - love live service/sport(s)/streaming/stream(s)/strings
     # - love Live Score (some sports app)
     # - Love Live Sweets (unrelated local bakery in New Jersey)
@@ -353,9 +352,9 @@ EXCLUDE_RE = re.compile(
     r"ur (?!.*\bcards?\b)|"
     # - love Live Wire
     r"wire|"
-    # - love live bands/gigs/mealworms/performances/shows/versions
+    # - love live bands/gigs/mealworms/performances/photos/shows/versions
     # - "Love Live in Paris" (typo of "Lover (Live from Paris)" album by Taylor Swift)
-    r"(band|gig|mealworm|performance|show|version|in pari)s|"
+    r"(band|gig|mealworm|p(erformance|hoto)|show|version|in pari)s|"
     # - 196x/197x after "love live" (usually live concert recordings)
     r".*\b19[67][0-9]\b)|"
     # [Artist] - [song name ending with "love"] live
@@ -378,11 +377,12 @@ EXCLUDE_RE = re.compile(
     # - stuff ending with "my love live":
     #   - "All My Love" live (usually song by Coldplay or any song name ending with
     #   that phrase)
+    #   - "Best of My Love" live (usually song by either Eagles or The Emotions)
     #   - "Darker My Love" live (song by T.S.O.L.)
     #   - "Darkness at the Heart of My Love" live (song by Ghost)
     #   - "Make You Feel My Love" live (song by Adele)
     #   - "To Bring You My Love" live (song by PJ Harvey)
-    r"(all|dark(er|ness at the heart of)|make you feel|to bring you) my|"
+    r"(all|best of|dark(er|ness at the heart of)|make you feel|to bring you) my|"
     # - stuff ending with "is love live":
     #   - "All You Need Is Love" live (usually song by The Beatles)
     #   - "What The World Needs Now Is Love" live (usually covers of 1960s song by
@@ -582,7 +582,8 @@ EXCLUDE_RE = re.compile(
     # - "The One I Love" live (song by R.E.M.)
     # - they love live [something] (all other cases not caught by the Great "I love
     #   live [something]" Hoarde pattern)
-    r"t(ainted|eam|he( one i|y))|"
+    # - "Tough Love" live
+    r"t(ainted|eam|he( one i|y)|ough)|"
     # - "Unconditional Love" live
     r"unconditional|"
     # - would love live [something] (all other cases not caught by the Great "I love
