@@ -30,7 +30,7 @@ LOVELIVE_RE = re.compile(
     r"lieder|"
     r"m(aybe|e(ntion(ed)?|rch(andise)?|troidvania)|o(ots|vies?)|vs?)\b|"
     r"n(esoberis?|iji(gasaki)?)|"
-    r"o(c(g|s?\b)|mf?g|p\b|r(?! die)\b|s(his?|t)|utfits?)|"
+    r"o(c(g|s?\b)|mf?g|omf(ie)?s?|p\b|r(?! die)\b|s(his?|t)|utfits?)|"
     r"p(ins?\b|l(aylist|ush(ies?)?))|"
     r"referenc(es?|ia)|"
     r"s(chool ?idol|e(ction|ries|iyuus?)|hips?\b|ip([^a-z]|\b)|(ifs)?orter|ky|potted|"
