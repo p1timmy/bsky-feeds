@@ -777,7 +777,7 @@ def make_characters_pattern() -> re.Pattern:
     return re.compile(
         f"(?:^|[^@a-z])(?:{'|'.join(patterns)}|"
         r"^(?!.*\blazarus\b.*).*((?<!thank )you ?watanabe|"
-        r"(?<!momo )(?<!shinichiro )(?<!akio )watanabe ?you(?!['’][a-z]+[a-z]|"
+        r"(?<!momo )(?<!shinichiro )(?<!akio )watanabe ?you(?!(['’][a-z])?[a-z]+|"
         r" ([a-z]+[a-z]n['’]?t|are|have|will)\b)).*|"
         r"^(?!.*\b(kong|wario)\b.*).*\bleah kazuno|#leahkazuno|"
         r"(?<!\nby )(?<!^by )(?<!post by )(?<!\bby: )mia taylor|"
