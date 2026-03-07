@@ -92,7 +92,7 @@ LOVELIVE_RE = re.compile(
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(diver"
     r" ?diva|r3birth)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
     r"tokimeki r(unners|oadmap to the future)|^me, a taylor\b|"
-    r"(ゆう|せつ|#残業)ぽむ|ぽむせつ|\b(sets|yu?)upomu\b|\bsetsuayu\b|"
+    r"(ゆう|せつ|しお|#残業)ぽむ|ぽむせつ|\b(sets|yu?)upomu\b|\bsetsuayu\b|"
     r"高咲\s?侑|上原\s?歩夢|中須\s?かすみ|桜坂\s?しずく|朝香\s?果林|宮下\s?愛|近江\s?(彼方|遥)|"
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
     r"かすみん|"
@@ -113,7 +113,7 @@ LOVELIVE_RE = re.compile(
     r"スリーズブーケ|dollches(tra(?!-art)|\b)|ドルケストラ|mira-cra\spark!?|"
     r"みらくらぱーく[!！]?|\bkahomegu\b|かほめぐ(♡じぇらーと)?|([^a-z]|\b)edel\s?note|"
     r"るりのとゆかいなつづりたち|ruri[&＆]to|PRINCEε[＞>]ε[＞>]|Nεw\sBlack|ichigo\smilk\slove|"
-    r"#新メンバーお披露目105期|ハロめぐ|"
+    r"かほるり|#新メンバーお披露目105期|ハロめぐ|"
     r"乙宗\s?梢|夕霧\s?綴理|藤島\s?慈|日野下\s?花帆|村野\s?さやか|大沢\s?瑠璃乃|百生\s?吟子|"
     r"徒町\s?小鈴|安養寺\s?姫芽|大賀美沙知|桂城\s?泉|セラス[・\s]?柳田[・\s]?リリエンフェルト|"
     # Love Live! Bluebird
@@ -123,6 +123,7 @@ LOVELIVE_RE = re.compile(
     r"此花\s?輝夜|山田\s?真緑|佐々木\s?翔音|"
     r"\b(polka_lion|My_Mai_Eld|G_Akky304250|hanabistarmine|MiracleGoldSP|Noricco_U|"
     r"Yukuri_talk|Rollie_twinkle|LittlegreenCom|ShaunTheBunny)([^a-z]|$)|"
+    r"regain again llllove|"
     # Concerts
     r"異次元フェス|ijigen\sfest?|#(llsat_|虹ブンブンビー_day[12])|"
     # Community stuff
@@ -136,7 +137,7 @@ SUKUFEST_RE = re.compile(
 SOLDIER_GAME_RE = re.compile(r"([^a-z]|\b)soldier game([^a-z]|\b)", re.IGNORECASE)
 YOHANE_RE = re.compile(r"\b(?<!@)yohane(?!(-label|.*mbatiza[jt]i))\b", re.IGNORECASE)
 CATCHU_RE = re.compile(
-    r"([^A-Za-z$]|^)(C[Aa]t[Cc][Hh]u|catchu|CATCHU)!?([^A-Za-z]|\b)"
+    r"([^A-Za-z$\-]|^)(C[Aa]t[Cc][Hh]u|catchu|CATCHU)!?([^A-Za-z\-]|\b)"
 )
 CHARACTER_NAMES = set(
     {
@@ -524,13 +525,15 @@ EXCLUDE_RE = re.compile(
     # - "It Must Be Love" live (song by Madness)
     # - "It's Only Love" live (usually covers of song by The Beatles)
     r"I( feel|['’]m outta|t( must be|['’]s only))|"
-    # - laugh/let (that)/live love live
     # - "La La Love" live (K-pop song by NCT DREAM)
-    # - "Love, Hate, Love" live (song by Alice In Chains)
-    # - "Love and Only Love" live (song by Neil Young)
+    # - laugh/let (that)/live love live
+    # - "Lookin' For A Love" live (usually song by J. Gelis Band)
     # - "Loud Love" live (song by Soundgarden)
+    # - "Love and Only Love" live (song by Neil Young)
+    # - "Love, Hate, Love" live (song by Alice In Chains)
     # - "Love Meeting Love" live (song by Level 42)
-    r"l(a( la|ugh)|et( that)?|ive|o(ud|ve( and only|,? hate,?| meeting)))|"
+    r"l(a( la|ugh)|o(okin[g'’]? for a|ud|ve( and only|,? hate,?| meeting))|et( that)?|"
+    r"ive)|"
     # - "life love live" but not "Link Life Love Live"
     r"(?<!link )life|"
     # - "Lotta Love" live (song by either Neil Young or Nicolette Larson) or "Whole
@@ -541,8 +544,9 @@ EXCLUDE_RE = re.compile(
     # - "Message of Love" live (song by The Pretenders)
     # - "Message to Love" live (song by Jimi Hendrix)
     # - Mike Love live (American reggae artist)
+    # - "Music Was My First Love" live (song by John Miles)
     # - "My True Love" live (song by The Promise)
-    r"m(a(d|ji)|essage (of|to)|ike|y true)|"
+    r"m(a(d|ji)|essage (of|to)|ike|usic was my first|y true)|"
     # - "Network Love" live (K-pop song by Seventeen)
     # - "No Loss, No Love" live (song by Spiritbox)
     # - "No Ordinary Love" live (song by Sade)
@@ -706,7 +710,7 @@ FAKE_CATCHU_RE = re.compile(
     # - [something] is so/really/very/etc. catchu (typo of catchy)
     # - need/tried/try(ing)/wait/want to catchu
     # - wanna/will catchu
-    r"(coo cool?|don['’]t|go((nn|tt)a)?|i(['’](ll|m)|s [a-z]+)?|le(m|t )me|w(anna|ill)|"
+    r"(coo ?cool?|don['’]t|go((nn|tt)a)?|i(['’](ll|m)|s [a-z]+)?|le(m|t )me|w(anna|ill)|"
     r"(need|tr(ied|y(ing)?)|w(a(it|nt))) to) +catchu|"
     # Phrases starting with "catchu":
     # - catchu all/at the/catchme/later
