@@ -34,7 +34,7 @@ LOVELIVE_RE = re.compile(
     r"p(ins?\b|l(aylist|ush(ies?)?))|"
     r"referenc(es?|ia)|"
     r"s(chool ?idol|e(ction|ries|iyuus?)|hips?\b|ip([^a-z]|\b)|(ifs)?orter|ky|potted|"
-    r"o(los?\b|ng\b|undtrack)|taff|u(b ?units?|nshine|per ?star))|"
+    r"o(los?\b|ng\b|undtrack)|ta(ff|rt[ :]dash)|u(b ?units?|nshine|per ?star))|"
     r"t(cg|h(emed?\b|ings)|wt\b)|"
     r"u['’]s|"
     r"vn\b|"
