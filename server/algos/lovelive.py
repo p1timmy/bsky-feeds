@@ -48,8 +48,7 @@ LOVELIVE_RE = re.compile(
     # マジラブライブ (Maji Love Live)
     r"([^クコジ]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     # School idol
-    r"スクールアイドル|(?<!middle )(?<!high )(?<!old )(?<!old-)(?<!your )\b"
-    r"(?<!@)(#\w+)?school ?idol(?! (story|book)\b)(s\b| ?((festiv|music)al|project))?|"
+    r"スクールアイドル|\bschool ?idol ?((festiv|music)al|project)|"
     # Games
     r"\bl(l|ove ?live ?)sif2?\b|\b(ll)?sif(as\b|\s?all[\s\-]?stars)|"
     r"\bLL(_|official-)cardgame|#ラブカ\b|ラブカ感謝祭|"
@@ -131,6 +130,7 @@ LOVELIVE_RE = re.compile(
     r"#HasuTH_Tran|([^a-z]|\b)OurSIF([^a-z]|$)|\bidoltober|#LL_Calendar_Collab_2026",
     re.IGNORECASE,
 )
+SCHOOL_IDOL_RE = re.compile(r"\bschool ?idol", re.IGNORECASE)
 SUKUFEST_RE = re.compile(
     r"(^|[^マアレ])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄|金沢|香川|名古屋|ニセコ)"
 )
@@ -697,6 +697,11 @@ EXCLUDE_RE = re.compile(
     r"\b(lush\b.+\blovelive|lovelive.+\blush)\b",
     re.IGNORECASE | re.MULTILINE,
 )
+FAKE_SCHOOL_IDOL_RE = re.compile(
+    r"((high|middle|old)[ \-]?|(transmigrated into a|your) )school idol|"
+    r"[#@]\w*schoolidol\w*\b|school ?idol ?(story|book)\b",
+    re.IGNORECASE
+)
 FAKE_YOHANE_RE = re.compile(r"shaman ?king|touhou", re.IGNORECASE)
 HI_YOHANE_RE = re.compile(r"\bh(e(llo|y)|i+) yohane\b", re.IGNORECASE)
 FAKE_CATCHU_RE = re.compile(
@@ -827,6 +832,8 @@ def filter(post: dict) -> bool:
     return not BAD_KEYWORDS_RE.search(all_texts) and any(
         (
             LOVELIVE_NAME_EN_RE.search(all_texts) and not EXCLUDE_RE.search(all_texts),
+            SCHOOL_IDOL_RE.search(all_texts)
+            and FAKE_SCHOOL_IDOL_RE.search(all_texts) is None,
             SUKUFEST_RE.search(all_texts) and "scrum" not in all_texts.lower(),
             SOLDIER_GAME_RE.search(all_texts)
             and not FAKE_SOLDIER_GAME_RE.search(all_texts),
