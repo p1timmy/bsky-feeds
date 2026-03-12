@@ -766,6 +766,7 @@ NIGAI58_BSKY_SOCIAL = "did:plc:danvhqwcktfn47vhuh77kn2z"
 SPLATER765_BSKY_SOCIAL = "did:plc:7zsqikdjppjczb6cfc3bmse6"
 
 IGNORE_USERS: set[str] = set()
+SCARLETRHAPSODY_COM = "did:plc:ohuf5ynr747r2dorqsefh6xt"
 SOLOVON_DILL_BURGGIT_MOE_AP_BRID_GY = "did:plc:dvxbc7qhvo7c2vf3pmzmswd6"
 
 uri = config.LOVELIVE_URI
@@ -833,7 +834,9 @@ def filter(post: dict) -> bool:
         (
             LOVELIVE_NAME_EN_RE.search(all_texts) and not EXCLUDE_RE.search(all_texts),
             SCHOOL_IDOL_RE.search(all_texts)
-            and FAKE_SCHOOL_IDOL_RE.search(all_texts) is None,
+            and FAKE_SCHOOL_IDOL_RE.search(all_texts) is None
+            # @scarletrhapsody.com posts too many "school idol" false positives
+            and author != SCARLETRHAPSODY_COM,
             SUKUFEST_RE.search(all_texts) and "scrum" not in all_texts.lower(),
             SOLDIER_GAME_RE.search(all_texts)
             and not FAKE_SOLDIER_GAME_RE.search(all_texts),
