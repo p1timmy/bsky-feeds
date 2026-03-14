@@ -280,9 +280,10 @@ EXCLUDE_RE = re.compile(
     # - love "Live and Dangerous" (album by Thin Lizzy)
     # - love "LIVE and FALL" (album by Xdinary Heroes)
     # - love live and let
+    # - "Love Live A$AP" (typo of "LONG.LIVE.A$AP" or "LIVE.LOVE.A$AP" by A$AP Rocky)
     # - love live at (usually songs ending with "Love" + "live at [some place/event]"
     #   but not "love live at it(')s")
-    r"a(ction|mmo|nd (be|dangerous|fall|let)\b|t\b(?!it['’]?s\b)| ?live)|"
+    r"a(ction|mmo|nd (be|dangerous|fall|let)\b|[s$]ap|t\b(?!it['’]?s\b)| ?live)|"
     # - love "Live and Learn" (usually Sonic Adventure 2 theme song)
     r"(and|&) learn\b|"
     # - love live betting/beyond/bootlegs/broadcasting
