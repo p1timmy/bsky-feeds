@@ -14,7 +14,7 @@ LOVELIVE_NAME_EN_RE = re.compile(
 )
 LOVELIVE_RE = re.compile(
     # "Love Live" + other related words
-    r"love[^\S\r\n]?live(([^\S\r\n]|[!:])*("
+    r"(?<!@)love[^\S\r\n]?live(([^\S\r\n]|[!:])*("
     r"a(cc((oun)?ts?|s)|(d|fter school|rcade|u)\b|ll[ -]stars|pp|nime)|"
     r"(tribute )?album\b|"
     r"b(adges?\b|lue ?bird)|"
@@ -28,7 +28,7 @@ LOVELIVE_RE = re.compile(
     r"i(ce cream|dols?|n general)|"
     r"jumpscare|"
     r"lieder|"
-    r"m(aybe|e(ntion(ed)?|rch(andise)?|troidvania)|o(ots|vies?)|vs?)\b|"
+    r"m(aybe|e(mes?|ntion(ed)?|rch(andise)?|troidvania)|o(ots|vies?)|vs?)\b|"
     r"n(esoberis?|iji(gasaki)?)|"
     r"o(c(g|s?\b)|mf?g|omf(ie)?s?|p\b|r(?! die)\b|s(his?|t)|utfits?)|"
     r"p(ins?\b|l(aylist|ush(ies?)?))|"
@@ -61,7 +61,7 @@ LOVELIVE_RE = re.compile(
     r"音ノ木坂?|otonokizaka|([^a-z]|\b)[μµ](['’‘`´′]s(ic)?|sic\s?forever)([^a-z]|\b)|"
     r"高坂\s?穂乃果|絢瀬\s?絵里|南\s?ことり|園田\s?海未|星空\s?凛|西木野\s?真姫|東條\s?希|"
     r"小泉\s?花陽|矢澤\s?にこ|nico\snico\sni+\b|#niconiconi+\b|\bminalinsky\b|ミナリンスキー|"
-    r"エリーチカ|\belichika\b|りんぱな|\b(nico)?rinpana\b|金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
+    r"エリーチカ|\belichika\b|(?<!くる)りんぱな|\b(nico)?rinpana\b|"r"金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
     r"#にこまき|ほのまき|のぞえり|\bnozoeli\b|"
     r"snow\s?halation([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
     r"(^|[^a-z\u00C0-\u024F\u1E00-\u1EFF\-])a[-\u2010]rise([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|$)|"
@@ -382,7 +382,7 @@ EXCLUDE_RE = re.compile(
     #   - "Best of My Love" live (usually song by either Eagles or The Emotions)
     #   - "Darker My Love" live (song by T.S.O.L.)
     #   - "Darkness at the Heart of My Love" live (song by Ghost)
-    #   - "Make You Feel My Love" live (song by Adele)
+    #   - "Make You Feel My Love" live (song by Bob Dylan or Adele)
     #   - "To Bring You My Love" live (song by PJ Harvey)
     r"(all|best of|dark(er|ness at the heart of)|make you feel|to bring you) my|"
     # - stuff ending with "is love live":
@@ -444,10 +444,11 @@ EXCLUDE_RE = re.compile(
     #   - this/that/what kind of love live
     #   - "Tunnel of Love" live (usually song by Dire Straits or Bruce Springsteen)
     #   - "Victim of Love" live (song by Eagles)
+    #   - "Vision of Love" live (song by Mariah Carey)
     r"(all is full|book|c(aravan|rush)|d(ance me to the end|e(ath|finition))|fire|"
     r"genius|h(azards|ouse)|l(exicon|ight)|p(ath|risoner)|s(atellite|hot|ongs)|"
     r"m(iracle|ost exalted potentate|ystery)|(any|sunday|[tw]hat|this) kind|"
-    r"t(he (look|meaning)|unnel)|victim) of|"
+    r"t(he (look|meaning)|unnel)|vi(ctim|sion)) of|"
     # - stuff ending with "in love live":
     #   - "Crazy in Love" live (song by Beyonce)
     #   - "Dangerously in Love" live (album by Beyonce)
@@ -455,6 +456,7 @@ EXCLUDE_RE = re.compile(
     #   - "Fall(s) in Love" live (usually different songs by different artists or any
     #     song name ending with that phrase)
     #   - "Fallin(g) in Love" live (usually different song names ending with that phrase)
+    #   - fell in love live
     #   - "Friday I'm In Love" live (usually song by The Cure or cover by Robert Smith and
     #     Olivia Rodrigo)
     #   - "I'm Not in Love" live (usually song by 10cc)
@@ -462,8 +464,8 @@ EXCLUDE_RE = re.compile(
     #   - "(I) Think I'm In Love" live (usually song by Eddie Money)
     #   - "Paris in Love" live (album by Ibrahim Maalouf)
     #   - "Stone in Love" live (song by Journey)
-    r"(crazy|d(angerously|runk)|fall(in[g'’]?|s)?|(friday|think) i['’]?m|paris|stone|"
-    r"i['’]?m (always|not)) in|"
+    r"(crazy|d(angerously|runk)|f(all(in[g'’]?|s)?|ell)|(friday|think) i['’]?m|paris|"
+    r"stone|i['’]?m (always|not)) in|"
     # - "Destination: Love Live" (album by The Make-Up)
     # - does not/doesn't love live [something]
     r"d(estination:?|o(es)?( not|n['’]t))|"
@@ -490,7 +492,8 @@ EXCLUDE_RE = re.compile(
     r"(?<!\bget )(?<!\bgetting )ready) for|"
     # - G. Love live (American singer/rapper)
     # - Gerry Love live (British rock singer/bass guitar player)
-    r"g(er(ard|ry)|\.?)|"
+    # - "Goodbye to Love" live (song by The Carpenters)
+    r"g(er(ard|ry)|oodbye to|\.?)|"
     # - give/show (them/me/etc.) some love live
     r"(give|show) (\w+ )?some|"
     # - Helen Love live (Welsh rock band)
@@ -528,13 +531,14 @@ EXCLUDE_RE = re.compile(
     r"I( feel|['’]m outta|t( must be|['’]s only))|"
     # - "La La Love" live (K-pop song by NCT DREAM)
     # - laugh/let (that)/live love live
+    # - "Let There Be Love" live
     # - "Lookin' For A Love" live (usually song by J. Gelis Band)
     # - "Loud Love" live (song by Soundgarden)
     # - "Love and Only Love" live (song by Neil Young)
     # - "Love, Hate, Love" live (song by Alice In Chains)
     # - "Love Meeting Love" live (song by Level 42)
-    r"l(a( la|ugh)|o(okin[g'’]? for a|ud|ve( and only|,? hate,?| meeting))|et( that)?|"
-    r"ive)|"
+    r"l(a( la|ugh)|o(okin[g'’]? for a|ud|ve( and only|,? hate,?| meeting))|ive|"
+    r"et( th(at|ere be))?)|"
     # - "life love live" but not "Link Life Love Live"
     r"(?<!link )life|"
     # - "Lotta Love" live (song by either Neil Young or Nicolette Larson) or "Whole
@@ -585,10 +589,11 @@ EXCLUDE_RE = re.compile(
     # - "Tainted Love" live (song by Soft Cell)
     # - Team Love Live (typo of "Team Love Life")
     # - "The One I Love" live (song by R.E.M.)
+    # - "Thing Called Love" live (usually "Crazy Little Thing Called Love" live)
     # - they love live [something] (all other cases not caught by the Great "I love
     #   live [something]" Hoarde pattern)
     # - "Tough Love" live
-    r"t(ainted|eam|he( one i|y)|ough)|"
+    r"t(ainted|eam|h(e( one i|y)|ing called)|ough)|"
     # - "Unconditional Love" live
     r"unconditional|"
     # - would love live [something] (all other cases not caught by the Great "I love
@@ -680,7 +685,7 @@ EXCLUDE_RE = re.compile(
     r"#(AEW\w*|b(b27|eyondthegates)|couple\w+|eaglerock|F(aith|otoVorschlag)|"
     r"g(od|ratitude)|hope|L(ove(Is(Blind|land\w*)|r|Story|Wins)?|ivemusic)|"
     r"M(o(m|tivation)|usic(Challenge|sky))|(NewYear|ValentinesDay)20[0-9]{2}|"
-    r"O(nlyFans|wnOurVenues)|positivity|totp|v(iral|ss365)|"
+    r"O(nlyFans|wnOurVenues)|positivity|totp|viral|"
     r"[a-z]+(daymo(rning|tivation)|vibes[a-z]*))\b|"
     # Random artists frequently mentioned in "love live (music)" false positive posts
     r"\b(d(['’]angelo|uran ?duran)|floyd|grateful dead|hot mulligan|john lewis|kahan|"
@@ -701,9 +706,9 @@ EXCLUDE_RE = re.compile(
 FAKE_SCHOOL_IDOL_RE = re.compile(
     r"((high|middle|old)[ \-]?|(transmigrated into a|your) )school idol|"
     r"[#@]\w*schoolidol\w*\b|school ?idol ?(story|book)\b",
-    re.IGNORECASE
+    re.IGNORECASE,
 )
-FAKE_YOHANE_RE = re.compile(r"shaman ?king|touhou", re.IGNORECASE)
+FAKE_YOHANE_RE = re.compile(r"project yohane|shaman ?king|touhou", re.IGNORECASE)
 HI_YOHANE_RE = re.compile(r"\bh(e(llo|y)|i+) yohane\b", re.IGNORECASE)
 FAKE_CATCHU_RE = re.compile(
     # Phrases ending with "catchu":
@@ -716,8 +721,8 @@ FAKE_CATCHU_RE = re.compile(
     # - [something] is so/really/very/etc. catchu (typo of catchy)
     # - need/tried/try(ing)/wait/want to catchu
     # - wanna/will catchu
-    r"(coo ?cool?|don['’]t|go((nn|tt)a)?|i(['’](ll|m)|s [a-z]+)?|le(m|t )me|w(anna|ill)|"
-    r"(need|tr(ied|y(ing)?)|w(a(it|nt))) to) +catchu|"
+    r"(coo ?cool?|don['’]t|go((nn|tt)a)?|i(['’](ll|m)|s [a-z]+)?|le(m|t )me|"
+    r"w(anna|ill)|(need|tr(ied|y(ing)?)|w(a(it|nt))) to) +catchu|"
     # Phrases starting with "catchu":
     # - catchu all/at the/catchme/later
     # - (Ricky when I) catchu Ricky
@@ -736,10 +741,9 @@ FAKE_SOLDIER_GAME_RE = re.compile(
     re.IGNORECASE,
 )
 BAD_KEYWORDS_RE = re.compile(
+    # spam domains
     r"\b(arxiv\b|(europesays|newsbeep)\.com\b|zmedia\.(twitren\.com|jp)\b|"
-    # Moths with species names containing "liella" substring
-    r"#teammoth|"
-    # Political keywords often used in "love live"/"Mia Taylor" false positives
+    # political keywords often used in "love live"/"Mia Taylor" false positives
     r"amerikkka|charlie ?kirk|democrats?\b|\bepstein\b|GOP\b|hegseth\b|MAGAs?\b|"
     r"netanyahu|\bR(epublicans?|FK)|trump\b|"
     # Gaza war victim fundraiser spam
@@ -751,8 +755,13 @@ BAD_KEYWORDS_RE = re.compile(
     # NSFW keywords
     r"bds&?m|c(am ?girl|haturbate|ock(s|\b)|um(ming|shot)?([^a-z]|\b))|di(aper|ck|ldo)|"
     r"(futanar|henta)i|jock[sa]traps?|nude|p(enis|regnant)|s(ex([^a-z]|\b)|lut)"
+    r")|#("
     # NSFW hashtags
-    r")|#(ecchi|nsfw|porn|r18)",
+    r"ecchi|nsfw|porn|r18|"
+    # moths with species names containing "liella" substring
+    r"teammoth|"
+    # some general creative writing hashtag
+    r"vss365\b)",
     re.IGNORECASE,
 )
 
