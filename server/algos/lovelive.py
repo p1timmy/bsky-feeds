@@ -675,10 +675,10 @@ EXCLUDE_RE = re.compile(
     r"\bplay(ing)? .+ love live on|"
     # "love live here/on/there" at end of sentence/post
     r"\blove live (on|t?here) *[^\w ]|"
-    # I('d/'m/'ve)/who/my ... saw/have heard/[[[got/need/went/etc.] to/gotta/gonna]
-    # hear/see] [song/artist name ending with "Love"] live
-    r"\b(I(['’][dm]|ve)?|my( [a-z'’,&]+)+|who) ((([a-z]+ ){,2}to|go(tt|nn)a) "
-    r"(h((ave h)?eard|ear)|s(aw|ee))) ([\w'’]+ )+love live|"
+    # I('d/'m/'ve)/who/my ... saw/heard/[[[got/need/went/etc.] to/gotta/gonna] hear/
+    # see]/have heard/seen [song/artist name ending with "Love"] live
+    r"\b((I(['’][dm]|ve)?|my( [a-z'’,&]+)+|who) ((([a-z]+ ){,2}to|go(tt|nn)a) "
+    r"(h(eard|ear)|s(aw|ee)))|have (heard|seen)) ([\w'’]+ )+love live|"
     # find love live and/your/etc.
     r"\bfind love live \w{3,}\b|"
     # hashtags frequently used in #lovelive/"(#)love live" false positives
