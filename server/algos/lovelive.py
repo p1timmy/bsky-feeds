@@ -25,7 +25,7 @@ LOVELIVE_RE = re.compile(
     r"f(an(art|dom|s)?\b|(anf)?ics?\b|es ?2?\b|i(gur(in)?es?|nals)|ranchise)|"
     r"g(i(f|rls?)|lobal)\b|(rhythm )?game\b|"
     r"hasu|"
-    r"i(ce cream|dols?|n general)|"
+    r"i(ce cream|dols?|n (general|the first\b))|"
     r"jumpscare|"
     r"lieder|"
     r"m(aybe|e(mes?|ntion(ed)?|rch(andise)?|troidvania)|o(ots|vies?)|vs?)\b|"
@@ -311,9 +311,10 @@ EXCLUDE_RE = re.compile(
     # - love live him
     # - love live hockey
     r"h(appily|im|ockey)|"
+    # - love live in (t)here/him/me/them/you
     # - love "Live in Colo(u)r" (sometimes typo of "love Life In Color")
     # - love live interaction
-    r"in( colou?r|teraction)|"
+    r"in( (colou?r|(hi|the)m|me|t?here|you)\b|teraction)|"
     # - Love Live Italian
     # - love live within
     r"(italia|withi)n|"
@@ -452,6 +453,7 @@ EXCLUDE_RE = re.compile(
     # - stuff ending with "in love live":
     #   - "Crazy in Love" live (song by Beyonce)
     #   - "Dangerously in Love" live (album by Beyonce)
+    #   - "Do You Believe In Love" live (song by Huey Lewis and the News)
     #   - "Drunk in Love" live (song by Beyonce)
     #   - "Fall(s) in Love" live (usually different songs by different artists or any
     #     song name ending with that phrase)
@@ -463,9 +465,10 @@ EXCLUDE_RE = re.compile(
     #   - "I'm Always in Love" live (song by Wilco)
     #   - "(I) Think I'm In Love" live (usually song by Eddie Money)
     #   - "Paris in Love" live (album by Ibrahim Maalouf)
+    #   - so in love live
     #   - "Stone in Love" live (song by Journey)
-    r"(crazy|d(angerously|runk)|f(all(in[g'’]?|s)?|ell)|(friday|think) i['’]?m|paris|"
-    r"stone|i['’]?m (always|not)) in|"
+    r"(crazy|d(angerously|o you believe|runk)|f(all(in[g'’]?|s)?|ell)|paris|"
+    r"(friday|think) i['’]?m|s(o|tone)|i['’]?m (always|not)) in|"
     # - "Destination: Love Live" (album by The Make-Up)
     # - does not/doesn't love live [something]
     r"d(estination:?|o(es)?( not|n['’]t))|"
@@ -593,7 +596,8 @@ EXCLUDE_RE = re.compile(
     # - they love live [something] (all other cases not caught by the Great "I love
     #   live [something]" Hoarde pattern)
     # - "Tough Love" live
-    r"t(ainted|eam|h(e( one i|y)|ing called)|ough)|"
+    # - "(The) Truth About Love" live (song by P!NK)
+    r"t(ainted|eam|h(e( one i|y)|ing called)|ough|ruth about)|"
     # - "Unconditional Love" live
     r"unconditional|"
     # - would love live [something] (all other cases not caught by the Great "I love
