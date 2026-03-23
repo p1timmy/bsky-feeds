@@ -90,7 +90,7 @@ LOVELIVE_RE = re.compile(
     r"([^a-z]|\b)((nij|an|e)igasaki|niji(chizu|gaku|yon))([^a-z]|\b)|a・zu・na|qu4rtz|"
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(diver"
     r" ?diva|r3birth)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
-    r"tokimeki r(unners|oadmap to the future)|^me, a taylor\b|"
+    r"tokimeki r(unners|oadmap to the future)|^me, a taylor\b|#TOKIMEKIの春|"
     r"(ゆう|せつ|しお|#残業)ぽむ|ぽむせつ|\b(sets|yu?)upomu\b|\bsetsuayu\b|"
     r"高咲\s?侑|上原\s?歩夢|中須\s?かすみ|桜坂\s?しずく|朝香\s?果林|宮下\s?愛|近江\s?(彼方|遥)|"
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
