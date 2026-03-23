@@ -126,7 +126,7 @@ LOVELIVE_RE = re.compile(
     # Concerts
     r"異次元フェス|ijigen\sfest?|#(llsat_|虹ブンブンビー_day[12])|"
     # Community stuff
-    r"\bteam onibe\b|\bonib(e|ased)([^a-z’]|$)|(schoolido\.lu|idol\.st)(?!/user/\d+)|"
+    r"\bteam onibe\b|\bonib(e|ased)([^a-z’]|$)|(schoolido\.lu|idol\.st)(?!/user/)|"
     r"#HasuTH_Tran|([^a-z]|\b)OurSIF([^a-z]|$)|\bidoltober|#LL_Calendar_Collab_2026",
     re.IGNORECASE,
 )
