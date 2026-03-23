@@ -15,7 +15,7 @@ LOVELIVE_NAME_EN_RE = re.compile(
 LOVELIVE_RE = re.compile(
     # "Love Live" + other related words
     r"(?<!@)love[^\S\r\n]?live(([^\S\r\n]|[!:])*("
-    r"a(cc((oun)?ts?|s)|(d|fter school|rcade|u)\b|ll[ -]stars|pp|nime)|"
+    r"a(cc((oun)?ts?|s)|(d|fter school|rcade|u)\b|ll[ -]stars|pps?\b|nime)|"
     r"(tribute )?album\b|"
     r"b(adges?\b|lue ?bird)|"
     r"c(anon|ollab|yber|(d|osplay|haracter)s?)|"
@@ -383,9 +383,12 @@ EXCLUDE_RE = re.compile(
     #   - "Best of My Love" live (usually song by either Eagles or The Emotions)
     #   - "Darker My Love" live (song by T.S.O.L.)
     #   - "Darkness at the Heart of My Love" live (song by Ghost)
+    #   - "I Feed You My Love" live (song by Margaret Berger)
+    #   - "If You Were My Love" live (song by Stevie Nicks)
     #   - "Make You Feel My Love" live (song by Bob Dylan or Adele)
     #   - "To Bring You My Love" live (song by PJ Harvey)
-    r"(all|best of|dark(er|ness at the heart of)|make you feel|to bring you) my|"
+    r"(all|best of|dark(er|ness at the heart of)|if you were|make you feel|"
+    r"(I feed|to bring) you) my|"
     # - stuff ending with "is love live":
     #   - "All You Need Is Love" live (usually song by The Beatles)
     #   - "What The World Needs Now Is Love" live (usually covers of 1960s song by
@@ -587,6 +590,9 @@ EXCLUDE_RE = re.compile(
     # - "Sweet Love" live (usually song by Anita Baker)
     r"s(a(me old|vage)|exy|imon|how me|kinny|o(me kinda|ul)|p(iritual|read)|"
     r"t(one|range)|uper duper|weet)|"
+    # - "[Name]'s love live" (usually typo of "[Name]'s love life") but not "it's
+    # - love live"
+    r"\w+(?<!it)['’]s|"
     # - hear/saw/see(n) [artist name] perform [song name ending with "Love"] live
     r"(hear|s(aw|een?)) .+ perform .+|"
     # - "Tainted Love" live (song by Soft Cell)
@@ -748,8 +754,8 @@ BAD_KEYWORDS_RE = re.compile(
     # spam domains
     r"\b(arxiv\b|(europesays|newsbeep)\.com\b|zmedia\.(twitren\.com|jp)\b|"
     # political keywords often used in "love live"/"Mia Taylor" false positives
-    r"amerikkka|charlie ?kirk|democrats?\b|\bepstein\b|GOP\b|hegseth\b|MAGAs?\b|"
-    r"netanyahu|\bR(epublicans?|FK)|trump\b|"
+    r"\b(amerikkka|charlie ?kirk|democrats?\b|epstein|GOP\b|hegseth|isis\b|MAGAs?\b|"
+    r"netanyahu|R(epublicans?|FK)|trump\b)|"
     # Gaza war victim fundraiser spam
     r"abed|ABD-GFM|GFM-ABD|kutt\.it/|"
     # Jel Kawasaki bot posts
