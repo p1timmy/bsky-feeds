@@ -757,7 +757,7 @@ BAD_KEYWORDS_RE = re.compile(
     r"\b(amerikkka|charlie ?kirk|democrats?\b|epstein|GOP\b|hegseth|isis\b|MAGAs?\b|"
     r"netanyahu|R(epublicans?|FK)|trump\b)|"
     # Gaza war victim fundraiser spam
-    r"abed|ABD-GFM|GFM-ABD|kutt\.it/|"
+    r"ab(ed|delfattah)|ABD-GFM|GFM-ABD|mahmo?u?d|"
     # Jel Kawasaki bot posts
     r"\[商品リンク\]|"
     # "Buy Anything From Amazon" spam
