@@ -401,9 +401,10 @@ EXCLUDE_RE = re.compile(
     r"(art(ist)?|band|music|people|[a-z]+s) (i|you|they)( ([a-z]+[a-z],? )+(and|&))?|"
     # - "Bad Love" live (usually song by Key or Eric Clapton) but not "how bad Love Live"
     r"(?<!how )bad|"
+    # - "Barbed Wire Love" live (song by Stiff Little Fingers)
     # - "Blind Love" live (different songs by different artists)
     # - "Bye Bye Love" live (usually song by The Everly Brothers or Simon & Garfunkel)
-    r"b(lind|ye bye)|"
+    r"b(arbed wire|lind|ye bye)|"
     # - stuff ending with "it's love live":
     #   - "Because It's Love" live (song by The Kelly Family)
     #   - "When It's Love" live (song by Van Halen)
@@ -475,14 +476,19 @@ EXCLUDE_RE = re.compile(
     # - "Destination: Love Live" (album by The Make-Up)
     # - does not/doesn't love live [something]
     r"d(estination:?|o(es)?( not|n['’]t))|"
+    # - "Everlasting Love" live (usually song by Robert Knight or its covers)
+    r"everlasting|"
     # - "Faithless Love" live (song by Linda Ronstadt)
     # - "Fake Love" live (song by BTS)
     # - "Feelin' Love" live (song by Paula Cole)
     # - "Feel Like Makin' Love" live (song by Roberta Flack or Bad Company)
     # - feel the love live
     # - fight love live (usually Filoli, California historical marker)
+    # - "Flawless Love" live (album by Jaejoong)
     # - "Frozen Love" live (song by Buckingham Nicks)
-    r"f(a(ithless|ke)|eel(in['’]?| (like makin['’g]?|the))|ight|rozen)|"
+    # - "From [some place] With Love" live
+    r"f(a(ithless|ke)|eel(in['’]?| (like makin['’g]?|the))|ight|lawless|"
+    r"ro(m( the)? (\w+ ){1,3}with|zen))|"
     # - stuff ending with "for love live":
     #   - "Ain't No Cure for Love" live (song by Leonard Cohen)
     #   - "Exist for Love" live (song by Aurora)
@@ -494,7 +500,8 @@ EXCLUDE_RE = re.compile(
     #   - "(Bardic) Quest for Love" live (indie visual novel game)
     #   - "Ready for Love" live (usually song by Bad Company, but not "get(ting) ready
     #     for love live")
-    r"(ain['’]?t no cure|exist|(foo|kil)l|living|(?<!\bcame )out|quest|"
+    #   - "Too Late For Love" live (usually song by Def Leppard)
+    r"(ain['’]?t no cure|exist|(foo|kil)l|living|(?<!\bcame )out|quest|too late|"
     r"(?<!\bget )(?<!\bgetting )ready) for|"
     # - G. Love live (American singer/rapper)
     # - Gerry Love live (British rock singer/bass guitar player)
@@ -692,7 +699,7 @@ EXCLUDE_RE = re.compile(
     # find love live and/your/etc.
     r"\bfind love live \w{3,}\b|"
     # hashtags frequently used in #lovelive/"(#)love live" false positives
-    r"#(AEW\w*|b(b27|eyondthegates)|couple\w+|eaglerock|F(aith|otoVorschlag)|"
+    r"#(AEW\w*|b(b27|eyondthegates|tg)|couple\w+|eaglerock|F(aith|otoVorschlag)|"
     r"g(od|ratitude)|hope|L(ove(Is(Blind|land\w*)|r|Story|Wins)?|ivemusic)|"
     r"M(o(m|tivation)|usic(Challenge|sky))|(NewYear|ValentinesDay)20[0-9]{2}|"
     r"O(nlyFans|wnOurVenues)|positivity|totp|viral|"
