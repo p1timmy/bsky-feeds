@@ -1,5 +1,6 @@
 import os
 
+import validators
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -16,6 +17,12 @@ SERVICE_DID = os.environ.get("SERVICE_DID") or f"did:web:{HOSTNAME}"
 
 HANDLE = os.environ.get("HANDLE")
 PASSWORD = os.environ.get("PASSWORD")
+PDS_URL = os.environ.get("PDS_URL") or "https://bsky.social"
+if (
+    not validators.url(PDS_URL, consider_tld=True, validate_scheme=lambda s: s == "https")
+    or PDS_URL.strip().endswith("/")
+):
+    raise RuntimeError(f"Not a valid PDS URL: '{PDS_URL}'")
 
 # ---- Feed URIs ----
 

@@ -5,7 +5,7 @@ from typing import Optional
 from atproto import Client
 from atproto_client import Session, SessionEvent, models
 
-from server.config import HANDLE, PASSWORD
+from server.config import HANDLE, PASSWORD, PDS_URL
 
 SESSION_PATH = Path(PurePath(__file__).parents[1], f"session_{HANDLE}.txt")
 logger = logging.getLogger(__name__)
@@ -36,7 +36,7 @@ def get_client() -> Client:
     Get a new Bluesky API client instance that's ready to use
     """
 
-    client = Client()
+    client = Client(base_url=PDS_URL)
     client.on_session_change(_on_session_change)
 
     session_string = _get_session()
