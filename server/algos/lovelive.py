@@ -139,6 +139,7 @@ YOHANE_RE = re.compile(r"\b(?<!@)yohane(?!(-label|.*mbatiza[jt]i))\b", re.IGNORE
 CATCHU_RE = re.compile(
     r"([^A-Za-z$\-]|^)(C[Aa]t[Cc][Hh]u|catchu|CATCHU)!?([^A-Za-z\-]|\b)"
 )
+VANILLAKUNIKIDA_RE = re.compile(r"\bDay \d+|maru|sunshine|zura", re.IGNORECASE)
 CHARACTER_NAMES = set(
     {
         # μ's
@@ -791,6 +792,7 @@ DEDICATED_USERS_MEDIA_ONLY: set[str] = set()
 MMMINAMI_BSKY_SOCIAL = "did:plc:vgygtg6ozeaudtzilxihgpca"
 NIGAI58_BSKY_SOCIAL = "did:plc:danvhqwcktfn47vhuh77kn2z"
 SPLATER765_BSKY_SOCIAL = "did:plc:7zsqikdjppjczb6cfc3bmse6"
+VANILLAKUNIKIDA_BSKY_SOCIAL = "did:plc:dajx3rdhbsxeyc6epbm6zxr7"
 
 IGNORE_USERS: set[str] = set()
 SCARLETRHAPSODY_COM = "did:plc:ohuf5ynr747r2dorqsefh6xt"
@@ -881,6 +883,10 @@ def filter(post: dict) -> bool:
             and (
                 (author == NIGAI58_BSKY_SOCIAL and "ちゃん" in all_texts)
                 or (author == MMMINAMI_BSKY_SOCIAL and "うみこと" in all_texts)
+                or (
+                    author == VANILLAKUNIKIDA_BSKY_SOCIAL
+                    and VANILLAKUNIKIDA_RE.search(all_texts) is not None
+                )
             ),
             (
                 author == SPLATER765_BSKY_SOCIAL
