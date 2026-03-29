@@ -6,4 +6,4 @@ apscheduler>=3.11.0,<4.0.0
 hupper
 py-multiformats-cid
 tld
-validators
+validators>=0.35
