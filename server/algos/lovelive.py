@@ -115,6 +115,7 @@ LOVELIVE_RE = re.compile(
     r"かほるり|#新メンバーお披露目105期|ハロめぐ|"
     r"乙宗\s?梢|夕霧\s?綴理|藤島\s?慈|日野下\s?花帆|村野\s?さやか|大沢\s?瑠璃乃|百生\s?吟子|"
     r"徒町\s?小鈴|安養寺\s?姫芽|大賀美沙知|桂城\s?泉|セラス[・\s]?柳田[・\s]?リリエンフェルト|"
+    r"錦上[^\S\r\n]?マイカ|令沢[^\S\r\n]?葵|紫輪[^\S\r\n]?みおん|"
     # Love Live! Bluebird
     # NOTE: "L(ove) High School" not included due to too many false positives
     r"いきづら[い絵]部|イキヅ(ライブ|LIVE配信)|\bikizu( ?(live|raibu))?|love学院|"
@@ -220,6 +221,9 @@ CHARACTER_NAMES = set(
         ("Ceras", "Yanagida", True),
         ("Yanagida", "Lilienfeld", True),
         ("Ceras", "Lilienfeld", True),
+        ("Maika", "Kinjou?", True),
+        ("Aoi", "Reizawa", True),
+        ("Mion", "Shirin", True),
         # LL Bluebird
         ("Polka", "Takahashi", False),
         ("Mai", "Azabu", False),
