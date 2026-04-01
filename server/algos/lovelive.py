@@ -347,11 +347,12 @@ EXCLUDE_RE = re.compile(
     # - love Live Score (some sports app)
     # - Love Live Sweets (unrelated local bakery in New Jersey)
     r"s(core|ervice|ports?|tr(eam(ing|s)?|ings)|weets)|"
-    # - love live tables/tapes/TV/television/texting/theater/trees/tweeting
+    # - love live tables/tapes/television/texting/theater/trees/tweeting
+    # - "love live TV" but not "Love Live TV anime"
     # - love "Live to Live" (song from Hazbin Hotel S2)
     # - love "Live to Tell" (song by Madonna)
     # - love "Live Through This" (usually album by Hole)
-    r"t((a(bl|p)|re)es|elevision|(ex|wee)ting|h(eat(er|re)|rough this)|v|"
+    r"t((a(bl|p)|re)es|elevision|(ex|wee)ting|h(eat(er|re)|rough this)|v(?! anime)|"
     r"o (live|tell))|"
     # - "love live the" (usually typo of "long live the") but not "Love Live the
     #   competition/most/movie/Musical/other/same/School Idol"
