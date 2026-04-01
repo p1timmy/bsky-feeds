@@ -16,7 +16,7 @@ from server.database import Feed, Post, db  # noqa: E402
 _DID_PATTERN = r"did:plc:[a-z2-7]{24}"
 _TID_PATTERN = r"([a-z2-7]{13})"
 BSKY_POST_URL_REGEX = re.compile(
-    r"https://((b|witch)sky\.app|blacksky\.community|deer\.social)/profile/"
+    r"https://(?:(?:b|witch)sky\.app|blacksky\.community|deer\.social)/profile/"
     rf"([A-Za-z0-9\-\.]+\.[a-z]+|{_DID_PATTERN})/post/{_TID_PATTERN}"
 )
 BSKY_POST_AT_URI_REGEX = re.compile(
