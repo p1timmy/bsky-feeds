@@ -339,6 +339,8 @@ EXCLUDE_RE = re.compile(
     r"now (at|on)\b|"
     # - love live oak(s)/on stage
     r"o(aks?|n stage)|"
+    # - love live premiere(s)
+    r"premieres?|"
     # - love live radio/reacting/reaction(s)/recording(s)/renditions
     # - love live rock (typo of "long live rock")
     # - love "Live Rust" (album by Neil Young & Crazy Horse)
@@ -479,10 +481,11 @@ EXCLUDE_RE = re.compile(
     #   - "I'm Not in Love" live (usually song by 10cc)
     #   - "I'm Always in Love" live (song by Wilco)
     #   - "(I) Think I'm In Love" live (usually song by Eddie Money)
+    #   - "Lost In Love" live (usually song/album by Air Supply)
     #   - "Paris in Love" live (album by Ibrahim Maalouf)
     #   - so in love live
     #   - "Stone in Love" live (song by Journey)
-    r"(crazy|d(angerously|o you believe|runk)|f(all(in[g'’]?|s)?|ell)|paris|"
+    r"(crazy|d(angerously|o you believe|runk)|f(all(in[g'’]?|s)?|ell)|lost|paris|"
     r"(friday|think) i['’]?m|s(o|tone)|i['’]?m (always|not)) in|"
     # - "Destination: Love Live" (album by The Make-Up)
     # - does not/doesn't love live [something]
@@ -527,10 +530,11 @@ EXCLUDE_RE = re.compile(
     #     that phrase)
     #   - "Come And Get Your Love" live (song by Redbone)
     #   - "[song name ending with "For Your Love"]" live
+    #   - "Inside Your Love" live
     #   - "How Deep Is Your Love" live (usually song by Bee Gees)
     #   - in your love live (sometimes typo of "in your love life")
     #   - "Sunshine of Your Love" live (usually song by Cream)
-    r"(all|come (and|&) get|for|how deep is|in|sunshine of) your|"
+    r"(all|come (and|&) get|for|how deep is|in(side)?|sunshine of) your|"
     # - compassion/happiness/hope/joy/kindness/memory/pain/peace/unity and
     #   ([God/someone]'s) love live
     r"(compassion|h(appiness|ope)|joy|kindness|memory|p(ain|eace)|unity),?"
@@ -634,8 +638,9 @@ EXCLUDE_RE = re.compile(
     # - "We Found Love" live (song by Rihanna feat. Calvin Harris or any song name
     #   ending with that phrase)
     # - "We Got Love" live (usually different songs by The Beach Boys or Jessica Mauboy)
+    # - where does love live
     # - "Wreckless Love" live (song by either Alicia Keys or Robert Plant)
-    r"w(asted|e( (are|found|got))?|ould|reckless)|"
+    r"w(asted|e( (are|found|got))?|here does|ould|reckless)|"
     # - you are/you're in love live
     r"you( a|['’])re in) love live\b|"
     # - @[user handle ending with ".love"] live
@@ -672,14 +677,14 @@ EXCLUDE_RE = re.compile(
     r"whether you.+ or (just )?love live |"
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
     # love love [something]" but not "(and) love live all/also/always/and/are/as/auf/
-    # but/can/could/did/does(n't)/doing/going/gone/got/had/has/hates/here/I/if/in/is(t)/
-    # I'll/I'm/just/kinda/kind of/made/make(s)/making/may [be/have/not]/music [is/was]/
-    # needs/never/not/on/really/siempre/should/song(s)/there/tries/tried/UR ... card(s)/
-    # was/what/will/would"
+    # but/can/could/did/does(n't)/doing/gets/going/gone/got/had/has/hates/here/I/if/in/
+    # is(t)/I'll/I'm/just/kinda/kind of/made/make(s)/making/may [be/have/not]/music
+    # [is/was]/needs/never/not/on/*ly/siempre/should/song(s)/there/tries/tried/UR ...
+    # card(s)/was/what/will/would"
     r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|nd|re|s|"
-    r"uf)|but|can|[csw]ould|[dg]oing|d(id|oes(n['’]?t)?)|gone|[gn]ot|ha([ds]|tes)|just|"
-    r"t?here|i([fn'’]|st?)?|kind(a| of)|ne(eds|ver)|on|really|s(iempre|ongs?)|trie[ds]|"
-    r"m(a(de|k(es?|ing)|y( ?be| (have|not)))|usic (i|wa)s)|w(as|hat|ill)|"
+    r"uf)|but|can|[csw]ould|[dg]oing|d(id|oes(n['’]?t)?)|g(ets|one)|[gn]ot|just|t?here|"
+    r"ha([ds]|tes)|i([fn'’]|st?)?|kind(a| of)|ne(eds|ver)|on|[a-z]{2,}ly|s(iempre|ongs?)|"
+    r"trie[ds]|m(a(de|k(es?|ing)|y( ?be| (have|not)))|usic (i|wa)s)|w(as|hat|ill)|"
     r"ur .*cards?)\b)|([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live(r)" at beginning of sentence
     r"([^\w\s]+? *|^)love (love )+liver?\b|"
