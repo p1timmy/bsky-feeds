@@ -256,7 +256,7 @@ EXCLUDE_RE = re.compile(
     r"would(['’]ve)?|[a-z]+[a-z] (and|&)))*"
     # - love live [something]/love liver(s)/love Live (as in a band named LĪVE, Ableton
     #   Live music software, or typo of "love life")
-    r" ((love )+live((?! (so |a(nd|s well)|but)\b),? &? ?#?\w+\b|rs?)|"
+    r' ((love )+live((?! (so |a(nd|s well)|but)\b),? &? ?[#{\[("“]?\w+\b|rs?)|'
     r"love live($|[^\s\w]| \w+))|"
     # "love live music/comedy/theater" at start of sentence or after any emoji but not
     # "love live music/comedy/theater is/was"
