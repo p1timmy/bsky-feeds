@@ -100,7 +100,7 @@ LOVELIVE_RE = re.compile(
     r"結ヶ丘|yuigaoka|5yncri5e!?|kaleidoscore|トマカノーテ|tomakanote|スパスタ[3３]期|"
     r"澁谷\s?かのん|唐\s?可可|嵐千\s?砂都|平安名\s?すみれ|葉月\s?恋|桜小路\s?きな子|米女\s?メイ|"
     r"若菜\s?四季|鬼塚\s?(夏美|冬毬)|ウィーン・?マルガレーテ|"
-    r"ク([ウゥ]ク[ウゥ]ちゃ|ーカー)|oninatsu|オニナッツ|"
+    r"ク([ウゥ]ク[ウゥ]ちゃ|ーカー)|oninatsu|オニナッツ|sumikeke|"
     r"sunny\s?pas(sion)?(\b|[^a-z\u00C0-\u024F\u1E00-\u1EFF])|"
     r"sunnypa(\b|[^a-z\u00C0-\u024F\u1E00-\u1EFF])|"
     r"聖澤悠奈|柊\s?摩央|"
@@ -451,6 +451,7 @@ EXCLUDE_RE = re.compile(
     #   - "Mystery of Love" live (usually song by Sufjan Stevens)
     #   - "Path of Love" live (usually song name)
     #   - "Prisoner of Love" live (song by James Brown)
+    #   - "Rhythm of Love" live (song by Scorpions)
     #   - "Satellite of Love" live (usually song by Lou Reed)
     #   - "Shot of Love" live (song by Bob Dylan)
     #   - "Songs of Love Live" (album by Mark Eitzel)
@@ -464,10 +465,11 @@ EXCLUDE_RE = re.compile(
     #   - "Victim of Love" live (song by Eagles)
     #   - "Vision of Love" live (song by Mariah Carey)
     r"(all is full|b(ook|roken)|c(aravan|rush)|d(ance me to the end|e(ath|finition))|"
-    r"fire|genius|h(azards|ouse)|in the name|l(exicon|ight)|p(ath|risoner)|"
+    r"fire|genius|h(azards|ouse)|in the name|l(exicon|ight)|p(ath|risoner)|rhythm|"
     r"m(iracle|ost exalted potentate|ystery)|(any|sunday|[tw]hat|this) kind|"
     r"s(atellite|hot|ongs)|t(he (look|meaning)|unnel)|vi(ctim|sion)) of|"
     # - stuff ending with "in love live":
+    #   - be in love live
     #   - "Crazy in Love" live (song by Beyonce)
     #   - "Dangerously in Love" live (album by Beyonce)
     #   - "Do You Believe In Love" live (song by Huey Lewis and the News)
@@ -485,7 +487,7 @@ EXCLUDE_RE = re.compile(
     #   - "Paris in Love" live (album by Ibrahim Maalouf)
     #   - so in love live
     #   - "Stone in Love" live (song by Journey)
-    r"(crazy|d(angerously|o you believe|runk)|f(all(in[g'’]?|s)?|ell)|lost|paris|"
+    r"(be|crazy|d(angerously|o you believe|runk)|f(all(in[g'’]?|s)?|ell)|lost|paris|"
     r"(friday|think) i['’]?m|s(o|tone)|i['’]?m (always|not)) in|"
     # - "Destination: Love Live" (album by The Make-Up)
     # - does not/doesn't love live [something]
@@ -639,8 +641,9 @@ EXCLUDE_RE = re.compile(
     #   ending with that phrase)
     # - "We Got Love" live (usually different songs by The Beach Boys or Jessica Mauboy)
     # - where does love live
+    # - with great love live
     # - "Wreckless Love" live (song by either Alicia Keys or Robert Plant)
-    r"w(asted|e( (are|found|got))?|here does|ould|reckless)|"
+    r"w(asted|e( (are|found|got))?|here does|ith great|ould|reckless)|"
     # - you are/you're in love live
     r"you( a|['’])re in) love live\b|"
     # - @[user handle ending with ".love"] live
@@ -780,8 +783,8 @@ BAD_KEYWORDS_RE = re.compile(
     # spam domains
     r"\b(arxiv\b|(europesays|newsbeep)\.com\b|zmedia\.(twitren\.com|jp)\b|"
     # political keywords often used in "love live"/"Mia Taylor" false positives
-    r"\b(amerikkka|charlie ?kirk|democrats?\b|epstein|GOP\b|hegseth|isis\b|MAGAs?\b|"
-    r"netanyahu|R(epublicans?|FK)|trumps?\b)|"
+    r"\b(amerikkka|charlie ?kirk|D(emocrats?|JT)\b|epstein|GOP\b|hegseth|isis\b|"
+    r"MAGAs?\b|netanyahu|R(epublicans?|FK)|trumps?\b)|"
     # Gaza war victim fundraiser spam
     r"ab(ed|delfattah)|ABD-GFM|GFM-ABD|mahmo?u?d|"
     # Jel Kawasaki bot posts
@@ -908,7 +911,7 @@ def filter(post: dict) -> bool:
             ),
             (
                 author == SPLATER765_BSKY_SOCIAL
-                and "goodnight everyone" in all_texts.lower()
+                and all_texts.lower().strip().endswith("everyone!!")
             ),
         )
     )
