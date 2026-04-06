@@ -549,8 +549,11 @@ EXCLUDE_RE = re.compile(
     #   - "Slave to Love" live (song by Bryan Ferry)
     #   - "Somebody to Love" live (usually song by Queen or Jefferson Airplane or any
     #     song name ending with that phrase)
+    #   - taught/teach(ing) me to love live (sometimes typo of "taught/teach(ing) me
+    #     to love life")
     #   - what's/what is not to love live
-    r"(how|(learn|want)(ed|ing)?|love|s(lave|omebody)|what(['’]| i)?s not) to|"
+    r"(how|(learn|want)(ed|ing)?|love|s(lave|omebody)|t(aught|each(ing)?) me|"
+    r"what(['’]| i)?s not) to|"
     # - (that) I('d) love live [something] (all other cases not caught by the Great "I
     #   love live [something]" Hoarde pattern)
     r"(that)?\bI(['’]d)?|"
