@@ -36,6 +36,11 @@ REPEATED_CAR_BLOCK_ERRORS_DIDS = set(
     {
         "did:plc:zarclecdtpsynv4gwfqlu4vc",  # alice.pds1.men-esthe.info
         "did:plc:nkgmc5sst3tt6pjwpnodh2dx",  # alice.dev-tp.uk
+        "did:plc:k3f2xkl6n4wshudsmkzjwmy5",  # alice2.dev-tp.uk
+        "did:plc:msojozvce347orwguctjm2hf",  # alice3.dev-tp.uk
+        "did:plc:3qcr3bigy67v2lc2cx5d5rfw",  # alice4.dev-tp.uk
+        "did:plc:d4meycqp7mwfjb5eh5akxjf7",  # alice5.dev-tp.uk
+        "did:plc:bf34wwlmbxhrvi7e5npc3d4a",  # patrick.pds.ultivity.com -- invalid timestamps
     }
 )
 repos_last_message_time: datetime = datetime.min.replace(tzinfo=UTC)
