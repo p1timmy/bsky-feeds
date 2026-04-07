@@ -523,8 +523,8 @@ EXCLUDE_RE = re.compile(
     # - Gerry Love live (British rock singer/bass guitar player)
     # - "Goodbye to Love" live (song by The Carpenters)
     r"g(er(ard|ry)|oodbye to|\.?)|"
-    # - give/show (them/me/etc.) some love live
-    r"(give|show) (\w+ )?some|"
+    # - give/send/show (them/me/etc.) some love live
+    r"(give|s(end|how)) ([\w'’]+ )*some|"
     # - Helen Love live (Welsh rock band)
     r"helen|"
     # - stuff ending with "your love live":
