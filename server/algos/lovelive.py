@@ -10,7 +10,8 @@ from server.algos._base import get_post_texts, post_has_media_embeds
 logger = logging.getLogger(__name__)
 
 LOVELIVE_NAME_EN_RE = re.compile(
-    r"([^a-z0-9_=＝]|^-? *)love ?live($|[^a-z0-9\-]|rs?([^a-z0-9_]|\b))", re.IGNORECASE
+    r"([^a-z0-9_=＝]|^-? *)love ?live($|[^a-z0-9\-]|rs?([^a-z0-9_]|\b)|e{2,19}\b)",
+    re.IGNORECASE
 )
 LOVELIVE_RE = re.compile(
     # "Love Live" + other related words
@@ -43,7 +44,8 @@ LOVELIVE_RE = re.compile(
     r")| ?!? +(vs|X)\b| fest?\b)|"
     r"lovelive(-(anime|fanfunfestival|news\.bsky\.social)|_staff|15th)|"
     r"\b((dan|enjoy|hate|is thi|love|m(eet|is)|think|variou|(?<!it )wa)s|draw(ing|s)|"
-    r"thank you|like[ds]?) love ?live\b|#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
+    r"thank you|li(ke[ds]?|nk li[kv]e)) love ?live\b|#lovelive(art|_)|"
+    r"\bLL(heardle|s(ip|taff))|"
     # ラブライブ but not クラブライブ (club live)/イコラブライブ (Ikolab Live)/
     # マジラブライブ (Maji Love Live)
     r"([^クコジ]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
@@ -61,9 +63,11 @@ LOVELIVE_RE = re.compile(
     r"音ノ木坂?|otonokizaka|([^a-z]|\b)[μµ](['’‘`´′]s(ic)?|sic\s?forever)([^a-z]|\b)|"
     r"高坂\s?穂乃果|絢瀬\s?絵里|南\s?ことり|園田\s?海未|星空\s?凛|西木野\s?真姫|東條\s?希|"
     r"小泉\s?花陽|矢澤\s?にこ|nico\snico\sni+\b|#niconiconi+\b|\bminalinsky\b|ミナリンスキー|"
-    r"エリーチカ|\belichika\b|(?<!くる)りんぱな|\b(nico)?rinpana\b|"r"金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
-    r"#にこまき|ほのまき|のぞえり|\bnozoeli\b|"
+    r"エリーチカ|\belichika\b|(?<!くる)りんぱな|\b(nico)?rinpana\b|金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
+    r"(にこ|ほの)まき(?![ゃゅょ])|のぞえり|ことうみ|(?<!りゅ)うみ(えり|こと)|"
+    r"(?<!@)\b((kotoum|nozoel)i|nicomaki(?! tensai))\b|"
     r"snow\s?halation([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
+    # A-RISE
     r"(^|[^a-z\u00C0-\u024F\u1E00-\u1EFF\-])a[-\u2010]rise([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|$)|"
     r"綺羅\s?ツバサ|優木\s?あんじゅ|統堂\s?英玲奈|"
     # Love Live! Sunshine!!
@@ -83,8 +87,8 @@ LOVELIVE_RE = re.compile(
     r"よし(ルビ|りこ)|#よしまる|るびまる|"
     r"\b((ruby|yoha)maru|yo((shi|ha)riko|u(chika|riko))|diamari)\b|"
     r"(永久|\beikyuu\s?)(hours|stage)|"
-    r"(?<!\bRT @)(?<!x.com/)saint\s?snow([^a-z]|$)|"
-    r"鹿角\s?(理亞|聖良)|"
+    # Saint Snow
+    r"(?<!\bRT @)(?<!x.com/)saint\s?snow([^a-z]|$)|鹿角\s?(理亞|聖良)|"
     # Nijigasaki
     r"虹ヶ咲(?!学園交通運輸研究部)|ニジガク|(アニ|エイ)ガサキ|(あに|えい)がさき|にじ(よん|ちず)|"
     r"([^a-z]|\b)((nij|an|e)igasaki|niji(chizu|gaku|yon))([^a-z]|\b)|a・zu・na|qu4rtz|"
@@ -96,7 +100,7 @@ LOVELIVE_RE = re.compile(
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
     r"かすみん|"
     # Love Live! Superstar!!
-    r"([^a-z]|\b)(or|tuto|w+)?(?-i:[Ll]iella|LIELLA)(?!(nd|tte))|リエラジ|"
+    r"([^a-z]|\b)(or|tuto|w+)?(?-i:[Ll]iella|LIELLA)(?!(nd|tte))|ちゅーとりえら|リエラジ|"
     r"結ヶ丘|yuigaoka|5yncri5e!?|kaleidoscore|トマカノーテ|tomakanote|スパスタ[3３]期|"
     r"澁谷\s?かのん|唐\s?可可|嵐千\s?砂都|平安名\s?すみれ|葉月\s?恋|桜小路\s?きな子|米女\s?メイ|"
     r"若菜\s?四季|鬼塚\s?(夏美|冬毬)|ウィーン・?マルガレーテ|"
@@ -122,8 +126,8 @@ LOVELIVE_RE = re.compile(
     r"高橋\s?ポルカ|麻布\s?麻衣|五桐\s?玲|駒形\s?花火|金澤\s?奇跡|調布\s?のりこ|春宮\s?ゆくり|"
     r"此花\s?輝夜|山田\s?真緑|佐々木\s?翔音|"
     r"\b(polka_lion|My_Mai_Eld|G_Akky304250|hanabistarmine|MiracleGoldSP|Noricco_U|"
-    r"Yukuri_talk|Rollie_twinkle|LittlegreenCom|ShaunTheBunny)([^a-z]|$)|"
-    r"regain again llllove|"
+    r"Yukuri_talk|Rollie_twinkle|LittlegreenCom|ShaunTheBunny)"
+    r"((?!(\.[a-z0-9]{2})+\b)[^a-z]|$)|regain again llllove|"
     # Concerts
     r"異次元フェス|ijigen\sfest?|#(llsat_|虹ブンブンビー_day[12])|"
     # Community stuff
@@ -243,9 +247,9 @@ EXCLUDE_RE = re.compile(
     # - I('d/'ve)/he/she/they (both)/you (all)/y'all/you'll/we (all/both)/gotta/got to/have to/
     #   learn(ed) to/like to/who/anyone (else), people/ppl (in [some place]), [plural word]
     #   that, my ... and sister/brother/wife/etc.
-    r"\b((i|s?he|they)(['’]?(d|ve))?|y(ou(['’]ll)?|(ou |['’])all)|(we|they)( (all|both))?|"
-    r"gotta|(got|have|l(earn(ed)?|ike)) to|who|p(eople|pl)( in (the )?[a-z]+[a-z])?|"
-    r"[a-z]{3,}(?<!a)(?<!e)s( that)?|my .+and [a-z]+[a-z]|"
+    r"\b((i|s?he|they)(['’]?(d|ve))?|y(ou(['’]ll)?|(ou |['’])all)|gotta|who|"
+    r"(we|they)( (all|both))?|(got|have|l(earn(ed)?|ike)) to|my .+and [a-z]+[a-z]|"
+    r"p(eople|pl)( in (the )?[a-z]+[a-z])?|[a-z]{3,}(?<!a)(?<!e)s( that)?|"
     r"anyone( else['’]s|( else)?( (o(ver|ut) )?t?here)?)?)"
     # - *ly/also/always/bloody/can't/cannot/(sure) do/does/don't (but not "don't do")/
     #   even/f*king/hecking/just/lowkey/still/(came/come/grew/have/happen(ed/s)/use(d)/
@@ -648,9 +652,13 @@ EXCLUDE_RE = re.compile(
     # - "Wreckless Love" live (song by either Alicia Keys or Robert Plant)
     r"w(asted|e( (are|found|got))?|here does|ith great|ould|reckless)|"
     # - you are/you're in love live
-    r"you( a|['’])re in) love live\b|"
+    r"you( a|['’])re in|"
+    # 田村ゆかり LOVE♡LIVE (live concerts by seiyuu/J-pop artist Yukari Tamura)
+    r"田村ゆかり) love live\b|"
     # - @[user handle ending with ".love"] live
     r"@([a-z0-9\-]+\.)+love live\b|"
+    # - [last name]-Love live
+    r"[a-z]+-love live|"
     # "Big Love" live (in) (song by Fleetwood Mac or Lindsey Buckingham)
     r"(fleetwood|linds[ae]y|buckingham)(.|\n)+big love live|"
     r"big love live( in|(.|\n)+(fleetwood|linds[ae]y|buckingham))|"
@@ -689,9 +697,9 @@ EXCLUDE_RE = re.compile(
     # card(s)/was/what/will/would"
     r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|nd|re|s|"
     r"uf)|but|can|[csw]ould|[dg]oing|d(id|oes(n['’]?t)?)|g(ets|one)|[gn]ot|just|t?here|"
-    r"ha([ds]|tes)|i([fn'’]|st?)?|kind(a| of)|ne(eds|ver)|on|[a-z]{2,}ly|s(iempre|ongs?)|"
-    r"trie[ds]|m(a(de|k(es?|ing)|y( ?be| (have|not)))|usic (i|wa)s)|w(as|hat|ill)|"
-    r"ur .*cards?)\b)|([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
+    r"ha([ds]|tes)|i([fn'’]|st?)?|kind(a| of)|ne(eds|ver)|on|[a-z]{2,}ly|trie[ds]|"
+    r"s(iempre|ongs?)|m(a(de|k(es?|ing)|y( ?be| (have|not)))|usic (i|wa)s)|ur .*cards?|"
+    r"w(as|hat|ill))\b)|([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live(r)" at beginning of sentence
     r"([^\w\s]+? *|^)love (love )+liver?\b|"
     # ... and love live(s) here/there
@@ -796,8 +804,8 @@ BAD_KEYWORDS_RE = re.compile(
     r"zort\.my/|"
     # NSFW keywords
     r"bds&?m|c(am ?girl|haturbate|ock(s|\b)|um(ming|shot)?([^a-z]|\b))|di(aper|ck|ldo)|"
-    r"(futanar|henta)i|jock[sa]traps?|n(ude|ipple)|p(enis|regnant)|s(ex([^a-z]|\b)|lut)"
-    r")|#("
+    r"fansly|(futanar|henta)i|jock[sa]traps?|n(ude|ipple)|p(enis|regnant)|"
+    r"s(ex([^a-z]|\b)|lut))|#("
     # NSFW hashtags
     r"ecchi|nsfw|porn|r18|"
     # moths with species names containing "liella" substring
