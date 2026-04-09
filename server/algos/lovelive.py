@@ -25,7 +25,7 @@ LOVELIVE_RE = re.compile(
     r"e(n|pisodes?|ra|tc)\b|"
     r"f(an(art|dom|s)?\b|(anf)?ics?\b|es ?2?\b|i(gur(in)?es?|nals)|ranchise)|"
     r"g(i(f|rls?)|lobal)\b|(rhythm )?game\b|"
-    r"hasu|"
+    r"ha([ds]\b|su)|"
     r"i(ce cream|dols?|n (general|the first\b))|"
     r"jumpscare|"
     r"lieder|"
@@ -83,7 +83,7 @@ LOVELIVE_RE = re.compile(
     r"numazu( in( the)?)? mirage|#ヨハネ(生誕|誕生)祭|"
     r"高海\s?千歌|桜内\s?梨子|松浦\s?果南|黒澤\s?(ダイヤ|ルビィ?)|渡辺\s?[曜月]|津島\s?善子|"
     r"国木田\s?花丸|小原\s?鞠莉|"
-    r"がんば(ルビ|るび)|(^|[^@])ganbaruby|today['’]s maru\b|maru's month|"
+    r"がんば(ルビ|るび)|(^|[^@])ganbaruby|today['’]s maru\b|maru's month|ヨキソバ|"
     r"よし(ルビ|りこ)|#よしまる|るびまる|"
     r"\b((ruby|yoha)maru|yo((shi|ha)riko|u(chika|riko))|diamari)\b|"
     r"(永久|\beikyuu\s?)(hours|stage)|"
@@ -123,6 +123,8 @@ LOVELIVE_RE = re.compile(
     # Love Live! Bluebird
     # NOTE: "L(ove) High School" not included due to too many false positives
     r"いきづら[い絵]部|イキヅ(ライブ|LIVE配信)|\bikizu( ?(live|raibu))?|love学院|知らんらんらじお|"
+    r"(\b|[^a-z])chaki[!！]|mi[x×]nori\s?[=＝]\s?tea|"
+    r"(\b|[^a-z])(plumina|sh1on)(\b|[^a-z])|"
     r"高橋\s?ポルカ|麻布\s?麻衣|五桐\s?玲|駒形\s?花火|金澤\s?奇跡|調布\s?のりこ|春宮\s?ゆくり|"
     r"此花\s?輝夜|山田\s?真緑|佐々木\s?翔音|"
     r"\b(polka_lion|My_Mai_Eld|G_Akky304250|hanabistarmine|MiracleGoldSP|Noricco_U|"
@@ -691,14 +693,14 @@ EXCLUDE_RE = re.compile(
     r"whether you.+ or (just )?love live |"
     # "(and) love live [something]" as a typo of "long live [something]" or "love love
     # love love [something]" but not "(and) love live all/also/always/and/are/as/auf/
-    # but/can/could/did/does(n't)/doing/gets/going/gone/got/had/has/hates/here/I/if/in/
-    # is(t)/I'll/I'm/just/kinda/kind of/made/make(s)/making/may [be/have/not]/music
-    # [is/was]/needs/never/not/on/*ly/siempre/should/song(s)/there/tries/tried/UR ...
-    # card(s)/was/what/will/would"
+    # but/can/could/did/does(n't)/doing/gets/going/gone/got/hates/here/I/if/in/is(t)/
+    # I'll/I'm/just/kinda/kind of/made/make(s)/making/may [be/have/not]/music [is/was]/
+    # needs/never/not/on/*ly/siempre/should/song(s)/there/tries/tried/UR ... card(s)/
+    # was/what/will/would"
     r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|nd|re|s|"
     r"uf)|but|can|[csw]ould|[dg]oing|d(id|oes(n['’]?t)?)|g(ets|one)|[gn]ot|just|t?here|"
-    r"ha([ds]|tes)|i([fn'’]|st?)?|kind(a| of)|ne(eds|ver)|on|[a-z]{2,}ly|trie[ds]|"
-    r"s(iempre|ongs?)|m(a(de|k(es?|ing)|y( ?be| (have|not)))|usic (i|wa)s)|ur .*cards?|"
+    r"hates|i([fn'’]|st?)?|kind(a| of)|ne(eds|ver)|on|[a-z]{2,}ly|s(iempre|ongs?)|"
+    r"m(a(de|k(es?|ing)|y( ?be| (have|not)))|usic (i|wa)s)|trie[ds]|ur .*cards?|"
     r"w(as|hat|ill))\b)|([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live(r)" at beginning of sentence
     r"([^\w\s]+? *|^)love (love )+liver?\b|"
