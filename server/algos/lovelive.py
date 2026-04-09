@@ -122,12 +122,12 @@ LOVELIVE_RE = re.compile(
     r"錦上[^\S\r\n]?マイカ|令沢[^\S\r\n]?葵|紫輪[^\S\r\n]?みおん|"
     # Love Live! Bluebird
     # NOTE: "L(ove) High School" not included due to too many false positives
-    r"いきづら[い絵]部|イキヅ(ライブ|LIVE配信)|\bikizu( ?(live|raibu))?|love学院|"
+    r"いきづら[い絵]部|イキヅ(ライブ|LIVE配信)|\bikizu( ?(live|raibu))?|love学院|知らんらんらじお|"
     r"高橋\s?ポルカ|麻布\s?麻衣|五桐\s?玲|駒形\s?花火|金澤\s?奇跡|調布\s?のりこ|春宮\s?ゆくり|"
     r"此花\s?輝夜|山田\s?真緑|佐々木\s?翔音|"
     r"\b(polka_lion|My_Mai_Eld|G_Akky304250|hanabistarmine|MiracleGoldSP|Noricco_U|"
     r"Yukuri_talk|Rollie_twinkle|LittlegreenCom|ShaunTheBunny)"
-    r"((?!(\.[a-z0-9]{2})+\b)[^a-z]|$)|regain again llllove|"
+    r"((?!(\.[a-z0-9]{2})+\b)[^a-z]|$)|regain again llllove|dou[- ]da[?？]? doing[!！]?|"
     # Concerts
     r"異次元フェス|ijigen\sfest?|#(llsat_|虹ブンブンビー_day[12])|"
     # Community stuff
