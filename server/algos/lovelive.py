@@ -45,7 +45,7 @@ LOVELIVE_RE = re.compile(
     r"lovelive(-(anime|fanfunfestival|news\.bsky\.social)|_staff|15th)|"
     r"\b((dan|enjoy|hate|is thi|love|m(eet|is)|think|variou|(?<!it )wa)s|draw(ing|s)|"
     r"thank you|li(ke[ds]?|nk li[kv]e)) love ?live\b|#lovelive(art|_)|"
-    r"\bLL(heardle|s(ip|taff))|"
+    r"\bsim_lovelive|\bLL(heardle|s(ip|taff))|"
     # ラブライブ but not クラブライブ (club live)/イコラブライブ (Ikolab Live)/
     # マジラブライブ (Maji Love Live)
     r"([^クコジ]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
