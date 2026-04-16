@@ -407,12 +407,13 @@ EXCLUDE_RE = re.compile(
     r"(I feed|to bring) you) my|"
     # - stuff ending with "is love live":
     #   - "All You Need Is Love" live (usually song by The Beatles)
+    #   - "The Blood Is Love" live (song by Queens Of The Stone Age)
     #   - "What The World Needs Now Is Love" live (usually covers of 1960s song by
     #     Jackie DeShannon)
     #   - "What Time Is Love" live (usually song by The KLF)
     #   - his love live (usually typo of "his love life")
     #   - "Prophecy x This Love" live (song by Taylor Swift)
-    r"((all you need|what t(he world needs now|ime)) |(prophecy x t)?h)is|"
+    r"((all you need|what t(he world needs now|ime)|the blood) |(prophecy x t)?h)is|"
     # Art(ist(s))/band(s)/music/people/[some plural word] I/you/etc. (... and) love live
     r"(art(ist)?|band|music|people|[a-z]+s) (i|you|they)( ([a-z]+[a-z],? )+(and|&))?|"
     # - "Bad Love" live (usually song by Key or Eric Clapton) but not "how bad Love Live"
@@ -499,7 +500,8 @@ EXCLUDE_RE = re.compile(
     # - does not/doesn't love live [something]
     r"d(estination:?|o(es)?( not|n['’]t))|"
     # - "Everlasting Love" live (usually song by Robert Knight or its covers)
-    r"everlasting|"
+    # - "Expresso Love" live (song by Dire Straits)
+    r"e(verlasting|xpresso)|"
     # - "Faithless Love" live (song by Linda Ronstadt)
     # - "Fake Love" live (song by BTS)
     # - "Feelin' Love" live (song by Paula Cole)
@@ -527,8 +529,7 @@ EXCLUDE_RE = re.compile(
     r"(?<!\bget )(?<!\bgetting )ready) for|"
     # - G. Love live (American singer/rapper)
     # - Gerry Love live (British rock singer/bass guitar player)
-    # - "Goodbye to Love" live (song by The Carpenters)
-    r"g(er(ard|ry)|oodbye to|\.?)|"
+    r"g(er(ard|ry)|\.?)|"
     # - give/send/show (them/me/etc.) some love live
     r"(give|s(end|how)) ([\w'’]+ )*some|"
     # - Helen Love live (Welsh rock band)
@@ -548,18 +549,20 @@ EXCLUDE_RE = re.compile(
     r"(compassion|h(appiness|ope)|joy|kindness|memory|p(ain|eace)|unity),?"
     r" (and|&)( [a-z]+['’]s)?|"
     # - stuff ending with "to love live":
-    #   - learn/want(ed/ing) to love live [something]
+    #   - "Goodbye to Love" live (song by The Carpenters)
     #   - "How To Love" live (usually song by Lil Wayne or any song name ending with
     #     that phrase)
+    #   - learn/want(ed/ing) to love live [something]
     #   - "Love to Love" live (usually song by UFO)
+    #   - reason(s) to love live [something]
     #   - "Slave to Love" live (song by Bryan Ferry)
     #   - "Somebody to Love" live (usually song by Queen or Jefferson Airplane or any
     #     song name ending with that phrase)
     #   - taught/teach(ing) me to love live (sometimes typo of "taught/teach(ing) me
     #     to love life")
     #   - what's/what is not to love live
-    r"(how|(learn|want)(ed|ing)?|love|s(lave|omebody)|t(aught|each(ing)?) me|"
-    r"what(['’]| i)?s not) to|"
+    r"(goodbye|how|(learn|want)(ed|ing)?|love|s(lave|omebody)|t(aught|each(ing)?) me|"
+    r"reasons?|what(['’]| i)?s not) to|"
     # - (that) I('d) love live [something] (all other cases not caught by the Great "I
     #   love live [something]" Hoarde pattern)
     r"(that)?\bI(['’]d)?|"
@@ -759,7 +762,9 @@ FAKE_SCHOOL_IDOL_RE = re.compile(
     re.IGNORECASE,
 )
 FAKE_YOHANE_RE = re.compile(
-    r"(artist\b.+|project) yohane|yohane parakan[aã]|shaman ?king|touhou", re.IGNORECASE
+    r"(artist\b.+|project) yohane|yohane (parakan[aã]|dean lengol)|shaman ?king|"
+    r"touhou",
+    re.IGNORECASE
 )
 HI_YOHANE_RE = re.compile(r"\bh(e(llo|y)|i+) yohane\b", re.IGNORECASE)
 FAKE_CATCHU_RE = re.compile(
