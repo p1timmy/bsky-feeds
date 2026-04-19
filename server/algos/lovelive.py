@@ -487,17 +487,16 @@ EXCLUDE_RE = re.compile(
     #     song name ending with that phrase)
     #   - "Fallin(g) in Love" live (usually different song names ending with that phrase)
     #   - fell in love live
-    #   - "Friday I'm In Love" live (usually song by The Cure or cover by Robert Smith and
-    #     Olivia Rodrigo)
+    #   - "I'm In Love" live (usually "Friday I'm In Love" by The Cure or cover by
+    #     Robert Smith and Olivia Rodrigo or song names ending with that phrase)
     #   - "I'm Not in Love" live (usually song by 10cc)
     #   - "I'm Always in Love" live (song by Wilco)
-    #   - "(I) Think I'm In Love" live (usually song by Eddie Money)
     #   - "Lost In Love" live (usually song/album by Air Supply)
     #   - "Paris in Love" live (album by Ibrahim Maalouf)
     #   - so in love live
     #   - "Stone in Love" live (song by Journey)
     r"(be|crazy|d(angerously|o you believe|runk)|f(all(in[g'’]?|s)?|ell)|lost|paris|"
-    r"(friday|think) i['’]?m|s(o|tone)|i['’]?m (always|not)) in|"
+    r"s(o|tone)|i['’]?m( (always|not))?) in|"
     # - "Destination: Love Live" (album by The Make-Up)
     # - does not/doesn't love live [something]
     r"d(estination:?|o(es)?( not|n['’]t))|"
