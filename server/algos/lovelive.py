@@ -344,8 +344,8 @@ EXCLUDE_RE = re.compile(
     r"m(oments|usic at\b)|"
     # - love live now at/on
     r"now (at|on)\b|"
-    # - love live oak(s)/on stage
-    r"o(aks?|n stage)|"
+    # - love live oak(s)/on [MTV/stage]
+    r"o(aks?|n (MTV|stage))|"
     # - love live premiere(s)
     r"premieres?|"
     # - love live radio/reacting/reaction(s)/recording(s)/renditions
@@ -435,8 +435,9 @@ EXCLUDE_RE = re.compile(
     # - "Computer Love" live (song by Kraftwerk)
     # - "Connected by Love" live (song by Jack White)
     # - "Cosmic Love" live (usually song by Florence + The Machine)
+    # - Courtney Love live (American pop singer)
     r"c(an['’]?t (buy me|get enough of your|hide)|(an|ould) you not|"
-    r"o(mp(licated|uter)|nnected by|smic))|"
+    r"o(mp(licated|uter)|nnected by|smic|urtney))|"
     # - stuff ending with "of love live":
     #   - "All is Full of Love" live (song by Bjork)
     #   - "Any Kind of Love" live (song by REO Speedwagon)
