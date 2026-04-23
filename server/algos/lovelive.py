@@ -43,8 +43,8 @@ LOVELIVE_RE = re.compile(
     r"yuri\b"
     r")| ?!? +(vs|X)\b| fest?\b)|"
     r"lovelive(-(anime|fanfunfestival|news\.bsky\.social)|_staff|15th)|"
-    r"\b((dan|enjoy|hate|is thi|love|m(eet|is)|think|variou|(?<!it )wa)s|draw(ing|s)|"
-    r"thank you|li(ke[ds]?|nk li[kv]e)) love ?live\b|#lovelive(art|_)|"
+    r"\b((dan|enjoy|hate|is thi|love|m(eet|is)|previou|think|variou|(?<!it )wa)s|"
+    r"draw(ing|s)|thank you|li(ke[ds]?|nk li[kv]e)) love ?live\b|#lovelive(art|_)|"
     r"\bsim_lovelive|\bLL(heardle|s(ip|taff))|"
     # ラブライブ but not クラブライブ (club live)/イコラブライブ (Ikolab Live)/
     # マジラブライブ (Maji Love Live)
@@ -66,7 +66,7 @@ LOVELIVE_RE = re.compile(
     r"エリーチカ|\belichika\b|(?<!くる)りんぱな|\b(nico)?rinpana\b|金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
     r"(にこ|ほの)まき(?![ゃゅょ])|のぞえり|ことうみ|(?<!りゅ)うみ(えり|こと)|"
     r"(?<!@)\b((kotoum|nozoel)i|nicomaki(?! tensai))\b|"
-    r"snow\s?halation([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
+    r"([^a-z]|\b)(snow ?halation|mermaid festa)([^a-z]|\b)|"
     # A-RISE
     r"(^|[^a-z\u00C0-\u024F\u1E00-\u1EFF\-])a[-\u2010]rise([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|$)|"
     r"綺羅\s?ツバサ|優木\s?あんじゅ|統堂\s?英玲奈|"
