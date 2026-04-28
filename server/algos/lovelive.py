@@ -18,13 +18,13 @@ LOVELIVE_RE = re.compile(
     r"(?<!@)love[^\S\r\n]?live(([^\S\r\n]|[!:])*("
     r"a(cc((oun)?ts?|s)|(d|fter school|rcade|u)\b|ll[ -]stars|pps?\b|n(d idol|ime))|"
     r"(tribute )?album\b|"
-    r"b(adges?\b|lue ?bird)|"
+    r"b(adges?\b|irthdays?|lue ?bird)|"
     r"c(anon|ollab|yber|(d|osplay|haracter)s?)|"
     r"d(a(nce(s| groups?)|ys)|rama\b)|"
     r"heardle|"
     r"e(n|pisodes?|ra|tc)\b|"
     r"f(an(art|dom|s)?\b|(anf)?ics?\b|es ?2?\b|i(gur(in)?es?|nals)|ranchise)|"
-    r"g(i(f|rls?)|lobal)\b|(rhythm )?game\b|"
+    r"g(i(f|rls?)|lobal|rid)\b|(rhythm )?game\b|"
     r"ha([ds]\b|su)|"
     r"i(ce cream|dols?|n (general|the first\b))|"
     r"jumpscare|"
@@ -34,8 +34,9 @@ LOVELIVE_RE = re.compile(
     r"o(c(g|s?\b)|mf?g|omf(ie)?s?|p\b|r(?! die)\b|s(his?|t)|utfits?)|"
     r"p(ins?\b|l(aylist|ush(ies?)?))|"
     r"referenc(es?|ia)|"
-    r"s(chool ?idol|e(ction|ries|iyuus?)|hips?\b|ip([^a-z]|\b)|(ifs)?orter|ky|potted|"
-    r"o(los?\b|ng\b|undtrack)|ta(ff|rt[ :]dash)|u(b ?units?|nshine|per ?star))|"
+    r"s(chool ?idol|e(ction|ries|iyuus?)|hips?\b|ip([^a-z]|\b)|(ifs)?orter|ky|"
+    r"o(los?\b|ng\b|undtrack)|p(inoff|otted)|ta(ff|rt[ :]dash)|"
+    r"u(b ?units?|nshine|per ?star))|"
     r"t(cg|h(emed?\b|ings)|wt\b)|"
     r"u['’]s|"
     r"vn\b|"
@@ -44,7 +45,7 @@ LOVELIVE_RE = re.compile(
     r")| ?!? +(vs|X)\b| fest?\b)|"
     r"lovelive(-(anime|fanfunfestival|news\.bsky\.social)|_staff|15th|['’]?d\b)|"
     r"\b((dan|enjoy|hate|is thi|love|m(eet|is)|previou|think|variou|(?<!it )wa)s|"
-    r"draw(ing|s)|thank you|li(ke[ds]?|nk li[kv]e)) love ?live\b|#lovelive(art|_)|"
+    r"draw(ing|s)?|thank you|li(ke[ds]?|nk li[kv]e)) love ?live\b|#lovelive(art|_)|"
     r"\bsim_lovelive|\bLL(heardle|s(ip|taff))|"
     # ラブライブ but not クラブライブ (club live)/イコラブライブ (Ikolab Live)/
     # マジラブライブ (Maji Love Live)
@@ -66,7 +67,7 @@ LOVELIVE_RE = re.compile(
     r"エリーチカ|\belichika\b|(?<!くる)りんぱな|\b(nico)?rinpana\b|金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
     r"(にこ|ほの)まき(?![ゃゅょ])|のぞえり|ことうみ|(?<!りゅ)うみ(えり|こと)|"
     r"(?<!@)\b((kotoum|nozoel)i|nicomaki(?! tensai))\b|"
-    r"([^a-z]|\b)(snow ?halation|mermaid festa)([^a-z]|\b)|"
+    r"([^a-z]|\b)(snow ?halation|mermaid festa)([^a-z]|\b)|bokura wa ima no naka de|"
     # A-RISE
     r"(^|[^a-z\u00C0-\u024F\u1E00-\u1EFF\-])a[-\u2010]rise([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|$)|"
     r"綺羅\s?ツバサ|優木\s?あんじゅ|統堂\s?英玲奈|"
@@ -94,7 +95,7 @@ LOVELIVE_RE = re.compile(
     r"([^a-z]|\b)((nij|an|e)igasaki|niji(chizu|gaku|yon))([^a-z]|\b)|a・zu・na|qu4rtz|"
     r"([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)(diver"
     r" ?diva|r3birth)([^a-z\u00C0-\u024F\u1E00-\u1EFF]|\b)|"
-    r"tokimeki r(unners|oadmap to the future)|^me, a taylor\b|#TOKIMEKIの春|"
+    r"tokimeki (express|r(unners|oadmap to the future))|^me, a taylor\b|#TOKIMEKIの春|"
     r"(ゆう|せつ|しお|#残業)ぽむ|ぽむせつ|\b(sets|yu?)upomu\b|\bsetsuayu\b|"
     r"高咲\s?侑|上原\s?歩夢|中須\s?かすみ|桜坂\s?しずく|朝香\s?果林|宮下\s?愛|近江\s?(彼方|遥)|"
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
@@ -135,7 +136,8 @@ LOVELIVE_RE = re.compile(
     r"異次元フェス|ijigen\sfest?|#(llsat_|虹ブンブンビー_day[12])|"
     # Community stuff
     r"\bteam onibe\b|\bonib(e|ased)([^a-z’]|$)|(schoolido\.lu|idol\.st)(?!/user/)|"
-    r"#HasuTH_Tran|([^a-z]|\b)OurSIF([^a-z]|$)|\bidoltober|#LL_Calendar_Collab_2026",
+    r"#HasuTH_Tran|([^a-z]|\b)OurSIF([^a-z]|$)|\bidoltober|#LL_Calendar_Collab_2026|"
+    r"\bloveliveradio\.ca|puchiball|lovelivematocha\.com",
     re.IGNORECASE,
 )
 SCHOOL_IDOL_RE = re.compile(r"\bschool ?idol", re.IGNORECASE)
@@ -262,8 +264,9 @@ EXCLUDE_RE = re.compile(
     r"n(ever|ot)|(st|w)ill|would(['’]ve)?|[a-z]+[a-z] (and|&)|"
     r"((c[ao]me|ha(ve|ppen(ed|s)?)|used?|grew) t|s|t(o|end( not)? t))o))*"
     # - love live [something]/love liver(s)/love Live (as in a band named LĪVE, Ableton
-    #   Live music software, or typo of "love life")
-    r' ((love )+live((?! (so |a(nd|s well)|but)\b),? &? ?[#{\[("“]?\w+\b|rs?)|'
+    #   Live music software, or typo of "love life") but not "love live and/as well/but/
+    #   so/sm"
+    r' ((love )+live((?! (a(nd|s well)|but|s[mo])\b),? &? ?[#{\[("“]?\w+\b|rs?)|'
     r"love live($|[^\s\w]| \w+))|"
     # "love live music/comedy/theater" at start of sentence or after any emoji but not
     # "love live music/comedy/theater is/was"
@@ -501,19 +504,21 @@ EXCLUDE_RE = re.compile(
     # - "Destination: Love Live" (album by The Make-Up)
     # - does not/doesn't love live [something]
     r"d(estination:?|o(es)?( not|n['’]t))|"
+    # - eat love live
     # - "Everlasting Love" live (usually song by Robert Knight or its covers)
     # - "Expresso Love" live (song by Dire Straits)
-    r"e(verlasting|xpresso)|"
+    r"e(at|verlasting|xpresso)|"
     # - "Faithless Love" live (song by Linda Ronstadt)
     # - "Fake Love" live (song by BTS)
     # - "Feelin' Love" live (song by Paula Cole)
     # - "Feel Like Makin' Love" live (song by Roberta Flack or Bad Company)
     # - feel the love live
     # - fight love live (usually Filoli, California historical marker)
+    # - find love live
     # - "Flawless Love" live (album by Jaejoong)
     # - "Frozen Love" live (song by Buckingham Nicks)
     # - "From [some place] With Love" live
-    r"f(a(ithless|ke)|eel(in['’]?| (like makin['’g]?|the))|ight|lawless|"
+    r"f(a(ithless|ke)|eel(in['’]?| (like makin['’g]?|the))|i(ght|nd)|lawless|"
     r"ro(m( the)? (\w+ ){1,3}with|zen))|"
     # - stuff ending with "for love live":
     #   - "Ain't No Cure for Love" live (song by Leonard Cohen)
@@ -602,9 +607,8 @@ EXCLUDE_RE = re.compile(
     # - "Nothing Without Your Love" live (K-pop song by (Seok-)Jin)
     r"n(etwork|o( (loss,? no|ordinary)|thing without your))|"
     # - "Pirate Love" live (song by The Heartbreakers)
-    # - Pop the Balloon or/and/to/etc. Find Love live (dating show on YT/Netflix)
     # - "Punch-Drunk Love" live (romantic movie title)
-    r"p(irate|op [a-z]+ balloon [a-z]+ find|unch[ -]drunk)|"
+    r"p(irate|unch[ -]drunk)|"
     # - Quest Love live (famous drummer/DJ)
     r"quest|"
     # - "Radar Love" live (song by Golden Earring)
@@ -698,16 +702,16 @@ EXCLUDE_RE = re.compile(
     r"(^|[^\w ] *)love liver(s and)?(?! (are|is))\b|"
     # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
-    # "(and) love live [something]" as a typo of "long live [something]" or "love love
-    # love love [something]" but not "(and) love live all/also/always/and/are/as/auf/
-    # but/can/could/did/does(n't)/doing/gets/going/gone/got/hates/here/I/if/in/is(t)/
-    # I'll/I'm/just/kinda/kind of/made/make(s)/making/may [be/have/not]/music [is/was]/
-    # needs/never/not/on/*ly/siempre/should/song(s)/there/tries/tried/UR ... card(s)/
-    # was/what/will/would"
-    r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|nd|re|s|"
-    r"uf)|but|can|[csw]ould|[dg]oing|d(id|oes(n['’]?t)?)|g(ets|one)|[gn]ot|just|t?here|"
-    r"hates|i([fn'’]|st?)?|kind(a| of)|ne(eds|ver)|on|[a-z]{2,}ly|s(iempre|ongs?)|"
-    r"m(a(de|k(es?|ing)|y( ?be| (have|not)))|usic (i|wa)s)|trie[ds]|ur .*cards?|"
+    # "(and) love live [something]" (as a typo of "long live [something]") or "love love
+    # love love [something]" but not "(and) love live all/also/always/and/[plural word]
+    # are/as/auf/but/can/could/did/does(n't)/doing/gets/going/gone/got/hates/here/I/if/
+    # in/is(t)/I'll/I'm/just/kinda/kind of/made/make(s)/making/may [be/have/not]/music
+    # [is/was]/needs/never/not/on/*ly/siempre/should/song(s)/there/tries/tried/UR ...
+    # card(s)/was/what/will/would"
+    r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(l(l(?! of)|so|ways)|nd|s|uf)|"
+    r"\w+ are|but|can|[csw]ould|[dg]oing|d(id|oes(n['’]?t)?)|g(ets|one)|[gn]ot|just|"
+    r"hates|t?here|i([fn'’]|st?)?|kind(a| of)|ne(eds|ver)|on|[a-z]{2,}ly|ur .*cards?|"
+    r"m(a(de|k(es?|ing)|y( ?be| (have|not)))|usic (i|wa)s)|s(iempre|ongs?)|trie[ds]|"
     r"w(as|hat|ill))\b)|([^\w\s'’,:]+? +|^)(love )+live,)( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
     # "love love live(r)" at beginning of sentence
     r"([^\w\s]+? *|^)love (love )+liver?\b|"
@@ -721,8 +725,8 @@ EXCLUDE_RE = re.compile(
     # - my ... in love live in (typo of "my ... in law live in")
     # - who live in love live (1 John 4:16)
     r"\b(in|ma?y) love live in\b|"
-    # her/his/our/their/who(se)/yet ... (and) love live in/on/with
-    r"(h(er|is)|(y?ou|thei)r|who(se)?|yet|\w+['’]s)( ([a-z]+[a-z]|.+ (and|&)))?"
+    # her/his/our/their/who(se)/yet/[name]'s ... (and) love live in/on/with
+    r"(h(er|is)|(y?ou|thei)r|who(se)?|yet|\w+(?!what)['’]s)( ([a-z]+[a-z]|.+ (and|&)))?"
     r" love lives? ([io]n|with)|"
     # "his/her/their/you(r) (...ing) love live" (sometimes a typo of "love life/lives")
     # or "learn love live" before period/comma/quote mark/"is/was" at end of sentence
