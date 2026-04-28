@@ -35,11 +35,15 @@ _LabelsMessageCallbackType = Callable[
 REPEATED_CAR_BLOCK_ERRORS_DIDS = set(
     {
         "did:plc:zarclecdtpsynv4gwfqlu4vc",  # alice.pds1.men-esthe.info
+        "did:plc:tzbsd7do67px54vmgekanmse",  # alice2.pds1.men-esthe.info
         "did:plc:nkgmc5sst3tt6pjwpnodh2dx",  # alice.dev-tp.uk
         "did:plc:k3f2xkl6n4wshudsmkzjwmy5",  # alice2.dev-tp.uk
         "did:plc:msojozvce347orwguctjm2hf",  # alice3.dev-tp.uk
         "did:plc:3qcr3bigy67v2lc2cx5d5rfw",  # alice4.dev-tp.uk
         "did:plc:d4meycqp7mwfjb5eh5akxjf7",  # alice5.dev-tp.uk
+        "did:plc:p3x2ed2zknmcumndqiiulltq",  # alice6.dev-tp-uk
+        "did:plc:tpm3cuoqaa7kqmwtz6vvubkw",  # alice7.dev-tp.uk
+        "did:plc:pvprfqpevx7bcfrnkajpsvvu",  # alice2.pds2.men-esthe.info
         "did:plc:bf34wwlmbxhrvi7e5npc3d4a",  # patrick.pds.ultivity.com -- invalid timestamps
     }
 )
