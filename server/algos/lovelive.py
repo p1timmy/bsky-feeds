@@ -20,11 +20,11 @@ LOVELIVE_RE = re.compile(
     r"(tribute )?album\b|"
     r"b(adges?\b|irthdays?|lue ?bird)|"
     r"c(anon|ollab|yber|(d|osplay|haracter)s?)|"
-    r"d(a(nce(s| groups?)|ys)|rama\b)|"
+    r"d(a(nce(s| groups?)|ys)|oujin|rama\b)|"
     r"heardle|"
     r"e(n|pisodes?|ra|tc)\b|"
     r"f(an(art|dom|s)?\b|(anf)?ics?\b|es ?2?\b|i(gur(in)?es?|nals)|ranchise)|"
-    r"g(i(f|rls?)|lobal|rid)\b|(rhythm )?game\b|"
+    r"g(ang\b|i(f|rls?)|lobal|rid)\b|(rhythm )?game\b|"
     r"ha([ds]\b|su)|"
     r"i(ce cream|dols?|n (general|the first\b))|"
     r"jumpscare|"
@@ -124,8 +124,8 @@ LOVELIVE_RE = re.compile(
     r"錦上[^\S\r\n]?マイカ|令沢[^\S\r\n]?葵|紫輪[^\S\r\n]?みおん|"
     # Love Live! Bluebird
     # NOTE: "L(ove) High School" not included due to too many false positives
-    r"いきづら[い絵]部|イキヅ(ライブ|LIVE配信)|\bikizu( ?(live|raibu))?|love学院|知らんらんらじお|"
     r"(\b|[^a-z])chaki[!！]|mi[x×]nori\s?[=＝]\s?tea|"
+    r"いきづら[い絵]部|イキヅ(ライブ|LIVE配信)|\bikizu( ?(live|raibu))?\b|love学院|知らんらんらじお|"
     r"(\b|[^a-z])(plumina|sh1on)(\b|[^a-z])|"
     r"高橋\s?ポルカ|麻布\s?麻衣|五桐\s?玲|駒形\s?花火|金澤\s?奇跡|調布\s?のりこ|春宮\s?ゆくり|"
     r"此花\s?輝夜|山田\s?真緑|佐々木\s?翔音|"
@@ -148,6 +148,11 @@ SOLDIER_GAME_RE = re.compile(r"([^a-z]|\b)soldier game([^a-z]|\b)", re.IGNORECAS
 YOHANE_RE = re.compile(r"\b(?<!@)yohane(?!(-label|.*mbatiza[jt]i))\b", re.IGNORECASE)
 CATCHU_RE = re.compile(
     r"([^A-Za-z$\-]|^)(C[Aa]t[Cc][Hh]u|catchu|CATCHU)!?([^A-Za-z\-]|\b)"
+)
+GKSS_RE = re.compile(
+    r"([^a-z=]|^)(?-i:GKSS|gkss)([^a-z]|\b)|"
+    r"([^a-z]|\b)(burn[:： ]born|wake[:：]woke)([^a-z]|\b)",
+    re.IGNORECASE,
 )
 VANILLAKUNIKIDA_RE = re.compile(r"\bDay \d+|maru|sunshine|zura", re.IGNORECASE)
 CHARACTER_NAMES = set(
@@ -805,6 +810,7 @@ FAKE_SOLDIER_GAME_RE = re.compile(
     r"s(tar|uper)|t(heir|oy)|winter) soldier game(?! cover)",
     re.IGNORECASE,
 )
+FAKE_GKSS_RE = re.compile(r"forsch|(crash and|(?-i:[A-Z][a-z]+[a-z])) burn", re.IGNORECASE)
 BAD_KEYWORDS_RE = re.compile(
     # spam domains
     r"\b(arxiv\b|(europesays|newsbeep)\.com\b|zmedia\.(twitren\.com|jp)\b|"
@@ -863,7 +869,8 @@ def make_characters_pattern() -> re.Pattern:
     return re.compile(
         f"(?:^|[^@a-z])(?:{'|'.join(patterns)}|"
         r"^(?!.*\blazarus\b.*).*((?<!thank )you ?watanabe|"
-        r"(?<!momo )(?<!shinichiro )(?<!akio )watanabe ?you(?!(['’][a-z])?[a-z]+|"
+        r"(?<!momo )(?<!shinichiro )(?<!akio )(?<!takaaki )watanabe ?you"
+        r"(?!(['’][a-z])?[a-z]+|"
         r" ([a-z]+[a-z]n['’]?t|are|have|will)\b)).*|"
         r"^(?!.*\b(kong|wario)\b.*).*\bleah kazuno|#leahkazuno|"
         r"(?<!\nby )(?<!^by )(?<!post by )(?<!\bby: )mia taylor|"
@@ -925,6 +932,7 @@ def filter(post: dict) -> bool:
                 and HI_YOHANE_RE.search(all_texts)
             ),
             CATCHU_RE.search(all_texts) and not FAKE_CATCHU_RE.search(all_texts),
+            GKSS_RE.search(all_texts) and not FAKE_GKSS_RE.search(all_texts),
             CHARACTERS_EN_RE.search(all_texts),
             post_has_media_embeds(post)
             and (
