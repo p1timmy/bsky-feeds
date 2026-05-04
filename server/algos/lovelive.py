@@ -810,7 +810,9 @@ FAKE_SOLDIER_GAME_RE = re.compile(
     r"s(tar|uper)|t(heir|oy)|winter) soldier game(?! cover)",
     re.IGNORECASE,
 )
-FAKE_GKSS_RE = re.compile(r"forsch|(crash and|(?-i:[A-Z][a-z]+[a-z])) burn", re.IGNORECASE)
+FAKE_GKSS_RE = re.compile(
+    r"youtu\.be/gkss|forsch|(crash and|(?-i:[A-Z][a-z]+[a-z])) burn", re.IGNORECASE
+)
 BAD_KEYWORDS_RE = re.compile(
     # spam domains
     r"\b(arxiv\b|(europesays|newsbeep)\.com\b|zmedia\.(twitren\.com|jp)\b|"
