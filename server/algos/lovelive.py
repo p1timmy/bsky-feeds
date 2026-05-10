@@ -820,7 +820,8 @@ BAD_KEYWORDS_RE = re.compile(
     r"\b(amerikkka|charlie ?kirk|D(emocrats?|JT)\b|epstein|GOP\b|hegseth|isis\b|"
     r"MAGAs?\b|netanyahu|R(epublicans?|FK)|trumps?\b)|"
     # Gaza war victim fundraiser spam
-    r"ab(ed|delfattah)|ABD-GFM|GFM-ABD|mahmo?u?d|"
+    r"a(b(ed|delfattah)|mal\b)|ABD-GFM|GFM-ABD|mahmo?u?d|even (\$5|5 dollars)|"
+    r"chuffed\.org|"
     # Jel Kawasaki bot posts
     r"\[商品リンク\]|"
     # "Buy Anything From Amazon" spam
@@ -834,7 +835,9 @@ BAD_KEYWORDS_RE = re.compile(
     # moths with species names containing "liella" substring
     r"teammoth|"
     # some general creative writing hashtag
-    r"vss365\b)",
+    r"vss365\b)|"
+    # @*ousama*.bsky.social (posts by @estheking.bsky.social and alts)
+    r"@[a-z\-]+ousama[a-z\-]*\.bsky\.social\b",
     re.IGNORECASE,
 )
 
