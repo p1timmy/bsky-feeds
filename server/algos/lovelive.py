@@ -61,7 +61,8 @@ LOVELIVE_RE = re.compile(
     r"(^|[^\u30a1-\u30f6\u30fc])スク(スタ(?!ン[ドプ]|イル|ッフ|ート)|ミュ)|"
     # Love Live! School Idol Project
     # NOTE: Printemps, lily white, BiBi not included due to too many false positives
-    r"音ノ木坂?|otonokizaka|([^a-z]|\b)[μµ](['’‘`´′]s(ic)?|sic\s?forever)([^a-z]|\b)|"
+    r"音ノ木坂?|otonokizaka|"
+    r"([^a-z]|\b)(?-i:[μµ])(['’‘`´′]s(ic)?|sic\s?forever)([^a-z]|\b)|"
     r"高坂\s?穂乃果|絢瀬\s?絵里|南\s?ことり|園田\s?海未|星空\s?凛|西木野\s?真姫|東條\s?希|"
     r"小泉\s?花陽|矢澤\s?にこ|nico\snico\sni+\b|#niconiconi+\b|\bminalinsky\b|ミナリンスキー|"
     r"エリーチカ|\belichika\b|(?<!くる)りんぱな|\b(nico)?rinpana\b|金曜凛ちゃんりんりんりん|火曜日かよちゃん|"
