@@ -12,12 +12,12 @@ FORTNIGHT = timedelta(days=14)
 CURSOR_EOF = "eof"
 TWEET_URL_RE = re.compile(r"^https?://(x|twitter).com/\w+/status/[0-9]+.*$")
 YOUTUBE_URL_RE = re.compile(r"^https?://(([a-z]+\.)?youtube\.com|youtu\.be)/.+$")
-
+GIF_URL_BASES = ("https://media.tenor.com/", "https://static.klipy.com/")
 
 def post_has_media_embeds(post: dict) -> bool:
     """
-    Check if a post contains media (image/video/Tenor GIF) embeds. Posts with link embeds
-    pointing to other external media (YouTube/Spotify/etc.) don't count.
+    Check if a post contains media (image/video/Tenor GIF/KLIPY GIF) embeds. Posts with
+    link embeds pointing to other external media (YouTube/Spotify/etc.) don't count.
     """
     record: models.AppBskyFeedPost.Record = post["record"]
     embed = record.embed
@@ -30,7 +30,7 @@ def post_has_media_embeds(post: dict) -> bool:
     ) or (
         isinstance(embed, models.AppBskyEmbedExternal.Main)
         and embed.external
-        and embed.external.uri.startswith("https://media.tenor.com/")
+        and embed.external.uri.startswith(GIF_URL_BASES)
     )
 
 
@@ -40,8 +40,9 @@ def get_post_texts(post: dict, include_media=True) -> list[str]:
 
     :param post: `dict` containing at least a `record` key with `app.bsky.feed.post#Record`
         model instance value
-    :param include_media: Also get image/video/Tenor GIF alt texts and link embed titles
-        and descriptions (only for YouTube and 𝕏/Twitter) in addition to the post text.
+    :param include_media: Also get image/video/Tenor GIF/KLIPY GIF alt texts and link
+        embed titles and descriptions (only for YouTube and 𝕏/Twitter) in addition to
+        the post text.
         Defaults to True.
     """
     record: models.AppBskyFeedPost.Record = post["record"]
@@ -64,10 +65,10 @@ def get_post_texts(post: dict, include_media=True) -> list[str]:
             texts.append(embed.alt)
         elif isinstance(embed, models.AppBskyEmbedExternal.Main):
             link = embed.external
-            if link.uri.startswith("https://media.tenor.com/") and link.description:
-                # Tenor GIFs inserted using the post editor use link embeds, official
-                # Bluesky app lets you add custom alt text which is put into description
-                # field in embed
+            if link.uri.startswith(GIF_URL_BASES) and link.description:
+                # Tenor/KLIPY GIFs inserted using the post editor use link embeds,
+                # official Bluesky app lets you add custom alt text which is put into
+                # description field in embed
                 texts.append(link.description)
             elif YOUTUBE_URL_RE.search(link.uri):
                 texts.append(link.title)
