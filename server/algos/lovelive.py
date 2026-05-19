@@ -22,8 +22,8 @@ LOVELIVE_RE = re.compile(
     r"c(anon|ollab|yber|(d|osplay|haracter)s?)|"
     r"d(a(nce(s| groups?)|ys)|oujin|rama\b)|"
     r"heardle|"
-    r"e(n|pisodes?|ra|tc)\b|"
-    r"f(an(art|dom|s)?\b|(anf)?ics?\b|es ?2?\b|i(gur(in)?es?|nals)|ranchise)|"
+    r"e(n|pisodes?|ra|tc)\b|-esque\b|"
+    r"f(a(n(art|dom|s)?|vorites)\b|(anf)?ics?\b|es ?2?\b|i(gur(in)?es?|nals)|ranchise)|"
     r"g(ang\b|i(f|rls?)|lobal|rid)\b|(rhythm )?game\b|"
     r"ha([ds]\b|su)|"
     r"i(ce cream|dols?|n (general|the first\b))|"
@@ -43,12 +43,11 @@ LOVELIVE_RE = re.compile(
     r"wa(ifus?|tch party)\b|"
     r"yuri\b"
     r")| ?!? +(vs|X)\b| fest?\b)|"
-    r"lovelive(-(anime|fanfunfestival|news\.bsky\.social)|_staff|15th|['’]?d\b)|"
-    r"\b((dan|enjoy|hate|is thi|love|m(eet|is)|previou|think|variou|(?<!it )wa)s|"
-    r"draw(ing|s)?|thank you|li(ke[ds]?|nk li[kv]e)) love ?live\b|#lovelive(art|_)|"
-    r"\bsim_lovelive|\bLL(heardle|s(ip|taff))|"
-    # ラブライブ but not クラブライブ (club live)/イコラブライブ (Ikolab Live)/
-    # マジラブライブ (Maji Love Live)
+    r"lovelive(-(a(nime|s\.bushimo\.jp)|fanfunfestival|news\.bsky\.social)|_staff|15th|"
+    r"['’]?d\b)|\b((dan|enjoy|hate|is thi|love|m(eet|is)|previou|think|variou|"
+    r"(?<!it )wa)s|draw(ing|s)?|thank you|li(ke[ds]?|nk li[kv]e)) love ?live\b|"
+    r"#lovelive(art|_)|\bsim_lovelive|\bLL(heardle|s(ip|taff))|\bpre-love ?live\b|"
+    # ラブライブ but not クラブライブ (club live)/イコラブライブ (=LOVE live)/マジラブライブ (Maji Love Live)
     r"([^クコジ]|\b)(リンクライク)?ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)?|バー)|"
     # School idol
     r"スクールアイドル|\bschool ?idol ?((festiv|music)al|project)|"
@@ -112,7 +111,6 @@ LOVELIVE_RE = re.compile(
     r"聖澤悠奈|柊\s?摩央|"
     # Link! Like! Love Live! / Hasunosora
     # リンクラ but not リンクライン or katakana phrases with リンクラ character sequence
-    r"(^|[^\u30a1-\u30f6\u30fc])リンクラ(?!イ(ン|ブラリ)|ボ|ベル|ス|ッ|ブ)|"
     r"hasu\s?no\s?sora|\blink(ura|-like-lovelive)\b|蓮ノ(空|休日)|"
     r"^(?!(.|\n)*\broses?\b(.|\n)*$)((.|\n)*\bcerise\s?bouquet\b(.|\n)*)|"
     r"スリーズブーケ|dollches(tra(?!-art)|\b)|ドルケストラ|mira-cra\spark!?|"
@@ -125,14 +123,15 @@ LOVELIVE_RE = re.compile(
     r"錦上[^\S\r\n]?マイカ|令沢[^\S\r\n]?葵|紫輪[^\S\r\n]?みおん|"
     # Love Live! Bluebird
     # NOTE: "L(ove) High School" not included due to too many false positives
-    r"(\b|[^a-z])chaki[!！]|mi[x×]nori\s?[=＝]\s?tea|"
-    r"いきづら[い絵]部|イキヅ(ライブ|LIVE配信)|\bikizu( ?(live|raibu))?\b|love学院|知らんらんらじお|"
+    r"いきづら[い絵]部|イキヅ(ライブ|LIVE配信)|\bikizu( ?(live|raibu))?\b|love学院|"
+    r"知らんらんらじお|(\b|[^a-z])chaki[!！]|mi[x×]nori\s?[=＝]\s?tea|"
     r"(\b|[^a-z])(plumina|sh1on)(\b|[^a-z])|"
     r"高橋\s?ポルカ|麻布\s?麻衣|五桐\s?玲|駒形\s?花火|金澤\s?奇跡|調布\s?のりこ|春宮\s?ゆくり|"
     r"此花\s?輝夜|山田\s?真緑|佐々木\s?翔音|"
     r"\b(polka_lion|My_Mai_Eld|G_Akky304250|hanabistarmine|MiracleGoldSP|Noricco_U|"
     r"Yukuri_talk|Rollie_twinkle|LittlegreenCom|ShaunTheBunny)"
-    r"((?!(\.[a-z0-9]{2})+\b)[^a-z]|$)|regain again llllove|dou[- ]da[?？]? doing[!！]?|"
+    r"((?!(\.[a-z0-9]{2})+\b)[^a-z]|$)|regain again llllove|"
+    r"dou[- ]da[?？]? doing[!！]?|"
     # Concerts
     r"異次元フェス|ijigen\sfest?|#(llsat_|虹ブンブンビー_day[12])|"
     # Community stuff
@@ -257,10 +256,10 @@ EXCLUDE_RE = re.compile(
     # The great "I love live [something]" hoarde
     # - I('d/'ll/'ve)/he/she/they (both)/you (all)/y'all/you'll/we (all/both)/gotta/
     #   got to/have to/learn(ed) to/like to/who/anyone (else), people/ppl (in [some
-    #   place]), [plural word] that, my ... and sister/brother/wife/etc.
+    #   place]), my ... and sister/brother/wife/etc.
     r"\b((i|s?he|they)(['’]?(d|ve|ll))?|y(ou(['’]ll)?|(ou |['’])all)|gotta|who|"
     r"(we|they)( (all|both))?|(got|have|l(earn(ed)?|ike)) to|my .+and [a-z]+[a-z]|"
-    r"p(eople|pl)( in (the )?[a-z]+[a-z])?|[a-z]{3,}(?<!a)(?<!e)s( that)?|"
+    r"p(eople|pl)( in (the )?[a-z]+[a-z])?|[a-z]{3,}(?<!a)(?<!e)s|"
     r"anyone( else['’]s|( else)?( (o(ver|ut) )?t?here)?)?)"
     # - *ly/also/always/bloody/can't/cannot/(sure) do/does/don't (but not "don't do")/
     #   even/f*king/hecking/just/lowkey/never/not/still/(came/come/grew/have/
@@ -285,9 +284,13 @@ EXCLUDE_RE = re.compile(
     r"( [a-z]+[a-z]){1,2}( for\b| ?[^\w ]|$)|"
     # It's/What a ... to love live [something]
     r"(it['’]?s|what) a ([\w'’\-]+ +)+to love live [a-z]+[a-z]|"
-    # "love live music" at end of sentence but not "about/i(t)s/of/to love live music"
-    r"(?<!\babout )(?<!\bit['’]s )(?<!\bits )(?<!\bis )(?<!\bof )(?<!\bto )love live"
-    r" music *[^\w ]|"
+    # "love live music" at end of sentence but not "about/i(t)s/of/perform/to love live
+    # music"
+    r"(?<!\babout )(?<!\bit['’]s )(?<!\bits )(?<!\bis )(?<!\bof )(?<!\bperform )"
+    r"(?<!\bto )love live music *[^\w ]|"
+    # "used to love live music" (all other cases not caught by the Great "I love live
+    # [something]" Hoarde pattern)
+    r"\bused to love live music\b|"
     # Words/phrases starting with "love live"
     r"\blove live ("
     # - love live @ (usually songs ending with "Love" + "live @ [some place/event]")
@@ -380,8 +383,8 @@ EXCLUDE_RE = re.compile(
     r"[ty]our|"
     # - "love live ur" (usually typo of "long live ur") but not "Love Live UR ... card"
     r"ur (?!.*\bcards?\b)|"
-    # - love Live Wire
-    r"wire|"
+    # - love Live Wire/with you
+    r"wi(re|th you)|"
     # - love live bands/gigs/mealworms/performances/photos/shows/versions
     # - "Love Live in Paris" (typo of "Lover (Live from Paris)" album by Taylor Swift)
     r"(band|gig|mealworm|p(erformance|hoto)|show|version|in pari)s|"
@@ -653,6 +656,8 @@ EXCLUDE_RE = re.compile(
     # - "Tough Love" live
     # - "(The) Truth About Love" live (song by P!NK)
     r"t(ainted|eam|h(e( one i|y)|ing called)|ough|ruth about)|"
+    # - "[plural word] that/who love live" (but not "seems that Love Live")
+    r"[a-z]+(?<!seem)s (that|who)|"
     # - "Unconditional Love" live
     r"unconditional|"
     # - would love live [something] (all other cases not caught by the Great "I love
@@ -772,13 +777,13 @@ EXCLUDE_RE = re.compile(
 )
 FAKE_SCHOOL_IDOL_RE = re.compile(
     r"((high|middle|old)[ \-]?|(transmigrated into a|your) )school idol|"
-    r"[#@]\w*schoolidol\w*\b|school ?idol ?(story|book)\b",
+    r"(#\w*|@[a-z\-]*)schoolidol[\w\-]*\b|school ?idol ?(story|book)\b",
     re.IGNORECASE,
 )
 FAKE_YOHANE_RE = re.compile(
     r"(artist\b.+|project) yohane|yohane (parakan[aã]|dean lengol)|shaman ?king|"
     r"touhou|@[a-z0-9\-]*yohane[a-z0-9\-]*\.[a-z0-9]",
-    re.IGNORECASE
+    re.IGNORECASE,
 )
 HI_YOHANE_RE = re.compile(r"\bh(e(llo|y)|i+) yohane\b", re.IGNORECASE)
 FAKE_CATCHU_RE = re.compile(
@@ -813,6 +818,9 @@ FAKE_SOLDIER_GAME_RE = re.compile(
 )
 FAKE_GKSS_RE = re.compile(
     r"youtu\.be/gkss|forsch|(crash and|(?-i:[A-Z][a-z]+[a-z])) burn", re.IGNORECASE
+)
+FAKE_RINKURA_RE = re.compile(
+    r"[\u30a1-\u30fa]ー?リンクラ|リンクラ(イ(ン|ブラリ)|ベル|[スッブボ])"
 )
 BAD_KEYWORDS_RE = re.compile(
     # spam domains
@@ -939,6 +947,7 @@ def filter(post: dict) -> bool:
             ),
             CATCHU_RE.search(all_texts) and not FAKE_CATCHU_RE.search(all_texts),
             GKSS_RE.search(all_texts) and not FAKE_GKSS_RE.search(all_texts),
+            "リンクラ" in all_texts and not FAKE_RINKURA_RE.search(all_texts),
             CHARACTERS_EN_RE.search(all_texts),
             post_has_media_embeds(post)
             and (
