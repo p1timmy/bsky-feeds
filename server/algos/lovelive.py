@@ -15,14 +15,14 @@ LOVELIVE_NAME_EN_RE = re.compile(
 )
 LOVELIVE_RE = re.compile(
     # "Love Live" + other related words
-    r"(?<!@)love[^\S\r\n]?live(([^\S\r\n]|[!:])*("
+    r"(?<!@)love([^\S\r\n]live([^\S\r\n]|[!:])+|live([^\S\r\n]|[!:])*)("
     r"a(cc((oun)?ts?|s)|(d|fter school|rcade|u)\b|ll[ -]stars|pps?\b|n(d idol|ime))|"
     r"(tribute )?album\b|"
     r"b(adges?\b|irthdays?|lue ?bird)|"
     r"c(anon|ollab|yber|(d|osplay|haracter)s?)|"
     r"d(a(nce(s| groups?)|ys)|oujin|rama\b)|"
     r"heardle|"
-    r"e(n|pisodes?|ra|tc)\b|-esque\b|"
+    r"e(n|pisodes?|ra|tc)\b|"
     r"f(a(n(art|dom|s)?|vorites)\b|(anf)?ics?\b|es ?2?\b|i(gur(in)?es?|nals)|ranchise)|"
     r"g(ang\b|i(f|rls?)|lobal|rid)\b|(rhythm )?game\b|"
     r"ha([ds]\b|su)|"
@@ -41,8 +41,8 @@ LOVELIVE_RE = re.compile(
     r"u['’]s|"
     r"vn\b|"
     r"wa(ifus?|tch party)\b|"
-    r"yuri\b"
-    r")| ?!? +(vs|X)\b| fest?\b)|"
+    r"yuri\b)|"
+    r"love[^\S\r\n]?live( ?!? +(vs|X)| fest?|-esque)\b|"
     r"lovelive(-(a(nime|s\.bushimo\.jp)|fanfunfestival|news\.bsky\.social)|_staff|15th|"
     r"['’]?d\b)|\b((dan|enjoy|hate|is thi|love|m(eet|is)|previou|think|variou|"
     r"(?<!it )wa)s|draw(ing|s)?|thank you|li(ke[ds]?|nk li[kv]e)) love ?live\b|"
@@ -106,8 +106,6 @@ LOVELIVE_RE = re.compile(
     r"澁谷\s?かのん|唐\s?可可|嵐千\s?砂都|平安名\s?すみれ|葉月\s?恋|桜小路\s?きな子|米女\s?メイ|"
     r"若菜\s?四季|鬼塚\s?(夏美|冬毬)|ウィーン・?マルガレーテ|"
     r"ク([ウゥ]ク[ウゥ]ちゃ|ーカー(?!ニョ))|oninatsu|オニナッツ|sumikeke|"
-    r"sunny\s?pas(sion)?(\b|[^a-z\u00C0-\u024F\u1E00-\u1EFF])|"
-    r"sunnypa(\b|[^a-z\u00C0-\u024F\u1E00-\u1EFF])|"
     r"聖澤悠奈|柊\s?摩央|"
     # Link! Like! Love Live! / Hasunosora
     # リンクラ but not リンクライン or katakana phrases with リンクラ character sequence
@@ -149,6 +147,7 @@ YOHANE_RE = re.compile(r"\b(?<!@)yohane(?!(-label|.*mbatiza[jt]i))\b", re.IGNORE
 CATCHU_RE = re.compile(
     r"([^A-Za-z$\-]|^)(C[Aa]t[Cc][Hh]u|catchu|CATCHU)!?([^A-Za-z\-]|\b)"
 )
+SUNNYPA_RE = re.compile(r"(\b|[^a-z])sunny( ?pas(sion)?|pa)(\b|[^a-z])", re.IGNORECASE)
 GKSS_RE = re.compile(
     r"([^a-z=]|^)(?-i:GKSS|gkss)([^a-z]|\b)|"
     r"([^a-z]|\b)(burn[:： ]born|wake[:：]woke)([^a-z]|\b)",
@@ -604,12 +603,13 @@ EXCLUDE_RE = re.compile(
     r"(whole )?lotta|"
     # - "Mad Love" live (usually album by Linda Ronstadt)
     # - Maji Love Live (live concerts by ST☆RISH from Uta no Prince-sama)
+    # - "Melty Love" live (visual kei song by Shazna)
     # - "Message of Love" live (song by The Pretenders)
     # - "Message to Love" live (song by Jimi Hendrix)
     # - Mike Love live (American reggae artist)
     # - "Music Was My First Love" live (song by John Miles)
     # - "My True Love" live (song by The Promise)
-    r"m(a(d|ji)|essage (of|to)|ike|usic was my first|y true)|"
+    r"m(a(d|ji)|e(lty|ssage (of|to))|ike|usic was my first|y true)|"
     # - "Network Love" live (K-pop song by Seventeen)
     # - "No Loss, No Love" live (song by Spiritbox)
     # - "No Ordinary Love" live (song by Sade)
@@ -808,9 +808,12 @@ FAKE_CATCHU_RE = re.compile(
     # - catchu p (typo of "catch up")
     # - catchu with (typo of "catchup with")
     r"catchu +((@|at) the|all|catchme|later|ricky|slippin|the future|"
-    r"u?p\b(?! (close|next)))|\b(to )?catchu with|\bpinky[ -]catchu\b",
+    r"u?p\b(?! (close|next)))|\b(to )?catchu with|\bpinky[ -]catchu\b|"
+    # - Lartiste (some French artist who has a song titled "Catchu")
+    r"\blartiste\b",
     re.IGNORECASE,
 )
+FAKE_SUNNYPA_RE = re.compile(r"\b(haru|urara)\b", re.IGNORECASE)
 FAKE_SOLDIER_GAME_RE = re.compile(
     r"\b(alien|(an?|the)( \w+\w){,5}|child|h(is|er)|m(ilitar)?y|p(lastic|sycho)|"
     r"s(tar|uper)|t(heir|oy)|winter) soldier game(?! cover)",
@@ -837,7 +840,7 @@ BAD_KEYWORDS_RE = re.compile(
     r"zort\.my/|"
     # NSFW keywords
     r"bds&?m|c(am ?girl|haturbate|ock(s|\b)|um(ming|shot)?([^a-z]|\b))|di(aper|ck|ldo)|"
-    r"fansly|(futanar|henta)i|jock[sa]traps?|n(ude|ipple)|p(enis|regnant)|"
+    r"fansly|(futanar|henta)i|jock[sa]traps?|n(ude|ipple)|p(e(do|nis)|regnant)|"
     r"s(ex([^a-z]|\b)|lut))|#("
     # NSFW hashtags
     r"ecchi|nsfw|porn|r18|"
@@ -948,6 +951,7 @@ def filter(post: dict) -> bool:
             CATCHU_RE.search(all_texts) and not FAKE_CATCHU_RE.search(all_texts),
             GKSS_RE.search(all_texts) and not FAKE_GKSS_RE.search(all_texts),
             "リンクラ" in all_texts and not FAKE_RINKURA_RE.search(all_texts),
+            SUNNYPA_RE.search(all_texts) is not None and not FAKE_SUNNYPA_RE.search(all_texts),
             CHARACTERS_EN_RE.search(all_texts),
             post_has_media_embeds(post)
             and (
