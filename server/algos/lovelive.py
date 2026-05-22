@@ -804,10 +804,11 @@ FAKE_CATCHU_RE = re.compile(
     # - (Ricky when I) catchu Ricky
     # - (Don't) catchu slippin (up)
     # - Catchu The Future
+    # - Catchu Squishychu (https://klipy.com/gifs/catchu-squishychu)
     # - "catchu up" but not "CatChu up close/next"
     # - catchu p (typo of "catch up")
     # - catchu with (typo of "catchup with")
-    r"catchu +((@|at) the|all|catchme|later|ricky|slippin|the future|"
+    r"catchu +((@|at) the|all|catchme|later|ricky|s(quishychu|lippin)|the future|"
     r"u?p\b(?! (close|next)))|\b(to )?catchu with|\bpinky[ -]catchu\b|"
     # - Lartiste (some French artist who has a song titled "Catchu")
     r"\blartiste\b",
