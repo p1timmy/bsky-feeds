@@ -586,6 +586,8 @@ EXCLUDE_RE = re.compile(
     # - "It Must Be Love" live (song by Madness)
     # - "It's Only Love" live (usually covers of song by The Beatles)
     r"I( feel|['’]m outta|t( must be|['’]s only))|"
+    # - "Jungle Love" live (song by Morris Day & The Time)
+    r"jungle|"
     # - "La La Love" live (K-pop song by NCT DREAM)
     # - laugh/let (that)/live love live
     # - "Let There Be Love" live
