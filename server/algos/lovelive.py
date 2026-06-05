@@ -31,7 +31,7 @@ LOVELIVE_RE = re.compile(
     r"jumpscare|"
     r"lieder|"
     r"m(aybe|e(mes?|ntion(ed)?|rch(andise)?|troidvania)|o(ots|vies?)|vs?)\b|"
-    r"n(esoberis?|iji(gasaki)?)|"
+    r"n(esoberis?|i(ji(gasaki)?|ght\b))|"
     r"o(c(g|s?\b)|mf?g|omf(ie)?s?|p\b|r(?! die)\b|s(his?|t)|taku|utfits?)|"
     r"p(ins?\b|l(aylist|ush(ies?)?))|"
     r"referenc(es?|ia)|"
@@ -138,7 +138,7 @@ LOVELIVE_RE = re.compile(
     # Community stuff
     r"\bteam onibe\b|\bonib(e|ased)([^a-z’]|$)|(schoolido\.lu|idol\.st)(?!/user/)|"
     r"#HasuTH_Tran|([^a-z]|\b)OurSIF([^a-z]|$)|\bidoltober|#LL_Calendar_Collab_2026|"
-    r"\bloveliveradio\.ca|puchiball|lovelivematocha\.com",
+    r"\bloveliveradio\.ca|puchiball|lovelivematocha\.com|mypick\.rurino\.dev",
     re.IGNORECASE,
 )
 SCHOOL_IDOL_RE = re.compile(r"\bschool ?idol", re.IGNORECASE)
@@ -369,8 +369,9 @@ EXCLUDE_RE = re.compile(
     r"r(adio|e(acti(ng|ons?)|cordings?|nditions)|ock|ust)|"
     # - love live service/sport(s)/streaming/stream(s)/strings
     # - love Live Score (some sports app)
+    # - Love Live Serve(r) (some random YTuber)
     # - Love Live Sweets (unrelated local bakery in New Jersey)
-    r"s(core|ervice|ports?|tr(eam(ing|s)?|ings)|weets)|"
+    r"s(core|erv(er?|ice)|ports?|tr(eam(ing|s)?|ings)|weets)|"
     # - love live tables/tapes/television/texting/theater/trees/tweeting
     # - "love live TV" but not "Love Live TV anime"
     # - love "Live to Live" (song from Hazbin Hotel S2)
@@ -557,13 +558,14 @@ EXCLUDE_RE = re.compile(
     # - stuff ending with "your love live":
     #   - "All Your Love" live (usually song by Otis Rush or any song name ending with
     #     that phrase)
+    #   - "Bring Your Love" live (song by Madonna)
     #   - "Come And Get Your Love" live (song by Redbone)
     #   - "[song name ending with "For Your Love"]" live
     #   - "Inside Your Love" live
     #   - "How Deep Is Your Love" live (usually song by Bee Gees)
     #   - in your love live (sometimes typo of "in your love life")
     #   - "Sunshine of Your Love" live (usually song by Cream)
-    r"(all|come (and|&) get|for|how deep is|in(side)?|sunshine of) your|"
+    r"(all|bring|come (and|&) get|for|how deep is|in(side)?|sunshine of) your|"
     # - compassion/happiness/hope/joy/kindness/memory/pain/peace/unity and
     #   ([God/someone]'s) love live
     r"(compassion|h(appiness|ope)|joy|kindness|memory|p(ain|eace)|unity),?"
@@ -623,8 +625,9 @@ EXCLUDE_RE = re.compile(
     # - "Nothing Without Your Love" live (K-pop song by (Seok-)Jin)
     r"n(etwork|o( (loss,? no|ordinary)|thing without your))|"
     # - "Pirate Love" live (song by The Heartbreakers)
+    # - "Plastic Love" live (song by Mariya Takeuchi)
     # - "Punch-Drunk Love" live (romantic movie title)
-    r"p(irate|unch[ -]drunk)|"
+    r"p(irate|lastic|unch[ -]drunk)|"
     # - Quest Love live (famous drummer/DJ)
     r"quest|"
     # - "Radar Love" live (song by Golden Earring)
@@ -712,8 +715,8 @@ EXCLUDE_RE = re.compile(
     r" live( .+)? (music|comedy)\b|"
     # can/will love live on
     r"(can|will) love live on|"
-    # love liver (and/with) onions/spinach, love liver disease/pate
-    r"love liver(( (and|&|with)|,)? (onions|spinach)| (disease|p[aâ]t[eé]))|"
+    # love liver (and/with) onions/sausage/spinach, love liver disease/pate
+    r"love liver(( (and|&|with)|,)? (onions|s(ausage|pinach))| (disease|p[aâ]t[eé]))|"
     # "love liver(s and)" at beginning of sentence/after emoji and not before "is/are"
     r"(^|[^\w ] *)love liver(s and)?(?! (are|is))\b|"
     # whether you('re) ... or (just) love live [something]
