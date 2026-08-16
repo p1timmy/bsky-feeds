@@ -874,7 +874,7 @@ BAD_KEYWORDS_RE = re.compile(
     r"\b(arxiv\b|(europesays|newsbeep)\.com\b|zmedia\.(twitren\.com|jp)\b|"
     # political keywords often used in "love live"/"Mia Taylor" false positives
     r"\b(amerikkka|charlie ?kirk|D(emocrats?|JT)\b|epstein|GOP\b|hegseth|isis\b|"
-    r"MAGAs?\b|netanyahu|R(epublicans?|FK)|trumps?\b)|"
+    r"MAGAs?\b|netanyahu|R(epublicans?|FK)|trumps?\b|uspolitics)|"
     # Gaza war victim fundraiser spam
     r"a(b(ed|delfattah)|mal\b)|ABD-GFM|GFM-ABD|mahmo?u?d|even (\$5|5 dollars)|"
     r"chuffed\.org|tinyurl\.com/[\w\-]*(a(boamro|moon)|moh)|"
