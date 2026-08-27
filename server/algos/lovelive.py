@@ -975,6 +975,12 @@ def filter(post: dict) -> bool:
     if not all_texts:
         return False
 
+    if record.reply and (
+        "ALT: Kasumi Nakasu's Adorable Pillow Dive" in all_texts
+        or "ALT: Anime Hand Touching Globe" in all_texts
+    ):
+        return False
+
     return not BAD_KEYWORDS_RE.search(all_texts) and any(
         (
             LOVELIVE_NAME_EN_RE.search(all_texts) and not EXCLUDE_RE.search(all_texts),
