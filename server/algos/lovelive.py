@@ -2,15 +2,17 @@ import logging
 import re
 
 from atproto_client import models
+from click import style
 
 from server import config
+from server.logger import log_post
 from server.post_utils import get_post_texts, post_has_media_embeds
 
 logger = logging.getLogger(__name__)
 
 LOVELIVE_NAME_EN_RE = re.compile(
     r"([^a-z0-9_=＝]|^-? *)love ?live($|[^a-z0-9\-]|rs?([^a-z0-9_]|\b)|e{2,19}\b)",
-    re.IGNORECASE
+    re.IGNORECASE,
 )
 LOVELIVE_RE = re.compile(
     # "Love Live" + other related words
@@ -993,44 +995,85 @@ def filter(post: dict) -> bool:
         "ALT: Kasumi Nakasu's Adorable Pillow Dive" in all_texts
         or "ALT: Anime Hand Touching Globe" in all_texts
     ):
+        # Too many posts with either GIF replying to NSFW posts
         return False
 
-    return not BAD_KEYWORDS_RE.search(all_texts) and any(
+    def has_match(pattern: re.Pattern) -> bool:
+        return pattern.search(all_texts) is not None
+
+    all_texts_lower = all_texts.lower()
+
+    # Tuple of tuples containing just 2 bools: 1st bool for keyword match, 2nd bool
+    # for false positive match
+    #
+    # If there is a (True, False) tuple, post gets added to feed unless the 2nd set
+    # of checks below (`to_be_added`) ends up being False.
+    #
+    # If there is a (True, True) tuple but no (True, False) tuples and `to_be_added`
+    # is False, it gets logged as a likely false positive but not added to feed.
+    #
+    # Post will always be added if `to_be_added` is True or skipped if otherwise.
+    hit_fake_results = (
+        (has_match(LOVELIVE_NAME_EN_RE), has_match(EXCLUDE_RE)),
         (
-            LOVELIVE_NAME_EN_RE.search(all_texts) and not EXCLUDE_RE.search(all_texts),
-            SCHOOL_IDOL_RE.search(all_texts)
-            and FAKE_SCHOOL_IDOL_RE.search(all_texts) is None
-            # @scarletrhapsody.com posts too many "school idol" false positives
-            and author != SCARLETRHAPSODY_COM,
-            SUKUFEST_RE.search(all_texts) and "scrum" not in all_texts.lower(),
-            SOLDIER_GAME_RE.search(all_texts)
-            and not FAKE_SOLDIER_GAME_RE.search(all_texts),
-            LOVELIVE_RE.search(all_texts),
-            YOHANE_RE.search(all_texts)
-            and not FAKE_YOHANE_RE.search(all_texts)
-            and not (
-                # Exclude replies (usually by @kanto141.bsky.social) that say "Hi Yohane"
+            has_match(SCHOOL_IDOL_RE),
+            (has_match(FAKE_SCHOOL_IDOL_RE) or author == SCARLETRHAPSODY_COM),
+        ),
+        (has_match(SOLDIER_GAME_RE), has_match(FAKE_SOLDIER_GAME_RE)),
+        (
+            has_match(YOHANE_RE),
+            has_match(FAKE_YOHANE_RE)
+            or (
+                # Skip replies (usually by @kanto141.bsky.social) that say "Hi Yohane"
                 record.reply is not None
-                and HI_YOHANE_RE.search(all_texts)
+                and has_match(HI_YOHANE_RE)
             ),
-            CATCHU_RE.search(all_texts) and not FAKE_CATCHU_RE.search(all_texts),
-            GKSS_RE.search(all_texts) and not FAKE_GKSS_RE.search(all_texts),
-            "リンクラ" in all_texts and not FAKE_RINKURA_RE.search(all_texts),
-            SUNNYPA_RE.search(all_texts) is not None and not FAKE_SUNNYPA_RE.search(all_texts),
-            "lttf" in all_texts.lower() and not FAKE_LTTF_RE.search(all_texts),
-            CHARACTERS_EN_RE.search(all_texts),
-            post_has_media_embeds(post)
-            and (
-                (author == NIGAI58_BSKY_SOCIAL and "ちゃん" in all_texts)
-                or (author == MMMINAMI_BSKY_SOCIAL and "うみこと" in all_texts)
-                or (
-                    author == VANILLAKUNIKIDA_BSKY_SOCIAL
-                    and VANILLAKUNIKIDA_RE.search(all_texts) is not None
-                )
-            ),
+        ),
+        (has_match(GKSS_RE), has_match(FAKE_GKSS_RE)),
+        (
+            "catchu" in all_texts_lower,
+            not has_match(CATCHU_RE) or has_match(FAKE_CATCHU_RE),
+        ),
+        (has_match(SUNNYPA_RE), has_match(FAKE_SUNNYPA_RE)),
+        ("リンクラ" in all_texts, has_match(FAKE_RINKURA_RE)),
+        ("lttf" in all_texts_lower, has_match(FAKE_LTTF_RE)),
+    )
+
+    # The 2nd round of checks ultimately decides which posts will be added to the feed
+    to_be_added = has_match(BAD_KEYWORDS_RE) is False and (
+        (True, False) in hit_fake_results
+        or any(
             (
-                author == SPLATER765_BSKY_SOCIAL
-                and all_texts.lower().strip().endswith("everyone!!")
-            ),
+                has_match(SUKUFEST_RE) and "scrum" not in all_texts_lower,
+                has_match(LOVELIVE_RE),
+                has_match(CHARACTERS_EN_RE),
+                post_has_media_embeds(post)
+                and (
+                    (author == NIGAI58_BSKY_SOCIAL and "ちゃん" in all_texts)
+                    or (author == MMMINAMI_BSKY_SOCIAL and "うみこと" in all_texts)
+                    or (
+                        author == VANILLAKUNIKIDA_BSKY_SOCIAL
+                        and has_match(VANILLAKUNIKIDA_RE)
+                    )
+                ),
+                (
+                    author == SPLATER765_BSKY_SOCIAL
+                    and all_texts_lower.strip().endswith("everyone!!")
+                ),
+            )
         )
     )
+
+    if (
+        to_be_added is False
+        and (True, True) in hit_fake_results
+        and "スプリンクラー" not in all_texts  # too many false positives to log
+        and "catchup" not in all_texts_lower  # too many false positives to log
+    ):
+        log_post(
+            post,
+            style("Skipped likely false positive post", fg="green", bold=True),
+            logger=logger,
+        )
+
+    return to_be_added
