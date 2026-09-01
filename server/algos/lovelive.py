@@ -3,9 +3,8 @@ import re
 
 from atproto_client import models
 
-# from time import perf_counter
 from server import config
-from server.algos._base import get_post_texts, post_has_media_embeds
+from server.post_utils import get_post_texts, post_has_media_embeds
 
 logger = logging.getLogger(__name__)
 

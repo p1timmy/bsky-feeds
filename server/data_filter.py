@@ -10,18 +10,11 @@ from peewee import IntegrityError, Model
 
 from server import data_stream
 from server.algos import filters
-from server.algos._base import get_post_texts
 from server.database import Feed, Post, db
+from server.logger import log_post
 
 _ADULT_LABELS = ("porn", "nudity", "sexual", "sexual-figurative")
 _BSKY_MOD_SERVICE = "did:plc:ar7c4by46qjdydhdevvrndac"
-_EMBED_TYPES = {
-    models.AppBskyEmbedImages.Main: "image",
-    models.AppBskyEmbedVideo.Main: "video",
-    models.AppBskyEmbedExternal.Main: "link",
-    models.AppBskyEmbedRecord.Main: "quote",
-    models.AppBskyEmbedRecordWithMedia.Main: "media+quote",
-}
 
 _MAX_COMMIT_LAG = timedelta(seconds=0.25)
 _ARCHIVED_THRESHOLD = timedelta(days=1)
@@ -88,39 +81,15 @@ def operations_callback(ops: defaultdict) -> bool:
 
         if feeds:
             # print post to show that it will be added to feeds
-            all_texts = [
-                f"  {text.replace("\n", style("↵", fg="blue")).replace("\r", "").strip()}"
-                for text in get_post_texts(created_post)
-            ]
-            if all_texts:
-                all_texts_str = "\n".join(all_texts)
-            else:
-                all_texts_str = style("  <no text>", fg="blue")
-
-            post_is_reply = bool(record.reply)
-            logger.info(
-                "NEW POST "
-                "[created_at=%s]"
-                "[uri=%s]"
-                "[embed=%s]"
-                "[is_reply=%s]"
-                "[labels=%s]"
-                "[lang=%s]"
-                "[feeds=%s]"
-                "\n%s",
-                record.created_at,
-                created_post["uri"],
-                _EMBED_TYPES.get(type(record.embed)),
-                post_is_reply,
-                ",".join(labels) or None,
-                ",".join(record.langs) if record.langs else None,
-                ",".join(feed.algo_name for feed in feeds),
-                all_texts_str,
+            log_post(
+                created_post,
+                "NEW POST",
+                extra_fields={"feeds": ",".join(feed.algo_name for feed in feeds)},
             )
             logger.debug(created_post)
 
             reply_root = reply_parent = None
-            if post_is_reply:
+            if record.reply:
                 reply_root = record.reply.root.uri
                 reply_parent = record.reply.parent.uri
 
