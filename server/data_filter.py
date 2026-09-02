@@ -83,7 +83,8 @@ def operations_callback(ops: defaultdict) -> bool:
             # print post to show that it will be added to feeds
             log_post(
                 created_post,
-                "NEW POST",
+                style("NEW POST", bold=True),
+                logger=logger,
                 extra_fields={"feeds": ",".join(feed.algo_name for feed in feeds)},
             )
             logger.debug(created_post)
