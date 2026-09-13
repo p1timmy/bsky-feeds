@@ -12,6 +12,7 @@ from server import data_stream
 from server.algos import filters
 from server.database import Feed, Post, db
 from server.logger import log_post
+from server.post_utils import get_post_labels
 
 _ADULT_LABELS = ("porn", "nudity", "sexual", "sexual-figurative")
 _BSKY_MOD_SERVICE = "did:plc:ar7c4by46qjdydhdevvrndac"
@@ -60,9 +61,7 @@ def operations_callback(ops: defaultdict) -> bool:
         # - porn = Adult Content (Explicit sexual images)
         # - nudity = Non-Sexual Nudity
         # - sexual = Adult Content (Does not include nudity)
-        labels: list[str] = []
-        if record.labels and record.labels.values is not None:
-            labels += [value.val for value in record.labels.values]
+        labels: list[str] = get_post_labels(created_post)
 
         pr0n = nudity = sexual = False
         if "porn" in labels:

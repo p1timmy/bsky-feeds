@@ -2,6 +2,7 @@ import re
 from typing import Any
 
 from atproto import models
+from atproto_client.models.dot_dict import DotDict
 
 TWEET_URL_RE = re.compile(r"^https?://(x|twitter).com/\w+/status/[0-9]+.*$")
 YOUTUBE_URL_RE = re.compile(r"^https?://(([a-z]+\.)?youtube\.com|youtu\.be)/.+$")
@@ -75,7 +76,13 @@ def get_post_texts(post: dict, include_media=True) -> list[str]:
 
 def get_post_labels(post: dict[str, Any]) -> list[str]:
     record: models.AppBskyFeedPost.Record = post["record"]
-    if record.labels is not None:
-        return [value.val for value in record.labels.values]
+    if record.labels is None:
+        return []
+    elif isinstance(record.labels, DotDict):
+        # Some posts have `DotDict` objects instead of the expected model for
+        # `com.atproto.label.defs#selfLabels`, the fact `DotDict` already has a
+        # `values` method prevents access to "values" key
+        labels_dict = record.labels.to_dict()
+        return [value.get("val", {}) for value in labels_dict.get("values", [])]
 
-    return []
+    return [value.val for value in record.labels.values]
