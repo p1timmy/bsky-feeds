@@ -30,18 +30,18 @@ LOVELIVE_RE = re.compile(
     r"l(ieder|ovelive\b)|"
     r"m(aybe|e(mes?|ntion(ed)?|rch(andise)?|troidvania)|o(ots|vies?)|vs?)\b|"
     r"n(esoberis?|i(ji(gasaki)?|ght\b))|"
-    r"o(c(g|s?\b)|mf?g|omf(ie)?s?|p\b|r(?! die)\b|s(his?|t)|taku|utfits?)|"
+    r"o(c(g|s?\b)|mf?g|omf(ie)?s?|p\b|r(?! die)\b|s(his?|t)|taku|utfits?|va\b)|"
     r"p(ins?\b|hotoshoots?|l(aylist|ush(ies?)?))|"
-    r"referenc(es?|ia)|"
+    r"re(ferenc(es?|ia)|watch)|"
     r"s(c(hool ?idol|reen ?shots?\b)|e(ction|ries|iyuus?)|hips?\b|ip([^a-z]|\b)|ky|"
     r"(ifs)?orter|o(los?\b|ng\b|undtrack)|p(inoff|otted)|ta(ff|rt[ :]dash|ys\b)|"
     r"u(b ?units?|nshine|per ?star))|"
-    r"t(cg|h(emed?|ing)\b|wt\b)|"
+    r"t(cg|h(emed?|ing)\b|ier ?list\b|wt\b)|"
     r"u['’]s|"
     r"v(as?|ids?|n)\b|"
     r"wa(ifus?|tch party)\b|"
     r"yuri\b)|"
-    r"love[^\S\r\n]?live( ?!? +(vs|X)| fest?|-esque)\b|(?<!\bI )love ?live games|"
+    r"love[^\S\r\n]?live( ?!? +(vs|X)| fest?|-esque)\b|"
     r"lovelive(-(a(nime|s\.bushimo\.jp)|fanfunfestival|news\.bsky\.social)|_staff|"
     r"#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
     # related word + Love Live
@@ -121,7 +121,6 @@ LOVELIVE_RE = re.compile(
     # NOTE: "L(ove) High School" not included due to too many false positives
     r"いきづら[い絵]部|イキヅ(ライブ|LIVE配信)|\bikizu( ?(live|raibu))?\b|love学院|"
     r"知らんらんらじお|(^|[^a-z'’])chaki[!！]|mi[x×]nori\s?[=＝]\s?tea|"
-    # r"知らんらんらじお|(\b|[^a-z])chaki[!！]|mi[x×✕]nori\s?[=＝]\s?tea|"
     r"(\b|[^a-z])(plumina|sh1on)(\b|[^a-z])|"
     r"高橋\s?ポルカ|麻布\s?麻衣|五桐\s?玲|駒形\s?花火|金澤\s?奇跡|調布\s?のりこ|春宮\s?ゆくり|"
     r"此花\s?輝夜|山田\s?真緑|佐々木\s?翔音|"
@@ -483,6 +482,7 @@ EXCLUDE_RE = re.compile(
     #   - "Definition of Love" live (song by Naomi Sharon)
     #   - "Fire of Love" live (usually album by The Gun Club)
     #   - "Genius of Love" live (song by Tom Tom Club)
+    #   - "Glory of Love" live (usually covers of song by Benny Goodman)
     #   - "Hazards of Love" live (album by The Decemberists)
     #   - "In The Name Of Love" live (usually "Stop! In The Name Of Love" or "Pride (In
     #     The Name Of Love)")
@@ -508,7 +508,7 @@ EXCLUDE_RE = re.compile(
     #   - "Victim of Love" live (song by Eagles)
     #   - "Vision of Love" live (song by Mariah Carey)
     #   - "Wheels of Love" live (usually "18 Wheels of Love" by Drive By Truckers)
-    r"(a(ct|ll is full)|b(ook|roken)|c(aravan|rush)|fire|genius|h(azards|ouse)|"
+    r"(a(ct|ll is full)|b(ook|roken)|c(aravan|rush)|fire|g(enius|lory)|h(azards|ouse)|"
     r"d(ance me to the end|e(ath|finition))|in the name|l(exicon|ight)|p(ath|risoner)|"
     r"m(iracle|ost exalted potentate|ystery)|(any|sunday|[tw]hat|this) kind|"
     r"r(hythm|ock)|s(atellite|hot|ongs)|t(he (look|meaning)|unnel)|vi(ctim|sion)|"
@@ -675,10 +675,11 @@ EXCLUDE_RE = re.compile(
     # - spread love live
     # - Stone Love live (usually Jamaican DJ group)
     # - "Strange Love" live (usually song by Depreche Mode or album by T.S.O.L.)
+    # - "Stubborn Love" live (song by The Lumineers)
     # - "Super Duper Love" live (song by Sugar Billy or Joss Stone)
     # - "Sweet Love" live (usually song by Anita Baker)
     r"s(a(me old|v(age|e the))|exy|imon|how me|kinny|o(me kinda|ul)|p(iritual|read)|"
-    r"t(one|range)|uper duper|weet)|"
+    r"t(one|range|ubborn)|uper duper|weet)|"
     # - "[Name]'s love live" (usually typo of "[Name]'s love life") but not "it's
     # - love live"
     r"\w+(?<!it)['’]s|"
@@ -742,8 +743,8 @@ EXCLUDE_RE = re.compile(
     # if you (live in/near/around [place name]) ... and/but love live (...) music/comedy
     r"((you(\s+liv|['’]r)e\s+(in|near|around)|if you)\s+.+\s+)?(and|but)\s+love"
     r" live( .+)? (music|comedy)\b|"
-    # can/will love live on
-    r"(can|will) love live on|"
+    # can/that/will love live on
+    r"(can|that|will) love live on|"
     # "her love live" (usually typo of "her love life") but not "her Love Live"
     r"\bher (?-i:love live|LOVE LIVE|love LIVE|LOVE live)\b|"
     # love liver (and/with/,) bacon/onions/sausage/spinach, love liver disease/pate
@@ -765,7 +766,7 @@ EXCLUDE_RE = re.compile(
     r"i([f'’]|n(?!(?-i: [A-Z]\w+))|st?)?|kind(a| of)|ne(eds|ver)|on|[a-z]{2,}ly|"
     r"ur .*cards?|m(a(de|k(es?|ing)|y( ?be| (have|not)))|usic (i|wa)s)|s(iempre|ongs?)|"
     r"trie[ds]|w(as|hat|i(ll|th))|y)\b)|([^\w\s'’,:]+? +|^)(love )+live,)"
-    r"( #?[a-z\-'’]+)+ ?([^\w ]|$)|"
+    r"( #?[a-z\-'’\u00C0-\u024F\u1E00-\u1EFF]+)+ ?([^\w ]|$)|"
     # "love love live(r)" at beginning of sentence
     r"([^\w\s]+? *|^)love (love )+liver?\b|"
     # ... and love live(s) here/there
@@ -803,7 +804,7 @@ EXCLUDE_RE = re.compile(
     r"[a-z]+(daymo(rning|tivation)|vibes[a-z]*))\b|"
     # Random artists frequently mentioned in "love live (music)" false positive posts
     r"\b(d(['’]angelo|uran ?duran)|floyd|grateful dead|hot mulligan|john lewis|kahan|"
-    r"marley|nick cave|oasis|phish)\b|"
+    r"marley|n(eil young|ick cave)|oasis|phish)\b|"
     # Venue of Love Live (rock music) Festival
     r"\bblackpool|"
     # Macclesfield, UK has a design company called LOVELIVE
@@ -850,7 +851,7 @@ FAKE_YOHANE_RE = re.compile(
 HI_YOHANE_RE = re.compile(r"\bh(e(llo|y)|i+) yohane\b", re.IGNORECASE)
 FAKE_MIA_TAYLOR_RE = re.compile(
     r"(@|[a-z0-9_]+)mia ?taylor|\bmia ?taylor[a-z0-9_]+|"
-    r"((^|\n|post |video )by:? )mia taylor",
+    r"((^|\n|post |video )by:? )mia taylor|cookie girl",
     re.IGNORECASE,
 )
 FAKE_LIELLA_RE = re.compile(
