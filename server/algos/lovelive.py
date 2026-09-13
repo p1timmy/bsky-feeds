@@ -10,10 +10,7 @@ from server.post_utils import get_post_texts, post_has_media_embeds
 
 logger = logging.getLogger(__name__)
 
-LOVELIVE_NAME_EN_RE = re.compile(
-    r"([^a-z0-9_=＝]|^-? *)love ?live($|[^a-z0-9\-]|rs?([^a-z0-9_]|\b)|e{2,19}\b)",
-    re.IGNORECASE,
-)
+LOVELIVE_NAME_EN_RE = re.compile(r"love ?live(rs?|e{2,19}\b)?", re.IGNORECASE)
 LOVELIVE_RE = re.compile(
     # "Love Live" + other related words
     r"(?<!@)love([^\S\r\n]live([^\S\r\n]|[!:])+|live([^\S\r\n]|[!:])*)("
@@ -51,8 +48,7 @@ LOVELIVE_RE = re.compile(
     r"['’]?d\b)|\b((dan|enjoy|hate|is thi|love|m(eet|is)|previou|th[ai]nk|variou|"
     r"(?<!it )wa)s|(cosplay|draw)(ing|s)?|thank you|li(ke[ds]?|nk li[kv]e)|peak|"
     r"gundam\W? and) love ?live\b|\b(pre|non)-love ?live\b|\bsim_lovelive|"
-    # ラブライブ but not クラブライブ (club live)/イコラブライブ (=LOVE live)/マジラブライブ (Maji Love Live)
-    r"([^クコジ]|\b)(リンクライク)?ラブライブ|ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)|バー)|"
+    r"リンクライクラブライブ|ラブライ(ブ[!！\s]*(サンシャイン|スーパースター)|バー)|"
     # School idol
     r"スクールアイドル|\bschool ?idol ?((festiv|music)al|project)|"
     # Games
@@ -60,8 +56,6 @@ LOVELIVE_RE = re.compile(
     r"\bLL(_|official-)cardgame|#ラブカ\b|ラブカ感謝祭|"
     # ぷちぐる but not ぷちぐるみ
     r"ぷちぐる([^み]|$)|puchiguru\b|"
-    # スクスタ/スクミュ but not words with マスク/デ(ィ)スク/スタンド/スタンプ/スタイル/スタッフ
-    r"(^|[^\u30a1-\u30f6\u30fc])スク(スタ(?!ン[ドプ]|イル|ッフ|ート)|ミュ)|"
     # Love Live! School Idol Project
     # NOTE: Printemps, lily white, BiBi not included due to too many false positives
     r"音ノ木坂?|otonokizaka|"
@@ -73,7 +67,6 @@ LOVELIVE_RE = re.compile(
     r"(?<!@)\b((kotoum|nozoel)i|nicomaki(?! tensai))\b|"
     r"([^a-z]|\b)(snow ?halation|mermaid festa)([^a-z]|\b)|bokura wa ima no naka de|"
     # A-RISE
-    r"(^|[^a-z\u00C0-\u024F\u1E00-\u1EFF\-])a[-\u2010]rise([^a-z\u00C0-\u024F\u1E00-\u1EFF\-]|$)|"
     r"綺羅\s?ツバサ|優木\s?あんじゅ|統堂\s?英玲奈|"
     # Love Live! Sunshine!!
     # NOTE: AZALEA not included due to too many false positives
@@ -105,7 +98,7 @@ LOVELIVE_RE = re.compile(
     r"優木\s?せつ菜|中川\s?菜々|エマ・?ヴェルデ|天王寺\s?璃奈|三船\s?栞子|ミア・?テイラー|鐘\s?嵐珠|"
     r"(?<!ちら)かすみん|#ひなきちゃんの誕生日まであと\b|"
     # Love Live! Superstar!!
-    r"([^a-z]|\b)(or|tuto|w+)?(?-i:[Ll]iella|LIELLA)(?!nd)|ちゅーとりえら|リエラジ|"
+    r"([^a-z]|\b)(or|tuto|w+)liella([^a-z]|\b)|ちゅーとりえら|リエラジ|"
     r"結ヶ丘|yuigaoka|5yncri5e!?|kaleidoscore|トマカノーテ|tomakanote|スパスタ[3３]期|"
     r"澁谷\s?かのん|唐\s?可可|嵐千\s?砂都|平安名\s?すみれ|葉月\s?恋|桜小路\s?きな子|米女\s?メイ|"
     r"若菜\s?四季|鬼塚\s?(夏美|冬毬)|ウィーン・?マルガレーテ|"
@@ -146,9 +139,6 @@ LOVELIVE_RE = re.compile(
     re.IGNORECASE,
 )
 SCHOOL_IDOL_RE = re.compile(r"\bschool ?idol", re.IGNORECASE)
-SUKUFEST_RE = re.compile(
-    r"(^|[^マアレビ])スクフェス(?!札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄|金沢|香川|名古屋|ニセコ)"
-)
 SOLDIER_GAME_RE = re.compile(r"([^a-z]|\b)soldier game([^a-z]|\b)", re.IGNORECASE)
 YOHANE_RE = re.compile(r"\b(?<!@)yohane(?!(-label|.*mbatiza[jt]i))\b", re.IGNORECASE)
 CATCHU_RE = re.compile(
@@ -261,6 +251,12 @@ CHARACTER_NAMES = set(
 )
 
 EXCLUDE_RE = re.compile(
+    # Words that end with "love" + live(r)
+    r"[a-z0-9_]-?love ?live(rs?)?|"
+    # "love" + words that start with "live(r)"
+    r"love ?live(r(?!s)|(?!(rs?|e{2,19}\b)))[a-z0-9\-]|"
+    # =LOVE live (unrelated J-pop girl group)
+    r"[=＝]love live|"
     # The great "I love live [something]" hoarde
     # - I('d/'ll/'ve)/he/she/they (both)/you (all)/y'all/you'll/we (all/both)/gotta/
     #   got to/have to/learn(ed) to/like to/who/could/anyone (else), people/ppl (in
@@ -827,9 +823,23 @@ EXCLUDE_RE = re.compile(
     r"\b(lush\b.+\blovelive|lovelive.+\blush)\b",
     re.IGNORECASE | re.MULTILINE,
 )
+# ラブライブ false positives:
+# - クラブライブ (club live, usually with ファン before it)
+# - イコラブライブ (=LOVE live)
+# - マジラブライブ (Maji Love Live)
+FAKE_RABURAIBU = re.compile(r"(ク|マジ|イコ)ラブライブ")
 FAKE_SCHOOL_IDOL_RE = re.compile(
     r"((high|middle|old)[ \-]?|(transmigrated into a|your) )school idol|"
     r"(#\w*|@[a-z\-]*)schoolidol[\w\-]*\b|school ?idol ?(story|book)\b",
+    re.IGNORECASE,
+)
+YOU_WATANABE_RE = re.compile(r"\byou ?watanabe", re.IGNORECASE)
+FAKE_YOU_WATANABE_RE = re.compile(r"lazarus|thank you watanabe", re.IGNORECASE)
+WATANABE_YOU_RE = re.compile(r"\bwatanabe ?you", re.IGNORECASE)
+FAKE_WATANABE_YOU_RE = re.compile(
+    r"watanabe you(\B|['’][a-z])|\Bwatanabe you|"
+    r"watanabe you ([a-z]+[a-z]n['’]?t|are|have|will)\b|lazarus|"
+    r"\b((fum|manam|takaak)i|(aki|mom|shinichir)o) watanabe you",
     re.IGNORECASE,
 )
 FAKE_YOHANE_RE = re.compile(
@@ -838,6 +848,14 @@ FAKE_YOHANE_RE = re.compile(
     re.IGNORECASE,
 )
 HI_YOHANE_RE = re.compile(r"\bh(e(llo|y)|i+) yohane\b", re.IGNORECASE)
+FAKE_MIA_TAYLOR_RE = re.compile(
+    r"(@|[a-z0-9_]+)mia ?taylor|\bmia ?taylor[a-z0-9_]+|"
+    r"((^|\n|post |video )by:? )mia taylor",
+    re.IGNORECASE,
+)
+FAKE_LIELLA_RE = re.compile(
+    "[a-z]+liella|lielland|(?-i:[Ll]iE[lL]{2}[aA])", re.IGNORECASE
+)
 FAKE_CATCHU_RE = re.compile(
     # Phrases ending with "catchu":
     # - coo coo(l) catchu
@@ -867,10 +885,43 @@ FAKE_CATCHU_RE = re.compile(
     re.IGNORECASE,
 )
 FAKE_SUNNYPA_RE = re.compile(r"\b(haru|urara)\b", re.IGNORECASE)
+FAKE_KEKE_TANG_RE = re.compile(r"[a-z]+keke ?tang|keke ?tang[a-z]+", re.IGNORECASE)
+FAKE_REN_HAZUKI_RE = re.compile(
+    r"(\w+|@)ren ?hazuki|ren ?hazuki[a-z]+|"
+    # Posts mentioning a male character from "The Expanse" also named Ren Hazuki are
+    # false positives
+    r"\bexpanse\b",
+    re.IGNORECASE,
+)
+# Usually "Wien Margareten" (some district in Vienna, Austria)
+FAKE_WIEN_MARGARETE_RE = re.compile(r"[a-z]+wien ?margarete|wien ?margarete[a-z]+", re.IGNORECASE)
 FAKE_SOLDIER_GAME_RE = re.compile(
     r"\b(alien|(an?|the)( \w+\w){,5}|child|h(is|er)|kid|m(ilitar)?y|p(lastic|sycho)|"
     r"s(illy( [a-z]+[a-z])?|tar|pace|uper)|t(heir|oy)|winter) soldier game(?! cover)",
     re.IGNORECASE,
+)
+A_RISE_RE = re.compile(r"a[\-\u2010]rise", re.IGNORECASE)
+FAKE_A_RISE_RE = re.compile(
+    r"[a-z\u00C0-\u024F\u1E00-\u1EFF\-]a[\-\u2010]rise|"
+    r"a[\-\u2010]rise[a-z\u00C0-\u024F\u1E00-\u1EFF\-]",
+    re.IGNORECASE,
+)
+FAKE_SUKUFEST_RE = re.compile(
+    # [some other katakana word/phrase ending in スク] + フェス:
+    # - マスクフェス ("mask fest")
+    # - アスクフェス ("Ask Fest")
+    # - レスクフェス ("risk fest")
+    # - ビスクフェス ("Tobisk Fest")
+    r"[マアレビ]スクフェス|"
+    # Scrum Fest (usually by @yesnobut.com or @warumonogakari.bsky.social)
+    r"スクフェス(札幌|大阪|[福盛]岡|神奈川|新潟|仙台|三河|沖縄|金沢|香川|名古屋|ニセコ)|scrum",
+    re.IGNORECASE,
+)
+FAKE_SUKUSTA_SUKUMYU_RE = re.compile(
+    # Any katakana word/phrase/name with スクスタ/スクミュ in middle or at end
+    r"[\u30a1-\u30f6\u30fc]スク(スタ|ミュ)|"
+    # Any katakana word/phrase containing スタンド/スタンプ/スタイル/スタッフ/スタート
+    r"スクスタ(ン[ドプ]|イル|ッフ|ート)"
 )
 FAKE_GKSS_RE = re.compile(
     r"youtu\.be/\w*gkss|forsch|(crash and|(?-i:[A-Z][a-z]+[a-z])) burn|gkss match cup",
@@ -945,14 +996,8 @@ def make_characters_pattern() -> re.Pattern:
 
     return re.compile(
         f"(?:^|[^@a-z])(?:{'|'.join(patterns)}|"
-        r"^(?!.*\blazarus\b.*).*((?<!thank )you ?watanabe|"
-        r"(?<!momo )(?<!shinichiro )(?<!akio )(?<!takaaki )(?<!manami )(?<!fumi )"
-        r"watanabe ?you(?!(['’][a-z])?[a-z]+|"
-        r" ([a-z]+[a-z]n['’]?t|are|have|will)\b)).*|"
         r"^(?!.*\b(kong|wario)\b.*).*\bleah kazuno|#leahkazuno|"
-        r"(?<!\nby )(?<!^by )(?<!post by )(?<!\bby: )mia taylor|"
-        r"^(?!.*\bexpanse\b.*).*\bren ?hazuki.*)\b|"
-        r"\b(?<!heather )midori yamada\b",
+        r"\b(?<!heather )midori yamada)\b",
         re.IGNORECASE | re.DOTALL,
     )
 
@@ -1015,11 +1060,20 @@ def filter(post: dict) -> bool:
     # Post will always be added if `to_be_added` is True or skipped if otherwise.
     hit_fake_results = (
         (has_match(LOVELIVE_NAME_EN_RE), has_match(EXCLUDE_RE)),
+        ("ラブライブ" in all_texts, has_match(FAKE_RABURAIBU)),
         (
             has_match(SCHOOL_IDOL_RE),
             (has_match(FAKE_SCHOOL_IDOL_RE) or author == SCARLETRHAPSODY_COM),
         ),
+        ("スクフェス" in all_texts, has_match(FAKE_SUKUFEST_RE)),
+        (
+            "スクスタ" in all_texts or "スクミュ" in all_texts,
+            has_match(FAKE_SUKUSTA_SUKUMYU_RE),
+        ),
+        (has_match(A_RISE_RE), has_match(FAKE_A_RISE_RE)),
         (has_match(SOLDIER_GAME_RE), has_match(FAKE_SOLDIER_GAME_RE)),
+        (has_match(YOU_WATANABE_RE), has_match(FAKE_YOU_WATANABE_RE)),
+        (has_match(WATANABE_YOU_RE), has_match(FAKE_WATANABE_YOU_RE)),
         (
             has_match(YOHANE_RE),
             has_match(FAKE_YOHANE_RE)
@@ -1031,10 +1085,19 @@ def filter(post: dict) -> bool:
         ),
         (has_match(GKSS_RE), has_match(FAKE_GKSS_RE)),
         (
+            "mia taylor" in all_texts_lower or "miataylor" in all_texts_lower,
+            has_match(FAKE_MIA_TAYLOR_RE),
+        ),
+        ("liella" in all_texts_lower, has_match(FAKE_LIELLA_RE)),
+        (
             "catchu" in all_texts_lower,
             not has_match(CATCHU_RE) or has_match(FAKE_CATCHU_RE),
         ),
         (has_match(SUNNYPA_RE), has_match(FAKE_SUNNYPA_RE)),
+        (
+            "ren hazuki" in all_texts_lower or "renhazuki" in all_texts_lower,
+            has_match(FAKE_REN_HAZUKI_RE),
+        ),
         ("リンクラ" in all_texts, has_match(FAKE_RINKURA_RE)),
         ("lttf" in all_texts_lower, has_match(FAKE_LTTF_RE)),
     )
@@ -1044,7 +1107,6 @@ def filter(post: dict) -> bool:
         (True, False) in hit_fake_results
         or any(
             (
-                has_match(SUKUFEST_RE) and "scrum" not in all_texts_lower,
                 has_match(LOVELIVE_RE),
                 has_match(CHARACTERS_EN_RE),
                 post_has_media_embeds(post)
