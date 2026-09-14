@@ -134,7 +134,7 @@ LOVELIVE_RE = re.compile(
     r"\bteam onibe\b|\bonib(e|ased)([^a-z’]|$)|(schoolido\.lu|idol\.st)(?!/user/)|"
     r"#HasuTH_Tran|([^a-z]|\b)OurSIF([^a-z]|$)|\bidoltober|#LL_Calendar_Collab_2026|"
     r"\bloveliveradio\.ca|puchiball|lovelive(-kaga|matocha)\.com|mypick\.rurino\.dev|"
-    r"#todayinlovelivehistory",
+    r"#todayinlovelivehistory|#LTYohane",
     re.IGNORECASE,
 )
 SCHOOL_IDOL_RE = re.compile(r"\bschool ?idol", re.IGNORECASE)
