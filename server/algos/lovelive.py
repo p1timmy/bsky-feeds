@@ -882,7 +882,9 @@ FAKE_CATCHU_RE = re.compile(
     r"catchu +((@|at) the|all|catchme|in\b|later|ricky|s(quishychu|lippin)|the future|"
     r"u?p\b(?! (close|next)))|\b(to )?catchu with|\bpinky[ -]catchu\b|"
     # - Lartiste (some French artist who has a song titled "Catchu")
-    r"\blartiste\b",
+    r"\blartiste\b|"
+    # - youda0403.github.io/catchu (some crane game simulator)
+    r"\byouda0403\.github\.io/catchu",
     re.IGNORECASE,
 )
 FAKE_SUNNYPA_RE = re.compile(r"\b(haru|urara)\b", re.IGNORECASE)
