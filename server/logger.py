@@ -50,7 +50,7 @@ def log_post(
     record: models.AppBskyFeedPost.Record = post["record"]
 
     # Post details + extra fields
-    labels = get_post_labels(post)
+    labels = get_post_labels(record)
     fields: dict[str, Any] = {
         "created_at": record.created_at,
         "uri": post["uri"],
@@ -69,7 +69,7 @@ def log_post(
     # Post text and any alt texts if there is an embed
     all_texts = [
         f"  {text.replace('\n', style('↵', fg='blue')).replace('\r', '').strip()}"
-        for text in get_post_texts(post, include_media)
+        for text in get_post_texts(record, include_media)
     ]
     if all_texts:
         texts_str = "\n".join(all_texts)

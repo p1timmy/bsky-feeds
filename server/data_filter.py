@@ -61,7 +61,7 @@ def operations_callback(ops: defaultdict) -> bool:
         # - porn = Adult Content (Explicit sexual images)
         # - nudity = Non-Sexual Nudity
         # - sexual = Adult Content (Does not include nudity)
-        labels: list[str] = get_post_labels(created_post)
+        labels: list[str] = get_post_labels(record)
 
         pr0n = nudity = sexual = False
         if "porn" in labels:

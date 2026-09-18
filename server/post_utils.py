@@ -8,13 +8,16 @@ TWEET_URL_RE = re.compile(r"^https?://(x|twitter).com/\w+/status/[0-9]+.*$")
 YOUTUBE_URL_RE = re.compile(r"^https?://(([a-z]+\.)?youtube\.com|youtu\.be)/.+$")
 GIF_URL_BASES = ("https://media.tenor.com/", "https://static.klipy.com/")
 
+PostRecordType = models.AppBskyFeedPost.Record | DotDict
 
-def post_has_media_embeds(post: dict) -> bool:
+
+def post_has_media_embeds(record: PostRecordType) -> bool:
     """
     Check if a post contains media (image/video/Tenor GIF/KLIPY GIF) embeds. Posts with
     link embeds pointing to other external media (YouTube/Spotify/etc.) don't count.
+
+    :param record: `app.bsky.feed.post#Record` model object containing post data.
     """
-    record: models.AppBskyFeedPost.Record = post["record"]
     embed = record.embed
     if isinstance(embed, models.AppBskyEmbedRecordWithMedia.Main):
         embed = embed.media
@@ -28,18 +31,16 @@ def post_has_media_embeds(post: dict) -> bool:
     )
 
 
-def get_post_texts(post: dict, include_media=True) -> list[str]:
+def get_post_texts(record: PostRecordType, include_media=True) -> list[str]:
     """
     Extract text content from a single post.
 
-    :param post: `dict` containing at least a `record` key with `app.bsky.feed.post#Record`
-        model instance value
+    :param record: `app.bsky.feed.post#Record` model object containing post data.
     :param include_media: Also get image/video/Tenor GIF/KLIPY GIF alt texts and link
         embed titles and descriptions (only for YouTube and 𝕏/Twitter) in addition to
         the post text.
         Defaults to True.
     """
-    record: models.AppBskyFeedPost.Record = post["record"]
     texts: list[str] = []
     if record.text:  # some posts may not have any text at all
         texts.append(record.text)
@@ -74,14 +75,21 @@ def get_post_texts(post: dict, include_media=True) -> list[str]:
     return texts
 
 
-def get_post_labels(post: dict[str, Any]) -> list[str]:
-    record: models.AppBskyFeedPost.Record = post["record"]
+def get_post_labels(record: PostRecordType) -> list[str]:
+    """
+    Get a flattened `list` of post label values.
+
+    :param record: `app.bsky.feed.post#Record` model object containing post data.
+    """
     if record.labels is None:
         return []
     elif isinstance(record.labels, DotDict):
+        if record.py_type != models.ids.AppBskyFeedPost:
+            raise TypeError("can only get labels from app.bsky.feed.post records")
+
         # Some posts have `DotDict` objects instead of the expected model for
         # `com.atproto.label.defs#selfLabels`, the fact `DotDict` already has a
-        # `values` method prevents access to "values" key
+        # `values` method prevents access to "values" key through attrs
         labels_dict = record.labels.to_dict()
         return [value.get("val", {}) for value in labels_dict.get("values", [])]
 

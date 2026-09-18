@@ -6,7 +6,7 @@ from click import style
 
 from server import config
 from server.logger import log_post
-from server.post_utils import get_post_texts, post_has_media_embeds
+from server.post_utils import PostRecordType, get_post_texts, post_has_media_embeds
 
 logger = logging.getLogger(__name__)
 
@@ -1012,15 +1012,14 @@ CHARACTERS_EN_RE = make_characters_pattern()
 
 def filter(post: dict) -> bool:
     author = post["author"]
+    record: PostRecordType = post["record"]
     if author in DEDICATED_USERS or (
-        author in DEDICATED_USERS_MEDIA_ONLY and post_has_media_embeds(post)
+        author in DEDICATED_USERS_MEDIA_ONLY and post_has_media_embeds(record)
     ):
         return True
 
     if author in IGNORE_USERS or author == SOLOVON_DILL_BURGGIT_MOE_AP_BRID_GY:
         return False
-
-    record: models.AppBskyFeedPost.Record = post["record"]
 
     # Don't add posts that quote an ignored user's post and/or is a reply to ignored user
     quoted_post_or_reply_parent_uri = ""
@@ -1037,7 +1036,7 @@ def filter(post: dict) -> bool:
     ):
         return False
 
-    all_texts = "\n".join(get_post_texts(post))
+    all_texts = "\n".join(get_post_texts(record))
     if not all_texts:
         return False
 
