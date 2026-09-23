@@ -1121,7 +1121,7 @@ def filter(post: dict) -> bool:
             (
                 has_match(LOVELIVE_RE),
                 has_match(CHARACTERS_EN_RE),
-                post_has_media_embeds(post)
+                post_has_media_embeds(record)
                 and (
                     (author == NIGAI58_BSKY_SOCIAL and "ちゃん" in all_texts)
                     or (author == MMMINAMI_BSKY_SOCIAL and "うみこと" in all_texts)
