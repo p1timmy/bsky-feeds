@@ -990,7 +990,10 @@ VANILLAKUNIKIDA_BSKY_SOCIAL = "did:plc:dajx3rdhbsxeyc6epbm6zxr7"
 
 IGNORE_USERS: set[str] = set()
 SCARLETRHAPSODY_COM = "did:plc:ohuf5ynr747r2dorqsefh6xt"
-SOLOVON_DILL_BURGGIT_MOE_AP_BRID_GY = "did:plc:dvxbc7qhvo7c2vf3pmzmswd6"
+SOLOVON_DIDS = set({
+    "did:plc:dvxbc7qhvo7c2vf3pmzmswd6",  # Solovon.dill.burggit.moe.ap.brid.gy
+    "did:plc:acpa7qar35ghknhdtpoljwfe",  # Solovon.shota.house.ap.brid.gy
+})
 
 uri = config.LOVELIVE_URI
 dedicated_userlist_uri = config.LOVELIVE_INCLUDE_LIST_URI
@@ -1026,7 +1029,7 @@ def filter(post: dict) -> bool:
     ):
         return True
 
-    if author in IGNORE_USERS or author == SOLOVON_DILL_BURGGIT_MOE_AP_BRID_GY:
+    if author in IGNORE_USERS or author in SOLOVON_DIDS:
         return False
 
     # Don't add posts that quote an ignored user's post and/or is a reply to ignored user
