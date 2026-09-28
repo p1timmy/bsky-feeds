@@ -128,7 +128,7 @@ LOVELIVE_RE = re.compile(
     r"\b(polka_lion|My_Mai_Eld|G_Akky304250|hanabistarmine|MiracleGoldSP|Noricco_U|"
     r"Yukuri_talk|Rollie_twinkle|LittlegreenCom|ShaunTheBunny)"
     r"((?!(\.[a-z0-9]{2})+\b)[^a-z]|$)|regain again llllove|"
-    r"dou[- ]da[?？]? doing[!！]?|"
+    r"dou[- ]da[?？]? doing[!！]?|(\b|[^a-z])tale of primavera(\b|[^a-z])|"
     # Concerts
     r"異次元フェス|ijigen\sfest?|#(llsat_|虹ブンブンビー_day[12])|"
     # Community stuff
@@ -263,7 +263,7 @@ EXCLUDE_RE = re.compile(
     #   [some place]), my ... and sister/brother/wife/etc.
     r"\b((i|s?he|they)(['’]?(d|ve|ll))?|y(ou(['’]ll)?|(ou |['’])all)|gotta|who|could|"
     r"(we|they)( (all|both))?|(got|have|l(earn(ed)?|ike)) to|my .+and [a-z]+[a-z]|"
-    r"p(eople|pl)( in (the )?[a-z]+[a-z])?|[a-z]{3,}(?<!a)(?<!(?<![ix])e)s|"
+    r"p(eople|pl)( in (the )?[a-z]+[a-z])?|[a-z]{3,}(?<!a)(?<!(?<![cix])e)s|"
     r"anyone( else['’]s|( else)?( (o(ver|ut) )?t?here)?)?)"
     # - *ly/also/always/bloody/can('t)/cannot/(sure) do/does/don't (but not "don't
     #   do")/even/either/f*king/hecking/just/lowkey/never/not/still/(came/come/grew/
@@ -345,7 +345,7 @@ EXCLUDE_RE = re.compile(
     # - love live happy/happily (ever after)
     # - love live him
     # - love live hockey
-    r"h(app(il)?y|im|ockey)|"
+    r"h(app(il)?y|im\b|ockey)|"
     # - love live in (t)here/him/me/them/you
     # - love "Live in Colo(u)r" (sometimes typo of "love Life In Color")
     # - love live interaction
@@ -858,7 +858,7 @@ FAKE_YOHANE_RE = re.compile(
 HI_YOHANE_RE = re.compile(r"\bh(e(llo|y)|i+) yohane\b", re.IGNORECASE)
 FAKE_MIA_TAYLOR_RE = re.compile(
     r"(@|[a-z0-9_]+)mia ?taylor|\bmia ?taylor[a-z0-9_]+|"
-    r"((^|\n|post |video )by:? )mia taylor|cookie girl",
+    r"(((^|\n|post |video )by:?|mamma) )mia taylor|cookie girl",
     re.IGNORECASE,
 )
 FAKE_LIELLA_RE = re.compile(
@@ -945,7 +945,7 @@ FAKE_RINKURA_RE = re.compile(
     r"[\u30a1-\u30fa]ー?リンクラ|リンクラ(イ(ン|ブラリ|ト)|ベル|[スッブボ])"
 )
 FAKE_LTTF_RE = re.compile(
-    r"([a-z0-9_#])lttf|lttf[a-z0-9_]|youtu(\.be/|be\.com/watch\?v=)\w*lttf\w*",
+    r"[a-z0-9_#]lttf|lttf[a-z0-9_]|youtu(\.be/|be\.com/watch\?v=)\w*lttf\w*",
     re.IGNORECASE,
 )
 BAD_KEYWORDS_RE = re.compile(
@@ -965,7 +965,7 @@ BAD_KEYWORDS_RE = re.compile(
     # NSFW keywords
     r"bds&?m|c(am ?girl|haturbate|ock(s|\b)|um(ming|shot)?([^a-z]|\b))|di(aper|ck|ldo)|"
     r"fansly|(futanar|henta)i|jock[sa]traps?|n(ude|ipple)|p(e(do|nis)|regnant)|"
-    r"s(ex([^a-z]|\b)|lut))|#("
+    r"s(ex([^a-z]|\b)|lut)|えっち|ちくび|おちんちん|ふたなり)|#("
     # NSFW hashtags
     r"ecchi|nsfw|porn|r18|"
     # moths with species names containing "liella" substring
