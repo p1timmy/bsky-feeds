@@ -45,7 +45,7 @@ LOVELIVE_RE = re.compile(
     r"lovelive(-(a(nime|s\.bushimo\.jp)|fanfunfestival|news\.bsky\.social)|_staff|"
     r"#lovelive(art|_)|\bLL(heardle|s(ip|taff))|"
     # related word + Love Live
-    r"['’]?d\b)|\b((dan|enjoy|hate|is thi|love|m(eet|is)|previou|th([ai]nk|ings)|"
+    r"['’]?d\b)|\b((dan|enjoy|hate|is thi|love|m(eet|is)|previou|serie|th([ai]nk|ings)|"
     r"variou|(?<!it )wa)s|(cosplay|draw)(ing|s)?|thank you|li(ke[ds]?|nk li[kv]e)|peak|"
     r"(ban(dori|g dream)|gundam|i(dol ?m[a@s]ter|m[a@]s))\W?( and)?) love ?live\b|"
     r"\b(pre|non)-love ?live\b|\bsim_lovelive|"
@@ -315,9 +315,9 @@ EXCLUDE_RE = re.compile(
     # - love live and let/play
     # - "Love Live A$AP" (typo of "LONG.LIVE.A$AP" or "LIVE.LOVE.A$AP" by A$AP Rocky)
     # - love live at (usually songs ending with "Love" + "live at [some place/event]"
-    #   but not "love live at all/it(')s")
+    #   but not "love live at all/it(')s/the time")
     r"a(c(oustic|tion)|id| ?live|mmo|nd (be|dangerous|fall|let|play)\b|[s$]ap|"
-    r"t\b(?! (all|it['’]?s)\b))|"
+    r"t\b(?! (all|it['’]?s|the time)\b))|"
     # - love "Live and Learn" (usually Sonic Adventure 2 theme song)
     r"(and|&) learn\b|"
     # - love live band/bait(s)/betting/beyond/bootlegs/broadcasting
@@ -632,8 +632,9 @@ EXCLUDE_RE = re.compile(
     # - "Love and Only Love" live (song by Neil Young)
     # - "Love, Hate, Love" live (song by Alice In Chains)
     # - "Love Meeting Love" live (song by Level 42)
+    # - "Lucid Love" live (song by Holding Absence)
     r"l(a( la|ugh)|o(okin[g'’]? for a|ud|ve( and only|,? hate,?| meeting))|ive|"
-    r"et( (my|th(at|ere be)))?)|"
+    r"et( (my|th(at|ere be)))?|ucid)|"
     # - "life love live" but not "Link Life Love Live"
     r"(?<!link )life|"
     # - "Lotta Love" live (song by either Neil Young or Nicolette Larson) or "Whole
@@ -756,8 +757,9 @@ EXCLUDE_RE = re.compile(
     # love liver (and/with/,) bacon/onions/sausage/spinach, love liver disease/pate
     r"love liver(( (and|&|with)|,)? ?"
     r"(bacon|onions|s(ausage|pinach))| (disease|p[aâ]t[eé]))|"
-    # "love liver(s and)" at beginning of sentence/after emoji and not before "is/are"
-    r"(^|[^\w ] *)love liver(s and)?(?! (are|is))\b|"
+    # "(still) love liver(s and)" at beginning of sentence/after emoji and not before
+    # "is/are"
+    r"(^|[^\w ] *)(still )?love liver(s and)?(?! (are|is))\b|"
     # whether you('re) ... or (just) love live [something]
     r"whether you.+ or (just )?love live |"
     # "(and) love live [something]" (as a typo of "long live [something]") or "love love
@@ -837,7 +839,7 @@ EXCLUDE_RE = re.compile(
 # - マジラブライブ (Maji Love Live)
 FAKE_RABURAIBU = re.compile(r"(ク|マジ|イコ)ラブライブ")
 FAKE_SCHOOL_IDOL_RE = re.compile(
-    r"((high|middle|old)[ \-]?|(transmigrated into a|your) )school idol|"
+    r"((after|high|middle|old)[ \-]?|(transmigrated into a|your) )school idol|"
     r"(#\w*|@[a-z\-]*)schoolidol[\w\-]*\b|school ?idol ?(story|book)\b",
     re.IGNORECASE,
 )
