@@ -6,6 +6,9 @@ from atproto_client.models.dot_dict import DotDict
 
 TWEET_URL_RE = re.compile(r"^https?://(x|twitter).com/\w+/status/[0-9]+.*$")
 YOUTUBE_URL_RE = re.compile(r"^https?://(([a-z]+\.)?youtube\.com|youtu\.be)/.+$")
+SPOTIFY_URL_RE = re.compile(
+    r"^https?://open.spotify.com/((intl-[a-z]+/)?(album|track)|s)/[A-Za-z0-9]+[A-Za-z0-9]"
+)
 GIF_URL_BASES = ("https://media.tenor.com/", "https://static.klipy.com/")
 
 PostRecordType = models.AppBskyFeedPost.Record | DotDict
@@ -37,8 +40,8 @@ def get_post_texts(record: PostRecordType, include_media=True) -> list[str]:
 
     :param record: `app.bsky.feed.post#Record` model object containing post data.
     :param include_media: Also get image/video/Tenor GIF/KLIPY GIF alt texts and link
-        embed titles and descriptions (only for YouTube and 𝕏/Twitter) in addition to
-        the post text.
+        embed titles and descriptions (only for YouTube, 𝕏/Twitter, and Spotify) in
+        addition to the post text.
         Defaults to True.
     """
     texts: list[str] = []
@@ -48,7 +51,7 @@ def get_post_texts(record: PostRecordType, include_media=True) -> list[str]:
     # Get alt text from images/video
     embed = record.embed
     if embed and include_media:
-        # Post has both pics/video and a quoted post
+        # Post has both pics/video/link card and a quoted post
         if isinstance(embed, models.AppBskyEmbedRecordWithMedia.Main):
             embed = embed.media
 
@@ -65,7 +68,10 @@ def get_post_texts(record: PostRecordType, include_media=True) -> list[str]:
                 # official Bluesky app lets you add custom alt text which is put into
                 # description field in embed
                 texts.append(link.description)
-            elif YOUTUBE_URL_RE.search(link.uri):
+            elif (
+                YOUTUBE_URL_RE.search(link.uri)
+                or SPOTIFY_URL_RE.search(link.uri)
+            ):
                 texts.append(link.title)
                 if link.description:
                     texts.append(link.description)
