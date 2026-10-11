@@ -1063,6 +1063,7 @@ def filter(post: dict) -> bool:
     if record.reply and (
         "ALT: Kasumi Nakasu's Adorable Pillow Dive" in all_texts
         or "ALT: Anime Hand Touching Globe" in all_texts
+        or "ALT: Love Live Grabby" in all_texts
     ):
         # Too many posts with either GIF replying to NSFW posts
         return False
