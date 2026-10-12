@@ -594,10 +594,11 @@ EXCLUDE_RE = re.compile(
     #   - "Come And Get Your Love" live (song by Redbone)
     #   - "[song name ending with "For Your Love"]" live
     #   - "Inside Your Love" live
-    #   - "How Deep Is Your Love" live (usually song by Bee Gees)
+    #   - "[song name ending with "Is Your Love"] live (usually "How Deep Is Your Love"
+    #     by Bee Gees)
     #   - in your love live (sometimes typo of "in your love life")
     #   - "Sunshine of Your Love" live (usually song by Cream)
-    r"(all|bring|come (and|&) get|for|how deep is|in(side)?|sunshine of) your|"
+    r"(all|bring|come (and|&) get|for|is|in(side)?|sunshine of) your|"
     # - compassion/happiness/hope/joy/kindness/memory/pain/peace/unity and
     #   ([God/someone]'s/the) love live
     r"(compassion|h(appiness|ope)|joy|kindness|memory|p(ain|eace)|unity),?"
