@@ -926,7 +926,7 @@ FAKE_SOLDIER_GAME_RE = re.compile(
 A_RISE_RE = re.compile(r"a[\-\u2010]rise", re.IGNORECASE)
 FAKE_A_RISE_RE = re.compile(
     r"[a-z\u00C0-\u024F\u1E00-\u1EFF\-]a[\-\u2010]rise|"
-    r"a[\-\u2010]rise[a-z\u00C0-\u024F\u1E00-\u1EFF\-]",
+    r"a[\-\u2010]rise[a-z\u00C0-\u024F\u1E00-\u1EFF\-]|sun a-rise",
     re.IGNORECASE,
 )
 FAKE_SUKUFEST_RE = re.compile(
