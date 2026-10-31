@@ -386,8 +386,8 @@ EXCLUDE_RE = re.compile(
     # - love "Live to Live" (song from Hazbin Hotel S2)
     # - love "Live to Tell" (song by Madonna)
     # - love "Live Through This" (usually album by Hole)
-    r"t((a(bl|p)|re)es|elevision|(ex|wee)ting|h(e(at(er|re)|ir)|rough this)|v(?! anime)|"
-    r"o (live|tell))|"
+    r"t((a(bl|p)|re)es|elevision|(ex|wee)ting|h(e(at(er|re)|ir)|rough this)|"
+    r"v(?! anime)|o (live|tell))|"
     # - "love live the" (usually typo of "long live the") but not "Love Live the
     #   competition/most/movie/Musical/other/same/School Idol"
     r"the\b(?! (competition|m(o(st|vie)|usical)|other|s(ame|chool idol))\b)|"
@@ -926,7 +926,9 @@ FAKE_REN_HAZUKI_RE = re.compile(
     re.IGNORECASE,
 )
 # Usually "Wien Margareten" (some district in Vienna, Austria)
-FAKE_WIEN_MARGARETE_RE = re.compile(r"[a-z]+wien ?margarete|wien ?margarete[a-z]+", re.IGNORECASE)
+FAKE_WIEN_MARGARETE_RE = re.compile(
+    r"[a-z]+wien ?margarete|wien ?margarete[a-z]+", re.IGNORECASE
+)
 # Usually katakana words containing "cooker"
 FAKE_KUUKAA_RE = re.compile(r"[\u30a1-\u30fa]ー?クーカー|クーカー[\u30a1-\u30fa]")
 FAKE_SOLDIER_GAME_RE = re.compile(
@@ -973,7 +975,7 @@ FAKE_LTTF_RE = re.compile(
 FAKE_AI_SCREAM_RE = re.compile(
     r"(?-i:AI ([Ss]cream|SCREAM)(?!!))|[a-z]+ai scream|ai scream[a-z]+|"
     r"ai Scream Queens|プラットフォーム",
-    re.IGNORECASE
+    re.IGNORECASE,
 )
 BAD_KEYWORDS_RE = re.compile(
     # spam domains
@@ -1018,10 +1020,12 @@ _2SK2SK_BSKY_SOCIAL = "did:plc:v6a5hd6xzfwyhkliateldpin"
 
 IGNORE_USERS: set[str] = set()
 SCARLETRHAPSODY_COM = "did:plc:ohuf5ynr747r2dorqsefh6xt"
-SOLOVON_DIDS = set({
-    "did:plc:dvxbc7qhvo7c2vf3pmzmswd6",  # Solovon.dill.burggit.moe.ap.brid.gy
-    "did:plc:acpa7qar35ghknhdtpoljwfe",  # Solovon.shota.house.ap.brid.gy
-})
+SOLOVON_DIDS = set(
+    {
+        "did:plc:dvxbc7qhvo7c2vf3pmzmswd6",  # Solovon.dill.burggit.moe.ap.brid.gy
+        "did:plc:acpa7qar35ghknhdtpoljwfe",  # Solovon.shota.house.ap.brid.gy
+    }
+)
 
 uri = config.LOVELIVE_URI
 dedicated_userlist_uri = config.LOVELIVE_INCLUDE_LIST_URI
