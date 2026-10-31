@@ -1014,6 +1014,7 @@ MMMINAMI_BSKY_SOCIAL = "did:plc:vgygtg6ozeaudtzilxihgpca"
 NIGAI58_BSKY_SOCIAL = "did:plc:danvhqwcktfn47vhuh77kn2z"
 SPLATER765_BSKY_SOCIAL = "did:plc:7zsqikdjppjczb6cfc3bmse6"
 VANILLAKUNIKIDA_BSKY_SOCIAL = "did:plc:dajx3rdhbsxeyc6epbm6zxr7"
+_2SK2SK_BSKY_SOCIAL = "did:plc:v6a5hd6xzfwyhkliateldpin"
 
 IGNORE_USERS: set[str] = set()
 SCARLETRHAPSODY_COM = "did:plc:ohuf5ynr747r2dorqsefh6xt"
@@ -1162,6 +1163,7 @@ def filter(post: dict) -> bool:
                         author == VANILLAKUNIKIDA_BSKY_SOCIAL
                         and has_match(VANILLAKUNIKIDA_RE)
                     )
+                    or (author == _2SK2SK_BSKY_SOCIAL and "寝ろ" in all_texts)
                 ),
                 (
                     author == SPLATER765_BSKY_SOCIAL
