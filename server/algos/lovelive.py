@@ -266,8 +266,8 @@ EXCLUDE_RE = re.compile(
     #   [some place]), my ... and sister/brother/wife/etc.
     r"\b((i|s?he|they)(['’]?(d|ve|ll))?|y(ou(['’]ll)?|(ou |['’])all)|gotta|who|could|"
     r"(we|they)( (all|both))?|(got|have|l(earn(ed)?|ike)) to|my .+and [a-z]+[a-z]|"
-    r"p(eople|pl)( in (the )?[a-z]+[a-z])?|[a-z]{3,}(?<!a)(?<!(?<![cix])e)s|"
-    r"anyone( else['’]s|( else)?( (o(ver|ut) )?t?here)?)?)"
+    r"(p(eople|pl)s?|[a-z]{3,}(?<!(?<![cix])e)(?<!a)s)( in (the )?[a-z]+[a-z])?|"
+    r"those( that)?|anyone( else['’]s|( else)?( (o(ver|ut) )?t?here)?)?)"
     # - *ly/also/always/bloody/can('t)/cannot/(sure) do/does/don't (but not "don't
     #   do")/even/either/f*king/hecking/just/kinda/kind of/lowkey/never/not/still/
     #   (came/come/grew/have/happen(ed/s)/use(d)/tend (not)) to/too/will/would('ve)/
@@ -870,8 +870,9 @@ FAKE_WATANABE_YOU_RE = re.compile(
     re.IGNORECASE,
 )
 FAKE_YOHANE_RE = re.compile(
-    r"(artist\b.+|project) yohane|yohane (dean lengol|parakan[aã]|nemu)|shaman ?king|"
-    r"touhou|@[a-z0-9\-]*yohane[a-z0-9\-]*\.[a-z0-9]|\byohane yousoro\b",
+    r"(artist\b.+|project) yohane|yohane (dean lengol|parakan[aã]|nemu)|"
+    r"sha(man ?king|nghai)|touhou|marisa|@[a-z0-9\-]*yohane[a-z0-9\-]*\.[a-z0-9]|"
+    r"\byohane yousoro\b",
     re.IGNORECASE,
 )
 HI_YOHANE_RE = re.compile(r"\bh(e(llo|y)|i+) yohane\b", re.IGNORECASE)
