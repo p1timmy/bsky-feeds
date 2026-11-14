@@ -133,7 +133,7 @@ LOVELIVE_RE = re.compile(
     r"dou[- ]da[?？]? doing[!！]?|(\b|[^a-z])tale of primavera(\b|[^a-z])|"
     # Concerts
     r"異次元フェス|ijigen\sfest?|#(llsat_|虹ブンブンビー_day[12])|"
-    r"([^\u30a1-\u30fa]|\b)(ラ[!！]?)?フェス(?!タ)[2２]?|"
+    r"([^\u30a1-\u30fa]|\b)(ラ[!！]?フェス(?!タ)|フェス[2２]([^0-9０-９]|\b))|"
     # Community stuff
     r"\bteam onibe\b|\bonib(e|ased)([^a-z’]|$)|(schoolido\.lu|idol\.st)(?!/user/)|"
     r"#(HasuTH_Tran|L(L_Calendar_Collab_|TYohane)|todayinlovelivehistory|"
