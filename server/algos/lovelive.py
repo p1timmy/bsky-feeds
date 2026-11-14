@@ -43,7 +43,7 @@ LOVELIVE_RE = re.compile(
     r"yuri\b)|"
     r"love[^\S\r\n]?live( ?!? +(vs|X)| fest?|-esque)\b|"
     r"lovelive(-(a(nime|s\.bushimo\.jp)|fanfunfestival|news\.bsky\.social)|_staff|"
-    r"#lovelive(art|_)|\bLL(heardle|s(ip|taff))|['’]?d\b)|"
+    r"['’]?d\b)|#lovelive(art|_)|\bLL( ?fest? ?2?\b|heardle|s(ip|taff))|"
     # Love Live, (and) [other idol franchise]
     r"\blove live, (and )?(aikatsu|ban(dori|g dream)|d4dj|i(dolm[a@]ster|m[a@]s)|"
     r"pr(ipara|oject sekai)|u(ma ?musume|ta( no prince|pri)))|"
@@ -133,7 +133,7 @@ LOVELIVE_RE = re.compile(
     r"dou[- ]da[?？]? doing[!！]?|(\b|[^a-z])tale of primavera(\b|[^a-z])|"
     # Concerts
     r"異次元フェス|ijigen\sfest?|#(llsat_|虹ブンブンビー_day[12])|"
-    r"([^\u30a1-\u30fa]|\b)ラ[!！]?フェス(?!タ)|"
+    r"([^\u30a1-\u30fa]|\b)(ラ[!！]?)?フェス(?!タ)[2２]?|"
     # Community stuff
     r"\bteam onibe\b|\bonib(e|ased)([^a-z’]|$)|(schoolido\.lu|idol\.st)(?!/user/)|"
     r"#(HasuTH_Tran|L(L_Calendar_Collab_|TYohane)|todayinlovelivehistory|"
@@ -409,6 +409,8 @@ EXCLUDE_RE = re.compile(
     r"\w+ [\-\u2013] .+ love live\b[^!]|"
     # love/LOVE Live, LOVE live
     r"(?-i:(love Live|LOVE [Ll]ive))|"
+    # can love live enough (sometimes typo of "can love life enough")
+    r"\bcan love live enough|"
     # just/my/[plural word] ... love liver (body part or food)
     r"\b(just( [a-z]+[a-z])?|my( ([a-z,'’]{3,}|&))+|[a-z]{3,}s( [a-z]{3,}){,2})"
     r" love liver\b|"
@@ -781,13 +783,13 @@ EXCLUDE_RE = re.compile(
     # and/[plural word] are/as/auf/being/but/can/c'est/could/did/does(n't)/doing/don't/
     # et/foi/gets/going/gone/got/hates/here/I/if/in/is(t)/I'll/I'm/just/kinda/kind of/
     # made/make(s)/making/may [be/have/not]/music [is/was]/needs/never/not/on/*ly/
-    # please/siempre/should/song(s)/there/things/tries/tried/UR ... card(s)/was/what/
-    # will/with/would/y"
+    # please/siempre/should/song(s)/still/there/things/tries/tried/UR ... card(s)/was/
+    # what/will/with/would/y"
     r"(([^\w\s:]+? *|^)(and )?(love )+live[\"'”’]?(?! (a(nd|s|uf|l(bum|so|ways|"
     r"l(?! (of|(?!(the|at) )[\w ]+\.))))|\w+ are|b(eing|ut)|c(an|e['’]st)|[csw]ould|"
     r"[dg]oing|d(id|o(es(n['’]?t)?|n['’]?t))|et|foi|g(ets|one)|[gn]ot|hates|just|"
     r"i([f'’]|n(?!(?-i: [A-Z]\w+))|st?)?|kind(a| of)|ne(eds|ver)|on|t?h(ere|ings?)|"
-    r"m(a(de|k(es?|ing)|y( ?be| (have|not)))|usic (i|wa)s)|s(iempre|ongs?)|"
+    r"m(a(de|k(es?|ing)|y( ?be| (have|not)))|usic (i|wa)s)|s(iempre|ongs?|till)|"
     r"[a-z]{2,}ly|please|ur .*?cards?|trie[ds]|w(as|hat|i(ll|th))|y)\b)|"
     r"([^\w\s'’,:]+? +|^)(love )+live,)"
     r"( #?[a-z\-'’\u00C0-\u024F\u1E00-\u1EFF]+| [0-9]+)+ ?([^\w ]|$)|"
@@ -803,6 +805,8 @@ EXCLUDE_RE = re.compile(
     # - my ... in love live in (typo of "my ... in law live in")
     # - who live in love live (1 John 4:16)
     r"\b(in|ma?y) love live in\b|"
+    # - my love live is/was (typo of "my love life is/was")
+    r"\bmy love live (i|wa)s\b|"
     # her/his/our/their/who(se)/yet/[name]'s ... (and) love live in/on/with
     r"(h(er|is)|(y?ou|thei)r|who(se)?|yet|\w+(?!what)['’]s)( ([a-z]+[a-z]|.+ (and|&)))?"
     r" love lives? ([io]n|with)|"
@@ -967,7 +971,7 @@ FAKE_GKSS_RE = re.compile(
 )
 # Mostly phrases with katakana before リンクラ
 FAKE_RINKURA_RE = re.compile(
-    r"[\u30a1-\u30fa]ー?リンクラ|リンクラ(イ(ン|ブラリ|ト)|ベル|[スッブボ])"
+    r"[\u30a1-\u30fa]ー?リンクラ|リンクラ(イ[^ク]|ベル|ブ(?!レード)|[スッボ])"
 )
 FAKE_LTTF_RE = re.compile(
     r"[a-z0-9_#]lttf|lttf[a-z0-9_]|youtu(\.be/|be\.com/watch\?v=)\w*lttf\w*",
